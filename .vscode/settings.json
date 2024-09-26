@@ -28,5 +28,9 @@
     "activityBar.background": "#3A2B10",
     "titleBar.activeBackground": "#523C17",
     "titleBar.activeForeground": "#FDFBF7"
-  }
+  },
+  "cSpell.words": [
+    "kakeibo",
+    "Kakeibo"
+  ]
 }
