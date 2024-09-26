@@ -1,0 +1,32 @@
+{
+  "workbench.colorCustomizations": {
+    "[Material Theme Darker High Contrast]": {
+      "activityBarBadge.background": "#84FFFF",
+      "activityBar.activeBorder": "#84FFFF",
+      "list.activeSelectionForeground": "#84FFFF",
+      "list.inactiveSelectionForeground": "#84FFFF",
+      "list.highlightForeground": "#84FFFF",
+      "scrollbarSlider.activeBackground": "#84FFFF50",
+      "editorSuggestWidget.highlightForeground": "#84FFFF",
+      "textLink.foreground": "#84FFFF",
+      "progressBar.background": "#84FFFF",
+      "pickerGroup.foreground": "#84FFFF",
+      "tab.activeBorder": "#84FFFF",
+      "notificationLink.foreground": "#84FFFF",
+      "editorWidget.resizeBorder": "#84FFFF",
+      "editorWidget.border": "#84FFFF",
+      "settings.modifiedItemIndicator": "#84FFFF",
+      "settings.headerForeground": "#84FFFF",
+      "panelTitle.activeBorder": "#84FFFF",
+      "breadcrumb.activeSelectionForeground": "#84FFFF",
+      "menu.selectionForeground": "#84FFFF",
+      "menubar.selectionForeground": "#84FFFF",
+      "editor.findMatchBorder": "#84FFFF",
+      "selection.background": "#84FFFF40",
+      "statusBarItem.remoteBackground": "#84FFFF"
+    },
+    "activityBar.background": "#3A2B10",
+    "titleBar.activeBackground": "#523C17",
+    "titleBar.activeForeground": "#FDFBF7"
+  }
+}
