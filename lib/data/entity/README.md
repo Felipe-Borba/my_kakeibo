@@ -1,0 +1,1 @@
+ator principal do sistema o core o cara do meio o sol do clean code
