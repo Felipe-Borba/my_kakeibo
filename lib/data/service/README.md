@@ -1,0 +1,1 @@
+implementação das interfaces do service
