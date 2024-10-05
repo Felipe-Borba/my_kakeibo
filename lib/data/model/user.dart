@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/data/entity/user.dart';
+import 'package:my_kakeibo/domain/entity/user.dart';
 
 extension UserModel on User {
   Map<String, dynamic> toJson() {

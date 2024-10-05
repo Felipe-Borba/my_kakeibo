@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/data/entity/user.dart';
+import 'package:my_kakeibo/domain/entity/user.dart';
 
 import 'settings_service.dart';
 
