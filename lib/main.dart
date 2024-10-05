@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presentation/app.dart';
+import 'app.dart';
 import 'presentation/settings/settings_controller.dart';
 import 'presentation/settings/settings_service.dart';
 
