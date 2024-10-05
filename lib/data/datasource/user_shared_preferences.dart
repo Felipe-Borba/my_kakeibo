@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:my_kakeibo/data/entity/user.dart';
-import 'package:my_kakeibo/data/repository/user_repository.dart';
-import 'package:my_kakeibo/domain/model/user.dart';
+import 'package:my_kakeibo/domain/entity/user.dart';
+import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/data/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserSharedPreferences implements UserRepository {
