@@ -6,4 +6,6 @@ abstract class Either<L, R> {
 
   // R getOrElse(R dflt()) => fold((_) => dflt(), (r) => r);
 }
-// peguei somente o que eu quero da lib https://pub.dev/packages/dartz
+
+// Peguei somente o que eu quero da lib https://pub.dev/packages/dartz
+// Existe também outro pacote da flutterando que faz a mesma coisa https://pub.dev/packages/result_dart só que chama de result isso
