@@ -27,3 +27,29 @@ the `lib/src/localization` directory.
 
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter apps](https://flutter.dev/to/internationalization).
+
+## Dependencies
+
+alguma dependência que vale mencionar e saber sobre
+
+**Para mock:**
+
+- https://pub.dev/packages/mocktail
+- https://pub.dev/packages/mockito
+
+**Para controle de exceção:**
+
+- https://pub.dev/packages/dartz
+- https://pub.dev/packages/result_dart
+
+**Para banco de dados local:**
+
+**Para controle de estado:**
+
+- ValueNotifier
+- ChangeNotifier
+- https://pub.dev/packages/mobx
+
+**Para injeção de deponência:**
+
+- https://pub.dev/packages/get_it
