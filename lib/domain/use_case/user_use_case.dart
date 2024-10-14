@@ -7,10 +7,10 @@ class UserUseCase {
   UserUseCase({required this.userRepository});
 
   Future<void> insert(User user) async {
-    throw Exception("To be implemented");
+    await userRepository.save(user);
   }
 
-  Future<User> getUser() async {
-    throw Exception("To be implemented");
+  Future<User?> getUser() async {
+    return await userRepository.getUser();
   }
 }
