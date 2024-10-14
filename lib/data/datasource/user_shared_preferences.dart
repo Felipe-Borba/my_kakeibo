@@ -9,7 +9,7 @@ class UserSharedPreferences implements UserRepository {
   static const String userKey = 'user';
 
   @override
-  void save(User user) async {
+  Future<void> save(User user) async {
     final prefs = await SharedPreferences.getInstance();
     String userJson = jsonEncode(user.toJson());
     prefs.setString(userKey, userJson);

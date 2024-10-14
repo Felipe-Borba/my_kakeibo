@@ -10,7 +10,7 @@ class UserMemoryRepository implements UserRepository {
   }
 
   @override
-  void save(User user) async {
+  Future<void> save(User user) async {
     _user = user;
   }
 }

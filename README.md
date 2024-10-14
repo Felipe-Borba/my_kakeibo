@@ -48,7 +48,11 @@ alguma dependência que vale mencionar e saber sobre
 
 - ValueNotifier
 - ChangeNotifier
-- https://pub.dev/packages/mobx
+- [Mobx](https://pub.dev/packages/mobx)
+
+**Misc:**
+
+- [Equatable](https://pub.dev/packages/equatable)
 
 **Para injeção de deponência:**
 
