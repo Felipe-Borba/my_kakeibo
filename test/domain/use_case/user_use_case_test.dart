@@ -8,7 +8,7 @@ void main() {
   group('UserUseCase', () {
     test('Should insert and retrieve user with all params', () async {
       var repository = UserMemoryRepository();
-      var userUseCase = UserUseCase(userRepository: repository);
+      var userUseCase = necessidade(userRepository: repository);
       var user = User(name: "Bob", theme: UserTheme.system);
 
       await userUseCase.insert(user);
