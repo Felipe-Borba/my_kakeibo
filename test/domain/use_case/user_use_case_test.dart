@@ -7,7 +7,7 @@ import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 void main() {
   group('UserUseCase', () {
-    group("isert", () {
+    group("insert", () {
       test('Should persist user with all params', () async {
         var repository = UserMemoryRepository();
         var userUseCase = UserUseCase(userRepository: repository);
@@ -31,8 +31,14 @@ void main() {
 
         var (_, error) = await userUseCase.insert(user);
 
-        var persistedUser = await repository.getUser();
+        var (persistedUser, _) = await repository.getUser();
         expect(persistedUser, null);
+        expect(error, isA<FieldFailure>());
+        if (error is FieldFailure) {
+          var fieldError = error.fieldErrorList[0];
+          expect(fieldError.field, "name");
+          expect(fieldError.message, "Field required");
+        }
       });
     });
   });

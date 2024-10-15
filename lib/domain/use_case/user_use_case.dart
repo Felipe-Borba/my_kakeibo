@@ -12,6 +12,10 @@ class UserUseCase {
   /// se eu acoplar lá no teste eu consigo testar mais isoladamente os métodos...
 
   Future<(Null, AppError)> insert(User user) async {
+    if(user.name.isEmpty) {
+      return (null, FieldFailure([FieldError("name", "Field required")]));
+    }
+
     await userRepository.save(user);
     return (null, Empty());
   }
