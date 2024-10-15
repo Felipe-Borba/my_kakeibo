@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_kakeibo/core/records/error.dart';
+import 'package:my_kakeibo/core/records/app_error.dart';
 
 void main() {
-  group('Error record', () {
-    // how it was proposed to be used, instead o the monad pattern (Either)
-    (int, Error) someOperation(int num) {
+  group('AppError record', () {
+    // this is how it was proposed to be used, instead of the monad pattern (Either)
+    (int, AppError) someOperation(int num) {
       if (num > 0) {
         return (num, Empty());
       } else {

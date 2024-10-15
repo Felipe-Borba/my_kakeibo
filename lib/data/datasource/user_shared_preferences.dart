@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/data/model/user.dart';
@@ -9,21 +10,24 @@ class UserSharedPreferences implements UserRepository {
   static const String userKey = 'user';
 
   @override
-  Future<void> save(User user) async {
+  Future<(Null, AppError)> save(User user) async {
     final prefs = await SharedPreferences.getInstance();
     String userJson = jsonEncode(user.toJson());
     prefs.setString(userKey, userJson);
+
+    return (null, Empty());
   }
 
   @override
-  Future<User?> getUser() async {
+  Future<(User?, AppError)> getUser() async {
     final prefs = await SharedPreferences.getInstance();
     String? userJson = prefs.getString(userKey);
 
     if (userJson != null) {
       Map<String, dynamic> userMap = jsonDecode(userJson);
-      return UserModel.fromJson(userMap);
+      return (UserModel.fromJson(userMap), Empty());
     }
-    return null;
+
+    return (null, Failure("User not found"));
   }
 }
