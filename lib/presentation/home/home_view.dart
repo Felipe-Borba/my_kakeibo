@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({
-    super.key,
-    // required this.userState,
-    // required this.userUseCase
-  });
+  static const String routeName = "/home";
 
-  // final UserState userState;
-  // final UserUseCase userUseCase;
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {

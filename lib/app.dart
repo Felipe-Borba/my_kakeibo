@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_kakeibo/core/theme.dart';
+import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
 
-import 'presentation/sample_feature/sample_item_details_view.dart';
-import 'presentation/sample_feature/sample_item_list_view.dart';
 import 'presentation/settings/settings_controller.dart';
 import 'presentation/settings/settings_view.dart';
 
@@ -44,13 +43,11 @@ class MyApp extends StatelessWidget {
           darkTheme: darkTheme,
           themeMode: settingsController.themeMode,
           //
-          initialRoute: SampleItemListView.routeName,
+          initialRoute: WelcomeView.routeName,
           routes: {
             SettingsView.routeName: (_) =>
                 SettingsView(controller: settingsController),
-            SampleItemListView.routeName: (_) => const SampleItemListView(),
-            SampleItemDetailsView.routeName: (_) =>
-                const SampleItemDetailsView(),
+            WelcomeView.routeName: (_) => const WelcomeView(),
           },
         );
       },
