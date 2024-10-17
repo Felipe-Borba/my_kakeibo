@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           routes: {
             SettingsView.routeName: (_) =>
                 SettingsView(controller: settingsController),
-            WelcomeView.routeName: (_) => const WelcomeView(),
+            // WelcomeView.routeName: (_) => const WelcomeView(),
           },
         );
       },
