@@ -1,1 +1,1 @@
-implementação das interfaces do service
+implementação das interfaces do repository

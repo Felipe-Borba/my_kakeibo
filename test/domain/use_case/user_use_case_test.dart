@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/data/datasource/user_memory_repository.dart';
+import 'package:my_kakeibo/data/service/user_memory_memory.dart';
 import 'package:my_kakeibo/domain/entity/user.dart';
 import 'package:my_kakeibo/domain/entity/user_theme.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
@@ -9,7 +9,7 @@ void main() {
   group('UserUseCase', () {
     group("insert", () {
       test('Should persist user with all params', () async {
-        var repository = UserMemoryRepository();
+        var repository = UserMemoryDatabase();
         var userUseCase = UserUseCase(userRepository: repository);
         var user = User(name: "Bob", theme: UserTheme.system);
 
@@ -25,7 +25,7 @@ void main() {
       });
 
       test('Should not insert user with empty name', () async {
-        var repository = UserMemoryRepository();
+        var repository = UserMemoryDatabase();
         var userUseCase = UserUseCase(userRepository: repository);
         var user = User(name: "", theme: UserTheme.system);
 

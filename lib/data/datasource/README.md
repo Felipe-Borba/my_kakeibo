@@ -1,1 +1,0 @@
-implementação das interfaces do repository
