@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import 'settings_controller.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({super.key, required this.controller});
+  const SettingsView({super.key});
 
   static const routeName = '/settings';
 
-  final SettingsController controller;
-
   @override
   Widget build(BuildContext context) {
+    final controller = Modular.get<SettingsController>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),

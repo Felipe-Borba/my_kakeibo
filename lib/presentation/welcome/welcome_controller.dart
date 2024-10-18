@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../home/home_view.dart';
-
-// acho qur vou ficar com esse modelo porque é o mais aceito pela comunidade, simples, 
+// acho qur vou ficar com esse modelo porque é o mais aceito pela comunidade, simples,
 class WelcomeController with ChangeNotifier {
   // Dependencies
 
@@ -10,6 +8,6 @@ class WelcomeController with ChangeNotifier {
 
   // Actions
   void onContinue(BuildContext context) {
-    Navigator.pushNamed(context, HomeView.routeName);
+    // Navigator.pushNamed(context, HomeView.routeName);
   }
 }

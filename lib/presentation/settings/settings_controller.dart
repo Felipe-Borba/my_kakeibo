@@ -8,7 +8,7 @@ class SettingsController with ChangeNotifier {
 
   final SettingsService _settingsService;
 
-  late ThemeMode _themeMode;
+  ThemeMode _themeMode = ThemeMode.system;
   ThemeMode get themeMode => _themeMode;
 
   Future<void> loadSettings() async {

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
 
 class WelcomeView extends StatelessWidget {
-  const WelcomeView({
-    super.key,
-    required this.controller,
-  });
+  const WelcomeView({super.key});
 
   static const routeName = '/welcome';
-  final WelcomeController controller;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Modular.get<WelcomeController>();
+
     return Scaffold(
       // backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: Padding(
