@@ -28,6 +28,12 @@ the `lib/src/localization` directory.
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter apps](https://flutter.dev/to/internationalization).
 
+## Para rodar todos os testes
+
+```console
+flutter test
+```
+
 ## Dependencies
 
 alguma dependência que vale mencionar e saber sobre

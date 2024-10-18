@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_kakeibo/presentation/login/login_view.dart';
 
 // acho qur vou ficar com esse modelo porque é o mais aceito pela comunidade, simples,
 class WelcomeController with ChangeNotifier {
@@ -7,7 +9,7 @@ class WelcomeController with ChangeNotifier {
   // State
 
   // Actions
-  void onContinue(BuildContext context) {
-    // Navigator.pushNamed(context, HomeView.routeName);
+  void onContinue() {
+    Modular.to.navigate(LoginView.routeName);
   }
 }

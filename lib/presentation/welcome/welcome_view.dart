@@ -53,7 +53,7 @@ class WelcomeView extends StatelessWidget {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
               child: ElevatedButton(
-                onPressed: () => controller.onContinue(context),
+                onPressed: controller.onContinue,
                 child: const Text("Get Started"),
               ),
             ),
