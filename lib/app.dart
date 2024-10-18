@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     // AppLocalizations? test = AppLocalizations.of(context);
     // print(test);
 
-    Modular.setInitialRoute(WelcomeView.routeName);
+    // Modular.setInitialRoute(WelcomeView.routeName);
     return ListenableBuilder(
       listenable: settingsController,
       builder: (BuildContext context, Widget? child) {
