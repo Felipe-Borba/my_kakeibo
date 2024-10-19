@@ -6,21 +6,23 @@ class UserUseCase {
   UserRepository userRepository;
 
   UserUseCase({required this.userRepository});
-  // TODO como vou validar esse treco
-  // TODO Me acoplo aqui ao ValueNotifier como no fluterando?
-  /// quero permitir usar qualquer tipo de gerenciamento de estado lá na presentation?
-  /// se eu acoplar lá no teste eu consigo testar mais isoladamente os métodos...
 
   Future<(Null, AppError)> insert(User user) async {
-    if(user.name.isEmpty) {
-      return (null, FieldFailure([FieldError("name", "Field required")]));
+    var (isValid, errorList) = user.validate();
+    if (!isValid) {
+      return (null, errorList);
     }
 
     await userRepository.save(user);
+
     return (null, Empty());
   }
 
   Future<(User?, AppError)> getUser() async {
     return await userRepository.getUser();
+  }
+
+  Future<(User, AppError)> login(String email, String password) async {
+    throw Exception("Todo");
   }
 }

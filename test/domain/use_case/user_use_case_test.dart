@@ -11,7 +11,12 @@ void main() {
       test('Should persist user with all params', () async {
         var repository = UserMemoryDatabase();
         var userUseCase = UserUseCase(userRepository: repository);
-        var user = User(name: "Bob", theme: UserTheme.system);
+        var user = User(
+          name: "Bob",
+          theme: UserTheme.system,
+          email: "e@e.com",
+          password: "123",
+        );
 
         var (response, error) = await userUseCase.insert(user);
 
@@ -27,7 +32,12 @@ void main() {
       test('Should not insert user with empty name', () async {
         var repository = UserMemoryDatabase();
         var userUseCase = UserUseCase(userRepository: repository);
-        var user = User(name: "", theme: UserTheme.system);
+        var user = User(
+          name: "",
+          theme: UserTheme.system,
+          email: "e@e.com",
+          password: "123",
+        );
 
         var (_, error) = await userUseCase.insert(user);
 

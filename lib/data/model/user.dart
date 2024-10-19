@@ -4,6 +4,8 @@ extension UserModel on User {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
+      'email': email,
+      'password': password,
       'theme': theme,
     };
   }
@@ -11,6 +13,8 @@ extension UserModel on User {
   static User fromJson(Map<String, dynamic> json) {
     return User(
       name: json['name'],
+      email: json['email'],
+      password: json['password'],
       theme: json['theme'],
     );
   }
