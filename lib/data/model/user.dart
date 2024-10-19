@@ -7,7 +7,7 @@ extension UserModel on User {
       'name': name,
       'email': email,
       'password': password,
-      'theme': theme,
+      // 'theme': theme,
       'balance': balance,
     };
   }
@@ -18,7 +18,7 @@ extension UserModel on User {
       name: json['name'],
       email: json['email'],
       password: json['password'],
-      theme: json['theme'],
+      // theme: json['theme'],
       balance: json['balance'],
     );
   }

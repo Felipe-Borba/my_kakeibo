@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user.dart';
-import 'package:my_kakeibo/domain/entity/user_theme.dart';
 
 void main() {
   late User user;
@@ -11,7 +10,6 @@ void main() {
       name: "user",
       email: "e@e.com",
       password: "123",
-      theme: UserTheme.system,
     );
   });
 

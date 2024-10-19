@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/service/user_memory_memory.dart';
 import 'package:my_kakeibo/domain/entity/user.dart';
-import 'package:my_kakeibo/domain/entity/user_theme.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 void main() {
@@ -13,7 +12,6 @@ void main() {
         var userUseCase = UserUseCase(userRepository: repository);
         var user = User(
           name: "Bob",
-          theme: UserTheme.system,
           email: "e@e.com",
           password: "123",
         );
@@ -34,7 +32,6 @@ void main() {
         var userUseCase = UserUseCase(userRepository: repository);
         var user = User(
           name: "",
-          theme: UserTheme.system,
           email: "e@e.com",
           password: "123",
         );
