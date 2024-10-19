@@ -30,4 +30,10 @@ class UserSharedPreferences implements UserRepository {
 
     return (null, Failure("User not found"));
   }
+  
+  @override
+  Future<(User, AppError)> getUserById(String id) {
+    // TODO: implement getUserById
+    throw UnimplementedError();
+  }
 }

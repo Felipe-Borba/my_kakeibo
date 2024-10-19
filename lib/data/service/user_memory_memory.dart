@@ -19,4 +19,10 @@ class UserMemoryDatabase implements UserRepository {
     _user = user;
     return (null, Empty());
   }
+  
+  @override
+  Future<(User, AppError)> getUserById(String id) {
+    // TODO: implement getUserById
+    throw UnimplementedError();
+  }
 }
