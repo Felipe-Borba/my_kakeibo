@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/domain/entity/user.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
 
 void main() {
   late User user;

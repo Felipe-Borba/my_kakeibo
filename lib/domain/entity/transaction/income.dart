@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/domain/entity/transaction.dart';
+import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Income extends Transaction {
   // IncomeCategory category; não sei se faz sentido isso aqui perguntar pai

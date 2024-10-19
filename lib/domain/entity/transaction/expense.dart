@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/domain/entity/transaction.dart';
+import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Expense extends Transaction {
   // ExpenseCategory category; //aluguel, conta etc,
