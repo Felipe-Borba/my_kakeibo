@@ -11,17 +11,17 @@ class UserSharedPreferences implements UserRepository {
 
   @override
   Future<(Null, AppError)> save(User user) async {
-    final prefs = await SharedPreferences.getInstance();
+    final preferences = await SharedPreferences.getInstance();
     String userJson = jsonEncode(user.toJson());
-    prefs.setString(userKey, userJson);
+    preferences.setString(userKey, userJson);
 
     return (null, Empty());
   }
 
   @override
   Future<(User?, AppError)> getUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userJson = prefs.getString(userKey);
+    final preferences = await SharedPreferences.getInstance();
+    String? userJson = preferences.getString(userKey);
 
     if (userJson != null) {
       Map<String, dynamic> userMap = jsonDecode(userJson);
@@ -30,10 +30,9 @@ class UserSharedPreferences implements UserRepository {
 
     return (null, Failure("User not found"));
   }
-  
+
   @override
-  Future<(User, AppError)> getUserById(String id) {
-    // TODO: implement getUserById
-    throw UnimplementedError();
+  Future<(User?, AppError)> getUserById(String id) async {
+    return getUser();
   }
 }

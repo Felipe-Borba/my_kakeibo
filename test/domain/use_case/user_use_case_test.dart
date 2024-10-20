@@ -85,11 +85,11 @@ void main() {
       when(() => userRepository.getUserById("id"))
           .thenAnswer((_) async => (user, Empty()));
 
-      var (logedUser, _) = await userUseCase.login("email", "password");
+      var (loggedUser, _) = await userUseCase.login("email", "password");
 
       verify(() => authRepository.login("email", "password")).called(1);
       verify(() => userRepository.getUserById("id")).called(1);
-      expect(logedUser, user);
+      expect(loggedUser, user);
     });
 
     test("Should return login error if login return failure", () async {
@@ -99,11 +99,11 @@ void main() {
       when(() => userRepository.getUserById("id"))
           .thenAnswer((_) async => (user, Empty()));
 
-      var (logedUser, err) = await userUseCase.login("email", "password");
+      var (loggedUser, err) = await userUseCase.login("email", "password");
 
       verify(() => authRepository.login("email", "password")).called(1);
       verifyNever(() => userRepository.getUserById("id"));
-      expect(logedUser, null);
+      expect(loggedUser, null);
       expect(err, failure);
     });
 
@@ -115,11 +115,11 @@ void main() {
       when(() => userRepository.getUserById("id"))
           .thenAnswer((_) async => (user, failure));
 
-      var (logedUser, err) = await userUseCase.login("email", "password");
+      var (loggedUser, err) = await userUseCase.login("email", "password");
 
       verify(() => authRepository.login("email", "password")).called(1);
       verify(() => userRepository.getUserById("id")).called(1);
-      expect(logedUser, null);
+      expect(loggedUser, null);
       expect(err, failure);
     });
   });

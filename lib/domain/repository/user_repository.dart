@@ -7,5 +7,5 @@ abstract class UserRepository {
   //Tenho algumas dúvidas se eu não vou acabar espalhando um monte de null check chato por causa dessa decisão XD
   Future<(User?, AppError)> getUser();
 
-  Future<(User, AppError)> getUserById(String id);
+  Future<(User?, AppError)> getUserById(String id);
 }

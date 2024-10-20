@@ -3,7 +3,7 @@ import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Expense extends Transaction {
-  // TODO depois no futuro seria legal deixar o usuario criar isso
+  // TODO depois no futuro seria legal deixar o usuário criar isso
   ExpenseCategory category; //aluguel, conta etc,
   // String payee // quem recebeu
   // PaymentMethod paymentMethod;
