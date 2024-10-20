@@ -1,7 +1,10 @@
+import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Expense extends Transaction {
-  // ExpenseCategory category; //aluguel, conta etc,
+  // TODO depois no futuro seria legal deixar o usuario criar isso
+  ExpenseCategory category; //aluguel, conta etc,
   // String payee // quem recebeu
   // PaymentMethod paymentMethod;
 
@@ -12,5 +15,20 @@ class Expense extends Transaction {
     required super.amount,
     required super.date,
     required super.description,
+    required this.category,
   });
+
+  (bool, AppError) validate() {
+    List<FieldError> fieldErrorList = [];
+    if (amount <= 0) {
+      fieldErrorList.add(
+        FieldError("amount", "Amount can't be less than zero"),
+      );
+    }
+
+    return (
+      fieldErrorList.isEmpty,
+      fieldErrorList.isEmpty ? Empty() : FieldFailure(fieldErrorList)
+    );
+  }
 }

@@ -54,4 +54,14 @@ void main() {
       expect(error.message, "Password is required");
     });
   });
+
+  group("decreaseAmount", () {
+    test("Should decrease user balance", () {
+      user.balance = 100;
+      
+      user.decreaseBalance(45);
+
+      expect(user.balance, 55);
+    });
+  });
 }

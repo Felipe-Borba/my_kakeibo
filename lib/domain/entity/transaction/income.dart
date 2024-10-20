@@ -1,8 +1,9 @@
+import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Income extends Transaction {
   // IncomeCategory category; não sei se faz sentido isso aqui perguntar pai
-  // IncomeSource source; // salario, investimento, etc.
+  IncomeSource source; // salario, investimento, etc.
   // Tax Withholdings
 
   // da mesma forma que lá na despesa aqui seria um tipo de receita?
@@ -13,5 +14,6 @@ class Income extends Transaction {
     required super.amount,
     required super.date,
     required super.description,
+    required this.source,
   });
 }

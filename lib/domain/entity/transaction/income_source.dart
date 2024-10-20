@@ -1,0 +1,3 @@
+enum IncomeSource {
+  salary
+}

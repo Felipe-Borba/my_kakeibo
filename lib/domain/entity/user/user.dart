@@ -38,4 +38,8 @@ class User {
       fieldErrorList.isEmpty ? Empty() : FieldFailure(fieldErrorList)
     );
   }
+
+  decreaseBalance(double amount) {
+    balance -= amount;
+  }
 }
