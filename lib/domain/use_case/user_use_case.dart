@@ -18,6 +18,15 @@ class UserUseCase {
       return (null, errorList);
     }
 
+    var (id, err) = await authRepository.createAccess(
+      user.email,
+      user.password,
+    );
+    if (err is! Empty) {
+      return (null, err);
+    }
+
+    user.id = id;
     await userRepository.save(user);
 
     return (null, Empty());

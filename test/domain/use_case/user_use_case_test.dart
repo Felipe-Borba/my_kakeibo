@@ -43,6 +43,11 @@ void main() {
     });
 
     test('Should persist user with all params', () async {
+      when(
+        () => authRepository.createAccess(user.email, user.password),
+      ).thenAnswer(
+        (_) async => ('id', Empty()),
+      );
       var (response, error) = await userUseCase.insert(user);
 
       var (persistedUser, _) = await userRepository.getUser();
@@ -50,6 +55,9 @@ void main() {
       expect(response, null);
       expect(error, isA<Empty>());
       expect(user, persistedUser);
+      verify(
+        () => authRepository.createAccess(user.email, user.password),
+      ).called(1);
       // pode dar um erro clássico aqui pq ele tá comparando referência de obj, mas como o banco é em memoria acaba que a referência é a mesma mas nem sempre isso é verdade no caso do shared pref por ex.
       // para resolver isso tenho que sobre escrever o método de comparação mas é uma sintaxe feia e para isso exite o package equatable
     });
@@ -99,7 +107,8 @@ void main() {
       expect(err, failure);
     });
 
-    test("Should return userRepository error if getUser return failure", () async {
+    test("Should return userRepository error if getUser return failure",
+        () async {
       var failure = Failure("some error");
       when(() => authRepository.login("email", "password"))
           .thenAnswer((_) async => ('id', Empty()));
