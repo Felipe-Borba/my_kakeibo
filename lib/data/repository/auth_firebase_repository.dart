@@ -45,10 +45,14 @@ class AuthFirebaseRepository implements AuthRepository {
       return (false, Failure(e.toString()));
     }
   }
-  
+
   @override
-  Future<(String, AppError)> getLoggedUserId() {
-    // TODO: implement getLoggedUserId
-    throw UnimplementedError();
+  Future<(String, AppError)> getLoggedUserId() async {
+    var user = _auth.currentUser;
+    if (user != null) {
+      return (user.uid, Empty());
+    } else {
+      return ("", Failure("User not found"));
+    }
   }
 }
