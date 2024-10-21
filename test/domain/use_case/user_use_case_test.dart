@@ -50,7 +50,8 @@ void main() {
       );
       var (response, error) = await userUseCase.insert(user);
 
-      var (persistedUser, _) = await userRepository.getUser();
+      // Isso pode não parecer fazer sentido no começo mas é por que aqui eu to usando uma implementação do banco do usuário em memória
+      var (persistedUser, _) = await userRepository.getUserById("id");
       expect(persistedUser, isNotNull);
       expect(response, null);
       expect(error, isA<Empty>());
@@ -67,7 +68,7 @@ void main() {
 
       var (_, error) = await userUseCase.insert(user);
 
-      var (persistedUser, _) = await userRepository.getUser();
+      var (persistedUser, _) = await userRepository.getUserById("id");
       expect(persistedUser, null);
       expect(error, isA<FieldFailure>());
       if (error is FieldFailure) {

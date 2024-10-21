@@ -5,13 +5,7 @@ import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserFirebaseRepository extends UserRepository {
-  var _db = FirebaseFirestore.instance;
-
-  @override
-  Future<(User?, AppError)> getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
-  }
+  final _db = FirebaseFirestore.instance;
 
   @override
   Future<(User?, AppError)> getUserById(String id) {

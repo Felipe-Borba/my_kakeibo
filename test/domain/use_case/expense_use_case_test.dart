@@ -5,25 +5,25 @@ import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 import '../repository/expense_repository_mock.dart';
-import '../repository/user_repository_mock.dart';
+import 'user_use_case_mock.dart';
 
 void main() {
   late ExpenseUseCase expenseUseCase;
-  late UserRepository userRepository;
+  late UserUseCase userUseCase;
   late ExpenseRepository expenseRepository;
   late User user;
   late Expense expense;
 
   setUp(() {
-    userRepository = UserRepositoryMock();
+    userUseCase = UserUseCaseMock();
     expenseRepository = ExpenseRepositoryMock();
 
     expenseUseCase = ExpenseUseCase(
-      userRepository: userRepository,
+      userUseCase: userUseCase,
       expenseRepository: expenseRepository,
     );
 
@@ -50,7 +50,7 @@ void main() {
       when(() => expenseRepository.insert(expense)).thenAnswer(
         (_) async => (expense, Empty()),
       );
-      when(() => userRepository.getUser()).thenAnswer(
+      when(() => userUseCase.getUser()).thenAnswer(
         (invocation) async => (user, Empty()),
       );
 
@@ -58,7 +58,7 @@ void main() {
 
       expect(user.balance, 50);
       verify(() => expenseRepository.insert(expense)).called(1);
-      verify(() => userRepository.getUser()).called(1);
+      verify(() => userUseCase.getUser()).called(1);
     });
   });
 

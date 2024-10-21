@@ -33,7 +33,11 @@ class UserUseCase {
   }
 
   Future<(User?, AppError)> getUser() async {
-    return await userRepository.getUser();
+    var (id, err) = await authRepository.getLoggedUserId();
+    if (err is! Empty) {
+      return (null, err);
+    }
+    return await userRepository.getUserById(id);
   }
 
   Future<(User?, AppError)> login(String email, String password) async {

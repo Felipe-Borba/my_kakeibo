@@ -6,23 +6,17 @@ class UserMemoryDatabase implements UserRepository {
   User? _user;
 
   @override
-  Future<(User?, AppError)> getUser() async {
+  Future<(Null, AppError)> save(User user) async {
+    _user = user;
+    return (null, Empty());
+  }
+
+  @override
+  Future<(User?, AppError)> getUserById(String id) async {
     if (_user != null) {
       return (_user, Empty());
     } else {
       return (null, Failure("User not found"));
     }
-  }
-
-  @override
-  Future<(Null, AppError)> save(User user) async {
-    _user = user;
-    return (null, Empty());
-  }
-  
-  @override
-  Future<(User, AppError)> getUserById(String id) {
-    // TODO: implement getUserById
-    throw UnimplementedError();
   }
 }

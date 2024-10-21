@@ -1,16 +1,16 @@
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 import '../../core/records/app_error.dart';
 
 class ExpenseUseCase {
   ExpenseRepository expenseRepository;
-  UserRepository userRepository;
+  UserUseCase userUseCase;
 
   ExpenseUseCase({
     required this.expenseRepository,
-    required this.userRepository,
+    required this.userUseCase,
   });
 
   Future<(Null, AppError)> insert(Expense expense) async {
@@ -18,7 +18,7 @@ class ExpenseUseCase {
     if (!isValid) {
       return (null, errorList);
     }
-    var (user!, userErr) = await userRepository.getUser();
+    var (user!, userErr) = await userUseCase.getUser();
     if (userErr is! Empty) {
       return (null, userErr);
     }

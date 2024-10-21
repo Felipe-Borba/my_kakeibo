@@ -3,7 +3,7 @@ import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthFirebaseRepository implements AuthRepository {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Future<(String, AppError)> createAccess(String email, String password) async {
@@ -44,5 +44,11 @@ class AuthFirebaseRepository implements AuthRepository {
     } catch (e) {
       return (false, Failure(e.toString()));
     }
+  }
+  
+  @override
+  Future<(String, AppError)> getLoggedUserId() {
+    // TODO: implement getLoggedUserId
+    throw UnimplementedError();
   }
 }
