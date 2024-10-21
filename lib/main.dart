@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_kakeibo/firebase_options.dart';
+import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
-import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
 
@@ -10,7 +12,10 @@ import 'app.dart';
 import 'presentation/settings/settings_controller.dart';
 import 'presentation/settings/settings_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   return runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 
