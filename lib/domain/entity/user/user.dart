@@ -18,6 +18,25 @@ class User {
     this.balance = 0.0,
   });
 
+  User.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        email = json['email'],
+        password = json['password'],
+        // theme = json['theme'],
+        balance = json['balance'].toDouble();
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'password': password,
+      // 'theme': theme,
+      'balance': balance,
+    };
+  }
+
   (bool, AppError) validate() {
     List<FieldError> fieldErrorList = [];
     if (name.isEmpty) {
