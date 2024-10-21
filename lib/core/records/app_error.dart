@@ -16,7 +16,7 @@ final class FieldFailure implements AppError {
 }
 
 final class FieldError {
-  final String field;
+  final String field; // TODO mudar para name
   final String message;
 
   FieldError(this.field, this.message);
