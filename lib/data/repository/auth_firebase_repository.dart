@@ -28,6 +28,8 @@ class AuthFirebaseRepository implements AuthRepository {
       );
 
       return (userCredentials.user!.uid, Empty());
+    } on FirebaseAuthException catch (e) {
+      return ("", Failure(e.message ?? e.code));
     } catch (e) {
       return ("", Failure(e.toString()));
     }

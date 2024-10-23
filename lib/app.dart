@@ -12,8 +12,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsController = Modular.get<SettingsController>();
-    // AppLocalizations? test = AppLocalizations.of(context);
-    // print(test);
 
     // Modular.setInitialRoute(WelcomeView.routeName);
     return ListenableBuilder(

@@ -2,5 +2,10 @@
   "appTitle": "My Kakeibo",
   "@appTitle": {
     "description": "Your personal finance app"
-  }
+  },
+  "welcome": "Welcome",
+  "email": "Email",
+  "password": "Password",
+  "login": "login",
+  "createAccount": "Create account"
 }

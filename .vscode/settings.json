@@ -34,5 +34,6 @@
     "Kakeibo",
     "mocktail",
     "STEB"
-  ]
+  ],
+  "cmake.ignoreCMakeListsMissing": true
 }
