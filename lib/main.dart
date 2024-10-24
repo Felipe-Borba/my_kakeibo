@@ -11,6 +11,8 @@ import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/firebase_options.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
+import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
+import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
@@ -44,6 +46,7 @@ class AppModule extends Module {
 
     i.add(LoginController.new);
     i.add(WelcomeController.new);
+    i.add(CreateAccountController.new);
   }
 
   @override
@@ -52,5 +55,7 @@ class AppModule extends Module {
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
     r.child(LoginView.routeName, child: (context) => const LoginView());
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
+    r.child(CreateAccountView.routeName,
+        child: (context) => const CreateAccountView());
   }
 }

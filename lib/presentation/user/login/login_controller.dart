@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
+import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
 
 class LoginController with ChangeNotifier {
   // Dependencies
@@ -14,7 +15,7 @@ class LoginController with ChangeNotifier {
 
   // Actions
   onClickCreateAccount() async {
-    // Modular.to.navigate(CreateAccount.routeName);
+    Modular.to.pushNamed(CreateAccountView.routeName);
   }
 
   onLogin() async {
