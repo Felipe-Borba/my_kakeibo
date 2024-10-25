@@ -73,4 +73,16 @@ void main() {
       verify(() => expenseRepository.findAll()).called(1);
     });
   });
+
+  group('delete', () {
+    test("Should call delete method", () async {
+      when(() => expenseRepository.delete(expense)).thenAnswer(
+        (_) async => (null, Empty()),
+      );
+
+      await expenseUseCase.delete(expense);
+
+      verify(() => expenseRepository.delete(expense)).called(1);
+    });
+  });
 }
