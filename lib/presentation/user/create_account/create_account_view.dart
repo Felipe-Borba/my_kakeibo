@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
@@ -12,7 +11,6 @@ class CreateAccountView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Modular.get<CreateAccountController>();
-    final intl = AppLocalizations.of(context)!;
 
     return ListenableBuilder(
       listenable: controller,
