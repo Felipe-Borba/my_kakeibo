@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+## Teste
+Rodar o teste com cobertura
+```
+flutter test --coverage
+```
+
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the
