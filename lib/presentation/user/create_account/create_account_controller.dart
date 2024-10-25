@@ -9,33 +9,40 @@ class CreateAccountController with ChangeNotifier {
   final userUseCase = Modular.get<UserUseCase>();
 
   // State
-  String email = "";
-  String emailError = "";
-  String password = "";
-  String passwordError = "";
-  String name = "";
-  String nameError = "";
-  double balance = 0;
-  String balanceError = "";
+  TextEditingController email = TextEditingController();
+  String? emailError;
+  TextEditingController password = TextEditingController();
+  String? passwordError;
+  TextEditingController name = TextEditingController();
+  String? nameError;
+
+  @override
+  void dispose() {
+    email.dispose();
+    password.dispose();
+    name.dispose();
+    super.dispose();
+  }
 
   // Actions
   onClickCreateAccount() async {
     var (_, error) = await userUseCase.insert(User(
-      password: password,
-      balance: balance,
-      email: email,
-      name: name,
+      password: password.text,
+      email: email.text,
+      name: name.text,
     ));
+
+    nameError = null;
+    emailError = null;
+    passwordError = null;
 
     switch (error) {
       case Empty():
         print("Usuário criado com sucesso.");
         break;
-
       case Failure(:final message):
         print("Erro: $message");
         break;
-
       case FieldFailure(:final fieldErrorList):
         print("Erro de validação nos seguintes campos:");
         for (var invalidField in fieldErrorList) {
@@ -49,19 +56,12 @@ class CreateAccountController with ChangeNotifier {
             case "password":
               passwordError = invalidField.message;
               break;
-            case "balance":
-              balanceError = invalidField.message;
-              break;
           }
         }
         break;
-
       default:
         print("Erro desconhecido.");
     }
-  }
-
-  onClickBack() async {
-    Modular.to.pop();
+    notifyListeners();
   }
 }

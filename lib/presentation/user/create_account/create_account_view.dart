@@ -18,11 +18,46 @@ class CreateAccountView extends StatelessWidget {
       listenable: controller,
       builder: (BuildContext context, Widget? child) {
         return Scaffold(
-          appBar: AppBarCustom(title: "Create account"),
+          appBar: const AppBarCustom(title: "Create account"),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
-              child: Placeholder(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextField(
+                    controller: controller.email,
+                    decoration: InputDecoration(
+                      labelText: "email",
+                      errorText: controller.emailError,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: controller.password,
+                    decoration: InputDecoration(
+                      labelText: "password",
+                      errorText: controller.passwordError,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    controller: controller.name,
+                    decoration: InputDecoration(
+                      labelText: "name",
+                      errorText: controller.nameError,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: controller.onClickCreateAccount,
+                      child: const Text("Create account"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         );

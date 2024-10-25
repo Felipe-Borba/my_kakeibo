@@ -51,7 +51,7 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    r.redirect("/", to: WelcomeView.routeName);
+    r.redirect("/", to: LoginView.routeName);
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
     r.child(LoginView.routeName, child: (context) => const LoginView());
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
