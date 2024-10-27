@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class LoginController with ChangeNotifier {
   // Dependencies
@@ -31,6 +32,8 @@ class LoginController with ChangeNotifier {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+    } else {
+      Modular.to.navigate(DashboardView.routeName);
     }
 
     notifyListeners();

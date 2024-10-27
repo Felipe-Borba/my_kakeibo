@@ -3,6 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class CreateAccountController with ChangeNotifier {
   // Dependencies
@@ -38,7 +39,7 @@ class CreateAccountController with ChangeNotifier {
 
     switch (error) {
       case Empty():
-        print("Usuário criado com sucesso.");
+        Modular.to.navigate(DashboardView.routeName);
         break;
       case Failure(:final message):
         print("Erro: $message");

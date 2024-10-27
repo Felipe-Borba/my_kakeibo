@@ -13,6 +13,7 @@ import 'package:my_kakeibo/firebase_options.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
@@ -57,5 +58,6 @@ class AppModule extends Module {
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
     r.child(CreateAccountView.routeName,
         child: (context) => const CreateAccountView());
+    r.child(DashboardView.routeName, child: (context) => DashboardView());
   }
 }
