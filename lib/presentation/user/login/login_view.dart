@@ -28,6 +28,7 @@ class LoginView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
+                  key: const Key("email"),
                   onChanged: (value) => controller.email = value,
                   decoration: InputDecoration(
                     labelText: intl.email,
@@ -35,6 +36,7 @@ class LoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 TextField(
+                  key: const Key("password"),
                   onChanged: (value) => controller.password = value,
                   decoration: InputDecoration(
                     labelText: intl.password,
@@ -43,11 +45,13 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 24),
                 Center(
                   child: ElevatedButton(
+                    key: const Key("login"),
                     onPressed: controller.onLogin,
                     child: Text(intl.login),
                   ),
                 ),
                 TextButton(
+                  key: const Key("create-account"),
                   onPressed: controller.onClickCreateAccount,
                   child: Text(intl.createAccount),
                 ),

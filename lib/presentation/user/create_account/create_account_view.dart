@@ -25,6 +25,7 @@ class CreateAccountView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextField(
+                    key: const Key("email"),
                     controller: controller.email,
                     decoration: InputDecoration(
                       labelText: "email",
@@ -33,6 +34,7 @@ class CreateAccountView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
+                    key: const Key("password"),
                     controller: controller.password,
                     decoration: InputDecoration(
                       labelText: "password",
@@ -41,6 +43,7 @@ class CreateAccountView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
+                    key: const Key("name"),
                     controller: controller.name,
                     decoration: InputDecoration(
                       labelText: "name",
@@ -50,6 +53,7 @@ class CreateAccountView extends StatelessWidget {
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
+                      key: const Key("create-account"),
                       onPressed: controller.onClickCreateAccount,
                       child: const Text("Create account"),
                     ),

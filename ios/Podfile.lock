@@ -1326,6 +1326,8 @@ PODS:
   - gRPC-Core/Interface (1.65.5)
   - gRPC-Core/Privacy (1.65.5)
   - GTMSessionFetcher/Core (3.5.0)
+  - integration_test (0.0.1):
+    - Flutter
   - leveldb-library (1.22.5)
   - nanopb (3.30910.0):
     - nanopb/decode (= 3.30910.0)
@@ -1344,6 +1346,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
@@ -1380,6 +1383,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
@@ -1405,6 +1410,7 @@ SPEC CHECKSUMS:
   "gRPC-C++": 2fa52b3141e7789a28a737f251e0c45b4cb20a87
   gRPC-Core: a27c294d6149e1c39a7d173527119cfbc3375ce4
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
