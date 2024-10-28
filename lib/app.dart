@@ -13,32 +13,40 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final settingsController = Modular.get<SettingsController>();
 
-    // Modular.setInitialRoute(WelcomeView.routeName);
-    return ListenableBuilder(
-      listenable: settingsController,
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp.router(
-          restorationScopeId: 'app',
-          debugShowCheckedModeBanner: false,
-          //
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: const [
-            Locale('en', ''),
-          ],
-          //
-          onGenerateTitle: (BuildContext context) =>
-              AppLocalizations.of(context)!.appTitle,
-          //
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: settingsController.themeMode,
-          //
-          routerConfig: Modular.routerConfig,
+    return FutureBuilder(
+      future: settingsController.loadSettings(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return ListenableBuilder(
+          listenable: settingsController,
+          builder: (BuildContext context, Widget? child) {
+            return MaterialApp.router(
+              restorationScopeId: 'app',
+              debugShowCheckedModeBanner: false,
+              //
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('en', ''),
+              ],
+              //
+              onGenerateTitle: (BuildContext context) =>
+                  AppLocalizations.of(context)!.appTitle,
+              //
+              theme: lightTheme,
+              darkTheme: darkTheme,
+              themeMode: settingsController.themeMode,
+              //
+              routerConfig: Modular.routerConfig,
+            );
+          },
         );
       },
     );
