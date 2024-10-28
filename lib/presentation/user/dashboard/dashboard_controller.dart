@@ -27,8 +27,4 @@ class DashboardController with ChangeNotifier {
     var (user, userError) = await userUseCase.getUser();
     this.user = user;
   }
-
-  onClickCreateAccount() async {
-    //TODO
-  }
 }
