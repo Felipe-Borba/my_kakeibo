@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
@@ -26,7 +27,7 @@ class CreateAccountController with ChangeNotifier {
   }
 
   // Actions
-  onClickCreateAccount() async {
+  onClickCreateAccount(BuildContext context) async {
     var (_, error) = await userUseCase.insert(User(
       password: password.text,
       email: email.text,
@@ -42,10 +43,9 @@ class CreateAccountController with ChangeNotifier {
         Modular.to.navigate(DashboardView.routeName);
         break;
       case Failure(:final message):
-        print("Erro: $message");
+        showSnackbar(context: context, text: message);
         break;
       case FieldFailure(:final fieldErrorList):
-        print("Erro de validação nos seguintes campos:");
         for (var invalidField in fieldErrorList) {
           switch (invalidField.field) {
             case "name":
@@ -61,7 +61,7 @@ class CreateAccountController with ChangeNotifier {
         }
         break;
       default:
-        print("Erro desconhecido.");
+        showSnackbar(context: context, text: "Erro desconhecido.");
     }
     notifyListeners();
   }

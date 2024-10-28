@@ -58,6 +58,6 @@ class AppModule extends Module {
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
     r.child(CreateAccountView.routeName,
         child: (context) => const CreateAccountView());
-    r.child(DashboardView.routeName, child: (context) => DashboardView());
+    r.child(DashboardView.routeName, child: (context) => const DashboardView());
   }
 }

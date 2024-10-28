@@ -36,4 +36,8 @@ class ExpenseUseCase {
   Future<(Null, AppError)> delete(Expense expense) async {
     return await expenseRepository.delete(expense);
   }
+
+  Future<(double, AppError)> getTotal() async {
+    return (0.0, Empty()); //TODO to be implemented
+  }
 }

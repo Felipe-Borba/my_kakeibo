@@ -54,7 +54,7 @@ class CreateAccountView extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       key: const Key("create-account"),
-                      onPressed: controller.onClickCreateAccount,
+                      onPressed: () => controller.onClickCreateAccount(context),
                       child: const Text("Create account"),
                     ),
                   ),

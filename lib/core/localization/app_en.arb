@@ -1,11 +1,17 @@
 {
+  "@@locale": "en",
   "appTitle": "My Kakeibo",
   "@appTitle": {
     "description": "Your personal finance app"
   },
   "welcome": "Welcome",
+  "@welcome": {},
   "email": "Email",
+  "@email": {},
   "password": "Password",
+  "@password": {},
   "login": "login",
-  "createAccount": "Create account"
+  "@login": {},
+  "createAccount": "Create account",
+  "@createAccount": {}
 }

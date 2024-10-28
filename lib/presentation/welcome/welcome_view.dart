@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
@@ -11,7 +10,6 @@ class WelcomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Modular.get<WelcomeController>();
-    var intl = AppLocalizations.of(context);
 
     return Scaffold(
       // backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
