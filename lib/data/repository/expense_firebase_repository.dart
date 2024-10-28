@@ -38,6 +38,12 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
 
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
+
+        Timestamp date = data["date"];
+        data["date"] = date.toDate();
+
+        data["id"] = doc.id;
+
         return Expense.fromJson(data);
       }).toList();
 

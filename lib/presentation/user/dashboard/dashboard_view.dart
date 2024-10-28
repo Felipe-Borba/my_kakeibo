@@ -13,16 +13,16 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Modular.get<DashboardController>();
 
-    return ListenableBuilder(
-      listenable: controller,
-      builder: (BuildContext context, Widget? child) {
-        return FutureBuilder(
-          future: controller.getInitialData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    return FutureBuilder(
+      future: controller.getInitialData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
+        return ListenableBuilder(
+          listenable: controller,
+          builder: (BuildContext context, Widget? child) {
             return const Scaffold(
               appBar: AppBarCustom(
                 title: "Dashboard",
