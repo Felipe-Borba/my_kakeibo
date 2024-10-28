@@ -10,6 +10,8 @@ import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/firebase_options.dart';
+import 'package:my_kakeibo/presentation/expense/add_expense/add_expense_controller.dart';
+import 'package:my_kakeibo/presentation/expense/add_expense/add_expense_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
@@ -48,6 +50,7 @@ class AppModule extends Module {
     i.add(LoginController.new);
     i.add(WelcomeController.new);
     i.add(CreateAccountController.new);
+    i.add(AddExpenseController.new);
   }
 
   @override
@@ -59,5 +62,6 @@ class AppModule extends Module {
     r.child(CreateAccountView.routeName,
         child: (context) => const CreateAccountView());
     r.child(DashboardView.routeName, child: (context) => const DashboardView());
+    r.child(AddExpenseView.routeName, child: (context) => const AddExpenseView());
   }
 }
