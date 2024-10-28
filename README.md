@@ -2,14 +2,6 @@
 
 A new Flutter project.
 
-## Teste 
-[referencia](https://www.youtube.com/watch?v=GEvNj7uogYE)     
-
-Rodar o teste com cobertura
-```
-flutter test --coverage
-```
-
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the
@@ -36,7 +28,21 @@ the `lib/src/localization` directory.
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter apps](https://flutter.dev/to/internationalization).
 
-## Para rodar todos os testes
+
+-------
+-------
+
+
+## Teste 
+[video teste de integração](https://www.youtube.com/watch?v=GEvNj7uogYE)     
+[video firebase test lab](https://www.youtube.com/watch?v=RBoMdhPQX1s&t=150s)
+
+Rodar o teste com cobertura
+```
+flutter test --coverage
+```
+
+Para rodar todos os testes
 
 ```console
 flutter test
@@ -71,3 +77,6 @@ alguma dependência que vale mencionar e saber sobre
 **Para injeção de deponência:**
 
 - https://pub.dev/packages/get_it
+
+**Styling**
+- [Mix](https://www.fluttermix.com)
