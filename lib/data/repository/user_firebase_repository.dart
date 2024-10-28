@@ -24,7 +24,7 @@ class UserFirebaseRepository extends UserRepository {
   @override
   Future<(Null, AppError)> save(User user) async {
     try {
-      await _db.collection(table).add(user.toJson());
+      await _db.collection(table).doc(user.id).set(user.toJson());
 
       return (null, Empty());
     } catch (e) {

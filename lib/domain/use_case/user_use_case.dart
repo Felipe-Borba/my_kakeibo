@@ -40,6 +40,10 @@ class UserUseCase {
     return await userRepository.getUserById(id);
   }
 
+  Future<(Null, AppError)> update(User user) async {
+    return await userRepository.save(user);
+  }
+
   Future<(User?, AppError)> login(String email, String password) async {
     var (id, loginErr) = await authRepository.login(email, password);
     if (loginErr is! Empty) {

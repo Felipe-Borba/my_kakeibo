@@ -24,6 +24,7 @@ class ExpenseUseCase {
     }
 
     user.decreaseBalance(expense.amount);
+    await userUseCase.update(user);
     await expenseRepository.insert(expense);
 
     return (null, Empty());
