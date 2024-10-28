@@ -28,7 +28,7 @@ void main() {
       var error = (errors as FieldFailure).fieldErrorList.first;
 
       expect(isValid, false);
-      expect(error.field, "name");
+      expect(error.name, "name");
       expect(error.message, "Name is required");
     });
 
@@ -39,7 +39,7 @@ void main() {
       var error = (errors as FieldFailure).fieldErrorList.first;
 
       expect(isValid, false);
-      expect(error.field, "email");
+      expect(error.name, "email");
       expect(error.message, "Email is required");
     });
 
@@ -50,7 +50,7 @@ void main() {
       var error = (errors as FieldFailure).fieldErrorList.first;
 
       expect(isValid, false);
-      expect(error.field, "password");
+      expect(error.name, "password");
       expect(error.message, "Password is required");
     });
   });

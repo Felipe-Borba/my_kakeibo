@@ -47,7 +47,7 @@ class CreateAccountController with ChangeNotifier {
         break;
       case FieldFailure(:final fieldErrorList):
         for (var invalidField in fieldErrorList) {
-          switch (invalidField.field) {
+          switch (invalidField.name) {
             case "name":
               nameError = invalidField.message;
               break;

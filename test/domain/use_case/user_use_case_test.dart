@@ -73,7 +73,7 @@ void main() {
       expect(error, isA<FieldFailure>());
       if (error is FieldFailure) {
         var fieldError = error.fieldErrorList[0];
-        expect(fieldError.field, "name");
+        expect(fieldError.name, "name");
         expect(fieldError.message, "Name is required");
       }
     });
