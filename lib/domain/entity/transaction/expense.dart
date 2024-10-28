@@ -34,7 +34,7 @@ class Expense extends Transaction {
       'amount': amount,
       'date': date,
       'description': description,
-      'category': category,
+      'category': category.toString(),
     };
   }
 

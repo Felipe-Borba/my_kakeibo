@@ -5,13 +5,13 @@ import 'package:my_kakeibo/domain/repository/user_repository.dart';
 
 class UserFirebaseRepository extends UserRepository {
   final _db = FirebaseFirestore.instance;
-  final _table = "Users";
+  static const table = "Users";
 
   @override
   Future<(User?, AppError)> getUserById(String id) async {
     try {
       var userQuery =
-          await _db.collection(_table).where("id", isEqualTo: id).get();
+          await _db.collection(table).where("id", isEqualTo: id).get();
 
       var userMap = userQuery.docs.first.data();
 
@@ -24,7 +24,7 @@ class UserFirebaseRepository extends UserRepository {
   @override
   Future<(Null, AppError)> save(User user) async {
     try {
-      await _db.collection(_table).add(user.toJson());
+      await _db.collection(table).add(user.toJson());
 
       return (null, Empty());
     } catch (e) {

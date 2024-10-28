@@ -9,6 +9,9 @@ class User {
   // UserTheme theme;
   double balance;
 
+  // sera que rola colocar uma lista de expense aqui?
+  // como se fosse um relacionamento no spring? sei que isso não tem nada a ver mas é um usuário que tem a despesa ou receita....
+
   User({
     this.id,
     required this.name,
