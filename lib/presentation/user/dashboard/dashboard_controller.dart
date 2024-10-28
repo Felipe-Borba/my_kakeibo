@@ -9,6 +9,11 @@ class DashboardController with ChangeNotifier {
   // State
 
   // Actions
+  getInitialData() async {
+    //TODO first call
+    await Future.delayed(const Duration(seconds: 3));
+  }
+
   onClickCreateAccount() async {
     //TODO
   }

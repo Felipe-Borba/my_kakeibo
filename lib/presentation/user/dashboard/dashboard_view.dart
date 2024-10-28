@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
-import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -11,7 +11,7 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<LoginController>();
+    final controller = Modular.get<DashboardController>();
 
     return ListenableBuilder(
       listenable: controller,
