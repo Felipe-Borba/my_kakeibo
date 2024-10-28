@@ -15,6 +15,11 @@ class LoginController with ChangeNotifier {
   String password = "";
 
   // Actions
+  getInitialData() async {
+    //TODO first call
+    await Future.delayed(const Duration(seconds: 3));
+  }
+
   onClickCreateAccount() async {
     Modular.to.pushNamed(CreateAccountView.routeName);
   }

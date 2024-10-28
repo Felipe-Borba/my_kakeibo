@@ -16,15 +16,24 @@ class DashboardView extends StatelessWidget {
     return ListenableBuilder(
       listenable: controller,
       builder: (BuildContext context, Widget? child) {
-        return  const Scaffold(
-          appBar: AppBarCustom(
-            title: "Dashboard",
-          ),
-          body: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
-            child: Placeholder(),
-          ),
-          drawer: DrawerCustom(),
+        return FutureBuilder(
+          future: controller.getInitialData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return const Scaffold(
+              appBar: AppBarCustom(
+                title: "Dashboard",
+              ),
+              body: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                child: Placeholder(),
+              ),
+              drawer: DrawerCustom(),
+            );
+          },
         );
       },
     );
