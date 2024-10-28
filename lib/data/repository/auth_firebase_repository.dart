@@ -36,6 +36,16 @@ class AuthFirebaseRepository implements AuthRepository {
   }
 
   @override
+  Future<(Null, AppError)> logOut() async {
+    try {
+      await _auth.signOut();
+      return (null, Empty());
+    } catch (e) {
+      return (null, Failure(e.toString()));
+    }
+  }
+
+  @override
   Future<(bool, AppError)> recoverPassword(String email) async {
     try {
       await _auth.sendPasswordResetEmail(

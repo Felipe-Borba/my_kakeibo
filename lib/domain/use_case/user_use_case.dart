@@ -53,4 +53,8 @@ class UserUseCase {
 
     return (user, Empty());
   }
+
+  Future<(Null, AppError)> logOut() async {
+    return authRepository.logOut();
+  }
 }
