@@ -5,7 +5,6 @@ import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class ExpenseFormController with ChangeNotifier {
   // Dependencies
@@ -25,7 +24,20 @@ class ExpenseFormController with ChangeNotifier {
   TextEditingController description = TextEditingController();
   String? descriptionError;
 
+  Expense? expense;
+
   // Actions
+  loadInitialData(Expense? expense) async {
+    this.expense = expense;
+    if (expense != null) {
+      amount.text = expense.amount.toString();
+      category = expense.category;
+      selectedDate = expense.date;
+      dateController.text = "${expense.date.toLocal()}".split(' ')[0];
+      description.text = expense.description;
+    }
+  }
+
   onSelectCategory(ExpenseCategory? newValue) {
     category = newValue;
     notifyListeners();
@@ -45,10 +57,10 @@ class ExpenseFormController with ChangeNotifier {
     notifyListeners();
   }
 
-  onClickSave({required BuildContext context, String? id}) async {
+  onClickSave(BuildContext context) async {
     //TODO talvez exista uma forma melhor de validar a entidade principalmente quando se trata de campos de tipos diferentes de string?
     var (_, error) = await expenseUseCase.insert(Expense(
-      id: id,
+      id: expense?.id,
       amount: double.parse(amount.text),
       category: category ?? ExpenseCategory.misc,
       description: description.text,
@@ -59,7 +71,7 @@ class ExpenseFormController with ChangeNotifier {
 
     switch (error) {
       case Empty():
-        Modular.to.navigate(DashboardView.routeName);
+        Modular.to.pop();
         break;
       case Failure(:final message):
         showSnackbar(context: context, text: message);
