@@ -88,9 +88,9 @@ class DashboardView extends StatelessWidget {
                                         Expanded(
                                           child: Text(
                                             NumberFormat.currency(
-                                                    locale: 'pt_BR',
-                                                    symbol: 'R\$')
-                                                .format(expense.amount),
+                                              locale: 'pt_BR',
+                                              symbol: 'R\$',
+                                            ).format(expense.amount),
                                           ),
                                         ),
                                         const SizedBox(
