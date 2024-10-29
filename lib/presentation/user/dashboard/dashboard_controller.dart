@@ -37,4 +37,12 @@ class DashboardController with ChangeNotifier {
     var (user, userError) = await userUseCase.getUser();
     this.user = user;
   }
+
+  deleteTransaction(Transaction transaction) async {
+    //TODO
+  }
+
+  onClick(Transaction transaction) {
+    //TODO
+  }
 }

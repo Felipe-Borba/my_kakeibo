@@ -77,57 +77,95 @@ class DashboardView extends StatelessWidget {
                     const SizedBox(height: 16),
                     const Divider(),
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: controller.list.length,
-                              itemBuilder: (context, index) {
-                                var expense = controller.list[index];
+                      child: ListView.builder(
+                        itemCount: controller.list.length,
+                        itemBuilder: (context, index) {
+                          var transaction = controller.list[index];
 
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        expense is Income
-                                            ? 'Inbound'
-                                            : 'Outbound',
-                                        style: const TextStyle(
-                                          color: Colors.blueAccent,
-                                        ),
+                          return Dismissible(
+                            key: Key(transaction.id!),
+                            direction: DismissDirection.endToStart,
+                            background: Container(
+                              color: Colors.red,
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onDismissed: (direction) async {
+                              await controller.deleteTransaction(transaction);
+                            },
+                            confirmDismiss: (direction) async {
+                              return await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Confirm Delete"),
+                                    content: const Text(
+                                      "Are you sure you want to delete this item?",
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(false);
+                                        },
+                                        child: const Text("Cancel"),
                                       ),
-                                      const SizedBox(width: 16),
-                                      Text(
-                                        NumberFormat.currency(
-                                          locale: 'pt_BR',
-                                          symbol: 'R\$',
-                                        ).format(expense.amount),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Icon(
-                                        expense is Expense
-                                            ? expense.category.icon
-                                            : Icons.monetization_on_outlined,
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Text(
-                                        DateFormat('dd/MM')
-                                            .format(expense.date),
-                                        style: const TextStyle(fontSize: 16),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(true);
+                                        },
+                                        child: const Text("Delete"),
                                       ),
                                     ],
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              );
+                            },
+                            child: GestureDetector(
+                              onTap: () => controller.onClick(transaction),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      transaction is Income
+                                          ? 'Inbound'
+                                          : 'Outbound',
+                                      style: const TextStyle(
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Text(
+                                      NumberFormat.currency(
+                                        locale: 'pt_BR',
+                                        symbol: 'R\$',
+                                      ).format(transaction.amount),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Icon(
+                                      transaction is Expense
+                                          ? transaction.category.icon
+                                          : Icons.monetization_on_outlined,
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Text(
+                                      DateFormat('dd/MM')
+                                          .format(transaction.date),
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ),
                   ],
