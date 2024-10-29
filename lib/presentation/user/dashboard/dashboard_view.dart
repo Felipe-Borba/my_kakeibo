@@ -23,15 +23,84 @@ class DashboardView extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            return const Scaffold(
-              appBar: AppBarCustom(
-                title: "Dashboard",
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(""),
               ),
               body: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
-                child: Placeholder(),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                child: Column(
+                  children: [
+                    // Container 1 - Exibição dos valores
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.blueAccent.shade100,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Valores',
+                          ),
+                          const SizedBox(height: 8),
+                          Text("")
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    const Divider(),
+                    // Container 2 - Lista de despesas em formato de coluna
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            index % 2 == 0
+                                                ? 'Inbound'
+                                                : 'Outbound',
+                                            style: TextStyle(
+                                                color: Colors.blueAccent),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child:
+                                              Text('R\$ ${20 + index * 10}.00'),
+                                        ),
+                                        Expanded(
+                                          child: Text('Alimentação'),
+                                        ),
+                                        Expanded(
+                                          child: Text('10/10'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              drawer: DrawerCustom(),
+              drawer: const DrawerCustom(),
             );
           },
         );
