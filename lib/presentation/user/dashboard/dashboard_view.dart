@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 
 class DashboardView extends StatelessWidget {
@@ -25,11 +29,10 @@ class DashboardView extends StatelessWidget {
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
               appBar: AppBar(
-                title: Text(""),
+                title: Text(controller.user!.name),
               ),
               body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
                     // Container 1 - Exibição dos valores
@@ -42,11 +45,9 @@ class DashboardView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Valores',
-                          ),
+                          Text('Valores'),
                           const SizedBox(height: 8),
-                          Text("")
+                          Text("1"),
                         ],
                       ),
                     ),
@@ -61,31 +62,38 @@ class DashboardView extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ListView.builder(
-                                itemCount: 10,
+                                itemCount: controller.expenseList.length,
                                 itemBuilder: (context, index) {
+                                  var expense = controller.expenseList[index];
+
                                   return Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4),
+                                    padding: const EdgeInsets.symmetric(vertical: 4),
                                     child: Row(
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            index % 2 == 0
+                                            expense.category == ExpenseCategory
                                                 ? 'Inbound'
                                                 : 'Outbound',
-                                            style: TextStyle(
-                                                color: Colors.blueAccent),
+                                            style: TextStyle(color: Colors.blueAccent),
                                           ),
                                         ),
+                                        const SizedBox(width: 16), // Espaço entre elementos
                                         Expanded(
-                                          child:
-                                              Text('R\$ ${20 + index * 10}.00'),
+                                          child: Text(
+                                            NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(expense.amount),
+                                          ),
                                         ),
+                                        const SizedBox(width: 16), // Espaço entre elementos
                                         Expanded(
-                                          child: Text('Alimentação'),
+                                          child: Icon(expense.category.icon),
                                         ),
+                                        const SizedBox(width: 16), // Espaço entre elementos
                                         Expanded(
-                                          child: Text('10/10'),
+                                          child: Text(
+                                            DateFormat('dd/MM').format(expense.date),
+                                            style: TextStyle(fontSize: 16),
+                                          ),
                                         ),
                                       ],
                                     ),

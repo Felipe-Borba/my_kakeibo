@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum ExpenseCategory {
   misc,
   rent,
@@ -5,7 +7,7 @@ enum ExpenseCategory {
   entertainment,
 }
 
-extension ExpenseCategoryExtension on String {
+extension ExpenseCategoryStringExtension on String {
   ExpenseCategory toExpenseCategory() {
     switch (this) {
       case 'misc':
@@ -18,6 +20,23 @@ extension ExpenseCategoryExtension on String {
         return ExpenseCategory.entertainment;
       default:
         throw Exception('Unknown category: $this');
+    }
+  }
+}
+
+extension ExpenseCategoryIconExtension on ExpenseCategory {
+  IconData get icon {
+    switch (this) {
+      case ExpenseCategory.misc:
+        return Icons.help; 
+      case ExpenseCategory.rent:
+        return Icons.house; 
+      case ExpenseCategory.food:
+        return Icons.fastfood;
+      case ExpenseCategory.entertainment:
+        return Icons.theater_comedy; 
+      default:
+        return Icons.error; 
     }
   }
 }
