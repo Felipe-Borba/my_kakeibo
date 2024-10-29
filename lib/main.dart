@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/data/repository/auth_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/expense_firebase_repository.dart';
+import 'package:my_kakeibo/data/repository/income_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
+import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/firebase_options.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_controller.dart';
@@ -41,11 +44,13 @@ class AppModule extends Module {
 
     i.addLazySingleton<AuthRepository>(AuthFirebaseRepository.new);
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
+    i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
     i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
     // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
 
     i.add(ExpenseUseCase.new);
+    i.add(IncomeUseCase.new);
     i.add(UserUseCase.new);
 
     i.add(LoginController.new);
@@ -58,14 +63,18 @@ class AppModule extends Module {
   @override
   void routes(r) {
     r.redirect("/", to: LoginView.routeName);
+
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
-    r.child(LoginView.routeName, child: (context) => const LoginView());
+
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
+
+    r.child(LoginView.routeName, child: (context) => const LoginView());
     r.child(
       CreateAccountView.routeName,
       child: (context) => const CreateAccountView(),
     );
     r.child(DashboardView.routeName, child: (context) => const DashboardView());
+
     r.child(
       ExpenseFormView.routeName,
       child: (context) => ExpenseFormView(id: r.args.params['id']),

@@ -2,12 +2,8 @@ import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Income extends Transaction {
-  // IncomeCategory category; não sei se faz sentido isso aqui perguntar pai
-  IncomeSource source; // salario, investimento, etc.
+  IncomeSource source;
   // Tax Withholdings
-
-  // da mesma forma que lá na despesa aqui seria um tipo de receita?
-  // receitas normalmente são cobradas imposto sobre
 
   Income({
     required super.id,
@@ -16,4 +12,24 @@ class Income extends Transaction {
     required super.description,
     required this.source,
   });
+
+  factory Income.fromJson(Map<String, dynamic> json) {
+    return Income(
+      id: json["id"],
+      amount: json["amount"],
+      date: json["date"],
+      description: json["description"],
+      source: mapExpenseSource(json["source"].toString()),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'amount': amount,
+      'date': date,
+      'description': description,
+      'source': source.name,
+    };
+  }
 }
