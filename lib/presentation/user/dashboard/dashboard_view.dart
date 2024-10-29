@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
-import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 
 class DashboardView extends StatelessWidget {
@@ -31,8 +30,10 @@ class DashboardView extends StatelessWidget {
               appBar: AppBar(
                 title: Text(controller.user!.name),
               ),
+              drawer: const DrawerCustom(),
               body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
                     // Container 1 - Exibição dos valores
@@ -42,11 +43,11 @@ class DashboardView extends StatelessWidget {
                         color: Colors.blueAccent.shade100,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Column(
+                      child: const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Valores'),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Text("1"),
                         ],
                       ),
@@ -62,37 +63,56 @@ class DashboardView extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ListView.builder(
-                                itemCount: controller.expenseList.length,
+                                itemCount: controller.list.length,
                                 itemBuilder: (context, index) {
-                                  var expense = controller.expenseList[index];
+                                  var expense = controller.list[index];
 
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 4),
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4),
                                     child: Row(
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            expense.category == ExpenseCategory
+                                            expense is Income
                                                 ? 'Inbound'
                                                 : 'Outbound',
-                                            style: TextStyle(color: Colors.blueAccent),
+                                            style: const TextStyle(
+                                              color: Colors.blueAccent,
+                                            ),
                                           ),
                                         ),
-                                        const SizedBox(width: 16), // Espaço entre elementos
+                                        const SizedBox(
+                                            width:
+                                                16), // Espaço entre elementos
                                         Expanded(
                                           child: Text(
-                                            NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$').format(expense.amount),
+                                            NumberFormat.currency(
+                                                    locale: 'pt_BR',
+                                                    symbol: 'R\$')
+                                                .format(expense.amount),
                                           ),
                                         ),
-                                        const SizedBox(width: 16), // Espaço entre elementos
+                                        const SizedBox(
+                                            width:
+                                                16), // Espaço entre elementos
                                         Expanded(
-                                          child: Icon(expense.category.icon),
+                                          child: Icon(
+                                            expense is Expense
+                                                ? expense.category.icon
+                                                : Icons
+                                                    .monetization_on_outlined,
+                                          ),
                                         ),
-                                        const SizedBox(width: 16), // Espaço entre elementos
+                                        const SizedBox(
+                                            width:
+                                                16), // Espaço entre elementos
                                         Expanded(
                                           child: Text(
-                                            DateFormat('dd/MM').format(expense.date),
-                                            style: TextStyle(fontSize: 16),
+                                            DateFormat('dd/MM')
+                                                .format(expense.date),
+                                            style:
+                                                const TextStyle(fontSize: 16),
                                           ),
                                         ),
                                       ],
@@ -108,7 +128,6 @@ class DashboardView extends StatelessWidget {
                   ],
                 ),
               ),
-              drawer: const DrawerCustom(),
             );
           },
         );
