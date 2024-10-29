@@ -28,7 +28,7 @@ class DashboardView extends StatelessWidget {
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
               appBar: AppBar(
-                title: Text(controller.user!.name),
+                title: Text("Bem vindo ${controller.user!.name}!"),
               ),
               drawer: const DrawerCustom(),
               body: Padding(
@@ -36,93 +36,98 @@ class DashboardView extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
-                    // Container 1 - Exibição dos valores
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.blueAccent.shade100,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('Valores'),
-                          SizedBox(height: 8),
-                          Text("1"),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Inbound'),
+                              const SizedBox(height: 8),
+                              Text(
+                                NumberFormat.currency(
+                                  locale: 'pt_BR',
+                                  symbol: 'R\$',
+                                ).format(controller.totalIncome),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Outbound'),
+                              const SizedBox(height: 8),
+                              Text(
+                                NumberFormat.currency(
+                                  locale: 'pt_BR',
+                                  symbol: 'R\$',
+                                ).format(controller.totalExpense),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 16),
                     const Divider(),
-                    // Container 2 - Lista de despesas em formato de coluna
                     Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: controller.list.length,
-                                itemBuilder: (context, index) {
-                                  var expense = controller.list[index];
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: controller.list.length,
+                              itemBuilder: (context, index) {
+                                var expense = controller.list[index];
 
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(vertical: 4),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            expense is Income
-                                                ? 'Inbound'
-                                                : 'Outbound',
-                                            style: const TextStyle(
-                                              color: Colors.blueAccent,
-                                            ),
-                                          ),
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        expense is Income
+                                            ? 'Inbound'
+                                            : 'Outbound',
+                                        style: const TextStyle(
+                                          color: Colors.blueAccent,
                                         ),
-                                        const SizedBox(
-                                            width:
-                                                16), // Espaço entre elementos
-                                        Expanded(
-                                          child: Text(
-                                            NumberFormat.currency(
-                                              locale: 'pt_BR',
-                                              symbol: 'R\$',
-                                            ).format(expense.amount),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                            width:
-                                                16), // Espaço entre elementos
-                                        Expanded(
-                                          child: Icon(
-                                            expense is Expense
-                                                ? expense.category.icon
-                                                : Icons
-                                                    .monetization_on_outlined,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                            width:
-                                                16), // Espaço entre elementos
-                                        Expanded(
-                                          child: Text(
-                                            DateFormat('dd/MM')
-                                                .format(expense.date),
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Text(
+                                        NumberFormat.currency(
+                                          locale: 'pt_BR',
+                                          symbol: 'R\$',
+                                        ).format(expense.amount),
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Icon(
+                                        expense is Expense
+                                            ? expense.category.icon
+                                            : Icons.monetization_on_outlined,
+                                      ),
+                                      const SizedBox(width: 16),
+                                      Text(
+                                        DateFormat('dd/MM')
+                                            .format(expense.date),
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

@@ -15,6 +15,8 @@ class DashboardController with ChangeNotifier {
 
   // State
   double total = 0;
+  double totalIncome = 0;
+  double totalExpense = 0;
   List<Transaction> list = List.empty();
   User? user;
 
@@ -24,6 +26,8 @@ class DashboardController with ChangeNotifier {
     var (totalExpense, totalExpenseError) =
         await expenseUseCase.getMonthTotal();
     total = totalIncome - totalExpense;
+    this.totalIncome = totalIncome;
+    this.totalExpense = totalExpense;
 
     var (incomeList, incomeListError) = await incomeUseCase.findAll();
     var (expenseList, expenseListError) = await expenseUseCase.findAll();
