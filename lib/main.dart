@@ -15,6 +15,7 @@ import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.d
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
@@ -51,6 +52,7 @@ class AppModule extends Module {
     i.add(WelcomeController.new);
     i.add(CreateAccountController.new);
     i.add(ExpenseFormController.new);
+    i.add(DashboardController.new);
   }
 
   @override

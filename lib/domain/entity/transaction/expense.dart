@@ -24,7 +24,7 @@ class Expense extends Transaction {
       amount: json["amount"],
       date: json["date"],
       description: json["description"],
-      category: json["category"],
+      category: json["category"].toString().toExpenseCategory(),
     );
   }
 
@@ -34,7 +34,7 @@ class Expense extends Transaction {
       'amount': amount,
       'date': date,
       'description': description,
-      'category': category.toString(),
+      'category': category.name,
     };
   }
 
