@@ -27,11 +27,18 @@ class ExpenseListController with ChangeNotifier {
     await expenseUseCase.delete(expense);
   }
 
-  onEdit(Expense expense) {
-    Modular.to.pushNamed(
+  onEdit(Expense expense) async {
+    var refresh = await Modular.to.pushNamed(
       ExpenseFormView.routeName,
       arguments: expense,
     );
+
+    if (refresh == true) {
+      var (list, error) = await expenseUseCase.findAll();
+      this.list = list;
+      list.sort((a, b) => a.date.compareTo(b.date));
+      notifyListeners();
+    }
   }
 
   onAdd() {

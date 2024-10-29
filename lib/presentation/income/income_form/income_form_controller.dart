@@ -65,7 +65,7 @@ class IncomeFormController with ChangeNotifier {
 
     switch (error) {
       case Empty():
-        Modular.to.pop();
+        Modular.to.pop(true);
         break;
       case Failure(:final message):
         showSnackbar(context: context, text: message);
