@@ -21,8 +21,6 @@ class SettingsController with ChangeNotifier {
     if (error is Empty) {
       Modular.setInitialRoute(DashboardView.routeName);
     }
-
-    notifyListeners();
   }
 
   logout(BuildContext context) async {
