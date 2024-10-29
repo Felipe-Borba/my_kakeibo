@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_view.dart';
-import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
+import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
@@ -47,7 +47,7 @@ class DrawerCustom extends StatelessWidget {
             leading: const Icon(Icons.attach_money),
             title: const Text('Income'),
             onTap: () {
-              Modular.to.navigate(IncomeFormView.routeName);
+              Modular.to.navigate(IncomeListView.routeName);
             },
           ),
           const Expanded(child: SizedBox(width: double.maxFinite)),

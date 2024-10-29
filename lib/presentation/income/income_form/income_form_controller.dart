@@ -5,7 +5,6 @@ import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class IncomeFormController with ChangeNotifier {
   // Dependencies
@@ -22,7 +21,19 @@ class IncomeFormController with ChangeNotifier {
   TextEditingController description = TextEditingController();
   String? descriptionError;
 
+  Income? income;
+
   // Actions
+  loadInitialData(Income? income) async {
+    this.income = income;
+    if (income != null) {
+      amount.text = income.amount.toString();
+      selectedDate = income.date;
+      dateController.text = "${income.date.toLocal()}".split(' ')[0];
+      description.text = income.description;
+    }
+  }
+
   onSelectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -37,11 +48,11 @@ class IncomeFormController with ChangeNotifier {
     notifyListeners();
   }
 
-  onClickSave({required BuildContext context, String? id}) async {
+  onClickSave(BuildContext context) async {
     //TODO talvez exista uma forma melhor de validar a entidade principalmente quando se trata de campos de tipos diferentes de string?
     // se eu não me engano tem um padrao de validator melhor e separado da entity
     var (_, error) = await incomeUseCase.insert(Income(
-      id: id,
+      id: income?.id,
       amount: double.parse(amount.text),
       source: IncomeSource.salary,
       description: description.text,
@@ -54,7 +65,7 @@ class IncomeFormController with ChangeNotifier {
 
     switch (error) {
       case Empty():
-        Modular.to.navigate(DashboardView.routeName);
+        Modular.to.pop();
         break;
       case Failure(:final message):
         showSnackbar(context: context, text: message);

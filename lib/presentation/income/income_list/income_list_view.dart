@@ -3,17 +3,16 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
+import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
 
-class ExpenseListView extends StatelessWidget {
-  const ExpenseListView({super.key});
+class IncomeListView extends StatelessWidget {
+  const IncomeListView({super.key});
 
-  static const routeName = '/expense-list';
+  static const routeName = "/income-list";
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<ExpenseListController>();
+    final controller = Modular.get<IncomeListController>();
 
     return FutureBuilder(
       future: controller.getInitialData(context),
@@ -26,7 +25,7 @@ class ExpenseListView extends StatelessWidget {
           listenable: controller,
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
-              appBar: const AppBarCustom(title: "Expense"),
+              appBar: const AppBarCustom(title: "Income"),
               drawer: const DrawerCustom(),
               floatingActionButton: FloatingActionButton.small(
                 onPressed: () => controller.onAdd(),
@@ -98,7 +97,7 @@ class ExpenseListView extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(expense.category.icon),
+                                  const Icon(Icons.monetization_on_outlined),
                                   const SizedBox(width: 16),
                                   Text(
                                     NumberFormat.currency(

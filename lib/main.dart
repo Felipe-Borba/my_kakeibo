@@ -19,6 +19,8 @@ import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_contro
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_view.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_controller.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
+import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
+import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
@@ -64,6 +66,7 @@ class AppModule extends Module {
     i.add(ExpenseFormController.new);
     i.add(ExpenseListController.new);
     i.add(IncomeFormController.new);
+    i.add(IncomeListController.new);
   }
 
   @override
@@ -91,8 +94,12 @@ class AppModule extends Module {
     );
 
     r.child(
+      IncomeListView.routeName,
+      child: (context) => const IncomeListView(),
+    );
+    r.child(
       IncomeFormView.routeName,
-      child: (context) => IncomeFormView(id: r.args.params['id']),
+      child: (context) => IncomeFormView(income: r.args.data),
     );
   }
 }

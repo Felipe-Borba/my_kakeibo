@@ -23,7 +23,11 @@ class IncomeUseCase {
 
     user.increaseBalance(income.amount);
     await userUseCase.update(user);
-    await incomeRepository.insert(income);
+    if (income.id != null) {
+      await incomeRepository.update(income);
+    } else {
+      await incomeRepository.insert(income);
+    }
 
     return (null, Empty());
   }
