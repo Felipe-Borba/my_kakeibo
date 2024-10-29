@@ -64,4 +64,8 @@ class User {
   decreaseBalance(double amount) {
     balance -= amount;
   }
+
+  increaseBalance(double amount) {
+    balance += amount;
+  }
 }

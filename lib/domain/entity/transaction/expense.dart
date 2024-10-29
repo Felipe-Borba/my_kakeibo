@@ -24,7 +24,7 @@ class Expense extends Transaction {
       amount: json["amount"],
       date: json["date"],
       description: json["description"],
-      category: json["category"].toString().toExpenseCategory(),
+      category: mapExpenseCategory(json["category"].toString()),
     );
   }
 
