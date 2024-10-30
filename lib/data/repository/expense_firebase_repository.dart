@@ -7,12 +7,14 @@ import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 
 class ExpenseFirebaseRepository implements ExpenseRepository {
   final _db = FirebaseFirestore.instance;
-  final String? userId = FirebaseAuth.instance.currentUser?.uid;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _table = "Expense";
 
   @override
   Future<(Null, AppError)> delete(Expense expense) async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       var docRef = _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
@@ -30,6 +32,8 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   @override
   Future<(List<Expense>, AppError)> findAll() async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       var querySnapshot = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
@@ -56,6 +60,8 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   @override
   Future<(Expense?, AppError)> insert(Expense expense) async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
@@ -71,6 +77,8 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   @override
   Future<(Expense?, AppError)> update(Expense expense) async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       var docRef = _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)

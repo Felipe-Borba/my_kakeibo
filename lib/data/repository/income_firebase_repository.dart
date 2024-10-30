@@ -7,12 +7,14 @@ import 'package:my_kakeibo/domain/repository/income_repository.dart';
 
 class IncomeFirebaseRepository implements IncomeRepository {
   final _db = FirebaseFirestore.instance;
-  final String? userId = FirebaseAuth.instance.currentUser?.uid;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _table = "Income";
 
   @override
   Future<(Null, AppError)> delete(Income income) async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       var docRef = _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
@@ -30,6 +32,8 @@ class IncomeFirebaseRepository implements IncomeRepository {
   @override
   Future<(List<Income>, AppError)> findAll() async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       var querySnapshot = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
@@ -56,6 +60,8 @@ class IncomeFirebaseRepository implements IncomeRepository {
   @override
   Future<(Income?, AppError)> insert(Income income) async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
@@ -71,6 +77,8 @@ class IncomeFirebaseRepository implements IncomeRepository {
   @override
   Future<(Income?, AppError)> update(Income income) async {
     try {
+      var userId = _auth.currentUser?.uid;
+
       var docRef = _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
