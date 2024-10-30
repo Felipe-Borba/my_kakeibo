@@ -49,6 +49,15 @@ Para rodar todos os testes
 flutter test
 ```
 
+Rodar os teste de integarção
+```
+flutter test integration_test/app_test.dart
+```
+com o driver
+```
+flutter drive --target=integration_test/app_test.dart
+```
+
 ## Dependencies
 
 alguma dependência que vale mencionar e saber sobre
