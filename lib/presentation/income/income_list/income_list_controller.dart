@@ -12,6 +12,7 @@ class IncomeListController with ChangeNotifier {
 
   // State
   List<Income> list = List.empty();
+  int sortNumber = 1;
 
   // Actions
   getInitialData(BuildContext context) async {
@@ -21,6 +22,19 @@ class IncomeListController with ChangeNotifier {
     }
     this.list = list;
     list.sort((a, b) => a.date.compareTo(b.date));
+  }
+
+  sortBy(int sortNumber) {
+    this.sortNumber = sortNumber;
+    switch (sortNumber) {
+      case 1:
+        list.sort((a, b) => a.date.compareTo(b.date));
+        break;
+      case 2:
+        list.sort((a, b) => b.date.compareTo(a.date));
+      default:
+    }
+    notifyListeners();
   }
 
   onDelete(Income income) async {

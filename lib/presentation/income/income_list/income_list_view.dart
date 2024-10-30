@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
+import 'package:my_kakeibo/core/components/sort_component.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
 
 class IncomeListView extends StatelessWidget {
@@ -37,7 +38,10 @@ class IncomeListView extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
-                    // TODO filter
+                    SortComponent(
+                      onSortChanged: controller.sortBy,
+                      sortNumber: controller.sortNumber,
+                    ),
                     const SizedBox(height: 16),
                     Expanded(
                       child: ListView.separated(

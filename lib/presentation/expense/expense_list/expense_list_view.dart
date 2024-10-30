@@ -6,6 +6,7 @@ import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
+import 'package:my_kakeibo/core/components/sort_component.dart';
 
 class ExpenseListView extends StatelessWidget {
   const ExpenseListView({super.key});
@@ -38,7 +39,10 @@ class ExpenseListView extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
-                    // TODO filter
+                    SortComponent(
+                      onSortChanged: controller.sortBy,
+                      sortNumber: controller.sortNumber,
+                    ),
                     const SizedBox(height: 16),
                     Expanded(
                       child: ListView.separated(
