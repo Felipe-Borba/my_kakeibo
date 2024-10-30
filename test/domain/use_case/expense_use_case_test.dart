@@ -53,6 +53,9 @@ void main() {
       when(() => userUseCase.getUser()).thenAnswer(
         (invocation) async => (user, Empty()),
       );
+      when(() => userUseCase.update(user)).thenAnswer(
+        (invocation) async => (null, Empty()),
+      );
 
       await expenseUseCase.insert(expense);
 
