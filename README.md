@@ -90,3 +90,6 @@ alguma dependência que vale mencionar e saber sobre
 
 **Styling**
 - [Mix](https://www.fluttermix.com)
+
+- Link da prototipação
+- https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1
