@@ -44,18 +44,17 @@ class DashboardView extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.account_balance,
                             color: Colors.black,
                             size: 32,
                           ),
-                          const SizedBox(
-                              height: 8), 
+                          const SizedBox(height: 8),
                           Text(
                             NumberFormat.currency(
                               locale: 'pt_BR',
                               symbol: 'R\$',
-                            ).format( controller.total), 
+                            ).format(controller.total),
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -73,15 +72,15 @@ class DashboardView extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Icon(
                                     Icons.arrow_downward,
                                     color: Colors.green,
                                     size: 16,
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Text(
+                                  SizedBox(width: 4),
+                                  Text(
                                     'Income',
                                     style: TextStyle(color: Colors.green),
                                   ),
@@ -100,15 +99,15 @@ class DashboardView extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Icon(
                                     Icons.arrow_upward,
                                     color: Colors.red,
                                     size: 16,
                                   ),
-                                  const SizedBox(width: 4),
-                                  const Text(
+                                  SizedBox(width: 4),
+                                  Text(
                                     'Expense',
                                     style: TextStyle(color: Colors.red),
                                   ),

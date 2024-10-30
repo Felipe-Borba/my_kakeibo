@@ -18,22 +18,22 @@ class DrawerCustom extends StatelessWidget {
           Container(
             height: 130,
             width: double.maxFinite,
-            color: const Color.fromRGBO(46, 66, 104, 1),
-            child: const Center(
+            color: Colors.green[300],
+            child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'My Kakeibo',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.grey[800],
                       fontSize: 24,
                     ),
                   ),
                   Text(
                     '家計簿',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.grey[800],
                       fontSize: 16,
                     ),
                   ),
