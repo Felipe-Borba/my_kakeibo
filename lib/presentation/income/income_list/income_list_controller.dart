@@ -25,27 +25,28 @@ class IncomeListController with ChangeNotifier {
 
   onDelete(Income income) async {
     await incomeUseCase.delete(income);
-    var (list, error) = await incomeUseCase.findAll();
-    this.list = list;
-    list.sort((a, b) => a.date.compareTo(b.date));
-    notifyListeners();
+    _doRefreshList(true);
   }
 
   onEdit(Income income) async {
-    final refresh = await Modular.to.pushNamed(
+    final refresh = await Modular.to.pushNamed<bool>(
       IncomeFormView.routeName,
       arguments: income,
     );
+    await _doRefreshList(refresh);
+  }
 
+  onAdd() async {
+    var refresh = await Modular.to.pushNamed<bool>(IncomeFormView.routeName);
+    await _doRefreshList(refresh);
+  }
+
+  _doRefreshList(bool? refresh) async {
     if (refresh == true) {
       var (list, error) = await incomeUseCase.findAll();
       this.list = list;
       list.sort((a, b) => a.date.compareTo(b.date));
       notifyListeners();
     }
-  }
-
-  onAdd() {
-    Modular.to.pushNamed(IncomeFormView.routeName);
   }
 }
