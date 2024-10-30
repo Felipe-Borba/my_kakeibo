@@ -46,54 +46,47 @@ class IncomeListView extends StatelessWidget {
                         ),
                         itemCount: controller.list.length,
                         itemBuilder: (context, index) {
-                          var expense = controller.list[index];
+                          var income = controller.list[index];
 
-                          return Dismissible(
-                            key: Key(expense.id!),
-                            direction: DismissDirection.endToStart,
-                            background: Container(
-                              color: Colors.red,
-                              alignment: Alignment.centerRight,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onDismissed: (direction) async {
-                              await controller.onDelete(expense);
-                            },
-                            confirmDismiss: (direction) async {
-                              return await showDeleteDialog(context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Icon(Icons.monetization_on_outlined),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    NumberFormat.currency(
-                                      locale: 'pt_BR',
-                                      symbol: 'R\$',
-                                    ).format(expense.amount),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    DateFormat('dd/MM').format(expense.date),
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  IconButton(
-                                    onPressed: () => controller.onEdit(expense),
-                                    icon: const Icon(Icons.edit),
-                                  ),
-                                ],
-                              ),
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Icon(Icons.monetization_on_outlined),
+                                const SizedBox(width: 16),
+                                Text(
+                                  NumberFormat.currency(
+                                    locale: 'pt_BR',
+                                    symbol: 'R\$',
+                                  ).format(income.amount),
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  DateFormat('dd/MM').format(income.date),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(child: Text(income.description)),
+                                const SizedBox(width: 16),
+                                IconButton(
+                                  onPressed: () => controller.onEdit(income),
+                                  icon: const Icon(Icons.edit),
+                                ),
+                                const SizedBox(width: 8),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  color: Colors.red,
+                                  onPressed: () async {
+                                    var confirm =
+                                        await showDeleteDialog(context);
+                                    if (confirm == true) {
+                                      controller.onDelete(income);
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                           );
                         },

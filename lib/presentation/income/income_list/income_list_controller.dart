@@ -25,6 +25,10 @@ class IncomeListController with ChangeNotifier {
 
   onDelete(Income income) async {
     await incomeUseCase.delete(income);
+    var (list, error) = await incomeUseCase.findAll();
+    this.list = list;
+    list.sort((a, b) => a.date.compareTo(b.date));
+    notifyListeners();
   }
 
   onEdit(Income income) async {

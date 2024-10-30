@@ -49,52 +49,45 @@ class ExpenseListView extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var expense = controller.list[index];
 
-                          return Dismissible(
-                            key: Key(expense.id!),
-                            direction: DismissDirection.endToStart,
-                            background: Container(
-                              color: Colors.red,
-                              alignment: Alignment.centerRight,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onDismissed: (direction) async {
-                              await controller.onDelete(expense);
-                            },
-                            confirmDismiss: (direction) async {
-                              return await showDeleteDialog(context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(expense.category.icon),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    NumberFormat.currency(
-                                      locale: 'pt_BR',
-                                      symbol: 'R\$',
-                                    ).format(expense.amount),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    DateFormat('dd/MM').format(expense.date),
-                                    style: const TextStyle(fontSize: 16),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  IconButton(
-                                    onPressed: () => controller.onEdit(expense),
-                                    icon: const Icon(Icons.edit),
-                                  ),
-                                ],
-                              ),
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(expense.category.icon),
+                                const SizedBox(width: 16),
+                                Text(
+                                  NumberFormat.currency(
+                                    locale: 'pt_BR',
+                                    symbol: 'R\$',
+                                  ).format(expense.amount),
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  DateFormat('dd/MM').format(expense.date),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(child: Text(expense.description)),
+                                const SizedBox(width: 16),
+                                IconButton(
+                                  onPressed: () => controller.onEdit(expense),
+                                  icon: const Icon(Icons.edit),
+                                ),
+                                const SizedBox(width: 8),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  color: Colors.red,
+                                  onPressed: () async {
+                                    var confirm =
+                                        await showDeleteDialog(context);
+                                    if (confirm == true) {
+                                      controller.onDelete(expense);
+                                    }
+                                  },
+                                ),
+                              ],
                             ),
                           );
                         },

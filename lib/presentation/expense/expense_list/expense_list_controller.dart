@@ -25,6 +25,10 @@ class ExpenseListController with ChangeNotifier {
 
   onDelete(Expense expense) async {
     await expenseUseCase.delete(expense);
+    var (list, error) = await expenseUseCase.findAll();
+    this.list = list;
+    list.sort((a, b) => a.date.compareTo(b.date));
+    notifyListeners();
   }
 
   onEdit(Expense expense) async {
