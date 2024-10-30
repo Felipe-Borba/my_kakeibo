@@ -1,6 +1,7 @@
 # my_kakeibo
 
-A new Flutter project.
+Projeto de flutter my_Kakeibo.
+Aplicativo realizado com o flutter e o firebase .
 
 ## Getting Started
 
