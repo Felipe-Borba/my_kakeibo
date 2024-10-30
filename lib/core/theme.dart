@@ -29,9 +29,15 @@ final ThemeData lightTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: WidgetStateProperty.all(Colors.green[600]),
+      foregroundColor: WidgetStateProperty.all(Colors.black),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      textStyle: WidgetStateProperty.all(
+        const TextStyle(
+          fontWeight: FontWeight.bold,
         ),
       ),
     ),
@@ -68,9 +74,15 @@ final ThemeData darkTheme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: WidgetStateProperty.all(Colors.green[300]),
+      foregroundColor: WidgetStateProperty.all(Colors.black),
       shape: WidgetStateProperty.all(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+      textStyle: WidgetStateProperty.all(
+        const TextStyle(
+          fontWeight: FontWeight.bold,
         ),
       ),
     ),
