@@ -18,9 +18,9 @@ class SettingsView extends StatelessWidget {
         title: const Text('Settings'),
       ),
       drawer: const DrawerCustom(),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DropdownButton<ThemeMode>(
               value: controller.themeMode,
