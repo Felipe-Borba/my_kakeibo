@@ -35,39 +35,92 @@ class DashboardView extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
+                  // AQUI!!!!
                   children: [
                     Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.blueAccent.shade100,
-                        borderRadius: BorderRadius.circular(8),
+                      margin:
+                          const EdgeInsets.only(bottom: 16), // Espaço abaixo
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.account_balance,
+                            color: Colors.black,
+                            size: 32,
+                          ),
+                          const SizedBox(
+                              height: 8), 
+                          Text(
+                            NumberFormat.currency(
+                              locale: 'pt_BR',
+                              symbol: 'R\$',
+                            ).format( controller.total), 
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Inbound'),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_downward,
+                                    color: Colors.green,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Text(
+                                    'Income',
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(height: 8),
                               Text(
                                 NumberFormat.currency(
                                   locale: 'pt_BR',
                                   symbol: 'R\$',
                                 ).format(controller.totalIncome),
+                                style: const TextStyle(color: Colors.green),
                               ),
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('Outbound'),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.arrow_upward,
+                                    color: Colors.red,
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Text(
+                                    'Expense',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ],
+                              ),
                               const SizedBox(height: 8),
                               Text(
                                 NumberFormat.currency(
                                   locale: 'pt_BR',
                                   symbol: 'R\$',
                                 ).format(controller.totalExpense),
+                                style: const TextStyle(color: Colors.red),
                               ),
                             ],
                           ),
@@ -81,88 +134,37 @@ class DashboardView extends StatelessWidget {
                         itemCount: controller.list.length,
                         itemBuilder: (context, index) {
                           var transaction = controller.list[index];
-
-                          return Dismissible(
-                            key: Key(transaction.id!),
-                            direction: DismissDirection.endToStart,
-                            background: Container(
-                              color: Colors.red,
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                            onDismissed: (direction) async {
-                              await controller.deleteTransaction(transaction);
-                            },
-                            confirmDismiss: (direction) async {
-                              return await showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text("Confirm Delete"),
-                                    content: const Text(
-                                      "Are you sure you want to delete this item?",
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop(false);
-                                        },
-                                        child: const Text("Cancel"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop(true);
-                                        },
-                                        child: const Text("Delete"),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                            child: GestureDetector(
-                              onTap: () => controller.onClick(transaction),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      transaction is Income
-                                          ? 'Inbound'
-                                          : 'Outbound',
-                                      style: const TextStyle(
-                                        color: Colors.blueAccent,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Text(
-                                      NumberFormat.currency(
-                                        locale: 'pt_BR',
-                                        symbol: 'R\$',
-                                      ).format(transaction.amount),
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Icon(
-                                      transaction is Expense
-                                          ? transaction.category.icon
-                                          : Icons.monetization_on_outlined,
-                                    ),
-                                    const SizedBox(width: 16),
-                                    Text(
-                                      DateFormat('dd/MM')
-                                          .format(transaction.date),
-                                      style: const TextStyle(fontSize: 16),
-                                    ),
-                                  ],
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  transaction is Income ? 'Income' : 'Expense',
+                                  style: const TextStyle(
+                                    color: Colors.blueAccent,
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  NumberFormat.currency(
+                                    locale: 'pt_BR',
+                                    symbol: 'R\$',
+                                  ).format(transaction.amount),
+                                ),
+                                const SizedBox(width: 16),
+                                Icon(
+                                  transaction is Expense
+                                      ? transaction.category.icon
+                                      : Icons.monetization_on_outlined,
+                                ),
+                                const SizedBox(width: 16),
+                                Text(
+                                  DateFormat('dd/MM').format(transaction.date),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
                             ),
                           );
                         },
