@@ -16,7 +16,7 @@ class Income extends Transaction {
   factory Income.fromJson(Map<String, dynamic> json) {
     return Income(
       id: json["id"],
-      amount: json["amount"],
+      amount: (json["amount"] as num).toDouble(),
       date: json["date"],
       description: json["description"],
       source: mapExpenseSource(json["source"].toString()),

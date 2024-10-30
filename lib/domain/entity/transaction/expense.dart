@@ -21,7 +21,7 @@ class Expense extends Transaction {
   factory Expense.fromJson(Map<String, dynamic> json) {
     return Expense(
       id: json["id"],
-      amount: json["amount"],
+      amount: (json["amount"] as num).toDouble(),
       date: json["date"],
       description: json["description"],
       category: mapExpenseCategory(json["category"].toString()),
