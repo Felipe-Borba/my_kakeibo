@@ -16,28 +16,29 @@ class DrawerCustom extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 130,
             width: double.maxFinite,
             color: Colors.green[300],
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'My Kakeibo',
-                    style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: 24,
+            child: SafeArea(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'My Kakeibo',
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: 24,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '家計簿',
-                    style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: 16,
+                    Text(
+                      '家計簿',
+                      style: TextStyle(
+                        color: Colors.grey[800],
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -63,12 +64,15 @@ class DrawerCustom extends StatelessWidget {
             },
           ),
           const Expanded(child: SizedBox(width: double.maxFinite)),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () {
-              Modular.to.navigate(SettingsView.routeName);
-            },
+          SafeArea(
+            bottom: true,
+            child: ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Modular.to.navigate(SettingsView.routeName);
+              },
+            ),
           ),
         ],
       ),
