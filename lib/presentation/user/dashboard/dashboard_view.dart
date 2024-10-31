@@ -24,7 +24,7 @@ class DashboardView extends StatelessWidget {
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("Bem vindo ${controller.user!.name}!"),
+                title: Text("Bem vindo ${controller.user?.name}!"),
               ),
               drawer: const DrawerCustom(),
               body: Padding(
