@@ -19,10 +19,6 @@ class DashboardView extends StatelessWidget {
     return FutureBuilder(
       future: controller.getInitialData(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
         return ListenableBuilder(
           listenable: controller,
           builder: (BuildContext context, Widget? child) {

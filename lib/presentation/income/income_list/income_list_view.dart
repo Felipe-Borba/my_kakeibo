@@ -19,10 +19,6 @@ class IncomeListView extends StatelessWidget {
     return FutureBuilder(
       future: controller.getInitialData(context),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
         return ListenableBuilder(
           listenable: controller,
           builder: (BuildContext context, Widget? child) {
