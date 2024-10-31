@@ -8,8 +8,8 @@ import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
-import '../repository/expense_repository_mock.dart';
-import 'user_use_case_mock.dart';
+import '../../mocks/expense_repository_mock.dart';
+import '../../mocks/user_use_case_mock.dart';
 
 void main() {
   late ExpenseUseCase expenseUseCase;

@@ -7,8 +7,8 @@ import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
-import '../repository/auth_repository_mock.dart';
-import '../repository/user_repository_mock.dart';
+import '../../mocks/auth_repository_mock.dart';
+import '../../mocks/user_repository_mock.dart';
 
 void main() {
   late UserUseCase userUseCase;
