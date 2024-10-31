@@ -7,6 +7,7 @@ enum ExpenseCategory {
   entertainment,
 }
 
+//TODO ver como melhorar essa questão de salvar enum em banco, serializar deserializar e como mostrar em tela com intl etc...
 extension ExpenseCategoryIconExtension on ExpenseCategory {
   IconData get icon {
     switch (this) {
