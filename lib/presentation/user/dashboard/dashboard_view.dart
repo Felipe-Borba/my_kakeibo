@@ -23,6 +23,7 @@ class DashboardView extends StatelessWidget {
           listenable: controller,
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
+              key: const Key("dashboard"),
               appBar: AppBar(
                 title: Text("Bem vindo ${controller.user?.name}!"),
               ),

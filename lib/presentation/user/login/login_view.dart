@@ -18,6 +18,7 @@ class LoginView extends StatelessWidget {
       listenable: controller,
       builder: (BuildContext context, Widget? child) {
         return Scaffold(
+          key: const Key("login-view"),
           appBar: AppBarCustom(
             title: intl.welcome,
           ),
@@ -56,7 +57,12 @@ class LoginView extends StatelessWidget {
                   child: ElevatedButton(
                     key: const Key("login"),
                     onPressed: () => controller.onLogin(context),
-                    child: Text(intl.login),
+                    child: controller.loading
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text(intl.login),
                   ),
                 ),
                 TextButton(

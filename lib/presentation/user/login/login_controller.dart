@@ -14,6 +14,7 @@ class LoginController with ChangeNotifier {
   String email = "";
   String password = "";
   bool isPasswordVisible = false;
+  bool loading = false;
 
   // Actions
   void togglePasswordVisibility() {
@@ -26,6 +27,11 @@ class LoginController with ChangeNotifier {
   }
 
   onLogin(BuildContext context) async {
+    if (loading == true) return;
+
+    loading = true;
+    notifyListeners();
+
     var (user, error) = await userUseCase.login(email, password);
 
     if (error is Failure) {
@@ -34,6 +40,7 @@ class LoginController with ChangeNotifier {
       Modular.to.navigate(DashboardView.routeName);
     }
 
+    loading = false;
     notifyListeners();
   }
 }

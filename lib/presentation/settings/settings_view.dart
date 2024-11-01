@@ -41,6 +41,7 @@ class SettingsView extends StatelessWidget {
               ],
             ),
             ElevatedButton.icon(
+              key: const Key("logout"),
               onPressed: () => controller.logout(context),
               label: const Text('Logout'),
               icon: const Icon(Icons.logout),

@@ -67,6 +67,7 @@ class DrawerCustom extends StatelessWidget {
           SafeArea(
             bottom: true,
             child: ListTile(
+              key: const Key("settings"),
               leading: const Icon(Icons.settings),
               title: const Text('Settings'),
               onTap: () {
