@@ -13,15 +13,9 @@ class LoginController with ChangeNotifier {
   // State
   String email = "";
   String password = "";
-  bool isPasswordVisible = false;
   bool loading = false;
 
   // Actions
-  void togglePasswordVisibility() {
-    isPasswordVisible = !isPasswordVisible;
-    notifyListeners();
-  }
-
   onClickCreateAccount() async {
     Modular.to.pushNamed(CreateAccountView.routeName);
   }
