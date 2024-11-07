@@ -22,7 +22,7 @@ class ExpenseFormController with ChangeNotifier {
     text: _expense?.amount.toString(),
   );
   late final dataController = TextEditingController(
-    text: _expense?.date.toString(),
+    text: _getDate(),
   );
   late final descriptionController = TextEditingController(
     text: _expense?.description,
@@ -53,7 +53,7 @@ class ExpenseFormController with ChangeNotifier {
     return null;
   }
 
-  String? getDate() {
+  String? _getDate() {
     if (_expense != null) {
       return DateFormat.yMEd(
         Localizations.localeOf(_context).toString(),
@@ -88,7 +88,7 @@ class ExpenseFormController with ChangeNotifier {
     var (_, error) = await expenseUseCase.insert(Expense(
       id: _expense?.id,
       amount: currencyFormatter.parse(amountController.text).toDouble(),
-      date: DateFormat.yMd(
+      date: DateFormat.yMEd(
         Localizations.localeOf(_context).toString(),
       ).parse(dataController.text),
       description: descriptionController.text,
