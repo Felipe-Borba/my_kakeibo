@@ -13,7 +13,6 @@ import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/firebase_options.dart';
-import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_controller.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_view.dart';
@@ -63,7 +62,6 @@ class AppModule extends Module {
     i.add(LoginController.new);
     i.add(CreateAccountController.new);
     i.add(DashboardController.new);
-    i.add(ExpenseFormController.new);
     i.add(ExpenseListController.new);
     i.add(IncomeFormController.new);
     i.add(IncomeListController.new);

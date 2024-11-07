@@ -14,10 +14,6 @@ class ExpenseUseCase {
   });
 
   Future<(Null, AppError)> insert(Expense expense) async {
-    var (isValid, errorList) = expense.validate();
-    if (!isValid) {
-      return (null, errorList);
-    }
     var (user!, userErr) = await userUseCase.getUser();
     if (userErr is! Empty) {
       return (null, userErr);
@@ -25,6 +21,7 @@ class ExpenseUseCase {
 
     user.decreaseBalance(expense.amount);
     await userUseCase.update(user);
+
     if (expense.id != null) {
       await expenseRepository.update(expense);
     } else {
