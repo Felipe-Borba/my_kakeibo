@@ -36,6 +36,7 @@ To support additional languages, please visit the tutorial on
 
 
 ## Teste 
+
 [video teste de integração](https://www.youtube.com/watch?v=GEvNj7uogYE)     
 [video firebase test lab](https://www.youtube.com/watch?v=RBoMdhPQX1s&t=150s)
 
@@ -102,3 +103,12 @@ Algumas dependências que vale mencionar e saber sobre
 
 ## Prototipação
 - [Figma](https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1)
+
+## Próximos passos
+
+- [ ] Isolar alguns componentes de input
+- [ ] Teste nova arquitetura da tela da expense_form
+- [ ] Notificações
+- [ ] Deploy
+- [ ] Observabilidade
+- [ ] Novas funcionalidades
