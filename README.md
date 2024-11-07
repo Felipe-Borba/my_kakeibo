@@ -61,36 +61,44 @@ flutter drive --target=integration_test/app_test.dart
 
 ## Dependencies
 
-alguma dependência que vale mencionar e saber sobre
+Algumas dependências que vale mencionar e saber sobre
 
 **Para mock:**
 
-- https://pub.dev/packages/mocktail
-- https://pub.dev/packages/mockito
+- [mocktail](https://pub.dev/packages/mocktail)
+- [mockito](https://pub.dev/packages/mockito)
 
 **Para controle de exceção:**
 
-- https://pub.dev/packages/dartz
-- https://pub.dev/packages/result_dart
+- [dartz](https://pub.dev/packages/dartz)
+- [result_dart](https://pub.dev/packages/result_dart)
 
-**Para banco de dados local:**
+**Para persistência de dados:**
+- [shared_preferences]()
+- [cloud_firestore]() *(DB do firebase)*
 
 **Para controle de estado:**
 
 - ValueNotifier
 - ChangeNotifier
 - [Mobx](https://pub.dev/packages/mobx)
+- [provider](https://pub.dev/packages/provider)
 
 **Misc:**
 
 - [Equatable](https://pub.dev/packages/equatable)
+- [flutter_modular](https://pub.dev/packages/flutter_modular)
+
+**Validação**
+
+- [lucid_validation]()
 
 **Para injeção de deponência:**
 
-- https://pub.dev/packages/get_it
+- [get_it](https://pub.dev/packages/get_it)
 
 **Styling**
 - [Mix](https://www.fluttermix.com)
 
-- Link da prototipação
-- https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1
+## Prototipação
+- [Figma](https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1)

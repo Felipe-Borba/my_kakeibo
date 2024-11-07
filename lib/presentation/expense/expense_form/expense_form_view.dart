@@ -12,6 +12,7 @@ class ExpenseFormView extends StatelessWidget {
   static const routeName = "/expense-form";
 
   final Expense? expense;
+  //TODO esse exemplo de view acho que virou o meu novo padrão para seguir para implementar qualquer outra tela, para validar tenho que ir trocando as outras para ver se encaixa bem.
 
   @override
   Widget build(BuildContext context) {

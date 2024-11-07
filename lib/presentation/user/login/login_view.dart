@@ -37,6 +37,7 @@ class LoginView extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 TextField(
+                  //TODO pelo que eu to abservando aqui, normalmente esses componentes que tem algum tipo de interação a mais que não faz parte da motivo de mudança da tela deveria estar em um componente isolado
                   key: const Key("password"),
                   onChanged: (value) => controller.password = value,
                   obscureText: !controller.isPasswordVisible,
