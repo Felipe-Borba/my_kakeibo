@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
@@ -14,14 +15,26 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<DashboardController>();
+    return ChangeNotifierProvider(
+      create: (context) => DashboardController(),
+      builder: (BuildContext context, Widget? child) {
+        final controller = Provider.of<DashboardController>(context);
+        final intl = AppLocalizations.of(context)!;
+        final NumberFormat formatter = NumberFormat.currency(
+          locale: Localizations.localeOf(context).toString(),
+          symbol: intl.currencyTag,
+          decimalDigits: 2,
+        );
 
-    return FutureBuilder(
-      future: controller.getInitialData(),
-      builder: (context, snapshot) {
-        return ListenableBuilder(
-          listenable: controller,
-          builder: (BuildContext context, Widget? child) {
+        return FutureBuilder(
+          future: controller.getInitialData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+
             return Scaffold(
               key: const Key("dashboard"),
               appBar: AppBar(
@@ -32,12 +45,10 @@ class DashboardView extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
-                  // AQUI!!!!
                   children: [
                     Container(
                       padding: const EdgeInsets.all(16),
-                      margin:
-                          const EdgeInsets.only(bottom: 16), // Espaço abaixo
+                      margin: const EdgeInsets.only(bottom: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -48,10 +59,7 @@ class DashboardView extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            NumberFormat.currency(
-                              locale: 'pt_BR',
-                              symbol: 'R\$',
-                            ).format(controller.total),
+                            formatter.format(controller.total),
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -85,10 +93,7 @@ class DashboardView extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                NumberFormat.currency(
-                                  locale: 'pt_BR',
-                                  symbol: 'R\$',
-                                ).format(controller.totalIncome),
+                                formatter.format(controller.totalIncome),
                                 style: const TextStyle(color: Colors.green),
                               ),
                             ],
@@ -112,10 +117,7 @@ class DashboardView extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                NumberFormat.currency(
-                                  locale: 'pt_BR',
-                                  symbol: 'R\$',
-                                ).format(controller.totalExpense),
+                                formatter.format(controller.totalExpense),
                                 style: const TextStyle(color: Colors.red),
                               ),
                             ],
@@ -143,12 +145,7 @@ class DashboardView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 16),
-                                Text(
-                                  NumberFormat.currency(
-                                    locale: 'pt_BR',
-                                    symbol: 'R\$',
-                                  ).format(transaction.amount),
-                                ),
+                                Text(formatter.format(transaction.amount)),
                                 const SizedBox(width: 16),
                                 Icon(
                                   transaction is Expense

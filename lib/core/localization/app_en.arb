@@ -4,6 +4,8 @@
   "@appTitle": {
     "description": "Your personal finance app"
   },
+  "currencyTag":"$ ",
+  "@currencyTag": {},
   "welcome": "Welcome",
   "@welcome": {},
   "email": "Email",

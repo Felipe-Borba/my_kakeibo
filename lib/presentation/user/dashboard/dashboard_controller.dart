@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
-
-import '../../../domain/entity/user/user.dart';
-import '../../../domain/use_case/expense_use_case.dart';
-import '../../../domain/use_case/user_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 class DashboardController with ChangeNotifier {
   // Dependencies
@@ -36,6 +35,5 @@ class DashboardController with ChangeNotifier {
 
     var (user, userError) = await userUseCase.getUser();
     this.user = user;
-    notifyListeners();
   }
 }
