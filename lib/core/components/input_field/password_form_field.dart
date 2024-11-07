@@ -4,12 +4,14 @@ class PasswordFormField extends StatefulWidget {
   final String? value;
   final void Function(String)? onChanged;
   final InputDecoration? decoration;
+  final String? Function(String? value)? validator;
 
   const PasswordFormField({
     super.key,
     this.value,
     this.onChanged,
     this.decoration,
+    this.validator,
   });
 
   @override
@@ -32,6 +34,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       initialValue: widget.value,
       onChanged: widget.onChanged,
       obscureText: !isPasswordVisible,
+      validator: widget.validator,
       decoration: widget.decoration?.copyWith(
         suffixIcon: IconButton(
           icon: Icon(

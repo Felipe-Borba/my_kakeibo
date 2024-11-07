@@ -21,7 +21,6 @@ import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart
 import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
-import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
@@ -58,7 +57,6 @@ class AppModule extends Module {
     i.add(UserUseCase.new);
 
     i.add(WelcomeController.new);
-    i.add(CreateAccountController.new);
     i.add(DashboardController.new);
     i.add(ExpenseListController.new);
     i.add(IncomeFormController.new);
