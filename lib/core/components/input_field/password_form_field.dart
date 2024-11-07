@@ -35,7 +35,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       decoration: widget.decoration?.copyWith(
         suffixIcon: IconButton(
           icon: Icon(
-            isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+            !isPasswordVisible ? Icons.visibility : Icons.visibility_off,
           ),
           onPressed: togglePasswordVisibility,
         ),

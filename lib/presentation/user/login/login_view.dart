@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/password_form_field.dart';
 import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -12,12 +12,12 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<LoginController>();
-    final intl = AppLocalizations.of(context)!;
-
-    return ListenableBuilder(
-      listenable: controller,
+    return ChangeNotifierProvider(
+      create: (context) => LoginController(context),
       builder: (BuildContext context, Widget? child) {
+        final controller = Provider.of<LoginController>(context);
+        final intl = AppLocalizations.of(context)!;
+
         return Scaffold(
           key: const Key("login-view"),
           appBar: AppBarCustom(
@@ -48,7 +48,7 @@ class LoginView extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                     key: const Key("login"),
-                    onPressed: () => controller.onLogin(context),
+                    onPressed: controller.onLogin,
                     child: controller.loading
                         ? const SizedBox(
                             height: 16,
