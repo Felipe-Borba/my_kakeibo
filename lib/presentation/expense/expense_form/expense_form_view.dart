@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/currency_form_field.dart';
+import 'package:my_kakeibo/core/components/input_field/date_form_field.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_controller.dart';
@@ -35,7 +36,7 @@ class ExpenseFormView extends StatelessWidget {
                 children: [
                   CurrencyFormField(
                     key: const Key("amount"),
-                    value: controller.getAmount(),
+                    value: controller.amount,
                     onChanged: controller.setAmount,
                     decoration: const InputDecoration(labelText: "Amount"),
                     validator: controller.validateAmount,
@@ -45,7 +46,7 @@ class ExpenseFormView extends StatelessWidget {
                   DropdownButtonFormField<ExpenseCategory?>(
                     key: const Key("category"),
                     hint: const Text("Category"),
-                    value: controller.getCategory(),
+                    value: controller.category,
                     onChanged: controller.setCategory,
                     items:
                         ExpenseCategory.values.map((ExpenseCategory category) {
@@ -58,26 +59,12 @@ class ExpenseFormView extends StatelessWidget {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   const SizedBox(height: 8),
-                  TextFormField(
-                    //TODO penso em mover isso para um componente isolado já que ele é bem propício para ser reutilizado e tem aspectos fáceis de esquecer como o icone certo, as malandragem no controller etc...
+                  DateFormField(
                     key: const Key("date"),
-                    readOnly: true,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: controller.validateDate,
-                    controller: controller.dataController,
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                      );
-                      controller.setDate(pickedDate);
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Select a Date",
-                      suffixIcon: Icon(Icons.calendar_today),
-                    ),
+                    value: controller.date,
+                    onChanged: controller.setDate
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
@@ -85,7 +72,8 @@ class ExpenseFormView extends StatelessWidget {
                     validator: controller.validateDescription,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: const InputDecoration(labelText: "Description"),
-                    controller: controller.descriptionController,
+                    initialValue: controller.description,
+                    onChanged: controller.setDescription,
                   ),
                   const SizedBox(height: 24),
                   Center(

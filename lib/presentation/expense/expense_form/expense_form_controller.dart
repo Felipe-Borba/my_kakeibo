@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
@@ -18,21 +17,14 @@ class ExpenseFormController with ChangeNotifier {
 
   // State
   final formKey = GlobalKey<FormState>();
-  late double? amount = _expense?.amount;
-  late final dataController = TextEditingController(
-    text: _getDate(),
-  );
-  late final descriptionController = TextEditingController(
-    text: _expense?.description,
-  );
-  late ExpenseCategory? category = _expense?.category;
   late final currencyFormatter = CurrencyFormatter(_context).formatter;
 
-  // Actions
-  double? getAmount() {//TODO talvez tire esse getter, não parece ser uma prática mto comum no flutter
-    return amount;
-  }
+  late double? amount = _expense?.amount;
+  late DateTime? date = _expense?.date;
+  late String description = _expense?.description ?? '';
+  late ExpenseCategory? category = _expense?.category;
 
+  // Actions
   void setAmount(double? value) {
     amount = value;
   }
@@ -46,13 +38,8 @@ class ExpenseFormController with ChangeNotifier {
     return null;
   }
 
-  ExpenseCategory? getCategory() {//TODO talvez tire esse getter, não parece ser uma prática mto comum no flutter
-    return category;
-  }
-
-  void setCategory(ExpenseCategory? newValue) {
-    category = newValue;
-    notifyListeners();
+  void setCategory(ExpenseCategory? value) {
+    category = value;
   }
 
   String? validateCategory(ExpenseCategory? value) {
@@ -60,28 +47,18 @@ class ExpenseFormController with ChangeNotifier {
     return null;
   }
 
-  String? _getDate() {
-    if (_expense != null) {
-      return DateFormat.yMEd(
-        Localizations.localeOf(_context).toString(),
-      ).format(_expense.date);
-    }
-    return null;
-  }
-
-  void setDate(DateTime? date) {
-    if (date != null) {
-      dataController.text = DateFormat.yMEd(
-        Localizations.localeOf(_context).toString(),
-      ).format(date);
-      notifyListeners();
-    }
+  void setDate(DateTime? value) {
+    date = value;
   }
 
   String? validateDate(String? value) {
     if (value == null) return "Select a date";
     if (value.isEmpty) return "Select a date";
     return null;
+  }
+
+  void setDescription(String value) {
+    description = value;
   }
 
   String? validateDescription(String? value) {
@@ -95,10 +72,8 @@ class ExpenseFormController with ChangeNotifier {
     var (_, error) = await expenseUseCase.insert(Expense(
       id: _expense?.id,
       amount: amount!,
-      date: DateFormat.yMEd(
-        Localizations.localeOf(_context).toString(),
-      ).parse(dataController.text),
-      description: descriptionController.text,
+      date: date!,
+      description: description,
       category: category!,
     ));
 

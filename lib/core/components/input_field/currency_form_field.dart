@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
 
 class CurrencyFormField extends StatelessWidget {
-  final String? Function(String?)? validator;
+  final String? Function(String? value)? validator;
   final AutovalidateMode? autovalidateMode;
   final InputDecoration? decoration;
   final double? value;
