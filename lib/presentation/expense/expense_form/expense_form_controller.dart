@@ -18,9 +18,7 @@ class ExpenseFormController with ChangeNotifier {
 
   // State
   final formKey = GlobalKey<FormState>();
-  late final amountController = TextEditingController(
-    text: _expense?.amount.toString(),
-  );
+  late double? amount = _expense?.amount;
   late final dataController = TextEditingController(
     text: _getDate(),
   );
@@ -31,6 +29,14 @@ class ExpenseFormController with ChangeNotifier {
   late final currencyFormatter = CurrencyFormatter(_context).formatter;
 
   // Actions
+  double? getAmount() {//TODO talvez tire esse getter, não parece ser uma prática mto comum no flutter
+    return amount;
+  }
+
+  void setAmount(double? value) {
+    amount = value;
+  }
+
   String? validateAmount(String? value) {
     //TODO agora sim a partir desse momento eu posso pensar na lib do lucid_validation, a unica coisa que eu acho que ganharia seria mandar as validações para a camada de dominio e internacionalização out of the box, mas em contrapartida eu ganho duas camadas acopladas a uma lib...
     if (value == null) return "valor obrigatório";
@@ -40,7 +46,7 @@ class ExpenseFormController with ChangeNotifier {
     return null;
   }
 
-  ExpenseCategory? getCategory() {
+  ExpenseCategory? getCategory() {//TODO talvez tire esse getter, não parece ser uma prática mto comum no flutter
     return category;
   }
 
@@ -65,7 +71,7 @@ class ExpenseFormController with ChangeNotifier {
 
   void setDate(DateTime? date) {
     if (date != null) {
-      dataController.text = DateFormat.yMd(
+      dataController.text = DateFormat.yMEd(
         Localizations.localeOf(_context).toString(),
       ).format(date);
       notifyListeners();
@@ -88,7 +94,7 @@ class ExpenseFormController with ChangeNotifier {
 
     var (_, error) = await expenseUseCase.insert(Expense(
       id: _expense?.id,
-      amount: currencyFormatter.parse(amountController.text).toDouble(),
+      amount: amount!,
       date: DateFormat.yMEd(
         Localizations.localeOf(_context).toString(),
       ).parse(dataController.text),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
-import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
+import 'package:my_kakeibo/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_controller.dart';
@@ -33,12 +33,10 @@ class ExpenseFormView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextFormField(
+                  CurrencyFormField(
                     key: const Key("amount"),
-                    controller: controller.amountController,
-                    //TODO de certa forma aqui tb, visto que eu sempre esqueço o keyboard certo e existe umas gambi de parse de valor lá no controller
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [CurrencyFormatter(context)],
+                    value: controller.getAmount(),
+                    onChanged: controller.setAmount,
                     decoration: const InputDecoration(labelText: "Amount"),
                     validator: controller.validateAmount,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
