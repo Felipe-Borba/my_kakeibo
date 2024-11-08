@@ -101,6 +101,28 @@ Algumas dependências que vale mencionar e saber sobre
 **Styling**
 - [Mix](https://www.fluttermix.com)
 
+
+### Geração de ícone de launcher
+
+Para simplificar o processo usarei a dependência [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)
+
+Para instalar o pacote:
+```markdown
+flutter pub add flutter_launcher_icons
+```
+
+Para criar o arquivo de configuração automaticamente:
+```bash
+dart run flutter_launcher_icons:generate
+```
+*É recomendável que o ícone seja um arquivo PNG quadrado, idealmente com 512x512 pixels ou maior, para garantir boa qualidade em diferentes tamanhos.*
+
+Depois de configurar o app e escolher a imagem é so rodar:
+```console
+flutter pub get
+dart run flutter_launcher_icons
+```
+
 ## Prototipação
 - [Figma](https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1)
 
