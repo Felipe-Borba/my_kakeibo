@@ -70,15 +70,6 @@ class IncomeFormController with ChangeNotifier {
       case Failure(:final message):
         showSnackbar(context: context, text: message);
         break;
-      case FieldFailure(:final fieldErrorList):
-        for (var invalidField in fieldErrorList) {
-          switch (invalidField.name) {
-            case "amount":
-              amountError = invalidField.message;
-              break;
-          }
-        }
-        break;
       default:
         showSnackbar(context: context, text: "Erro desconhecido.");
     }

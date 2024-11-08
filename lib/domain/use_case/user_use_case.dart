@@ -13,11 +13,6 @@ class UserUseCase {
   });
 
   Future<(Null, AppError)> insert(User user) async {
-    var (isValid, errorList) = user.validate();
-    if (!isValid) {
-      return (null, errorList);
-    }
-
     var (id, err) = await authRepository.createAccess(
       user.email,
       user.password,
