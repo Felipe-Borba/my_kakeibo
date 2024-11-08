@@ -6,9 +6,6 @@ class User {
   // UserTheme theme;
   double balance;
 
-  //TODO sera que rola colocar uma lista de expense aqui?
-  // como se fosse um relacionamento no spring? sei que isso não tem nada a ver mas é um usuário que tem a despesa ou receita....
-
   User({
     this.id,
     required this.name,
@@ -22,8 +19,7 @@ class User {
       : id = json['id'],
         name = json['name'],
         email = json['email'],
-        // TODO password should no be saved as plain text on satabase
-        password = json['password'],
+        password = '',
         // theme = json['theme'],
         balance = json['balance'].toDouble();
 
@@ -32,7 +28,7 @@ class User {
       'id': id,
       'name': name,
       'email': email,
-      'password': password,
+      'password': '',
       // 'theme': theme,
       'balance': balance,
     };

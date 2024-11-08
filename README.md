@@ -128,8 +128,10 @@ dart run flutter_launcher_icons
 
 ## Próximos passos
 
-- [ ] Isolar alguns componentes de input
-- [ ] Teste nova arquitetura da tela da expense_form
+- [X] Isolar alguns componentes de input
+- [X] Teste nova arquitetura da tela da expense_form
+- [ ] Filtrar as listas por mês
+- [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa
 - [ ] Notificações
 - [ ] Deploy
 - [ ] Observabilidade
