@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
+import 'package:provider/provider.dart';
 
 class IncomeListView extends StatelessWidget {
   const IncomeListView({super.key});
@@ -14,14 +16,26 @@ class IncomeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<IncomeListController>();
+    return ChangeNotifierProvider(
+      create: (context) => IncomeListController(context),
+      builder: (context, child) {
+        final controller = Provider.of<IncomeListController>(context);
+        final intl = AppLocalizations.of(context)!;
+        final NumberFormat formatter = NumberFormat.currency(
+          locale: Localizations.localeOf(context).toString(),
+          symbol: intl.currencyTag,
+          decimalDigits: 2,
+        );
 
-    return FutureBuilder(
-      future: controller.getInitialData(context),
-      builder: (context, snapshot) {
-        return ListenableBuilder(
-          listenable: controller,
-          builder: (BuildContext context, Widget? child) {
+        return FutureBuilder(
+          future: controller.getInitialData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+
             return Scaffold(
               appBar: const AppBarCustom(title: "Income"),
               drawer: const DrawerCustom(),
@@ -30,8 +44,10 @@ class IncomeListView extends StatelessWidget {
                 child: const Icon(Icons.add),
               ),
               body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
                 child: Column(
                   children: [
                     SortComponent(
@@ -41,53 +57,17 @@ class IncomeListView extends StatelessWidget {
                     const SizedBox(height: 16),
                     Expanded(
                       child: ListView.separated(
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 8,
-                        ),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 8),
                         itemCount: controller.list.length,
                         itemBuilder: (context, index) {
                           var income = controller.list[index];
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Icon(Icons.monetization_on_outlined),
-                                const SizedBox(width: 16),
-                                Text(
-                                  NumberFormat.currency(
-                                    locale: 'pt_BR',
-                                    symbol: 'R\$',
-                                  ).format(income.amount),
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  DateFormat('dd/MM').format(income.date),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(child: Text(income.description)),
-                                const SizedBox(width: 16),
-                                IconButton(
-                                  onPressed: () => controller.onEdit(income),
-                                  icon: const Icon(Icons.edit),
-                                ),
-                                const SizedBox(width: 8),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  color: Colors.red,
-                                  onPressed: () async {
-                                    var confirm =
-                                        await showDeleteDialog(context);
-                                    if (confirm == true) {
-                                      controller.onDelete(income);
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
+                          return item(
+                            formatter,
+                            income,
+                            controller,
+                            context,
                           );
                         },
                       ),
@@ -99,6 +79,51 @@ class IncomeListView extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Widget item(
+    NumberFormat formatter,
+    Income income,
+    IncomeListController controller,
+    BuildContext context,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Icon(Icons.monetization_on_outlined),
+          const SizedBox(width: 16),
+          Text(
+            formatter.format(income.amount),
+          ),
+          const SizedBox(width: 16),
+          Text(
+            DateFormat('dd/MM').format(income.date),
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(width: 16),
+          Expanded(child: Text(income.description)),
+          const SizedBox(width: 16),
+          IconButton(
+            onPressed: () => controller.onEdit(income),
+            icon: const Icon(Icons.edit),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.red,
+            onPressed: () async {
+              var confirm = await showDeleteDialog(context);
+              if (confirm == true) {
+                controller.onDelete(income);
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }

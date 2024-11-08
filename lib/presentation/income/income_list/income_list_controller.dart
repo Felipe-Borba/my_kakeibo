@@ -7,18 +7,21 @@ import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
 
 class IncomeListController with ChangeNotifier {
+IncomeListController(this._context);
+
   // Dependencies
   final incomeUseCase = Modular.get<IncomeUseCase>();
+  final BuildContext _context;
 
   // State
   List<Income> list = List.empty();
   int sortNumber = 1;
 
   // Actions
-  getInitialData(BuildContext context) async {
+  getInitialData() async {
     var (list, error) = await incomeUseCase.findAll();
     if (error is Failure) {
-      showSnackbar(context: context, text: error.message);
+      showSnackbar(context: _context, text: error.message);
     }
     this.list = list;
     list.sort((a, b) => a.date.compareTo(b.date));

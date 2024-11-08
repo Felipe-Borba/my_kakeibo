@@ -30,7 +30,6 @@ class ExpenseFormController with ChangeNotifier {
   }
 
   String? validateAmount(String? value) {
-    //TODO agora sim a partir desse momento eu posso pensar na lib do lucid_validation, a unica coisa que eu acho que ganharia seria mandar as validações para a camada de dominio e internacionalização out of the box, mas em contrapartida eu ganho duas camadas acopladas a uma lib...
     if (value == null) return "valor obrigatório";
     double? amount = currencyFormatter.tryParse(value)?.toDouble();
     if (amount == null) return "valor obrigatório";
