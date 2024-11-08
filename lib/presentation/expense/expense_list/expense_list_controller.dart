@@ -7,18 +7,21 @@ import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
 
 class ExpenseListController with ChangeNotifier {
+  ExpenseListController(this._context);
+
   // Dependencies
   final expenseUseCase = Modular.get<ExpenseUseCase>();
+  final BuildContext _context;
 
   // State
   List<Expense> list = List.empty();
   int sortNumber = 1;
 
   // Actions
-  getInitialData(BuildContext context) async {
+  getInitialData() async {
     var (expenseList, error) = await expenseUseCase.findAll();
     if (error is Failure) {
-      showSnackbar(context: context, text: error.message);
+      showSnackbar(context: _context, text: error.message);
     }
     list = expenseList;
     list.sort((a, b) => a.date.compareTo(b.date));

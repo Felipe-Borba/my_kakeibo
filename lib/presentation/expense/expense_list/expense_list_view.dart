@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseListView extends StatelessWidget {
   const ExpenseListView({super.key});
@@ -15,14 +16,26 @@ class ExpenseListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<ExpenseListController>();
+    return ChangeNotifierProvider(
+      create: (context) => ExpenseListController(context),
+      builder: (context, child) {
+        final controller = Provider.of<ExpenseListController>(context);
+        final intl = AppLocalizations.of(context)!;
+        final NumberFormat formatter = NumberFormat.currency(
+          locale: Localizations.localeOf(context).toString(),
+          symbol: intl.currencyTag,
+          decimalDigits: 2,
+        );
 
-    return FutureBuilder(
-      future: controller.getInitialData(context),
-      builder: (context, snapshot) {
-        return ListenableBuilder(
-          listenable: controller,
-          builder: (BuildContext context, Widget? child) {
+        return FutureBuilder(
+          future: controller.getInitialData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+
             return Scaffold(
               appBar: const AppBarCustom(title: "Expense"),
               drawer: const DrawerCustom(),
@@ -58,10 +71,7 @@ class ExpenseListView extends StatelessWidget {
                                 Icon(expense.category.icon),
                                 const SizedBox(width: 16),
                                 Text(
-                                  NumberFormat.currency(
-                                    locale: 'pt_BR',
-                                    symbol: 'R\$',
-                                  ).format(expense.amount),
+                                  formatter.format(expense.amount),
                                 ),
                                 const SizedBox(width: 16),
                                 Text(
