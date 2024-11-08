@@ -5,6 +5,7 @@ import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
 import 'package:provider/provider.dart';
@@ -62,43 +63,11 @@ class ExpenseListView extends StatelessWidget {
                         itemBuilder: (context, index) {
                           var expense = controller.list[index];
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(expense.category.icon),
-                                const SizedBox(width: 16),
-                                Text(
-                                  formatter.format(expense.amount),
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  DateFormat('dd/MM').format(expense.date),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(child: Text(expense.description)),
-                                const SizedBox(width: 16),
-                                IconButton(
-                                  onPressed: () => controller.onEdit(expense),
-                                  icon: const Icon(Icons.edit),
-                                ),
-                                const SizedBox(width: 8),
-                                IconButton(
-                                  icon: const Icon(Icons.delete),
-                                  color: Colors.red,
-                                  onPressed: () async {
-                                    var confirm =
-                                        await showDeleteDialog(context);
-                                    if (confirm == true) {
-                                      controller.onDelete(expense);
-                                    }
-                                  },
-                                ),
-                              ],
-                            ),
+                          return item(
+                            expense,
+                            formatter,
+                            controller,
+                            context,
                           );
                         },
                       ),
@@ -110,6 +79,51 @@ class ExpenseListView extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Widget item(
+    Expense expense,
+    NumberFormat formatter,
+    ExpenseListController controller,
+    BuildContext context,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(expense.category.icon),
+          const SizedBox(width: 16),
+          Text(
+            formatter.format(expense.amount),
+          ),
+          const SizedBox(width: 16),
+          Text(
+            DateFormat('dd/MM').format(expense.date),
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(width: 16),
+          Expanded(child: Text(expense.description)),
+          const SizedBox(width: 16),
+          IconButton(
+            onPressed: () => controller.onEdit(expense),
+            icon: const Icon(Icons.edit),
+          ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.red,
+            onPressed: () async {
+              var confirm = await showDeleteDialog(context);
+              if (confirm == true) {
+                controller.onDelete(expense);
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }
