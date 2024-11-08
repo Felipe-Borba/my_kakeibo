@@ -1,11 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateFormField extends StatelessWidget {
   final String? Function(String? value)? validator;
-  final AutovalidateMode? autovalidateMode;
-  final InputDecoration? decoration;
+  final AutovalidateMode autovalidateMode;
+  final InputDecoration decoration;
   final DateTime? value;
   final void Function(DateTime?)? onChanged;
 
@@ -15,10 +14,7 @@ class DateFormField extends StatelessWidget {
     this.value,
     this.onChanged,
     this.autovalidateMode = AutovalidateMode.onUserInteraction,
-    this.decoration = const InputDecoration(
-      hintText: "Select a Date",
-      suffixIcon: Icon(Icons.calendar_today),
-    ),
+    this.decoration = const InputDecoration(),
   });
 
   @override
@@ -47,7 +43,10 @@ class DateFormField extends StatelessWidget {
         if (onChanged != null) onChanged!(pickedDate);
         if (pickedDate != null) controller.text = formatter.format(pickedDate);
       },
-      decoration: decoration,
+      decoration: decoration.copyWith(
+        hintText: "Select a Date",
+        suffixIcon: Icon(Icons.calendar_today),
+      ),
     );
   }
 }
