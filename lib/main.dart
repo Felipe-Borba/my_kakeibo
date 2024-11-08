@@ -26,8 +26,6 @@ import 'package:my_kakeibo/presentation/user/login/login_view.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
 
 import 'app.dart';
-import 'presentation/settings/settings_controller.dart';
-import 'presentation/settings/settings_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,9 +37,6 @@ void main() async {
 class AppModule extends Module {
   @override
   void binds(i) {
-    i.addSingleton(SettingsService.new);
-    i.addSingleton(SettingsController.new);
-
     i.addLazySingleton<AuthRepository>(AuthFirebaseRepository.new);
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
     i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);

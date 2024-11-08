@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
-
-import 'settings_controller.dart';
+import 'package:my_kakeibo/presentation/settings/settings_controller.dart';
+import 'package:provider/provider.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -11,7 +10,7 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<SettingsController>();
+    final controller = Provider.of<SettingsController>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -42,7 +41,7 @@ class SettingsView extends StatelessWidget {
             ),
             ElevatedButton.icon(
               key: const Key("logout"),
-              onPressed: () => controller.logout(context),
+              onPressed: controller.logout,
               label: const Text('Logout'),
               icon: const Icon(Icons.logout),
             ),
