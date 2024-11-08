@@ -36,6 +36,12 @@ class IncomeUseCase {
     return await incomeRepository.findAll();
   }
 
+  Future<(List<Income>, AppError)> findByMonth({
+    required DateTime month,
+  }) async {
+    return await incomeRepository.findByMonth(month: month);
+  }
+
   Future<(Null, AppError)> delete(Income income) async {
     return await incomeRepository.delete(income);
   }

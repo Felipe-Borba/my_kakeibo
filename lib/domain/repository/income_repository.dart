@@ -8,6 +8,8 @@ abstract class IncomeRepository {
 
   Future<(List<Income>, AppError)> findAll();
 
+  Future<(List<Income>, AppError)> findByMonth({required DateTime month});
+
   Future<(Income?, AppError)> update(Income income);
 
   Future<(Null, AppError)> delete(Income income);

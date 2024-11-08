@@ -35,6 +35,12 @@ class ExpenseUseCase {
     return await expenseRepository.findAll();
   }
 
+  Future<(List<Expense>, AppError)> findByMonth({
+    required DateTime month,
+  }) async {
+    return await expenseRepository.findByMonth(month: month);
+  }
+
   Future<(Null, AppError)> delete(Expense expense) async {
     return await expenseRepository.delete(expense);
   }

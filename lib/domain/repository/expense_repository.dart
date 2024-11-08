@@ -8,6 +8,8 @@ abstract class ExpenseRepository {
 
   Future<(List<Expense>, AppError)> findAll();
 
+  Future<(List<Expense>, AppError)> findByMonth({required DateTime month});
+
   Future<(Expense?, AppError)> update(Expense expense);
 
   Future<(Null, AppError)> delete(Expense expense);

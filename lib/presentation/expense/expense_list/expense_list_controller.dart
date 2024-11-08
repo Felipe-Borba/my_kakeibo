@@ -16,19 +16,27 @@ class ExpenseListController with ChangeNotifier {
   // State
   List<Expense> list = List.empty();
   int sortNumber = 1;
+  DateTime monthFilter = DateTime.now();
 
   // Actions
   getInitialData() async {
-    var (expenseList, error) = await expenseUseCase.findAll();
+    var (expenseList, error) = await expenseUseCase.findByMonth(
+      month: monthFilter,
+    );
     if (error is Failure) {
       showSnackbar(context: _context, text: error.message);
     }
     list = expenseList;
-    list.sort((a, b) => a.date.compareTo(b.date));
+    sortByNumber(sortNumber);
   }
 
-  sortBy(int sortNumber) {
+  setSortBy(int sortNumber) {
     this.sortNumber = sortNumber;
+    sortByNumber(sortNumber);
+    notifyListeners();
+  }
+
+  void sortByNumber(int sortNumber) {
     switch (sortNumber) {
       case 1:
         list.sort((a, b) => a.date.compareTo(b.date));
@@ -37,7 +45,6 @@ class ExpenseListController with ChangeNotifier {
         list.sort((a, b) => b.date.compareTo(a.date));
       default:
     }
-    notifyListeners();
   }
 
   onDelete(Expense expense) async {
@@ -66,5 +73,11 @@ class ExpenseListController with ChangeNotifier {
       list.sort((a, b) => a.date.compareTo(b.date));
       notifyListeners();
     }
+  }
+
+  setMonthFilter(DateTime value) {
+    monthFilter = value;
+    getInitialData();
+    notifyListeners();
   }
 }

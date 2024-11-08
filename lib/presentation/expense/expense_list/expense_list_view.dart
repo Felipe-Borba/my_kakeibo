@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/core/components/input_field/month_selector.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
@@ -49,9 +50,19 @@ class ExpenseListView extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
                   children: [
-                    SortComponent(
-                      onSortChanged: controller.sortBy,
-                      sortNumber: controller.sortNumber,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox(width: 50),
+                        MonthSelector(
+                          onMonthSelected: controller.setMonthFilter,
+                          initialDate: controller.monthFilter,
+                        ),
+                        SortComponent(
+                          onSortChanged: controller.setSortBy,
+                          sortNumber: controller.sortNumber,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 16),
                     Expanded(
