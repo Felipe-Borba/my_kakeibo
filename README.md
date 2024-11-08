@@ -128,11 +128,20 @@ dart run flutter_launcher_icons
 
 ## Próximos passos
 
-- [X] Isolar alguns componentes de input
-- [X] Teste nova arquitetura da tela da expense_form
+- [x] Isolar alguns componentes de input
+- [x] Teste nova arquitetura da tela da expense_form
 - [ ] Filtrar as listas por mês
 - [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa
 - [ ] Notificações
 - [ ] Deploy
 - [ ] Observabilidade
+- [ ] Internacionalizar telas (+ por motivos de estudo mesmo)
+- [ ] Criar uma identidade visual (tema bonsai, verde)
+- [ ] Tema claro e escuro
+- [ ] Criar um design mais atrativo
+- [ ] Onboarding com possível paywall
 - [ ] Novas funcionalidades
+- [ ] Incorporar a filosofia do kakeibo
+- [ ] Recorrência de coisas
+- [ ] Lembretes de pagamentos de boletos, etc
+- [ ] Visão computacional
