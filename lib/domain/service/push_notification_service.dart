@@ -7,7 +7,5 @@ abstract class PushNotificationService {
 
   void listenToForegroundMessage(void Function(Message message) listener);
 
-  void listenToClosedAppMessage(void Function(Message message) listener);
-
   void listenToBackgroundMessage(void Function(Message message) listener);
 }

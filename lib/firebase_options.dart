@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyB6Sr94lNgxifA4y_8gTtbl5FxTW3vT0Hg',
-    appId: '1:713195547362:android:63b03eeb41d15c72cc0cbb',
+    appId: '1:713195547362:android:da3e38ab3b452e2ccc0cbb',
     messagingSenderId: '713195547362',
     projectId: 'my-kakeibo-f8ca5',
     storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',

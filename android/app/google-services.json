@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:713195547362:android:63b03eeb41d15c72cc0cbb",
+        "mobilesdk_app_id": "1:713195547362:android:da3e38ab3b452e2ccc0cbb",
         "android_client_info": {
-          "package_name": "com.felipe.mykakeibo"
+          "package_name": "com.example.my_kakeibo"
         }
       },
       "oauth_client": [

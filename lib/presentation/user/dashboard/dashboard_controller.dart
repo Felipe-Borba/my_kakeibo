@@ -39,6 +39,9 @@ class DashboardController with ChangeNotifier {
     list.sort((a, b) => a.date.compareTo(b.date));
 
     var (user, userError) = await userUseCase.getUser();
+    if (user != null) {
+      await userUseCase.checkPushNotificationSettings(user);
+    }
     this.user = user;
   }
 }

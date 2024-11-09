@@ -35,7 +35,7 @@ class FirebasePushNotificationService implements PushNotificationService {
 
   @override
   void listenToForegroundMessage(void Function(Message message) listener) {
-    // Tratar mensagens recebidas em primeiro plano
+    // mensagens recebidas em primeiro plano
     FirebaseMessaging.onMessage.listen(
       (event) {
         listener(Message(
@@ -50,23 +50,14 @@ class FirebasePushNotificationService implements PushNotificationService {
 
   @override
   void listenToBackgroundMessage(void Function(Message message) listener) {
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      // Tratar mensagens recebidas quando o aplicativo está fechado
-      print(
-        'Mensagem recebida quando o aplicativo está fechado: ${message.notification?.title}',
-      );
+    // Mensagens recebidas quando o aplicativo está fechado
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      listener(Message(
+        id: event.messageId,
+        category: event.category,
+        body: event.notification?.body,
+        title: event.notification?.title,
+      ));
     });
-  }
-
-  @override
-  void listenToClosedAppMessage(void Function(Message message) listener) {
-    FirebaseMessaging.onBackgroundMessage(
-      (message) async {
-        // Tratar mensagens recebidas em segundo plano
-        print(
-          'Mensagem recebida em segundo plano: ${message.notification?.title}',
-        );
-      },
-    );
   }
 }

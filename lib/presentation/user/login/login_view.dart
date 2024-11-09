@@ -32,6 +32,7 @@ class LoginView extends StatelessWidget {
                 TextField(
                   key: const Key("email"),
                   onChanged: (value) => controller.email = value,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: intl.email,
                   ),
