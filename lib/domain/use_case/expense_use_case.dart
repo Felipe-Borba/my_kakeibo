@@ -46,7 +46,9 @@ class ExpenseUseCase {
   }
 
   Future<(double, AppError)> getMonthTotal() async {
-    var (expenseList, err) = await expenseRepository.findAll();
+    var (expenseList, err) = await expenseRepository.findByMonth(
+      month: DateTime.now(),
+    );
 
     if (err is! Empty) {
       return (0.0, err);

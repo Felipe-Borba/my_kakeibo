@@ -15,6 +15,8 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
+
     return ChangeNotifierProvider(
       create: (context) => DashboardController(),
       builder: (BuildContext context, Widget? child) {
@@ -47,23 +49,21 @@ class DashboardView extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(16),
-                      margin: const EdgeInsets.only(bottom: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.account_balance,
-                            color: Colors.black,
+                            color: titleLarge?.color,
                             size: 32,
                           ),
                           const SizedBox(height: 8),
                           Text(
                             formatter.format(controller.total),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: titleLarge?.color,
                             ),
                           ),
                         ],
@@ -138,6 +138,12 @@ class DashboardView extends StatelessWidget {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Expanded(
+                                  child: Text(
+                                    formatter.format(transaction.amount),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
                                 Text(
                                   transaction is Income ? 'Income' : 'Expense',
                                   style: const TextStyle(
@@ -145,17 +151,17 @@ class DashboardView extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 16),
-                                Text(formatter.format(transaction.amount)),
+                                Text(
+                                  DateFormat.MEd(
+                                    Localizations.localeOf(context).toString(),
+                                  ).format(transaction.date),
+                                  style: const TextStyle(fontSize: 16),
+                                ),
                                 const SizedBox(width: 16),
                                 Icon(
                                   transaction is Expense
                                       ? transaction.category.icon
                                       : Icons.monetization_on_outlined,
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  DateFormat('dd/MM').format(transaction.date),
-                                  style: const TextStyle(fontSize: 16),
                                 ),
                               ],
                             ),

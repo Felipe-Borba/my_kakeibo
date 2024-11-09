@@ -28,8 +28,13 @@ class DashboardController with ChangeNotifier {
     this.totalIncome = totalIncome;
     this.totalExpense = totalExpense;
 
-    var (incomeList, incomeListError) = await incomeUseCase.findAll();
-    var (expenseList, expenseListError) = await expenseUseCase.findAll();
+    var now = DateTime.now();
+    var (incomeList, incomeListError) = await incomeUseCase.findByMonth(
+      month: now,
+    );
+    var (expenseList, expenseListError) = await expenseUseCase.findByMonth(
+      month: now,
+    );
     list = [...incomeList, ...expenseList];
     list.sort((a, b) => a.date.compareTo(b.date));
 

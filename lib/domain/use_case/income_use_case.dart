@@ -47,7 +47,9 @@ class IncomeUseCase {
   }
 
   Future<(double, AppError)> getMonthTotal() async {
-    var (incomeList, err) = await incomeRepository.findAll();
+    var (incomeList, err) = await incomeRepository.findByMonth(
+      month: DateTime.now(),
+    );
 
     if (err is! Empty) {
       return (0.0, err);
