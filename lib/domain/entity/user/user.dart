@@ -5,12 +5,14 @@ class User {
   String password;
   // UserTheme theme;
   double balance;
+  String? notificationToken;
 
   User({
     this.id,
     required this.name,
     required this.email,
     required this.password,
+    this.notificationToken,
     // required this.theme,
     this.balance = 0.0,
   });
@@ -21,6 +23,7 @@ class User {
         email = json['email'],
         password = '',
         // theme = json['theme'],
+        notificationToken = json['notificationToken'],
         balance = json['balance'].toDouble();
 
   Map<String, dynamic> toJson() {
@@ -31,6 +34,7 @@ class User {
       'password': '',
       // 'theme': theme,
       'balance': balance,
+      'notificationToken': notificationToken,
     };
   }
 

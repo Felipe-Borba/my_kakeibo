@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '713195547362',
     projectId: 'my-kakeibo-f8ca5',
     authDomain: 'my-kakeibo-f8ca5.firebaseapp.com',
-    storageBucket: 'my-kakeibo-f8ca5.appspot.com',
+    storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
     measurementId: 'G-MG6B7SGG4L',
   );
 
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
     appId: '1:713195547362:android:63b03eeb41d15c72cc0cbb',
     messagingSenderId: '713195547362',
     projectId: 'my-kakeibo-f8ca5',
-    storageBucket: 'my-kakeibo-f8ca5.appspot.com',
+    storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -69,7 +69,9 @@ class DefaultFirebaseOptions {
     appId: '1:713195547362:ios:571a9596af80c75acc0cbb',
     messagingSenderId: '713195547362',
     projectId: 'my-kakeibo-f8ca5',
-    storageBucket: 'my-kakeibo-f8ca5.appspot.com',
+    storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
+    iosClientId: '713195547362-r5r8a6bb5jq4t9pfb519qnup0cdvvtro.apps.googleusercontent.com',
     iosBundleId: 'com.example.myKakeibo',
   );
+
 }

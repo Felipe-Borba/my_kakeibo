@@ -5,10 +5,12 @@ import 'package:my_kakeibo/data/repository/auth_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/income_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/user_firebase_repository.dart';
+import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
 import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/domain/service/push_notification_service.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
@@ -39,6 +41,9 @@ class AppModule extends Module {
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
     i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
     i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
+    i.addLazySingleton<PushNotificationService>(
+      FirebasePushNotificationService.new,
+    );
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
     // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
 
