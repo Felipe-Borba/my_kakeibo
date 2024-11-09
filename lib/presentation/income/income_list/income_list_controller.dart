@@ -27,11 +27,16 @@ class IncomeListController with ChangeNotifier {
       showSnackbar(context: _context, text: error.message);
     }
     this.list = list;
-    list.sort((a, b) => a.date.compareTo(b.date));
+    sortBy(sortNumber);
   }
 
-  sortBy(int sortNumber) {
+  setSortBy(int sortNumber) {
     this.sortNumber = sortNumber;
+    sortBy(sortNumber);
+    notifyListeners();
+  }
+
+  void sortBy(int sortNumber) {
     switch (sortNumber) {
       case 1:
         list.sort((a, b) => a.date.compareTo(b.date));
@@ -40,7 +45,6 @@ class IncomeListController with ChangeNotifier {
         list.sort((a, b) => b.date.compareTo(a.date));
       default:
     }
-    notifyListeners();
   }
 
   onDelete(Income income) async {
@@ -68,5 +72,11 @@ class IncomeListController with ChangeNotifier {
       list.sort((a, b) => a.date.compareTo(b.date));
       notifyListeners();
     }
+  }
+
+  setMonthFilter(DateTime value) {
+    monthFilter = value;
+    getInitialData();
+    notifyListeners();
   }
 }
