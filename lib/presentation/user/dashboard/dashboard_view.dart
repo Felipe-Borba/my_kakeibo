@@ -44,8 +44,10 @@ class DashboardView extends StatelessWidget {
               ),
               drawer: const DrawerCustom(),
               body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
                 child: Column(
                   children: [
                     Container(
@@ -125,7 +127,6 @@ class DashboardView extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
                     const Divider(),
                     Expanded(
                       child: ListView.builder(
@@ -152,7 +153,7 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 16),
                                 Text(
-                                  DateFormat.MEd(
+                                  DateFormat.MMMEd(
                                     Localizations.localeOf(context).toString(),
                                   ).format(transaction.date),
                                   style: const TextStyle(fontSize: 16),

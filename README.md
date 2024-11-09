@@ -131,11 +131,13 @@ dart run flutter_launcher_icons
 - [x] Isolar alguns componentes de input
 - [x] Teste nova arquitetura da tela da expense_form
 - [x] Filtrar as listas por mês
-- [ ] Ajuste tela escrolável
 - [ ] Login com facebook e google
+- [ ] Teste tela escrolável dando overflow
+- [ ] Traduzir o app todo para português
+- [ ] Empty state das listas
 - [ ] Recorrência de coisas
 - [ ] Visão computacional
-- [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa
+- [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa (pensei em uma barra azulou verde com vermelho na horizontal)
 - [ ] Notificações
 - [ ] Lembretes de pagamentos de boletos, etc
 - [ ] Deploy
@@ -144,5 +146,5 @@ dart run flutter_launcher_icons
 - [ ] Criar um design mais atrativo
 - [ ] Onboarding com possível paywall
 - [ ] Incorporar a filosofia do kakeibo
-- [ ] Internacionalizar telas (+ por motivos de estudo mesmo)
 - [ ] Tema claro e escuro
+- [ ] Talvez uma tela de usuário mostrando o saldo dele, total gasto, ganho, anual? poder editar os dados dele...
