@@ -53,7 +53,7 @@ class ExpenseListView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SizedBox(width: 50),
+                        const SizedBox(width: 32, height: 24),
                         MonthSelector(
                           onMonthSelected: controller.setMonthFilter,
                           initialDate: controller.monthFilter,

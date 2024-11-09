@@ -32,26 +32,20 @@ class _MonthSelectorState extends State<MonthSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Selector for Month
-        DropdownButton<int>(
-          value: selectedMonth,
-          items: List.generate(12, (index) {
-            return DropdownMenuItem(
-              value: index + 1,
-              child: Text(DateFormat.MMMM().format(DateTime(0, index + 1))),
-            );
-          }),
-          onChanged: (value) {
-            setState(() {
-              selectedMonth = value!;
-              _notifyDateChanged();
-            });
-          },
-        ),
-      ],
+    return DropdownButton<int>(
+      value: selectedMonth,
+      items: List.generate(12, (index) {
+        return DropdownMenuItem(
+          value: index + 1,
+          child: Text(DateFormat.MMMM().format(DateTime(0, index + 1))),
+        );
+      }),
+      onChanged: (value) {
+        setState(() {
+          selectedMonth = value!;
+          _notifyDateChanged();
+        });
+      },
     );
   }
 }

@@ -137,7 +137,7 @@ dart run flutter_launcher_icons
 - [ ] Empty state das listas
 - [ ] Recorrência de coisas
 - [ ] Visão computacional
-- [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa (pensei em uma barra azulou verde com vermelho na horizontal)
+- [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa (pensei em uma barra azul ou verde com vermelho na horizontal)
 - [ ] Notificações
 - [ ] Lembretes de pagamentos de boletos, etc
 - [ ] Deploy
