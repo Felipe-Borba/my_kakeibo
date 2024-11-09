@@ -1,11 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class Message {
+class NotificationMessage {
   String? id;
   String? category;
   String? title;
   String? body;
 
-  Message({
+  NotificationMessage({
     this.id,
     this.category,
     this.body,

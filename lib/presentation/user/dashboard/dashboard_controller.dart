@@ -4,6 +4,7 @@ import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 class DashboardController with ChangeNotifier {
@@ -11,6 +12,7 @@ class DashboardController with ChangeNotifier {
   final userUseCase = Modular.get<UserUseCase>();
   final expenseUseCase = Modular.get<ExpenseUseCase>();
   final incomeUseCase = Modular.get<IncomeUseCase>();
+  final notificationUseCase = Modular.get<NotificationUseCase>();
 
   // State
   double total = 0;
@@ -40,7 +42,7 @@ class DashboardController with ChangeNotifier {
 
     var (user, userError) = await userUseCase.getUser();
     if (user != null) {
-      await userUseCase.checkPushNotificationSettings(user);
+      await notificationUseCase.checkPushNotificationSettings(user);
     }
     this.user = user;
   }

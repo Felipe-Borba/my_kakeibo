@@ -5,29 +5,24 @@ import 'package:my_kakeibo/data/repository/user_memory_memory.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
-import 'package:my_kakeibo/domain/service/push_notification_service.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 import '../../mocks/auth_repository_mock.dart';
-import '../../mocks/push_notification_service_mock.dart';
 import '../../mocks/user_repository_mock.dart';
 
 void main() {
   late UserUseCase userUseCase;
   late UserRepository userRepository;
   late AuthRepository authRepository;
-  late PushNotificationService pushNotificationService;
   late User user;
 
   setUp(() {
     userRepository = UserRepositoryMock();
     authRepository = AuthRepositoryMock();
-    pushNotificationService = PushNotificationServiceMock();
 
     userUseCase = UserUseCase(
       userRepository: userRepository,
       authRepository: authRepository,
-      pushNotificationService: pushNotificationService,
     );
 
     user = User(
@@ -44,7 +39,6 @@ void main() {
       userUseCase = UserUseCase(
         userRepository: userRepository,
         authRepository: authRepository,
-        pushNotificationService: pushNotificationService
       );
     });
 

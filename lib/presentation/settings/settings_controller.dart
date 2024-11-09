@@ -18,9 +18,9 @@ class SettingsController with ChangeNotifier {
   loadSettings() async {
     var (_, error) = await userUseCase.getUser();
     if (error is Empty) {
-      Modular.setInitialRoute(DashboardView.routeName);
+      Modular.to.navigate(DashboardView.routeName);
     } else {
-      Modular.setInitialRoute(LoginView.routeName);
+      Modular.to.navigate(LoginView.routeName);
     }
   }
 

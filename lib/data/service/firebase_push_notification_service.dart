@@ -1,5 +1,5 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/domain/entity/notification/message.dart';
+import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
 import 'package:my_kakeibo/domain/service/push_notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -34,11 +34,10 @@ class FirebasePushNotificationService implements PushNotificationService {
   }
 
   @override
-  void listenToForegroundMessage(void Function(Message message) listener) {
-    // mensagens recebidas em primeiro plano
+  void listenToForegroundMessage(void Function(NotificationMessage message) listener) {
     FirebaseMessaging.onMessage.listen(
       (event) {
-        listener(Message(
+        listener(NotificationMessage(
           id: event.messageId,
           category: event.category,
           body: event.notification?.body,
@@ -49,10 +48,9 @@ class FirebasePushNotificationService implements PushNotificationService {
   }
 
   @override
-  void listenToBackgroundMessage(void Function(Message message) listener) {
-    // Mensagens recebidas quando o aplicativo está fechado
+  void listenToBackgroundMessage(void Function(NotificationMessage message) listener) {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      listener(Message(
+      listener(NotificationMessage(
         id: event.messageId,
         category: event.category,
         body: event.notification?.body,

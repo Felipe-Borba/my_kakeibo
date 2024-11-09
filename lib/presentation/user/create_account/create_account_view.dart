@@ -34,6 +34,7 @@ class CreateAccountView extends StatelessWidget {
                       ),
                       onChanged: controller.setEmail,
                       validator: controller.validateEmail,
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 8),
                     PasswordFormField(

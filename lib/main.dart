@@ -7,13 +7,16 @@ import 'package:my_kakeibo/data/repository/expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/income_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/user_firebase_repository.dart';
 import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
+import 'package:my_kakeibo/data/service/local_notification_service_impl.dart';
 import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/domain/service/local_notification_service.dart';
 import 'package:my_kakeibo/domain/service/push_notification_service.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/firebase_options.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
@@ -29,38 +32,43 @@ import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
 import 'app.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Mensagem recebida em segundo plano: ${message.messageId}');
+  await Firebase.initializeApp();
+  print('Mensagem recebida com app em segundo plano: ${message.messageId}');
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+  Modular.setInitialRoute(LoginView.routeName);
   return runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 
 class AppModule extends Module {
   @override
   void binds(i) {
+    // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
+    // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
     i.addLazySingleton<AuthRepository>(AuthFirebaseRepository.new);
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
     i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
     i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
-    i.addLazySingleton<PushNotificationService>(
+    i.addSingleton<LocalNotificationService>(LocalNotificationServiceImpl.new);
+    i.addSingleton<PushNotificationService>(
       FirebasePushNotificationService.new,
     );
-    // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
-    // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
 
     i.add(ExpenseUseCase.new);
     i.add(IncomeUseCase.new);
     i.add(UserUseCase.new);
+    i.addSingleton(NotificationUseCase.new);
   }
 
   @override
   void routes(r) {
-    r.redirect("/", to: LoginView.routeName);
+    // r.redirect("/", to: LoginView.routeName);
 
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
 
