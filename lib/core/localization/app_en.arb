@@ -40,5 +40,15 @@
   "income": "Income",
   "@income": {},
   "expense": "Expense",
-  "@expense": {}
+  "@expense": {},
+  "settings": "Settings",
+  "@settings": {},
+  "systemTheme": "System Theme",
+  "@systemTheme": {},
+  "lightTheme": "Light Theme",
+  "@lightTheme": {},
+  "darkTheme": "Dark Theme",
+  "@darkTheme": {},
+  "logout": "Logout",
+  "@logout": {}
 }
