@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 class DateFormField extends StatelessWidget {
@@ -19,6 +20,7 @@ class DateFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final intl = AppLocalizations.of(context)!;
     final formatter = DateFormat.yMEd(
       Localizations.localeOf(context).toString(),
     );
@@ -44,7 +46,7 @@ class DateFormField extends StatelessWidget {
         if (pickedDate != null) controller.text = formatter.format(pickedDate);
       },
       decoration: decoration.copyWith(
-        hintText: "Select a Date",
+        hintText: intl.selectDate,
         suffixIcon: const Icon(Icons.calendar_today),
       ),
     );

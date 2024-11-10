@@ -133,7 +133,7 @@ dart run flutter_launcher_icons
 - [x] Filtrar as listas por mês
 <!-- - [ ] Login com facebook e google -->
 - [ ] Teste tela escrolável dando overflow
-- [ ] Traduzir o app todo para português
+- [x] Traduzir o app todo para português
 - [ ] Empty state das listas
 - [ ] Recorrência de coisas
 - [ ] Visão computacional

@@ -32,12 +32,17 @@ class _MonthSelectorState extends State<MonthSelector> {
 
   @override
   Widget build(BuildContext context) {
+
     return DropdownButton<int>(
       value: selectedMonth,
       items: List.generate(12, (index) {
         return DropdownMenuItem(
           value: index + 1,
-          child: Text(DateFormat.MMMM().format(DateTime(0, index + 1))),
+          child: Text(
+            DateFormat.MMMM(
+              Localizations.localeOf(context).toString(),
+            ).format(DateTime(0, index + 1)),
+          ),
         );
       }),
       onChanged: (value) {
