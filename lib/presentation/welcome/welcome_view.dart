@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
@@ -13,6 +14,7 @@ class WelcomeView extends StatelessWidget {
       create: (context) => WelcomeController(),
       builder: (context, child) {
         final controller = Provider.of<WelcomeController>(context);
+        final intl = AppLocalizations.of(context)!;
 
         return Scaffold(
           // backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -28,18 +30,17 @@ class WelcomeView extends StatelessWidget {
                   height: 240,
                   fit: BoxFit.cover,
                 ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
-                  child: Text('Welcome to our Finance App!'),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+                  child: Text(intl.welcomeToOurFinanceApp),
                 ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                  child: Text('Manage your finances with ease.'),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                  child: Text(intl.manageYourFinancesWithEase),
                 ),
-                const Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                  child:
-                      Text('Track your expenses, set budgets, and save money.'),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: Text(intl.trackYourExpensesSetBudgets),
                 ),
                 Expanded(
                   child: Container(
@@ -58,7 +59,7 @@ class WelcomeView extends StatelessWidget {
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                   child: ElevatedButton(
                     onPressed: controller.onContinue,
-                    child: const Text("Get Started"),
+                    child: Text(intl.getStarted),
                   ),
                 ),
               ],

@@ -18,6 +18,14 @@
   "@createAccount": {},
   "name": "Nome",
   "@name": {},
-  "titleCreateAccountPage": "Create Account",
-  "@titleCreateAccountPage": {}
+  "createAccountPageTitle": "Create Account",
+  "@createAccountPageTitle": {},
+  "welcomeToOurFinanceApp": "Welcome to our Finance App!",
+  "@welcomeToOurFinanceApp": {},
+  "manageYourFinancesWithEase": "Manage your finances with ease",
+  "@manageYourFinancesWithEase": {},
+  "trackYourExpensesSetBudgets": "Track your expenses, set budgets, and save money.",
+  "@trackYourExpensesSetBudgets": {},
+  "getStarted": "Get Started",
+  "@getStarted": {}
 }
