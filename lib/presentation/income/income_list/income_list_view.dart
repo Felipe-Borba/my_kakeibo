@@ -38,7 +38,7 @@ class IncomeListView extends StatelessWidget {
             }
 
             return Scaffold(
-              appBar: const AppBarCustom(title: "Income"),
+              appBar: AppBarCustom(title: intl.income),
               drawer: const DrawerCustom(),
               floatingActionButton: FloatingActionButton.small(
                 onPressed: () => controller.onAdd(),
@@ -112,7 +112,9 @@ class IncomeListView extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Text(
-            DateFormat('dd/MM').format(income.date),
+            DateFormat.Md(
+              Localizations.localeOf(context).toString(),
+            ).format(income.date),
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(width: 16),

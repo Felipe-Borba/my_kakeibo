@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/core/components/input_field/date_form_field.dart';
@@ -19,13 +20,14 @@ class IncomeFormView extends StatelessWidget {
       create: (context) => IncomeFormController(context, income),
       builder: (context, child) {
         final controller = Provider.of<IncomeFormController>(context);
+        final intl = AppLocalizations.of(context)!;
 
         return ListenableBuilder(
           listenable: controller,
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
-              appBar: const AppBarCustom(
-                title: "Income",
+              appBar: AppBarCustom(
+                title: intl.income,
               ),
               body: Form(
                 key: controller.formKey,
@@ -39,8 +41,8 @@ class IncomeFormView extends StatelessWidget {
                         key: const Key("amount"),
                         value: controller.amount,
                         onChanged: controller.setAmount,
-                        decoration: const InputDecoration(
-                          labelText: "Amount",
+                        decoration: InputDecoration(
+                          labelText: intl.amount,
                         ),
                         validator: controller.validateAmount,
                       ),
@@ -57,8 +59,8 @@ class IncomeFormView extends StatelessWidget {
                         initialValue: controller.description,
                         onChanged: controller.setDescription,
                         validator: controller.validateDescription,
-                        decoration: const InputDecoration(
-                          labelText: "Description",
+                        decoration: InputDecoration(
+                          labelText: intl.description,
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -66,7 +68,7 @@ class IncomeFormView extends StatelessWidget {
                         child: ElevatedButton(
                           key: const Key("save-income"),
                           onPressed: controller.onClickSave,
-                          child: const Text("Save"),
+                          child: Text(intl.save),
                         ),
                       ),
                     ],

@@ -39,7 +39,7 @@ class ExpenseListView extends StatelessWidget {
             }
 
             return Scaffold(
-              appBar: const AppBarCustom(title: "Expense"),
+              appBar: AppBarCustom(title: intl.expense),
               drawer: const DrawerCustom(),
               floatingActionButton: FloatingActionButton.small(
                 onPressed: () => controller.onAdd(),
@@ -112,7 +112,9 @@ class ExpenseListView extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Text(
-            DateFormat('dd/MM').format(expense.date),
+            DateFormat.Md(
+              Localizations.localeOf(context).toString(),
+            ).format(expense.date),
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(width: 16),

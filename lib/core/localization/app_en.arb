@@ -50,5 +50,13 @@
   "darkTheme": "Dark Theme",
   "@darkTheme": {},
   "logout": "Logout",
-  "@logout": {}
+  "@logout": {},
+  "amount": "Amount",
+  "@amount": {},
+  "description": "Description",
+  "@description": {},
+  "save": "Save",
+  "@save": {},
+  "category": "Category",
+  "@category": {}
 }

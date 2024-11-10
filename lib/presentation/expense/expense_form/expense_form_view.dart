@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/core/components/input_field/date_form_field.dart';
@@ -20,10 +21,11 @@ class ExpenseFormView extends StatelessWidget {
       create: (context) => ExpenseFormController(context, expense),
       builder: (context, child) {
         final controller = Provider.of<ExpenseFormController>(context);
+        final intl = AppLocalizations.of(context)!;
 
         return Scaffold(
-          appBar: const AppBarCustom(
-            title: "Expense",
+          appBar: AppBarCustom(
+            title: intl.expense,
           ),
           body: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
@@ -37,14 +39,14 @@ class ExpenseFormView extends StatelessWidget {
                     key: const Key("amount"),
                     value: controller.amount,
                     onChanged: controller.setAmount,
-                    decoration: const InputDecoration(labelText: "Amount"),
+                    decoration: InputDecoration(labelText: intl.amount),
                     validator: controller.validateAmount,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<ExpenseCategory?>(
                     key: const Key("category"),
-                    hint: const Text("Category"),
+                    hint: Text(intl.category),
                     value: controller.category,
                     onChanged: controller.setCategory,
                     items:
@@ -59,18 +61,17 @@ class ExpenseFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   DateFormField(
-                    key: const Key("date"),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: controller.validateDate,
-                    value: controller.date,
-                    onChanged: controller.setDate
-                  ),
+                      key: const Key("date"),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: controller.validateDate,
+                      value: controller.date,
+                      onChanged: controller.setDate),
                   const SizedBox(height: 8),
                   TextFormField(
                     key: const Key("description"),
                     validator: controller.validateDescription,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: const InputDecoration(labelText: "Description"),
+                    decoration: InputDecoration(labelText: intl.description),
                     initialValue: controller.description,
                     onChanged: controller.setDescription,
                   ),
@@ -79,7 +80,7 @@ class ExpenseFormView extends StatelessWidget {
                     child: ElevatedButton(
                       key: const Key("save-expense"),
                       onPressed: controller.onClickSave,
-                      child: const Text("Save"),
+                      child: Text(intl.save),
                     ),
                   ),
                 ],
