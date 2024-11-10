@@ -40,7 +40,7 @@ class DashboardView extends StatelessWidget {
             return Scaffold(
               key: const Key("dashboard"),
               appBar: AppBar(
-                title: Text("Bem vindo ${controller.user?.name}!"),
+                title: Text(intl.welcomeMessage(controller.user?.name ?? "")),
               ),
               drawer: const DrawerCustom(),
               body: Padding(
@@ -79,17 +79,17 @@ class DashboardView extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.arrow_downward,
                                     color: Colors.green,
                                     size: 16,
                                   ),
-                                  SizedBox(width: 4),
+                                  const SizedBox(width: 4),
                                   Text(
-                                    'Income',
-                                    style: TextStyle(color: Colors.green),
+                                    intl.income,
+                                    style: const TextStyle(color: Colors.green),
                                   ),
                                 ],
                               ),
@@ -103,17 +103,17 @@ class DashboardView extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Row(
+                              Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.arrow_upward,
                                     color: Colors.red,
                                     size: 16,
                                   ),
-                                  SizedBox(width: 4),
+                                  const SizedBox(width: 4),
                                   Text(
-                                    'Expense',
-                                    style: TextStyle(color: Colors.red),
+                                    intl.expense,
+                                    style: const TextStyle(color: Colors.red),
                                   ),
                                 ],
                               ),
@@ -133,6 +133,7 @@ class DashboardView extends StatelessWidget {
                         itemCount: controller.list.length,
                         itemBuilder: (context, index) {
                           var transaction = controller.list[index];
+                          //TODO extract method
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4),
                             child: Row(
@@ -146,7 +147,9 @@ class DashboardView extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 16),
                                 Text(
-                                  transaction is Income ? 'Income' : 'Expense',
+                                  transaction is Income
+                                      ? intl.income
+                                      : intl.expense,
                                   style: const TextStyle(
                                     color: Colors.blueAccent,
                                   ),

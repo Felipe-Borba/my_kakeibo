@@ -27,5 +27,18 @@
   "trackYourExpensesSetBudgets": "Track your expenses, set budgets, and save money.",
   "@trackYourExpensesSetBudgets": {},
   "getStarted": "Get Started",
-  "@getStarted": {}
+  "@getStarted": {},
+  "welcomeMessage": "Welcome {userName}!",
+  "@welcomeMessage": {
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Jack"
+      }
+    }
+  },
+  "income": "Income",
+  "@income": {},
+  "expense": "Expense",
+  "@expense": {}
 }

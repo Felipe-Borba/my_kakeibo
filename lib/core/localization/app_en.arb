@@ -24,8 +24,21 @@
   "@welcomeToOurFinanceApp": {},
   "manageYourFinancesWithEase": "Manage your finances with ease",
   "@manageYourFinancesWithEase": {},
-  "trackYourExpensesSetBudgets":"Track your expenses, set budgets, and save money.",
+  "trackYourExpensesSetBudgets": "Track your expenses, set budgets, and save money.",
   "@trackYourExpensesSetBudgets": {},
-  "getStarted":"Get Started",
-  "@getStarted": {}
+  "getStarted": "Get Started",
+  "@getStarted": {},
+  "welcomeMessage": "Welcome {userName}!",
+  "@welcomeMessage": {
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Jack"
+      }
+    }
+  },
+  "income": "Income",
+  "@income": {},
+  "expense": "Expense",
+  "@expense": {}
 }
