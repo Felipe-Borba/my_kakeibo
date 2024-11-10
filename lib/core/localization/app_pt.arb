@@ -1,0 +1,23 @@
+{
+  "@@locale": "pt",
+  "appTitle": "My Kakeibo",
+  "@appTitle": {
+    "description": "Seu aplicativo de finança pessoal"
+  },
+  "currencyTag": "R$ ",
+  "@currencyTag": {},
+  "welcome": "Bem Vindo",
+  "@welcome": {},
+  "email": "Email",
+  "@email": {},
+  "password": "Senha",
+  "@password": {},
+  "login": "Entrar",
+  "@login": {},
+  "createAccount": "Criar conta",
+  "@createAccount": {},
+  "name": "Nome",
+  "@name": {},
+  "titleCreateAccountPage": "Create Account",
+  "@titleCreateAccountPage": {}
+}

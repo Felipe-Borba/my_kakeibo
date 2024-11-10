@@ -4,7 +4,7 @@
   "@appTitle": {
     "description": "Your personal finance app"
   },
-  "currencyTag":"$ ",
+  "currencyTag": "$ ",
   "@currencyTag": {},
   "welcome": "Welcome",
   "@welcome": {},
@@ -15,5 +15,9 @@
   "login": "login",
   "@login": {},
   "createAccount": "Create account",
-  "@createAccount": {}
+  "@createAccount": {},
+  "name": "Name",
+  "@name": {},
+  "createAccountPageTitle": "Create Account",
+  "@createAccountPageTitle": {}
 }

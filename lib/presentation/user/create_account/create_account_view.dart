@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/password_form_field.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
@@ -15,9 +16,10 @@ class CreateAccountView extends StatelessWidget {
       create: (context) => CreateAccountController(context),
       builder: (BuildContext context, Widget? child) {
         final controller = Provider.of<CreateAccountController>(context);
+        final intl = AppLocalizations.of(context)!;
 
         return Scaffold(
-          appBar: const AppBarCustom(title: "Create account"),
+          appBar: AppBarCustom(title: intl.createAccountPageTitle),
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
@@ -29,8 +31,8 @@ class CreateAccountView extends StatelessWidget {
                   children: [
                     TextFormField(
                       key: const Key("email"),
-                      decoration: const InputDecoration(
-                        labelText: "email",
+                      decoration: InputDecoration(
+                        labelText: intl.email,
                       ),
                       onChanged: controller.setEmail,
                       validator: controller.validateEmail,
@@ -39,8 +41,8 @@ class CreateAccountView extends StatelessWidget {
                     const SizedBox(height: 8),
                     PasswordFormField(
                       key: const Key("password"),
-                      decoration: const InputDecoration(
-                        labelText: "password",
+                      decoration: InputDecoration(
+                        labelText: intl.password,
                       ),
                       onChanged: controller.setPassword,
                       validator: controller.validatePassword,
@@ -48,8 +50,8 @@ class CreateAccountView extends StatelessWidget {
                     const SizedBox(height: 8),
                     TextFormField(
                       key: const Key("name"),
-                      decoration: const InputDecoration(
-                        labelText: "name",
+                      decoration: InputDecoration(
+                        labelText: intl.name,
                       ),
                       onChanged: controller.setName,
                       validator: controller.validateName,
@@ -59,7 +61,7 @@ class CreateAccountView extends StatelessWidget {
                       child: ElevatedButton(
                         key: const Key("create-account"),
                         onPressed: controller.onClickCreateAccount,
-                        child: const Text("Create account"),
+                        child: Text(intl.createAccount),
                       ),
                     ),
                   ],
