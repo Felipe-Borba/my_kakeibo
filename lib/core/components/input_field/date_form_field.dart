@@ -45,7 +45,7 @@ class DateFormField extends StatelessWidget {
       },
       decoration: decoration.copyWith(
         hintText: "Select a Date",
-        suffixIcon: Icon(Icons.calendar_today),
+        suffixIcon: const Icon(Icons.calendar_today),
       ),
     );
   }

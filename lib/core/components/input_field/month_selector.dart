@@ -6,10 +6,10 @@ class MonthSelector extends StatefulWidget {
   final DateTime initialDate;
 
   const MonthSelector({
-    Key? key,
+    super.key,
     required this.onMonthSelected,
     required this.initialDate,
-  }) : super(key: key);
+  });
 
   @override
   _MonthSelectorState createState() => _MonthSelectorState();

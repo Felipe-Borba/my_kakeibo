@@ -131,14 +131,14 @@ dart run flutter_launcher_icons
 - [x] Isolar alguns componentes de input
 - [x] Teste nova arquitetura da tela da expense_form
 - [x] Filtrar as listas por mês
-- [ ] Login com facebook e google
+<!-- - [ ] Login com facebook e google -->
 - [ ] Teste tela escrolável dando overflow
 - [ ] Traduzir o app todo para português
 - [ ] Empty state das listas
 - [ ] Recorrência de coisas
 - [ ] Visão computacional
 - [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa (pensei em uma barra azul ou verde com vermelho na horizontal)
-- [ ] Notificações
+- [x] Notificações (fiz setup básico das push notification)
 - [ ] Lembretes de pagamentos de boletos, etc
 - [ ] Deploy
 - [ ] Observabilidade

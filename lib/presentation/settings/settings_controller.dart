@@ -9,7 +9,7 @@ import 'package:my_kakeibo/presentation/user/login/login_view.dart';
 class SettingsController with ChangeNotifier {
   SettingsController(this._context);
 
-  BuildContext _context;
+  final BuildContext _context;
   final userUseCase = Modular.get<UserUseCase>();
 
   ThemeMode _themeMode = ThemeMode.system;
