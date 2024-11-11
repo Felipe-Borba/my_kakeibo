@@ -19,7 +19,7 @@ class SettingsView extends StatelessWidget {
       appBar: AppBarCustom(
         title: intl.settings,
       ),
-      drawer: const DrawerCustom(),
+      endDrawer: const DrawerCustom(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

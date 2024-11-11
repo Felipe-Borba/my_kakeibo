@@ -43,7 +43,7 @@ class DashboardView extends StatelessWidget {
               appBar: AppBar(
                 title: Text(intl.welcomeMessage(controller.user?.name ?? "")),
               ),
-              drawer: const DrawerCustom(),
+              endDrawer: const DrawerCustom(),
               body: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,

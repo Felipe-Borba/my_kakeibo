@@ -39,7 +39,7 @@ class IncomeListView extends StatelessWidget {
 
             return Scaffold(
               appBar: AppBarCustom(title: intl.income),
-              drawer: const DrawerCustom(),
+              endDrawer: const DrawerCustom(),
               floatingActionButton: FloatingActionButton.small(
                 onPressed: () => controller.onAdd(),
                 child: const Icon(Icons.add),
