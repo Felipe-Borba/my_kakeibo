@@ -5,6 +5,7 @@ import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -133,42 +134,11 @@ class DashboardView extends StatelessWidget {
                         itemCount: controller.list.length,
                         itemBuilder: (context, index) {
                           var transaction = controller.list[index];
-                          //TODO extract method
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    formatter.format(transaction.amount),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  transaction is Income
-                                      ? intl.income
-                                      : intl.expense,
-                                  style: const TextStyle(
-                                    color: Colors.blueAccent,
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  DateFormat.MMMEd(
-                                    Localizations.localeOf(context).toString(),
-                                  ).format(transaction.date),
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                                const SizedBox(width: 16),
-                                Icon(
-                                  transaction is Expense
-                                      ? transaction.category.icon
-                                      : Icons.monetization_on_outlined,
-                                ),
-                              ],
-                            ),
+                          return item(
+                            formatter,
+                            transaction,
+                            intl,
+                            context,
                           );
                         },
                       ),
@@ -180,6 +150,48 @@ class DashboardView extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Padding item(
+    NumberFormat formatter,
+    Transaction transaction,
+    AppLocalizations intl,
+    BuildContext context,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Text(
+              formatter.format(transaction.amount),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Text(
+            transaction is Income ? intl.income : intl.expense,
+            style: const TextStyle(
+              color: Colors.blueAccent,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Text(
+            DateFormat.MMMEd(
+              Localizations.localeOf(context).toString(),
+            ).format(transaction.date),
+            style: const TextStyle(fontSize: 16),
+          ),
+          const SizedBox(width: 16),
+          Icon(
+            transaction is Expense
+                ? transaction.category.icon
+                : Icons.monetization_on_outlined,
+          ),
+        ],
+      ),
     );
   }
 }
