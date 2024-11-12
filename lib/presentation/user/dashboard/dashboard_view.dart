@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
@@ -40,8 +41,8 @@ class DashboardView extends StatelessWidget {
 
             return Scaffold(
               key: const Key("dashboard"),
-              appBar: AppBar(
-                title: Text(intl.welcomeMessage(controller.user?.name ?? "")),
+              appBar: AppBarCustom(
+                title: intl.welcomeMessage(controller.user?.name ?? ""),
               ),
               endDrawer: const DrawerCustom(),
               body: Padding(
