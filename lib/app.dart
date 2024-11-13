@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/theme.dart';
+import 'package:my_kakeibo/core/util.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/settings/settings_controller.dart';
@@ -12,6 +13,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = View.of(context) //
+        .platformDispatcher
+        .platformBrightness;
+    TextTheme textTheme = createTextTheme(context, "Alice", "Anek Bangla");
+    MaterialTheme theme = MaterialTheme(textTheme);
+
     return ChangeNotifierProvider(
       create: (context) => SettingsController(context),
       builder: (context, child) {
@@ -43,8 +50,10 @@ class MyApp extends StatelessWidget {
               onGenerateTitle: (BuildContext context) =>
                   AppLocalizations.of(context)!.appTitle,
               //
-              theme: lightTheme,
-              darkTheme: darkTheme,
+              darkTheme: theme.dark(),
+              theme: brightness == Brightness.light //
+                  ? theme.light()
+                  : theme.dark(),
               themeMode: settingsController.themeMode,
               //
               routerConfig: Modular.routerConfig,

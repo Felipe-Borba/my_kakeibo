@@ -17,7 +17,10 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.green, Color.fromARGB(255, 129, 199, 132)],
+                colors: [
+                  Color.fromARGB(255, 82, 178, 85),
+                  Color.fromARGB(255, 129, 199, 132)
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -27,7 +30,15 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
         AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(title),
+          title: Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          iconTheme: const IconThemeData(
+            color: Colors.white,
+          ),
         ),
       ]),
     );

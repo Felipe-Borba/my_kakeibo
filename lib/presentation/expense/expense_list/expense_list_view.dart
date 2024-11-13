@@ -28,6 +28,7 @@ class ExpenseListView extends StatelessWidget {
           symbol: intl.currencyTag,
           decimalDigits: 2,
         );
+        //TODO adicionar mais um campo de parcelamento, e se eu editar um registro de parcela?
 
         return FutureBuilder(
           future: controller.getInitialData(),
