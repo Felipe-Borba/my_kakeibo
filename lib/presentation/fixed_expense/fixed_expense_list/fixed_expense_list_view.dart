@@ -116,7 +116,6 @@ class FixedExpenseListView extends StatelessWidget {
             onPressed: () => controller.onEdit(fixedExpense),
             icon: const Icon(Icons.edit),
           ),
-          const SizedBox(width: 8),
           IconButton(
             icon: const Icon(Icons.delete),
             color: Colors.red,
