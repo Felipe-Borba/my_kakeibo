@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_view.dart';
+import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
@@ -40,6 +41,7 @@ class DrawerCustom extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
+                    const SizedBox(height: 4)
                   ],
                 ),
               ),
@@ -57,6 +59,13 @@ class DrawerCustom extends StatelessWidget {
             title: Text(intl.expense),
             onTap: () {
               Modular.to.navigate(ExpenseListView.routeName);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.card_membership),
+            title: Text(intl.fixedExpense),
+            onTap: () {
+              Modular.to.navigate(FixedExpenseListView.routeName);
             },
           ),
           ListTile(

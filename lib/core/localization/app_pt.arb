@@ -76,5 +76,7 @@
   "dateAsc": "Data ascendente",
   "@dateAsc": {},
   "dateDesc": "Data descendente",
-  "@dateDesc": {}
+  "@dateDesc": {},
+  "fixedExpense": "Despesa fixa",
+  "@fixedExpense": {}
 }
