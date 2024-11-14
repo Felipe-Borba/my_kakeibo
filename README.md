@@ -4,6 +4,10 @@ Projeto de flutter MY KAKEIBO
 
 Aplicativo realizado com o flutter e o firebase .
 
+## Setup your project
+TODO ver se precisa gerar os arquivos de automagicos de serialização
+instalar as depencias e pau no gato
+
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the
@@ -89,6 +93,7 @@ Algumas dependências que vale mencionar e saber sobre
 
 - [Equatable](https://pub.dev/packages/equatable)
 - [flutter_modular](https://pub.dev/packages/flutter_modular)
+- [json_serializable](https://pub.dev/packages/json_serializable)
 
 **Validação**
 
@@ -101,6 +106,15 @@ Algumas dependências que vale mencionar e saber sobre
 **Styling**
 - [Mix](https://www.fluttermix.com)
 
+### Serialização para json
+depois de anotar la roda
+```
+dart run build_runner build --delete-conflicting-outputs
+```
+existe uma modo maroto que ele fica vendo as mudanças e gerando automático
+```
+flutter pub run build_runner watch
+```
 
 ### Geração de ícone de launcher
 

@@ -1,5 +1,5 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/domain/entity/fixed_expense.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 
 abstract class FixedExpenseRepository {
   Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense);

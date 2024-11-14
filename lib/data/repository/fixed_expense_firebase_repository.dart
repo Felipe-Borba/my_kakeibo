@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/user_firebase_repository.dart';
-import 'package:my_kakeibo/domain/entity/fixed_expense.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 
 class FixedExpenseFirebaseRepository implements FixedExpenseRepository {

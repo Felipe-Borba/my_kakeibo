@@ -1,6 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 
+part 'fixed_expense.g.dart';
+
+@JsonSerializable()
 class FixedExpense {
   String? id;
   List<Expense> expenseList;
@@ -22,27 +26,9 @@ class FixedExpense {
     required this.category,
   });
 
-  factory FixedExpense.fromJson(Map<String, dynamic> json) {
-    return FixedExpense(
-      id: json["id"],
-      amount: (json["amount"] as num).toDouble(),
-      dueDate: json["dueDate"],
-      description: json["description"],
-      category: json['category'],
-      expenseList: json['add lib'],
-      frequency: json['todo'],
-      remember: json['todo'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'amount': amount,
-      'dueDate': dueDate,
-      'description': description,
-    };
-  }
+  factory FixedExpense.fromJson(Map<String, dynamic> json) =>
+      _$FixedExpenseFromJson(json);
+  Map<String, dynamic> toJson() => _$FixedExpenseToJson(this);
 }
 
 enum Frequency {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/domain/entity/fixed_expense.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_expense_form_view.dart';
 
