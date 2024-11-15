@@ -59,6 +59,9 @@ class FixedExpenseFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   DateFormField(
+                    decoration: InputDecoration(
+                      labelText: intl.dueDate,
+                    ),
                     key: const Key("dueDate"),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: controller.validateDueDate,

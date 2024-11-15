@@ -26,6 +26,12 @@ class FixedExpenseUseCase {
     // e na data do vencimento/pagamento cadastrar como expense,
     // isso deixaria flexivel e com possibilidade de calculo de juros, controle de mes pago, etc...
     // talvez complique um pouco para mostrar os dados na home como despesa projetada ou add ela direto como despesa...
+    if (fixedExpense.id != null) {
+      await fixedExpenseRepository.update(fixedExpense);
+    } else {
+      await fixedExpenseRepository.insert(fixedExpense);
+    }
+
     return (null, Empty());
   }
 

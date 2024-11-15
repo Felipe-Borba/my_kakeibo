@@ -42,12 +42,6 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
 
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
-
-        Timestamp date = data["date"];
-        data["date"] = date.toDate();
-
-        data["id"] = doc.id;
-
         return FixedExpense.fromJson(data);
       }).toList();
 
@@ -58,7 +52,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   }
 
   @override
-  Future<(FixedExpense?, AppError)> insert(FixedExpense expense) async {
+  Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -66,7 +60,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .add(expense.toJson());
+          .add(fixedExpense.toJson());
 
       return (null, Empty());
     } catch (e) {
@@ -75,7 +69,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   }
 
   @override
-  Future<(FixedExpense?, AppError)> update(FixedExpense expense) async {
+  Future<(FixedExpense?, AppError)> update(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -83,11 +77,11 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .doc(expense.id);
+          .doc(fixedExpense.id);
 
-      await docRef.update(expense.toJson());
+      await docRef.update(fixedExpense.toJson());
 
-      return (expense, Empty());
+      return (fixedExpense, Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
     }

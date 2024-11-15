@@ -101,8 +101,10 @@ class FixedExpenseListView extends StatelessWidget {
         children: [
           Icon(fixedExpense.category.icon),
           const SizedBox(width: 16),
+          Text(fixedExpense.description),
+          const SizedBox(width: 16),
           Text(
-            formatter.format(fixedExpense.description),
+            formatter.format(fixedExpense.amount),
           ),
           const SizedBox(width: 16),
           Text(

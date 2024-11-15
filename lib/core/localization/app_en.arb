@@ -78,5 +78,7 @@
   "dateDesc": "Date desc",
   "@dateDesc": {},
   "fixedExpense": "Fixed expense",
-  "@fixedExpense": {}
+  "@fixedExpense": {},
+  "dueDate": "Due date",
+  "@dueDate": {}
 }

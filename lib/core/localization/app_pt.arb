@@ -78,5 +78,7 @@
   "dateDesc": "Data descendente",
   "@dateDesc": {},
   "fixedExpense": "Despesa fixa",
-  "@fixedExpense": {}
+  "@fixedExpense": {},
+  "dueDate": "Vencimento",
+  "@dueDate": {}
 }
