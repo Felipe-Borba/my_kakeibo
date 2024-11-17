@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_expense_form_controller.dart';
@@ -51,7 +52,10 @@ class FixedExpenseFormView extends StatelessWidget {
                         ExpenseCategory.values.map((ExpenseCategory category) {
                       return DropdownMenuItem(
                         value: category,
-                        child: Text(category.toString().split('.').last),
+                        child: Text(ExpenseCategoryHelper.getTranslation(
+                          category,
+                          context: context,
+                        )),
                       );
                     }).toList(),
                     validator: controller.validateCategory,

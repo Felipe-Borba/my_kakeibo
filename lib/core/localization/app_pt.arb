@@ -80,5 +80,15 @@
   "fixedExpense": "Despesa fixa",
   "@fixedExpense": {},
   "dueDate": "Vencimento",
-  "@dueDate": {}
+  "@dueDate": {},
+  "misc": "Outros",
+  "@misc": {},
+  "rent": "Aluguel",
+  "@rent": {},
+  "food": "Comida",
+  "@food": {},
+  "entertainment": "Entretenimento",
+  "@entertainment": {},
+  "salary": "Salario",
+  "@salary": {}
 }

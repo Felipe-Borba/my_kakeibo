@@ -5,8 +5,8 @@ import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
+import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -99,7 +99,7 @@ class FixedExpenseListView extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(fixedExpense.category.icon),
+          Icon(ExpenseCategoryHelper.getIcon(fixedExpense.category)),
           const SizedBox(width: 16),
           Text(fixedExpense.description),
           const SizedBox(width: 16),

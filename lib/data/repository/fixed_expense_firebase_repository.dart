@@ -56,6 +56,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
+      fixedExpense.dueDate = fixedExpense.dueDate.toUtc();// no firebase isso ƒoi uma gambi para lidar com utc timestamp ja que a lib serializa para string iso8601
 
       await _db
           .collection(UserFirebaseRepository.table)
@@ -73,6 +74,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   Future<(FixedExpense?, AppError)> update(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
+      fixedExpense.dueDate = fixedExpense.dueDate.toUtc();
 
       var docRef = _db
           .collection(UserFirebaseRepository.table)

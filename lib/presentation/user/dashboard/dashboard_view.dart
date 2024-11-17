@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
@@ -188,7 +188,7 @@ class DashboardView extends StatelessWidget {
           const SizedBox(width: 16),
           Icon(
             transaction is Expense
-                ? transaction.category.icon
+                ? ExpenseCategoryHelper.getIcon(transaction.category)
                 : Icons.monetization_on_outlined,
           ),
         ],

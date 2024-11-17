@@ -42,10 +42,6 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
 
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
-
-        Timestamp date = data["date"];
-        data["date"] = date.toDate();
-
         data["id"] = doc.id;
 
         return Expense.fromJson(data);
@@ -61,6 +57,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   Future<(Expense?, AppError)> insert(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
+      expense.date = expense.date.toUtc();
 
       await _db
           .collection(UserFirebaseRepository.table)
@@ -78,6 +75,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   Future<(Expense?, AppError)> update(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
+      expense.date = expense.date.toUtc();
 
       var docRef = _db
           .collection(UserFirebaseRepository.table)
@@ -120,10 +118,6 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
 
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
-
-        Timestamp date = data["date"];
-        data["date"] = date.toDate();
-
         data["id"] = doc.id;
 
         return Expense.fromJson(data);

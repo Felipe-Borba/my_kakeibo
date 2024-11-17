@@ -80,5 +80,15 @@
   "fixedExpense": "Fixed expense",
   "@fixedExpense": {},
   "dueDate": "Due date",
-  "@dueDate": {}
+  "@dueDate": {},
+  "misc": "Misc",
+  "@misc": {},
+  "rent": "Rent",
+  "@rent": {},
+  "food": "Food",
+  "@food": {},
+  "entertainment": "Entertainment",
+  "@entertainment": {},
+  "salary": "Salary",
+  "@salary": {}
 }
