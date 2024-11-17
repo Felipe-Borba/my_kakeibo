@@ -42,6 +42,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
 
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
+        data["id"] = doc.id;
         return FixedExpense.fromJson(data);
       }).toList();
 
