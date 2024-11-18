@@ -90,5 +90,15 @@
   "entertainment": "Entertainment",
   "@entertainment": {},
   "salary": "Salary",
-  "@salary": {}
+  "@salary": {},
+  "frequency": "Frequency",
+  "@frequency": {},
+  "daily": "Daily",
+  "@daily": {},
+  "weekly": "Weekly",
+  "@weekly": {},
+  "monthly": "Monthly",
+  "@monthly": {},
+  "annually": "Annually",
+  "@annually": {}
 }

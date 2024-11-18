@@ -23,6 +23,7 @@ class FixedExpenseFormController with ChangeNotifier {
   late DateTime? dueDate = _fixedExpense?.dueDate;
   late String description = _fixedExpense?.description ?? '';
   late ExpenseCategory? category = _fixedExpense?.category;
+  late Frequency? frequency = _fixedExpense?.frequency;
 
   // Actions
   void setAmount(double? value) {
@@ -75,8 +76,8 @@ class FixedExpenseFormController with ChangeNotifier {
       dueDate: dueDate!,
       amount: amount!,
       expenseList: _fixedExpense?.expenseList ?? [],
-      frequency: Frequency.monthly,
-      remember: Remember.no,
+      frequency: frequency!,
+      remember: Remember.no, //TODO implement local notifications
     ));
 
     if (error is Empty) {
@@ -86,5 +87,10 @@ class FixedExpenseFormController with ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  String? validateFrequency(Frequency? value) {
+    if (value == null) return "Selecione uma opção";
+    return null;
   }
 }

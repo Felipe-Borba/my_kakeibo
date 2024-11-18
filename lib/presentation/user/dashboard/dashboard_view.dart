@@ -41,6 +41,7 @@ class DashboardView extends StatelessWidget {
 
             return Scaffold(
               key: const Key("dashboard"),
+              //TODO talvez colocar um botão flutuante aqui na home que abre outros btns para add os jaguara
               appBar: AppBarCustom(
                 title: intl.welcomeMessage(controller.user?.name ?? ""),
               ),
