@@ -111,9 +111,8 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .where("date",
-              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfMonth))
-          .where("date", isLessThanOrEqualTo: Timestamp.fromDate(endOfMonth));
+          .where("date", isGreaterThanOrEqualTo: startOfMonth.toIso8601String())
+          .where("date", isLessThanOrEqualTo: endOfMonth.toIso8601String());
 
       var querySnapshot = await query.get();
 

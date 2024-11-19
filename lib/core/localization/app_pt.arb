@@ -100,5 +100,11 @@
   "monthly": "Mensal",
   "@monthly": {},
   "annually": "Anual",
-  "@annually": {}
+  "@annually": {},
+  "confirmPayment": "Confirmação de pagamento",
+  "@confirmPayment": {},
+  "confirmPaymentText": "Tem certeza que deseja confirmar o pagamento?",
+  "@confirmPaymentText": {},
+  "pay": "Pay",
+  "@pay": {}
 }

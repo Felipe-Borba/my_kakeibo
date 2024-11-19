@@ -9,8 +9,8 @@ part of 'fixed_expense.dart';
 FixedExpense _$FixedExpenseFromJson(Map<String, dynamic> json) => FixedExpense(
       id: json['id'] as String?,
       amount: (json['amount'] as num).toDouble(),
-      expenseList: (json['expenseList'] as List<dynamic>)
-          .map((e) => Expense.fromJson(e as Map<String, dynamic>))
+      expenseIdList: (json['expenseIdList'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
       dueDate: DateTime.parse(json['dueDate'] as String),
       description: json['description'] as String,
@@ -22,7 +22,7 @@ FixedExpense _$FixedExpenseFromJson(Map<String, dynamic> json) => FixedExpense(
 Map<String, dynamic> _$FixedExpenseToJson(FixedExpense instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'expenseList': instance.expenseList,
+      'expenseIdList': instance.expenseIdList,
       'dueDate': instance.dueDate.toIso8601String(),
       'description': instance.description,
       'frequency': _$FrequencyEnumMap[instance.frequency]!,

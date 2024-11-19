@@ -75,7 +75,7 @@ class FixedExpenseFormController with ChangeNotifier {
       category: category!,
       dueDate: dueDate!,
       amount: amount!,
-      expenseList: _fixedExpense?.expenseList ?? [],
+      expenseIdList: _fixedExpense?.expenseIdList ?? [],
       frequency: frequency!,
       remember: Remember.no, //TODO implement local notifications
     ));

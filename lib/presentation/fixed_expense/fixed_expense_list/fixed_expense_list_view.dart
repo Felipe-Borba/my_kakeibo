@@ -73,6 +73,7 @@ class FixedExpenseListView extends StatelessWidget {
                             formatter,
                             controller,
                             context,
+                            intl,
                           );
                         },
                       ),
@@ -88,11 +89,11 @@ class FixedExpenseListView extends StatelessWidget {
   }
 
   Widget item(
-    FixedExpense fixedExpense,
-    NumberFormat formatter,
-    FixedExpenseListController controller,
-    BuildContext context,
-  ) {
+      FixedExpense fixedExpense,
+      NumberFormat formatter,
+      FixedExpenseListController controller,
+      BuildContext context,
+      AppLocalizations intl) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -128,6 +129,38 @@ class FixedExpenseListView extends StatelessWidget {
               }
             },
           ),
+          IconButton(
+            onPressed: () async {
+              var response = await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text(intl.confirmPayment),
+                    content: Text(intl.confirmPaymentText),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text(intl.cancel),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop(true);
+                        },
+                        child: Text(intl.pay),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              if (response == true) {
+                await controller.pay(fixedExpense);
+              }
+            },
+            icon: const Icon(Icons.payment),
+          )
         ],
       ),
     );

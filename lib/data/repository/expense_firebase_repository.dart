@@ -59,13 +59,14 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
       var userId = _auth.currentUser?.uid;
       expense.date = expense.date.toUtc();
 
-      await _db
+      var res = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
           .add(expense.toJson());
+      expense.id = res.id;
 
-      return (null, Empty());
+      return (expense, Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
     }
@@ -110,9 +111,8 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .where("date",
-              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfMonth))
-          .where("date", isLessThanOrEqualTo: Timestamp.fromDate(endOfMonth));
+          .where("date", isGreaterThanOrEqualTo: startOfMonth.toIso8601String())
+          .where("date", isLessThanOrEqualTo: endOfMonth.toIso8601String());
 
       var querySnapshot = await query.get();
 

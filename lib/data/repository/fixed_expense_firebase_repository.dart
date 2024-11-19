@@ -43,6 +43,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
         data["id"] = doc.id;
+
         return FixedExpense.fromJson(data);
       }).toList();
 
@@ -56,15 +57,17 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
-      fixedExpense.dueDate = fixedExpense.dueDate.toUtc();// no firebase isso ƒoi uma gambi para lidar com utc timestamp ja que a lib serializa para string iso8601
+      fixedExpense.dueDate = fixedExpense.dueDate
+          .toUtc(); // no firebase isso ƒoi uma gambi para lidar com utc timestamp ja que a lib serializa para string iso8601
 
-      await _db
+      var res = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
           .add(fixedExpense.toJson());
 
-      return (null, Empty());
+      fixedExpense.id = res.id;
+      return (fixedExpense, Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
     }

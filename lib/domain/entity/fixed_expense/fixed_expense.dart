@@ -7,7 +7,7 @@ part 'fixed_expense.g.dart';
 @JsonSerializable()
 class FixedExpense {
   String? id;
-  List<Expense> expenseList;
+  List<String> expenseIdList;
   DateTime dueDate;
   String description;
   Frequency frequency;
@@ -18,7 +18,7 @@ class FixedExpense {
   FixedExpense({
     this.id,
     required this.amount,
-    required this.expenseList,
+    required this.expenseIdList,
     required this.dueDate,
     required this.description,
     required this.frequency,
@@ -29,6 +29,12 @@ class FixedExpense {
   factory FixedExpense.fromJson(Map<String, dynamic> json) =>
       _$FixedExpenseFromJson(json);
   Map<String, dynamic> toJson() => _$FixedExpenseToJson(this);
+
+  void pay(Expense expense) {
+    if (expense.id != null) {
+      expenseIdList.add(expense.id!);
+    }
+  }
 }
 
 enum Frequency {
