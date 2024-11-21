@@ -77,6 +77,8 @@ class FixedExpenseListController with ChangeNotifier {
     var (res, error) = await fixedExpenseUseCase.pay(fixedExpense);
     if (error is Failure) {
       showSnackbar(context: _context, text: error.message);
+    } else {
+      _doRefresh(true);
     }
   }
 }

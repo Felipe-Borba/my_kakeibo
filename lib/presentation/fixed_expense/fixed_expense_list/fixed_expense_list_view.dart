@@ -130,35 +130,37 @@ class FixedExpenseListView extends StatelessWidget {
             },
           ),
           IconButton(
-            onPressed: () async {
-              var response = await showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text(intl.confirmPayment),
-                    content: Text(intl.confirmPaymentText),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(false);
-                        },
-                        child: Text(intl.cancel),
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          Navigator.of(context).pop(true);
-                        },
-                        child: Text(intl.pay),
-                      ),
-                    ],
-                  );
-                },
-              );
+            onPressed: fixedExpense.alreadyPaid
+                ? null
+                : () async {
+                    var response = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(intl.confirmPayment),
+                          content: Text(intl.confirmPaymentText),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: Text(intl.cancel),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: Text(intl.pay),
+                            ),
+                          ],
+                        );
+                      },
+                    );
 
-              if (response == true) {
-                await controller.pay(fixedExpense);
-              }
-            },
+                    if (response == true) {
+                      await controller.pay(fixedExpense);
+                    }
+                  },
             icon: const Icon(Icons.payment),
           )
         ],
