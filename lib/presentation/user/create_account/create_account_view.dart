@@ -48,6 +48,15 @@ class CreateAccountView extends StatelessWidget {
                       validator: controller.validatePassword,
                     ),
                     const SizedBox(height: 8),
+                    PasswordFormField(
+                      key: const Key("passwordConfirm"),
+                      decoration: InputDecoration(
+                        labelText: intl.passwordConfirm,
+                      ),
+                      onChanged: controller.setPasswordConfirm,
+                      validator: controller.validatePasswordConfirm,
+                    ),
+                    const SizedBox(height: 8),
                     TextFormField(
                       key: const Key("name"),
                       decoration: InputDecoration(

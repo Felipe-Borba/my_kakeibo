@@ -12,6 +12,8 @@
   "@email": {},
   "password": "Password",
   "@password": {},
+  "passwordConfirm": "Confirm Password",
+  "@passwordConfirm" : {},
   "login": "login",
   "@login": {},
   "createAccount": "Create account",

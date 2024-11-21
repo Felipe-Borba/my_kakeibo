@@ -17,6 +17,7 @@ class CreateAccountController with ChangeNotifier {
   // State
   String? email;
   String? password;
+  String? passwordConfirm;
   String? name;
 
   // Actions
@@ -70,6 +71,17 @@ class CreateAccountController with ChangeNotifier {
   String? validatePassword(String? value) {
     if (value == null) return "Field is required";
     if (value.isEmpty) return "Field is required";
+    return null;
+  }
+
+  void setPasswordConfirm(String value) {
+    passwordConfirm = value;
+  }
+
+  String? validatePasswordConfirm(String? value) {
+    if (value == null) return "Field is required";
+    if (value.isEmpty) return "Field is required";
+    if (password != value) return "Senha não confere";
     return null;
   }
 }
