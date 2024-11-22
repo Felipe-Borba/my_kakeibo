@@ -42,12 +42,7 @@ class IncomeFirebaseRepository implements IncomeRepository {
 
       var incomes = querySnapshot.docs.map((doc) {
         var data = doc.data();
-
-        Timestamp date = data["date"];
-        data["date"] = date.toDate();
-
         data["id"] = doc.id;
-
         return Income.fromJson(data);
       }).toList();
 
@@ -118,12 +113,7 @@ class IncomeFirebaseRepository implements IncomeRepository {
 
       var incomes = querySnapshot.docs.map((doc) {
         var data = doc.data();
-
-        Timestamp date = data["date"];
-        data["date"] = date.toDate();
-
         data["id"] = doc.id;
-
         return Income.fromJson(data);
       }).toList();
 

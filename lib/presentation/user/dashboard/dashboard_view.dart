@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/core/components/chats/pie_chart_custom.dart';
 import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
@@ -57,12 +58,12 @@ class DashboardView extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.account_balance,
-                            color: titleLarge?.color,
-                            size: 32,
-                          ),
-                          const SizedBox(height: 8),
+                          // Icon(
+                          //   Icons.account_balance,
+                          //   color: titleLarge?.color,
+                          //   size: 32,
+                          // ),
+                          // const SizedBox(height: 8),
                           Text(
                             formatter.format(controller.total),
                             style: TextStyle(
@@ -71,6 +72,8 @@ class DashboardView extends StatelessWidget {
                               color: titleLarge?.color,
                             ),
                           ),
+                          const SizedBox(height: 8),
+                          const PieChartCustom()
                         ],
                       ),
                     ),
