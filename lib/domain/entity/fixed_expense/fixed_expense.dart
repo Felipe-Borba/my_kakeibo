@@ -60,6 +60,9 @@ class FixedExpense {
     if (expense.id != null) {
       expenseIdList.add(expense.id!);
     }
+
+    ///TODO seria legal perguntar o dia que foi pago a conta, e registrar aqui
+    /// para depois ficar mais fácil de saber se ja foi pago ou não e conta
     switch (frequency) {
       case Frequency.daily:
         dueDate = dueDate.add(const Duration(days: 1));
