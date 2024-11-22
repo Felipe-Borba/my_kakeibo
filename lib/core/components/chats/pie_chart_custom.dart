@@ -1,15 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+
 import 'package:my_kakeibo/core/components/chats/indicator.dart';
 
 class PieChartCustom extends StatefulWidget {
-  const PieChartCustom({super.key});
+  final List<PieData> data;
+
+  const PieChartCustom({super.key, required this.data});
 
   @override
   State<StatefulWidget> createState() => PieChart2State();
 }
 
-class PieChart2State extends State {
+class PieChart2State extends State<PieChartCustom> {
   int touchedIndex = -1;
 
   @override
@@ -47,35 +51,21 @@ class PieChart2State extends State {
               ),
             ),
           ),
-          const Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Indicator(
-                color: Colors.blue,
-                text: 'First',
-                isSquare: true,
-              ),
-              SizedBox(height: 4),
-              Indicator(
-                color: Colors.red,
-                text: 'Second',
-                isSquare: true,
-              ),
-              SizedBox(height: 4),
-              Indicator(
-                color: Colors.green,
-                text: 'Third',
-                isSquare: true,
-              ),
-              SizedBox(height: 4),
-              Indicator(
-                color: Colors.orange,
-                text: 'Fourth',
-                isSquare: true,
-              ),
-              SizedBox(height: 18),
-            ],
+            children: widget.data.map((e) {
+              return Column(
+                children: [
+                  Indicator(
+                    color: e.color,
+                    text: e.label,
+                    isSquare: true,
+                  ),
+                  const SizedBox(height: 4),
+                ],
+              );
+            }).toList(),
           ),
         ],
       ),
@@ -83,67 +73,37 @@ class PieChart2State extends State {
   }
 
   List<PieChartSectionData> makeSections() {
-    return List.generate(4, (i) {
+    return widget.data.map((i) {
       final isTouched = i == touchedIndex;
       final fontSize = isTouched ? 25.0 : 16.0;
       final radius = isTouched ? 60.0 : 50.0;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: Colors.blue,
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: Colors.red,
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: Colors.green,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: Colors.orange,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              shadows: shadows,
-            ),
-          );
-        default:
-          throw Error();
-      }
-    });
+      return PieChartSectionData(
+        color: i.color,
+        value: i.value,
+        title: i.title,
+        radius: radius,
+        titleStyle: TextStyle(
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+          shadows: shadows,
+        ),
+      );
+    }).toList();
   }
+}
+
+class PieData {
+  Color color;
+  double value;
+  String title;
+  String label;
+
+  PieData({
+    required this.color,
+    required this.value,
+    required this.title,
+    required this.label,
+  });
 }

@@ -73,7 +73,28 @@ class DashboardView extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          const PieChartCustom()
+                          PieChartCustom(
+                            data: [
+                              PieData(
+                                color: Colors.blue,
+                                value: 40,
+                                title: '40%',
+                                label: "second",
+                              ),
+                              PieData(
+                                color: Colors.red,
+                                label: "first",
+                                title: "30%",
+                                value: 30,
+                              ),
+                              PieData(
+                                color: Colors.green,
+                                value: 15,
+                                title: '15%',
+                                label: "third",
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
