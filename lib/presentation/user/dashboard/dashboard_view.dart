@@ -21,7 +21,7 @@ class DashboardView extends StatelessWidget {
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;
 
     return ChangeNotifierProvider(
-      create: (context) => DashboardController(),
+      create: (context) => DashboardController(context),
       builder: (BuildContext context, Widget? child) {
         final controller = Provider.of<DashboardController>(context);
         final intl = AppLocalizations.of(context)!;
@@ -58,43 +58,16 @@ class DashboardView extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Icon(
-                          //   Icons.account_balance,
-                          //   color: titleLarge?.color,
-                          //   size: 32,
-                          // ),
-                          // const SizedBox(height: 8),
                           Text(
-                            formatter.format(controller.total),
+                            "Total: ${formatter.format(controller.total)}",
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: titleLarge?.color,
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          PieChartCustom(
-                            data: [
-                              PieData(
-                                color: Colors.blue,
-                                value: 40,
-                                title: '40%',
-                                label: "second",
-                              ),
-                              PieData(
-                                color: Colors.red,
-                                label: "first",
-                                title: "30%",
-                                value: 30,
-                              ),
-                              PieData(
-                                color: Colors.green,
-                                value: 15,
-                                title: '15%',
-                                label: "third",
-                              ),
-                            ],
-                          ),
+                          const Divider(),
+                          PieChartCustom(data: controller.pieChartData),
                         ],
                       ),
                     ),

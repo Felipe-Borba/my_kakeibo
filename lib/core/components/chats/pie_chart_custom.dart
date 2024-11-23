@@ -52,17 +52,17 @@ class PieChart2State extends State<PieChartCustom> {
             ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: widget.data.map((e) {
               return Column(
                 children: [
+                  const SizedBox(height: 8),
                   Indicator(
                     color: e.color,
                     text: e.label,
                     isSquare: true,
                   ),
-                  const SizedBox(height: 4),
                 ],
               );
             }).toList(),
@@ -75,7 +75,7 @@ class PieChart2State extends State<PieChartCustom> {
   List<PieChartSectionData> makeSections() {
     return widget.data.map((i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
+      final fontSize = isTouched ? 25.0 : 12.0;
       final radius = isTouched ? 60.0 : 50.0;
       const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
       return PieChartSectionData(
