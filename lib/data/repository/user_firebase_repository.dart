@@ -10,10 +10,11 @@ class UserFirebaseRepository extends UserRepository {
   @override
   Future<(User?, AppError)> getUserById(String id) async {
     try {
-      var userQuery =
-          await _db.collection(table).where("id", isEqualTo: id).get();
+      var userQuery = await _db.collection(table).doc(id).get();
 
-      var userMap = userQuery.docs.first.data();
+      var userMap = userQuery.data();
+
+      if (userMap == null) return (null, Failure("User not found"));
 
       return (User.fromJson(userMap), Empty());
     } catch (e) {
