@@ -122,7 +122,7 @@ Para simplificar o processo usarei a dependência [flutter_launcher_icons](https
 
 Para instalar o pacote:
 ```markdown
-flutter pub add flutter_launcher_icons
+flutter pub add flutter_launcher_icons --dev
 ```
 
 Para criar o arquivo de configuração automaticamente:
