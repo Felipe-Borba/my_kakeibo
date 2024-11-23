@@ -6,6 +6,7 @@ import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
 import 'package:my_kakeibo/core/expense_category_helper.dart';
+import 'package:my_kakeibo/core/frequency_helper.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
 import 'package:provider/provider.dart';
@@ -89,81 +90,109 @@ class FixedExpenseListView extends StatelessWidget {
   }
 
   Widget item(
-      FixedExpense fixedExpense,
-      NumberFormat formatter,
-      FixedExpenseListController controller,
-      BuildContext context,
-      AppLocalizations intl) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(ExpenseCategoryHelper.getIcon(fixedExpense.category)),
-          const SizedBox(width: 16),
-          Text(fixedExpense.description),
-          const SizedBox(width: 16),
-          Text(
-            formatter.format(fixedExpense.amount),
-          ),
-          const SizedBox(width: 16),
-          Text(
-            DateFormat.Md(
-              Localizations.localeOf(context).toString(),
-            ).format(fixedExpense.dueDate),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(width: 16),
-          IconButton(
-            onPressed: () => controller.onEdit(fixedExpense),
-            icon: const Icon(Icons.edit),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            color: Colors.red,
-            onPressed: () async {
-              var confirm = await showDeleteDialog(context);
-              if (confirm == true) {
-                controller.onDelete(fixedExpense);
-              }
-            },
-          ),
-          IconButton(
-            onPressed: fixedExpense.alreadyPaid
-                ? null
-                : () async {
-                    var response = await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text(intl.confirmPayment),
-                          content: Text(intl.confirmPaymentText),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(false);
-                              },
-                              child: Text(intl.cancel),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                Navigator.of(context).pop(true);
-                              },
-                              child: Text(intl.pay),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+    FixedExpense fixedExpense,
+    NumberFormat formatter,
+    FixedExpenseListController controller,
+    BuildContext context,
+    AppLocalizations intl,
+  ) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(ExpenseCategoryHelper.getIcon(
+                        fixedExpense.category,
+                      )),
+                      const SizedBox(width: 8),
+                      Text(ExpenseCategoryHelper.getTranslation(
+                        fixedExpense.category,
+                        context: context,
+                      )),
+                      const SizedBox(width: 8),
+                      Text(fixedExpense.description),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(FrequencyHelper.getTranslation(
+                        fixedExpense.frequency,
+                        context: context,
+                      )),
+                      const SizedBox(width: 8),
+                      Text(formatter.format(fixedExpense.amount)),
+                      const SizedBox(width: 8),
+                      Text(
+                        DateFormat.Md(
+                          Localizations.localeOf(context).toString(),
+                        ).format(fixedExpense.dueDate),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            IconButton(
+              onPressed: () => controller.onEdit(fixedExpense),
+              icon: const Icon(Icons.edit),
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              color: Colors.red,
+              onPressed: () async {
+                var confirm = await showDeleteDialog(context);
+                if (confirm == true) {
+                  controller.onDelete(fixedExpense);
+                }
+              },
+            ),
+            IconButton(
+              onPressed: fixedExpense.alreadyPaid
+                  ? null
+                  : () async {
+                      var response = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(intl.confirmPayment),
+                            content: Text(intl.confirmPaymentText),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(false);
+                                },
+                                child: Text(intl.cancel),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  Navigator.of(context).pop(true);
+                                },
+                                child: Text(intl.pay),
+                              ),
+                            ],
+                          );
+                        },
+                      );
 
-                    if (response == true) {
-                      await controller.pay(fixedExpense);
-                    }
-                  },
-            icon: const Icon(Icons.payment),
-          )
-        ],
+                      if (response == true) {
+                        await controller.pay(fixedExpense);
+                      }
+                    },
+              icon: const Icon(Icons.payment),
+            )
+          ],
+        ),
       ),
     );
   }

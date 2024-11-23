@@ -4,11 +4,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FrequencyHelper {
   static String getTranslation(
-    Frequency category, {
+    Frequency frequency, {
     required BuildContext context,
   }) {
     final intl = AppLocalizations.of(context)!;
-    switch (category) {
+    switch (frequency) {
       case Frequency.daily:
         return intl.daily;
       case Frequency.weekly:
