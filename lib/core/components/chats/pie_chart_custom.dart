@@ -73,24 +73,28 @@ class PieChart2State extends State<PieChartCustom> {
   }
 
   List<PieChartSectionData> makeSections() {
-    return widget.data.map((i) {
-      final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 12.0;
-      final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+    return List.generate(widget.data.length, (index) {
+      final data = widget.data[index];
+      final isTouched = index == touchedIndex;
+      final fontSize = isTouched ? 20.0 : 12.0;
+      final radius = isTouched ? 70.0 : 50.0;
+      const shadows = [Shadow(color: Colors.black, blurRadius: 4)];
+
       return PieChartSectionData(
-        color: i.color,
-        value: i.value,
-        title: i.title,
+        color: data.color,
+        value: data.value,
+        title: data.title,
         radius: radius,
         titleStyle: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
           color: Colors.white,
           shadows: shadows,
+          decorationStyle: TextDecorationStyle.solid,
+          decorationThickness: 3
         ),
       );
-    }).toList();
+    });
   }
 }
 
