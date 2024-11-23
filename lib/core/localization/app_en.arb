@@ -13,7 +13,7 @@
   "password": "Password",
   "@password": {},
   "passwordConfirm": "Confirm Password",
-  "@passwordConfirm" : {},
+  "@passwordConfirm": {},
   "login": "login",
   "@login": {},
   "createAccount": "Create account",
@@ -108,5 +108,14 @@
   "confirmPaymentText": "Are you sure you want to check the payment",
   "@confirmPaymentText": {},
   "pay": "Pagar",
-  "@pay": {}
+  "@pay": {},
+  "total": "Total balance {number}",
+  "@total": {
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "example": "$ 500.00"
+      }
+    }
+  }
 }

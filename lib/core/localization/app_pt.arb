@@ -108,5 +108,14 @@
   "confirmPaymentText": "Tem certeza que deseja confirmar o pagamento?",
   "@confirmPaymentText": {},
   "pay": "Pay",
-  "@pay": {}
+  "@pay": {},
+  "total": "Saldo total {number}",
+  "@total": {
+    "placeholders": {
+      "number": {
+        "type": "String",
+        "example": "R$ 500.00"
+      }
+    }
+  }
 }

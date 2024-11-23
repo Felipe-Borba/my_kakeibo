@@ -59,7 +59,7 @@ class DashboardView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Total: ${formatter.format(controller.total)}",
+                            intl.total(formatter.format(controller.total)),
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
