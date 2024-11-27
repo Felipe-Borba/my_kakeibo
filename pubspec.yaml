@@ -26,6 +26,7 @@ dependencies:
   google_fonts: ^6.2.1
   json_annotation: ^4.9.0
   fl_chart: ^0.69.2
+  timezone: ^0.10.0
 
 dev_dependencies:
   flutter_test:

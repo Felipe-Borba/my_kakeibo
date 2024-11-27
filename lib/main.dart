@@ -33,6 +33,8 @@ import 'package:my_kakeibo/presentation/user/create_account/create_account_view.
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'app.dart';
 
@@ -47,6 +49,8 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
+  tz.initializeTimeZones();
+
   Modular.setInitialRoute(LoginView.routeName);
   return runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
@@ -57,7 +61,8 @@ class AppModule extends Module {
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
     // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
     i.addLazySingleton<AuthRepository>(AuthFirebaseRepository.new);
-    i.addLazySingleton<FixedExpenseRepository>(FixedExpenseFirebaseRepository.new);
+    i.addLazySingleton<FixedExpenseRepository>(
+        FixedExpenseFirebaseRepository.new);
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
     i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
     i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
