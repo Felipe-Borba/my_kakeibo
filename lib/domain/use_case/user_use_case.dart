@@ -4,21 +4,17 @@ import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 
 class UserUseCase {
-  UserRepository userRepository;
-  AuthRepository authRepository;
+  late final UserRepository _userRepository;
+  late final AuthRepository _authRepository;
 
   UserUseCase({
-    required this.userRepository,
-    required this.authRepository,
-  });
+    required UserRepository userRepository,
+    required AuthRepository authRepository,
+  })  : _authRepository = authRepository,
+        _userRepository = userRepository;
 
   Future<(Null, AppError)> insert(User user) async {
-    var (isValid, errorList) = user.validate();
-    if (!isValid) {
-      return (null, errorList);
-    }
-
-    var (id, err) = await authRepository.createAccess(
+    var (id, err) = await _authRepository.createAccess(
       user.email,
       user.password,
     );
@@ -27,30 +23,30 @@ class UserUseCase {
     }
 
     user.id = id;
-    await userRepository.save(user);
+    await _userRepository.save(user);
 
     return (null, Empty());
   }
 
   Future<(User?, AppError)> getUser() async {
-    var (id, err) = await authRepository.getLoggedUserId();
+    var (id, err) = await _authRepository.getLoggedUserId();
     if (err is! Empty) {
       return (null, err);
     }
-    return await userRepository.getUserById(id);
+    return await _userRepository.getUserById(id);
   }
 
   Future<(Null, AppError)> update(User user) async {
-    return await userRepository.save(user);
+    return await _userRepository.save(user);
   }
 
   Future<(User?, AppError)> login(String email, String password) async {
-    var (id, loginErr) = await authRepository.login(email, password);
+    var (id, loginErr) = await _authRepository.login(email, password);
     if (loginErr is! Empty) {
       return (null, loginErr);
     }
 
-    var (user, userErr) = await userRepository.getUserById(id);
+    var (user, userErr) = await _userRepository.getUserById(id);
     if (userErr is! Empty) {
       return (null, userErr);
     }
@@ -59,6 +55,6 @@ class UserUseCase {
   }
 
   Future<(Null, AppError)> logOut() async {
-    return authRepository.logOut();
+    return _authRepository.logOut();
   }
 }

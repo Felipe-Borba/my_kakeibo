@@ -1,7 +1,10 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
+part 'expense.g.dart';
+
+@JsonSerializable()
 class Expense extends Transaction {
   // TODO depois no futuro seria legal deixar o usuário criar isso
   ExpenseCategory category; //aluguel, conta etc,
@@ -18,37 +21,7 @@ class Expense extends Transaction {
     required this.category,
   });
 
-  factory Expense.fromJson(Map<String, dynamic> json) {
-    return Expense(
-      id: json["id"],
-      amount: (json["amount"] as num).toDouble(),
-      date: json["date"],
-      description: json["description"],
-      category: mapExpenseCategory(json["category"].toString()),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'amount': amount,
-      'date': date,
-      'description': description,
-      'category': category.name,
-    };
-  }
-
-  (bool, AppError) validate() {
-    List<FieldError> fieldErrorList = [];
-    if (amount <= 0) {
-      fieldErrorList.add(
-        FieldError("amount", "Amount can't be less than zero"),
-      );
-    }
-
-    return (
-      fieldErrorList.isEmpty,
-      fieldErrorList.isEmpty ? Empty() : FieldFailure(fieldErrorList)
-    );
-  }
+  factory Expense.fromJson(Map<String, dynamic> json) =>
+      _$ExpenseFromJson(json);
+  Map<String, dynamic> toJson() => _$ExpenseToJson(this);
 }

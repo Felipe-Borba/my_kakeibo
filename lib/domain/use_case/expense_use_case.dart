@@ -14,10 +14,6 @@ class ExpenseUseCase {
   });
 
   Future<(Null, AppError)> insert(Expense expense) async {
-    var (isValid, errorList) = expense.validate();
-    if (!isValid) {
-      return (null, errorList);
-    }
     var (user!, userErr) = await userUseCase.getUser();
     if (userErr is! Empty) {
       return (null, userErr);
@@ -25,6 +21,7 @@ class ExpenseUseCase {
 
     user.decreaseBalance(expense.amount);
     await userUseCase.update(user);
+
     if (expense.id != null) {
       await expenseRepository.update(expense);
     } else {
@@ -38,12 +35,20 @@ class ExpenseUseCase {
     return await expenseRepository.findAll();
   }
 
+  Future<(List<Expense>, AppError)> findByMonth({
+    required DateTime month,
+  }) async {
+    return await expenseRepository.findByMonth(month: month);
+  }
+
   Future<(Null, AppError)> delete(Expense expense) async {
     return await expenseRepository.delete(expense);
   }
 
   Future<(double, AppError)> getMonthTotal() async {
-    var (expenseList, err) = await expenseRepository.findAll();
+    var (expenseList, err) = await expenseRepository.findByMonth(
+      month: DateTime.now(),
+    );
 
     if (err is! Empty) {
       return (0.0, err);

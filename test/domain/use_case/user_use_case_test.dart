@@ -62,21 +62,6 @@ void main() {
       // pode dar um erro clássico aqui pq ele tá comparando referência de obj, mas como o banco é em memoria acaba que a referência é a mesma mas nem sempre isso é verdade no caso do shared pref por ex.
       // para resolver isso tenho que sobre escrever o método de comparação mas é uma sintaxe feia e para isso exite o package equatable
     });
-
-    test('Should not insert user with empty name', () async {
-      user.name = "";
-
-      var (_, error) = await userUseCase.insert(user);
-
-      var (persistedUser, _) = await userRepository.getUserById("id");
-      expect(persistedUser, null);
-      expect(error, isA<FieldFailure>());
-      if (error is FieldFailure) {
-        var fieldError = error.fieldErrorList[0];
-        expect(fieldError.name, "name");
-        expect(fieldError.message, "Name is required");
-      }
-    });
   });
 
   group("login", () {

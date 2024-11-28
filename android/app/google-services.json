@@ -2,17 +2,22 @@
   "project_info": {
     "project_number": "713195547362",
     "project_id": "my-kakeibo-f8ca5",
-    "storage_bucket": "my-kakeibo-f8ca5.appspot.com"
+    "storage_bucket": "my-kakeibo-f8ca5.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:713195547362:android:63b03eeb41d15c72cc0cbb",
+        "mobilesdk_app_id": "1:713195547362:android:da3e38ab3b452e2ccc0cbb",
         "android_client_info": {
           "package_name": "com.example.my_kakeibo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "713195547362-cd9l44rdvv9flci3sbp141s53emr4mc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB6Sr94lNgxifA4y_8gTtbl5FxTW3vT0Hg"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713195547362-cd9l44rdvv9flci3sbp141s53emr4mc8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "713195547362-r5r8a6bb5jq4t9pfb519qnup0cdvvtro.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myKakeibo"
+              }
+            }
+          ]
         }
       }
     }

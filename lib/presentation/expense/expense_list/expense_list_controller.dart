@@ -7,25 +7,36 @@ import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
 
 class ExpenseListController with ChangeNotifier {
+  ExpenseListController(this._context);
+
   // Dependencies
   final expenseUseCase = Modular.get<ExpenseUseCase>();
+  final BuildContext _context;
 
   // State
   List<Expense> list = List.empty();
   int sortNumber = 1;
+  DateTime monthFilter = DateTime.now();
 
   // Actions
-  getInitialData(BuildContext context) async {
-    var (expenseList, error) = await expenseUseCase.findAll();
+  getInitialData() async {
+    var (expenseList, error) = await expenseUseCase.findByMonth(
+      month: monthFilter,
+    );
     if (error is Failure) {
-      showSnackbar(context: context, text: error.message);
+      showSnackbar(context: _context, text: error.message);
     }
     list = expenseList;
-    list.sort((a, b) => a.date.compareTo(b.date));
+    sortByNumber(sortNumber);
   }
 
-  sortBy(int sortNumber) {
+  setSortBy(int sortNumber) {
     this.sortNumber = sortNumber;
+    sortByNumber(sortNumber);
+    notifyListeners();
+  }
+
+  void sortByNumber(int sortNumber) {
     switch (sortNumber) {
       case 1:
         list.sort((a, b) => a.date.compareTo(b.date));
@@ -34,7 +45,6 @@ class ExpenseListController with ChangeNotifier {
         list.sort((a, b) => b.date.compareTo(a.date));
       default:
     }
-    notifyListeners();
   }
 
   onDelete(Expense expense) async {
@@ -63,5 +73,11 @@ class ExpenseListController with ChangeNotifier {
       list.sort((a, b) => a.date.compareTo(b.date));
       notifyListeners();
     }
+  }
+
+  setMonthFilter(DateTime value) {
+    monthFilter = value;
+    getInitialData();
+    notifyListeners();
   }
 }

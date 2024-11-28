@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_kakeibo/core/components/app_bar_custom.dart';
-import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_kakeibo/core/components/app_bar_custom.dart';
+import 'package:my_kakeibo/core/components/input_field/password_form_field.dart';
+import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -11,12 +12,12 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<LoginController>();
-    final intl = AppLocalizations.of(context)!;
-
-    return ListenableBuilder(
-      listenable: controller,
+    return ChangeNotifierProvider(
+      create: (context) => LoginController(context),
       builder: (BuildContext context, Widget? child) {
+        final controller = Provider.of<LoginController>(context);
+        final intl = AppLocalizations.of(context)!;
+
         return Scaffold(
           key: const Key("login-view"),
           appBar: AppBarCustom(
@@ -31,35 +32,28 @@ class LoginView extends StatelessWidget {
                 TextField(
                   key: const Key("email"),
                   onChanged: (value) => controller.email = value,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: intl.email,
                   ),
                 ),
                 const SizedBox(height: 8),
-                TextField(
+                PasswordFormField(
                   key: const Key("password"),
                   onChanged: (value) => controller.password = value,
-                  obscureText: !controller.isPasswordVisible,
                   decoration: InputDecoration(
                     labelText: intl.password,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        controller.isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: controller.togglePasswordVisibility,
-                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
                 Center(
                   child: ElevatedButton(
                     key: const Key("login"),
-                    onPressed: () => controller.onLogin(context),
+                    onPressed: controller.onLogin,
                     child: controller.loading
-                        ? const Padding(
-                            padding: EdgeInsets.all(8.0),
+                        ? const SizedBox(
+                            height: 16,
+                            width: 16,
                             child: CircularProgressIndicator(),
                           )
                         : Text(intl.login),

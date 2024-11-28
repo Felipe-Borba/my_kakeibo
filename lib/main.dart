@@ -1,72 +1,81 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/data/repository/auth_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/expense_firebase_repository.dart';
+import 'package:my_kakeibo/data/repository/fixed_expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/income_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/user_firebase_repository.dart';
+import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
+import 'package:my_kakeibo/data/service/local_notification_service_impl.dart';
 import 'package:my_kakeibo/domain/repository/auth_repository.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
+import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/domain/service/local_notification_service.dart';
+import 'package:my_kakeibo/domain/service/push_notification_service.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
+import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/firebase_options.dart';
-import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_controller.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
-import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_view.dart';
-import 'package:my_kakeibo/presentation/income/income_form/income_form_controller.dart';
+import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_expense_form_view.dart';
+import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
-import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
-import 'package:my_kakeibo/presentation/user/create_account/create_account_controller.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/dashboard_controller.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
-import 'package:my_kakeibo/presentation/user/login/login_controller.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
-import 'package:my_kakeibo/presentation/welcome/welcome_controller.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'app.dart';
-import 'presentation/settings/settings_controller.dart';
-import 'presentation/settings/settings_service.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Mensagem recebida com app em segundo plano: ${message.messageId}');
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  tz.initializeTimeZones();
+
+  Modular.setInitialRoute(LoginView.routeName);
   return runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 
 class AppModule extends Module {
   @override
   void binds(i) {
-    i.addSingleton(SettingsService.new);
-    i.addSingleton(SettingsController.new);
-
+    // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
+    // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
     i.addLazySingleton<AuthRepository>(AuthFirebaseRepository.new);
+    i.addLazySingleton<FixedExpenseRepository>(
+        FixedExpenseFirebaseRepository.new);
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
     i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
     i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
-    // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
-    // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
+    i.addSingleton<LocalNotificationService>(LocalNotificationServiceImpl.new);
+    i.addSingleton<PushNotificationService>(
+      FirebasePushNotificationService.new,
+    );
 
+    i.add(FixedExpenseUseCase.new);
     i.add(ExpenseUseCase.new);
     i.add(IncomeUseCase.new);
     i.add(UserUseCase.new);
-
-    i.add(WelcomeController.new);
-    i.add(LoginController.new);
-    i.add(CreateAccountController.new);
-    i.add(DashboardController.new);
-    i.add(ExpenseFormController.new);
-    i.add(ExpenseListController.new);
-    i.add(IncomeFormController.new);
-    i.add(IncomeListController.new);
+    i.addSingleton(NotificationUseCase.new);
   }
 
   @override
@@ -83,6 +92,15 @@ class AppModule extends Module {
       child: (context) => const CreateAccountView(),
     );
     r.child(DashboardView.routeName, child: (context) => const DashboardView());
+
+    r.child(
+      FixedExpenseListView.routeName,
+      child: (context) => const FixedExpenseListView(),
+    );
+    r.child(
+      FixedExpenseFormView.routeName,
+      child: (context) => FixedExpenseFormView(fixedExpense: r.args.data),
+    );
 
     r.child(
       ExpenseListView.routeName,

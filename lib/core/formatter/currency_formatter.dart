@@ -1,14 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class CurrencyFormatter extends TextInputFormatter {
-  //TODO intl
-  final NumberFormat _formatter = NumberFormat.currency(
-    locale: 'pt_BR',
+  CurrencyFormatter(this._context);
+
+  final BuildContext _context;
+
+  late final NumberFormat formatter = NumberFormat.currency(
+    locale: Localizations.localeOf(_context).toString(),
     symbol: '',
     decimalDigits: 2,
   );
-
 
   @override
   TextEditingValue formatEditUpdate(
@@ -23,7 +26,7 @@ class CurrencyFormatter extends TextInputFormatter {
 
     double value = double.parse(filteredText) / 100;
 
-    final formattedText = _formatter.format(value);
+    final formattedText = formatter.format(value);
 
     return newValue.copyWith(
       text: formattedText,

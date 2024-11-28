@@ -1,87 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 
 class IncomeFormController with ChangeNotifier {
+  IncomeFormController(this._context, this._income);
+
   // Dependencies
   final incomeUseCase = Modular.get<IncomeUseCase>();
+  final BuildContext _context;
+  final Income? _income;
+  final formKey = GlobalKey<FormState>();
+  late final currencyFormatter = CurrencyFormatter(_context).formatter;
 
   // State
-  TextEditingController amount = TextEditingController();
-  String? amountError;
-
-  DateTime? selectedDate;
-  final TextEditingController dateController = TextEditingController();
-  String? dateError;
-
-  TextEditingController description = TextEditingController();
-  String? descriptionError;
-
-  Income? income;
+  late double? amount = _income?.amount;
+  late DateTime? date = _income?.date;
+  late String description = _income?.description ?? '';
 
   // Actions
-  loadInitialData(Income? income) async {
-    this.income = income;
-    if (income != null) {
-      amount.text = income.amount.toString();
-      selectedDate = income.date;
-      dateController.text = "${income.date.toLocal()}".split(' ')[0];
-      description.text = income.description;
-    }
-  }
+  onClickSave() async {
+    bool isValid = formKey.currentState?.validate() ?? false;
+    if (!isValid) return;
 
-  onSelectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != selectedDate) {
-      selectedDate = picked;
-      dateController.text = "${selectedDate!.toLocal()}".split(' ')[0];
-    }
-    notifyListeners();
-  }
-
-  onClickSave(BuildContext context) async {
-    //TODO talvez exista uma forma melhor de validar a entidade principalmente quando se trata de campos de tipos diferentes de string?
-    // se eu não me engano tem um padrao de validator melhor e separado da entity
     var (_, error) = await incomeUseCase.insert(Income(
-      id: income?.id,
-      amount: double.parse(amount.text),
+      id: _income?.id,
+      amount: amount!,
       source: IncomeSource.salary,
-      description: description.text,
-      date: selectedDate ?? DateTime.now(),
+      description: description,
+      date: date ?? DateTime.now(),
     ));
-
-    amountError = null;
-    dateError = null;
-    descriptionError = null;
 
     switch (error) {
       case Empty():
         Modular.to.pop(true);
         break;
       case Failure(:final message):
-        showSnackbar(context: context, text: message);
-        break;
-      case FieldFailure(:final fieldErrorList):
-        for (var invalidField in fieldErrorList) {
-          switch (invalidField.name) {
-            case "amount":
-              amountError = invalidField.message;
-              break;
-          }
-        }
+        showSnackbar(context: _context, text: message);
         break;
       default:
-        showSnackbar(context: context, text: "Erro desconhecido.");
+        showSnackbar(context: _context, text: "Erro desconhecido.");
     }
     notifyListeners();
+  }
+
+  String? validateAmount(String? value) {
+    if (value == null) return "valor obrigatório";
+    double? amount = currencyFormatter.tryParse(value)?.toDouble();
+    if (amount == null) return "valor obrigatório";
+    if (amount <= 0) return "valor deve ser maior que zero";
+    return null;
+  }
+
+  void setAmount(double? value) {
+    amount = value;
+  }
+
+  void setDate(DateTime? value) {
+    date = value;
+  }
+
+  String? validateDate(String? value) {
+    if (value == null) return "Select a date";
+    if (value.isEmpty) return "Select a date";
+    return null;
+  }
+
+  void setDescription(String value) {
+    description = value;
+  }
+
+  String? validateDescription(String? value) {
+    return null;
   }
 }

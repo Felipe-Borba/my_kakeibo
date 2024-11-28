@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
+import 'package:my_kakeibo/core/components/input_field/currency_form_field.dart';
+import 'package:my_kakeibo/core/components/input_field/date_form_field.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_controller.dart';
+import 'package:provider/provider.dart';
 
 class IncomeFormView extends StatelessWidget {
   const IncomeFormView({super.key, this.income});
@@ -14,66 +16,63 @@ class IncomeFormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Modular.get<IncomeFormController>();
+    return ChangeNotifierProvider(
+      create: (context) => IncomeFormController(context, income),
+      builder: (context, child) {
+        final controller = Provider.of<IncomeFormController>(context);
+        final intl = AppLocalizations.of(context)!;
 
-    return FutureBuilder(
-      future: controller.loadInitialData(income),
-      builder: (context, snapshot) {
         return ListenableBuilder(
           listenable: controller,
           builder: (BuildContext context, Widget? child) {
             return Scaffold(
-              appBar: const AppBarCustom(
-                title: "Income",
+              appBar: AppBarCustom(
+                title: intl.income,
               ),
-              body: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextField(
-                      key: const Key("amount"),
-                      controller: controller.amount,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: InputDecoration(
-                        labelText: "Amount",
-                        errorText: controller.amountError,
+              body: Form(
+                key: controller.formKey,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CurrencyFormField(
+                        key: const Key("amount"),
+                        value: controller.amount,
+                        onChanged: controller.setAmount,
+                        decoration: InputDecoration(
+                          labelText: intl.amount,
+                        ),
+                        validator: controller.validateAmount,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      key: const Key("date"),
-                      controller: controller.dateController,
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        hintText: "Select a Date",
-                        errorText: controller.dateError,
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.calendar_today),
-                          onPressed: () => controller.onSelectDate(context),
+                      const SizedBox(height: 8),
+                      DateFormField(
+                        key: const Key("date"),
+                        value: controller.date,
+                        onChanged: controller.setDate,
+                        validator: controller.validateDate,
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        key: const Key("description"),
+                        initialValue: controller.description,
+                        onChanged: controller.setDescription,
+                        validator: controller.validateDescription,
+                        decoration: InputDecoration(
+                          labelText: intl.description,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    TextField(
-                      key: const Key("description"),
-                      controller: controller.description,
-                      decoration: InputDecoration(
-                        labelText: "Description",
-                        errorText: controller.descriptionError,
+                      const SizedBox(height: 24),
+                      Center(
+                        child: ElevatedButton(
+                          key: const Key("save-income"),
+                          onPressed: controller.onClickSave,
+                          child: Text(intl.save),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 24),
-                    Center(
-                      child: ElevatedButton(
-                        key: const Key("save-income"),
-                        onPressed: () => controller.onClickSave(context),
-                        child: const Text("Save"),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             );

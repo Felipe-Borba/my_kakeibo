@@ -7,26 +7,23 @@ import 'package:my_kakeibo/presentation/user/create_account/create_account_view.
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class LoginController with ChangeNotifier {
+  LoginController(this._context); 
+
   // Dependencies
   final userUseCase = Modular.get<UserUseCase>();
+  final BuildContext _context;
 
   // State
   String email = "";
   String password = "";
-  bool isPasswordVisible = false;
   bool loading = false;
 
   // Actions
-  void togglePasswordVisibility() {
-    isPasswordVisible = !isPasswordVisible;
-    notifyListeners();
-  }
-
   onClickCreateAccount() async {
     Modular.to.pushNamed(CreateAccountView.routeName);
   }
 
-  onLogin(BuildContext context) async {
+  onLogin() async {
     if (loading == true) return;
 
     loading = true;
@@ -35,7 +32,7 @@ class LoginController with ChangeNotifier {
     var (user, error) = await userUseCase.login(email, password);
 
     if (error is Failure) {
-      showSnackbar(context: context, text: error.message);
+      showSnackbar(context: _context, text: error.message);
     } else {
       Modular.to.navigate(DashboardView.routeName);
     }

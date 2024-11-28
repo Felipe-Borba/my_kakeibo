@@ -42,10 +42,6 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
 
       var expenses = querySnapshot.docs.map((doc) {
         var data = doc.data();
-
-        Timestamp date = data["date"];
-        data["date"] = date.toDate();
-
         data["id"] = doc.id;
 
         return Expense.fromJson(data);
@@ -61,14 +57,16 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   Future<(Expense?, AppError)> insert(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
+      expense.date = expense.date.toUtc();
 
-      await _db
+      var res = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
           .add(expense.toJson());
+      expense.id = res.id;
 
-      return (null, Empty());
+      return (expense, Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
     }
@@ -78,6 +76,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   Future<(Expense?, AppError)> update(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
+      expense.date = expense.date.toUtc();
 
       var docRef = _db
           .collection(UserFirebaseRepository.table)
@@ -90,6 +89,43 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
       return (expense, Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
+    }
+  }
+
+  @override
+  Future<(List<Expense>, AppError)> findByMonth({
+    required DateTime month,
+  }) async {
+    try {
+      var userId = _auth.currentUser?.uid;
+
+      if (userId == null) {
+        return (List<Expense>.empty(), Failure("User not authenticated"));
+      }
+
+      DateTime startOfMonth = DateTime(month.year, month.month, 1);
+      DateTime endOfMonth =
+          DateTime(month.year, month.month + 1, 0, 23, 59, 59);
+
+      var query = _db
+          .collection(UserFirebaseRepository.table)
+          .doc(userId)
+          .collection(_table)
+          .where("date", isGreaterThanOrEqualTo: startOfMonth.toIso8601String())
+          .where("date", isLessThanOrEqualTo: endOfMonth.toIso8601String());
+
+      var querySnapshot = await query.get();
+
+      var expenses = querySnapshot.docs.map((doc) {
+        var data = doc.data();
+        data["id"] = doc.id;
+
+        return Expense.fromJson(data);
+      }).toList();
+
+      return (expenses, Empty());
+    } catch (e) {
+      return (List<Expense>.empty(), Failure(e.toString()));
     }
   }
 }

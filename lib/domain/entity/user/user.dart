@@ -1,6 +1,3 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
-// import 'package:my_kakeibo/domain/entity/user_theme.dart';
-
 class User {
   String? id;
   String name;
@@ -8,58 +5,42 @@ class User {
   String password;
   // UserTheme theme;
   double balance;
-
-  //TODO sera que rola colocar uma lista de expense aqui?
-  // como se fosse um relacionamento no spring? sei que isso não tem nada a ver mas é um usuário que tem a despesa ou receita....
+  String? notificationToken;
 
   User({
     this.id,
     required this.name,
     required this.email,
     required this.password,
+    this.notificationToken,
     // required this.theme,
     this.balance = 0.0,
   });
 
-  User.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        email = json['email'],
-        // TODO password should no be saved as plain text on satabase
-        password = json['password'],
-        // theme = json['theme'],
-        balance = json['balance'].toDouble();
+  /// No final das contas não sei se vale muito a pena aquela lib de serializadão o preço que eu pago escrevendo isso é baixo
+  /// e usando o json_serializable eu só ganhei uma vantagem de serializar o enum automático
+  /// mas deu xabu no timestamp pq eu não consegui usar a tipagem do firebase e salvou como string no formato iso8601 sem o timezone.
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      password: '',
+      // theme: json['theme'],
+      notificationToken: json['notificationToken'],
+      balance: json['balance'].toDouble(),
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'name': name,
       'email': email,
-      'password': password,
       // 'theme': theme,
       'balance': balance,
+      'notificationToken': notificationToken,
     };
-  }
-
-  (bool, AppError) validate() {
-    List<FieldError> fieldErrorList = [];
-    if (name.isEmpty) {
-      //TODO isso prejudica a internacionalização, retornar uma msg de erro para mostrar diretor na tela
-      fieldErrorList.add(FieldError("name", "Name is required"));
-    }
-
-    if (email.isEmpty) {
-      fieldErrorList.add(FieldError("email", "Email is required"));
-    }
-
-    if (password.isEmpty) {
-      fieldErrorList.add(FieldError("password", "Password is required"));
-    }
-
-    return (
-      fieldErrorList.isEmpty,
-      fieldErrorList.isEmpty ? Empty() : FieldFailure(fieldErrorList)
-    );
   }
 
   decreaseBalance(double amount) {
