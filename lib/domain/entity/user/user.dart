@@ -17,7 +17,7 @@ class User {
     this.balance = 0.0,
   });
 
-  /// No final das contas não sei se vale muito a pena aquela lib de serializadão o preço que eu pago escrevendo isso é baixo
+  /// No final das contas não sei se vale muito a pena aquela lib de serialização o preço que eu pago escrevendo isso é baixo
   /// e usando o json_serializable eu só ganhei uma vantagem de serializar o enum automático
   /// mas deu xabu no timestamp pq eu não consegui usar a tipagem do firebase e salvou como string no formato iso8601 sem o timezone.
   factory User.fromJson(Map<String, dynamic> json) {
