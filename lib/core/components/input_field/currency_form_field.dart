@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/core/extentions/currency.dart';
 import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
 
 class CurrencyFormField extends StatelessWidget {
@@ -20,10 +21,9 @@ class CurrencyFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController(text: value?.toString());
-    final currencyFormatter = CurrencyFormatter(context).formatter;
 
     return TextFormField(
-      // key: key,
+      key: key,
       controller: controller,
       keyboardType: TextInputType.number,
       inputFormatters: [CurrencyFormatter(context)],
@@ -32,7 +32,7 @@ class CurrencyFormField extends StatelessWidget {
       autovalidateMode: autovalidateMode,
       onChanged: (value) {
         if (onChanged != null) {
-          onChanged!(currencyFormatter.parse(value).toDouble());
+          onChanged!(context.currency.parse(value).toDouble());
         }
       },
     );

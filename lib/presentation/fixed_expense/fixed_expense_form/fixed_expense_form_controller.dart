@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
+import 'package:my_kakeibo/core/extentions/currency.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
@@ -17,7 +17,6 @@ class FixedExpenseFormController with ChangeNotifier {
 
   // State
   final formKey = GlobalKey<FormState>();
-  late final currencyFormatter = CurrencyFormatter(_context).formatter;
 
   late double? amount = _fixedExpense?.amount;
   late DateTime? dueDate = _fixedExpense?.dueDate;
@@ -32,7 +31,7 @@ class FixedExpenseFormController with ChangeNotifier {
 
   String? validateAmount(String? value) {
     if (value == null) return "valor obrigatório";
-    double? amount = currencyFormatter.tryParse(value)?.toDouble();
+    double? amount = _context.currency.tryParse(value)?.toDouble();
     if (amount == null) return "valor obrigatório";
     if (amount <= 0) return "valor deve ser maior que zero";
     return null;

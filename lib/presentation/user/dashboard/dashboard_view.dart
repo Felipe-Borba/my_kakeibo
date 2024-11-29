@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
-import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/chats/pie_chart_custom.dart';
+import 'package:my_kakeibo/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/core/components/life_bar.dart';
 import 'package:my_kakeibo/core/expense_category_helper.dart';
+import 'package:my_kakeibo/core/extentions/currency.dart';
+import 'package:my_kakeibo/core/extentions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
@@ -24,12 +26,6 @@ class DashboardView extends StatelessWidget {
       create: (context) => DashboardController(context),
       builder: (BuildContext context, Widget? child) {
         final controller = Provider.of<DashboardController>(context);
-        final intl = AppLocalizations.of(context)!;
-        final NumberFormat formatter = NumberFormat.currency(
-          locale: Localizations.localeOf(context).toString(),
-          symbol: intl.currencyTag,
-          decimalDigits: 2,
-        );
 
         return FutureBuilder(
           future: controller.getInitialData(),
@@ -44,7 +40,7 @@ class DashboardView extends StatelessWidget {
               key: const Key("dashboard"),
               //TODO talvez colocar um botão flutuante aqui na home que abre outros btns para add os jaguara
               appBar: AppBarCustom(
-                title: intl.welcomeMessage(controller.user?.name ?? ""),
+                title: context.intl.welcomeMessage(controller.user?.name ?? ""),
               ),
               endDrawer: const DrawerCustom(),
               body: Padding(
@@ -54,23 +50,21 @@ class DashboardView extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            intl.total(formatter.format(controller.total)),
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: titleLarge?.color,
-                            ),
-                          ),
-                          const Divider(),
-                          PieChartCustom(data: controller.pieChartData),
-                        ],
+                    Text(
+                      context.intl.total(
+                        context.currency.format(controller.total),
+                      ),
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: titleLarge?.color,
                       ),
                     ),
+                    LifeBar(
+                      total: controller.totalIncome,
+                      current: controller.total,
+                    ),
+                    // const Divider(),
                     Container(
                       padding: const EdgeInsets.all(16),
                       child: Row(
@@ -88,14 +82,14 @@ class DashboardView extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    intl.income,
+                                    context.intl.income,
                                     style: const TextStyle(color: Colors.green),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                formatter.format(controller.totalIncome),
+                                context.currency.format(controller.totalIncome),
                                 style: const TextStyle(color: Colors.green),
                               ),
                             ],
@@ -112,14 +106,15 @@ class DashboardView extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    intl.expense,
+                                    context.intl.expense,
                                     style: const TextStyle(color: Colors.red),
                                   ),
                                 ],
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                formatter.format(controller.totalExpense),
+                                context.currency
+                                    .format(controller.totalExpense),
                                 style: const TextStyle(color: Colors.red),
                               ),
                             ],
@@ -127,18 +122,14 @@ class DashboardView extends StatelessWidget {
                         ],
                       ),
                     ),
+                    PieChartCustom(data: controller.pieChartData),
                     const Divider(),
                     Expanded(
                       child: ListView.builder(
                         itemCount: controller.list.length,
                         itemBuilder: (context, index) {
                           var transaction = controller.list[index];
-                          return item(
-                            formatter,
-                            transaction,
-                            intl,
-                            context,
-                          );
+                          return item(transaction, context);
                         },
                       ),
                     ),
@@ -152,12 +143,7 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  Padding item(
-    NumberFormat formatter,
-    Transaction transaction,
-    AppLocalizations intl,
-    BuildContext context,
-  ) {
+  Padding item(Transaction transaction, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
@@ -166,18 +152,19 @@ class DashboardView extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              formatter.format(transaction.amount),
+              context.currency.format(transaction.amount),
             ),
           ),
           const SizedBox(width: 16),
           Text(
-            transaction is Income ? intl.income : intl.expense,
+            transaction is Income ? context.intl.income : context.intl.expense,
             style: const TextStyle(
               color: Colors.blueAccent,
             ),
           ),
           const SizedBox(width: 16),
           Text(
+            //TODO aproveitando a vaibe das extentions fazer com isso tb
             DateFormat.MMMEd(
               Localizations.localeOf(context).toString(),
             ).format(transaction.date),

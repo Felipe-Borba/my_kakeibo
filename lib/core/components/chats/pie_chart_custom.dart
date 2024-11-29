@@ -52,17 +52,17 @@ class PieChart2State extends State<PieChartCustom> {
             ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: widget.data.map((e) {
               return Column(
                 children: [
-                  const SizedBox(height: 8),
                   Indicator(
                     color: e.color,
                     text: e.label,
                     isSquare: true,
                   ),
+                  const SizedBox(height: 8),
                 ],
               );
             }).toList(),
@@ -86,13 +86,12 @@ class PieChart2State extends State<PieChartCustom> {
         title: data.title,
         radius: radius,
         titleStyle: TextStyle(
-          fontSize: fontSize,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-          shadows: shadows,
-          decorationStyle: TextDecorationStyle.solid,
-          decorationThickness: 3
-        ),
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            shadows: shadows,
+            decorationStyle: TextDecorationStyle.solid,
+            decorationThickness: 3),
       );
     });
   }
