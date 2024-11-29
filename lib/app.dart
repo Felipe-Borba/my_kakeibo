@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/theme.dart';
-import 'package:my_kakeibo/core/util.dart';
+import 'package:my_kakeibo/core/font.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/settings/settings_controller.dart';
