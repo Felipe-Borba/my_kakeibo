@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/theme.dart';
 import 'package:my_kakeibo/core/font.dart';
 import 'package:provider/provider.dart';
@@ -13,9 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = View.of(context) //
-        .platformDispatcher
-        .platformBrightness;
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
     TextTheme textTheme = createTextTheme(context, "Alice", "Anek Bangla");
     MaterialTheme theme = MaterialTheme(textTheme);
 
@@ -47,14 +46,14 @@ class MyApp extends StatelessWidget {
                 Locale('pt'),
               ],
               //
-              onGenerateTitle: (BuildContext context) =>
-                  AppLocalizations.of(context)!.appTitle,
+              onGenerateTitle: (context) => context.intl.appTitle,
               //
               darkTheme: theme.dark(),
+              themeMode: settingsController.themeMode,
               theme: brightness == Brightness.light //
                   ? theme.light()
                   : theme.dark(),
-              themeMode: settingsController.themeMode,
+              //TODO ver essa questão de dark theme e dispositivos que forçam o dark theme
               //
               routerConfig: Modular.routerConfig,
             );
