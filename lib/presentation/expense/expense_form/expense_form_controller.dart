@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/core/extentions/currency.dart';
-import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
+import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';

@@ -109,7 +109,7 @@
   "@confirmPaymentText": {},
   "pay": "Pagar",
   "@pay": {},
-  "total": "Total balance {number}",
+  "total": "Balance {number}",
   "@total": {
     "placeholders": {
       "number": {

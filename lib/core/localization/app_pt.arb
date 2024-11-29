@@ -109,7 +109,7 @@
   "@confirmPaymentText": {},
   "pay": "Pay",
   "@pay": {},
-  "total": "Saldo total {number}",
+  "total": "Saldo {number}",
   "@total": {
     "placeholders": {
       "number": {

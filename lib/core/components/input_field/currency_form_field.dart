@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extentions/currency.dart';
+import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
 
 class CurrencyFormField extends StatelessWidget {

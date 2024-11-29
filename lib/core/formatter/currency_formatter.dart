@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_kakeibo/core/extentions/currency.dart';
+import 'package:my_kakeibo/core/extensions/currency.dart';
 
 class CurrencyFormatter extends TextInputFormatter {
   CurrencyFormatter(this._context);
