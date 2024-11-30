@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/data/repository/firebase/model/fixed_expense_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
@@ -40,14 +41,11 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
           .collection(_table)
           .get();
 
-      var expenses = querySnapshot.docs.map((doc) {
-        var data = doc.data();
-        data["id"] = doc.id;
+      var fixedExpenses = querySnapshot.docs
+          .map((doc) => FixedExpenseModel.fromDoc(doc).toEntity())
+          .toList();
 
-        return FixedExpense.fromJson(data);
-      }).toList();
-
-      return (expenses, Empty());
+      return (fixedExpenses, Empty());
     } catch (e) {
       return (List<FixedExpense>.empty(), Failure(e.toString()));
     }
@@ -57,14 +55,12 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
-      fixedExpense.dueDate = fixedExpense.dueDate
-          .toUtc(); // no firebase isso ƒoi uma gambi para lidar com utc timestamp ja que a lib serializa para string iso8601
 
       var res = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .add(fixedExpense.toJson());
+          .add(FixedExpenseModel.fromEntity(fixedExpense).toJson());
 
       fixedExpense.id = res.id;
       return (fixedExpense, Empty());
@@ -77,7 +73,6 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   Future<(FixedExpense?, AppError)> update(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
-      fixedExpense.dueDate = fixedExpense.dueDate.toUtc();
 
       var docRef = _db
           .collection(UserFirebaseRepository.table)
@@ -85,7 +80,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
           .collection(_table)
           .doc(fixedExpense.id);
 
-      await docRef.update(fixedExpense.toJson());
+      await docRef.update(FixedExpenseModel.fromEntity(fixedExpense).toJson());
 
       return (fixedExpense, Empty());
     } catch (e) {

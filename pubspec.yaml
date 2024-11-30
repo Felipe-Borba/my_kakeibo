@@ -23,7 +23,6 @@ dependencies:
   firebase_messaging: ^15.1.4
   flutter_local_notifications: ^18.0.0
   google_fonts: ^6.2.1
-  json_annotation: ^4.9.0
   fl_chart: ^0.69.2
   timezone: ^0.10.0
   realm: ^3.4.1
