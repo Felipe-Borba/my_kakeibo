@@ -27,19 +27,6 @@ class UserModel {
     themeString = theme.toString().split('.').last;
   }
 
-  factory UserModel.fromUser(User user) {
-    var model = UserModel(
-      id: user.id ?? const Uuid().v4(),
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      balance: user.balance,
-      notificationToken: user.notificationToken,
-    );
-    // model.theme = user.theme;
-    return model;
-  }
-
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
@@ -52,6 +39,19 @@ class UserModel {
     );
   }
 
+  factory UserModel.fromUser(User user) {
+    const uuid = Uuid();
+    return UserModel(
+      id: user.id ?? uuid.v4(),
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      balance: user.balance,
+      notificationToken: user.notificationToken,
+      // themeString: 
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -61,5 +61,16 @@ class UserModel {
       'balance': balance,
       'notificationToken': notificationToken,
     };
+  }
+
+  User toEntity() {
+    return User(
+      name: name,
+      email: email,
+      password: password,
+      balance: balance,
+      id: id,
+      notificationToken: notificationToken,
+    );
   }
 }

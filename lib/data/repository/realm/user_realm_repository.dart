@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 
 class UserRealmRepository extends UserRepository {
   final realm = RealmService.instance;
+  final uuid = const Uuid();
 
   @override
   Future<(User?, AppError)> getUserById(String id) async {
@@ -46,7 +47,7 @@ class UserRealmRepository extends UserRepository {
 
   UserModel _toModel(User user) {
     var model = UserModel(
-      user.id ?? const Uuid().v4(),
+      user.id ?? uuid.v4(),
       user.name,
       user.email,
       user.password,

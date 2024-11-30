@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/data/repository/firebase/model/user_model.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:uuid/uuid.dart';
 
 class UserFirebaseRepository extends UserRepository {
   final _db = FirebaseFirestore.instance;
   static const table = "Users";
+  final uuid = const Uuid();
 
   @override
   Future<(User?, AppError)> getUserById(String id) async {
@@ -16,7 +19,7 @@ class UserFirebaseRepository extends UserRepository {
 
       if (userMap == null) return (null, Failure("User not found"));
 
-      return (User.fromJson(userMap), Empty());
+      return (UserModel.fromJson(userMap).toEntity(), Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
     }
@@ -25,7 +28,8 @@ class UserFirebaseRepository extends UserRepository {
   @override
   Future<(Null, AppError)> save(User user) async {
     try {
-      await _db.collection(table).doc(user.id).set(user.toJson());
+      var model = UserModel.fromUser(user);
+      await _db.collection(table).doc(user.id).set(model.toJson());
 
       return (null, Empty());
     } catch (e) {
