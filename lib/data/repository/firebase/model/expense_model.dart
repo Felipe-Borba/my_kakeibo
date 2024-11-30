@@ -23,7 +23,7 @@ class ExpenseModel {
     categoryString = category.toString().split('.').last;
   }
 
-  factory ExpenseModel.fromExpense(Expense expense) {
+  factory ExpenseModel.fromEntity(Expense expense) {
     const uuid = Uuid();
     var model = ExpenseModel(
       id: expense.id ?? uuid.v4(),

@@ -61,7 +61,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .add(ExpenseModel.fromExpense(expense).toJson());
+          .add(ExpenseModel.fromEntity(expense).toJson());
 
       expense.id = res.id;
       return (expense, Empty());
@@ -82,7 +82,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(_table)
           .doc(expense.id);
 
-      await docRef.update(ExpenseModel.fromExpense(expense).toJson());
+      await docRef.update(ExpenseModel.fromEntity(expense).toJson());
 
       return (expense, Empty());
     } catch (e) {

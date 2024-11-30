@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/data/repository/firebase/model/income_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
@@ -40,11 +41,9 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .collection(_table)
           .get();
 
-      var incomes = querySnapshot.docs.map((doc) {
-        var data = doc.data();
-        data["id"] = doc.id;
-        return Income.fromJson(data);
-      }).toList();
+      var incomes = querySnapshot.docs
+          .map((doc) => IncomeModel.fromDoc(doc).toEntity())
+          .toList();
 
       return (incomes, Empty());
     } catch (e) {
@@ -61,7 +60,7 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .add(income.toJson());
+          .add(IncomeModel.fromEntity(income).toJson());
 
       return (null, Empty());
     } catch (e) {
@@ -80,7 +79,7 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .collection(_table)
           .doc(income.id);
 
-      await docRef.update(income.toJson());
+      await docRef.update(IncomeModel.fromEntity(income).toJson());
 
       return (income, Empty());
     } catch (e) {
@@ -106,16 +105,15 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .where("date", isGreaterThanOrEqualTo: startOfMonth.toIso8601String())
-          .where("date", isLessThanOrEqualTo: endOfMonth.toIso8601String());
+          .where("date",
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfMonth))
+          .where("date", isLessThanOrEqualTo: Timestamp.fromDate(endOfMonth));
 
       var querySnapshot = await query.get();
 
-      var incomes = querySnapshot.docs.map((doc) {
-        var data = doc.data();
-        data["id"] = doc.id;
-        return Income.fromJson(data);
-      }).toList();
+      var incomes = querySnapshot.docs
+          .map((doc) => IncomeModel.fromDoc(doc).toEntity())
+          .toList();
 
       return (incomes, Empty());
     } catch (e) {
