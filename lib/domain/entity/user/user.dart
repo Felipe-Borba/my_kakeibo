@@ -51,3 +51,9 @@ class User {
     balance += amount;
   }
 }
+
+enum UserTheme {
+  system,
+  light,
+  dark,
+}

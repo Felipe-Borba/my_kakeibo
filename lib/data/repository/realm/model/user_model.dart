@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:realm/realm.dart';
 
 part 'user_model.realm.dart';

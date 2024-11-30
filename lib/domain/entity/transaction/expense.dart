@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 part 'expense.g.dart';
@@ -24,4 +23,11 @@ class Expense extends Transaction {
   factory Expense.fromJson(Map<String, dynamic> json) =>
       _$ExpenseFromJson(json);
   Map<String, dynamic> toJson() => _$ExpenseToJson(this);
+}
+
+enum ExpenseCategory {
+  misc,
+  rent,
+  food,
+  entertainment,
 }

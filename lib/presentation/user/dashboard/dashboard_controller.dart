@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/chats/pie_chart_custom.dart';
 import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
