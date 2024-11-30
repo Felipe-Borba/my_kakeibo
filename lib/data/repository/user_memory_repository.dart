@@ -2,7 +2,7 @@ import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 
-class UserMemoryDatabase implements UserRepository {
+class UserMemoryRepository implements UserRepository {
   User? _user;
 
   @override

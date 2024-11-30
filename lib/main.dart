@@ -58,7 +58,6 @@ class AppModule extends Module {
   @override
   void binds(i) {
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
-    // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
     i.addLazySingleton<AuthService>(AuthFirebaseService.new);
     i.addLazySingleton<FixedExpenseRepository>(
         FixedExpenseFirebaseRepository.new);

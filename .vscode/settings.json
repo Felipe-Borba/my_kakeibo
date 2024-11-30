@@ -33,7 +33,8 @@
     "kakeibo",
     "Kakeibo",
     "mocktail",
-    "STEB"
+    "STEB",
+    "uuid"
   ],
   "cmake.ignoreCMakeListsMissing": true
 }
