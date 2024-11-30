@@ -3,22 +3,22 @@ import 'package:mocktail/mocktail.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/user_memory_memory.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/repository/auth_repository.dart';
+import 'package:my_kakeibo/domain/service/auth_service.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
-import '../../mocks/auth_repository_mock.dart';
+import '../../mocks/auth_service_mock.dart';
 import '../../mocks/user_repository_mock.dart';
 
 void main() {
   late UserUseCase userUseCase;
   late UserRepository userRepository;
-  late AuthRepository authRepository;
+  late AuthService authRepository;
   late User user;
 
   setUp(() {
     userRepository = UserRepositoryMock();
-    authRepository = AuthRepositoryMock();
+    authRepository = AuthServiceMock();
 
     userUseCase = UserUseCase(
       userRepository: userRepository,

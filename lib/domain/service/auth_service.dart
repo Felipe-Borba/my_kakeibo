@@ -1,6 +1,6 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
 
-abstract class AuthRepository {
+abstract class AuthService {
   Future<(String, AppError)> login(String email, String password);
 
   Future<(Null, AppError)> logOut();

@@ -1,9 +1,8 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/domain/repository/auth_repository.dart';
+import 'package:my_kakeibo/domain/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-//TODO isso aqui tá mais para serviço
-class AuthFirebaseRepository implements AuthRepository {
+class AuthFirebaseService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override

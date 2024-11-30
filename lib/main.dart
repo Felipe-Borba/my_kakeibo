@@ -2,14 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_kakeibo/data/repository/firebase/auth_firebase_repository.dart';
+import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
 import 'package:my_kakeibo/data/repository/firebase/expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/fixed_expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/income_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
 import 'package:my_kakeibo/data/service/local_notification_service_impl.dart';
-import 'package:my_kakeibo/domain/repository/auth_repository.dart';
+import 'package:my_kakeibo/domain/service/auth_service.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
@@ -59,7 +59,7 @@ class AppModule extends Module {
   void binds(i) {
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
     // i.addLazySingleton<UserRepository>(UserSharedPreferences.new);
-    i.addLazySingleton<AuthRepository>(AuthFirebaseRepository.new);
+    i.addLazySingleton<AuthService>(AuthFirebaseService.new);
     i.addLazySingleton<FixedExpenseRepository>(
         FixedExpenseFirebaseRepository.new);
     i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
