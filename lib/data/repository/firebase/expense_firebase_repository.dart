@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/data/repository/firebase/model/expense_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
@@ -40,12 +41,9 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(_table)
           .get();
 
-      var expenses = querySnapshot.docs.map((doc) {
-        var data = doc.data();
-        data["id"] = doc.id;
-
-        return Expense.fromJson(data);
-      }).toList();
+      var expenses = querySnapshot.docs
+          .map((doc) => ExpenseModel.fromDoc(doc).toEntity())
+          .toList();
 
       return (expenses, Empty());
     } catch (e) {
@@ -63,9 +61,9 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .add(expense.toJson());
-      expense.id = res.id;
+          .add(ExpenseModel.fromExpense(expense).toJson());
 
+      expense.id = res.id;
       return (expense, Empty());
     } catch (e) {
       return (null, Failure(e.toString()));
@@ -84,7 +82,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(_table)
           .doc(expense.id);
 
-      await docRef.update(expense.toJson());
+      await docRef.update(ExpenseModel.fromExpense(expense).toJson());
 
       return (expense, Empty());
     } catch (e) {
@@ -111,17 +109,15 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
-          .where("date", isGreaterThanOrEqualTo: startOfMonth.toIso8601String())
-          .where("date", isLessThanOrEqualTo: endOfMonth.toIso8601String());
+          .where("date",
+              isGreaterThanOrEqualTo: Timestamp.fromDate(startOfMonth))
+          .where("date", isLessThanOrEqualTo: Timestamp.fromDate(endOfMonth));
 
       var querySnapshot = await query.get();
 
-      var expenses = querySnapshot.docs.map((doc) {
-        var data = doc.data();
-        data["id"] = doc.id;
-
-        return Expense.fromJson(data);
-      }).toList();
+      var expenses = querySnapshot.docs
+          .map((doc) => ExpenseModel.fromDoc(doc).toEntity())
+          .toList();
 
       return (expenses, Empty());
     } catch (e) {
