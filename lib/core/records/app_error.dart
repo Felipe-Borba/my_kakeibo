@@ -6,6 +6,12 @@ final class Failure implements AppError {
   Failure(this.message);
 }
 
+final class Warning implements AppError {
+  final String message;
+
+  Warning(this.message);
+}
+
 final class Empty implements AppError {}
 
 /**

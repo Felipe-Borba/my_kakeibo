@@ -58,12 +58,21 @@ class AppModule extends Module {
   @override
   void binds(i) {
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
-    i.addLazySingleton<AuthService>(AuthFirebaseService.new);
     i.addLazySingleton<FixedExpenseRepository>(
-        FixedExpenseFirebaseRepository.new);
-    i.addLazySingleton<ExpenseRepository>(ExpenseFirebaseRepository.new);
+      FixedExpenseFirebaseRepository.new,
+    );
+    i.addLazySingleton<ExpenseRepository>(
+      ExpenseFirebaseRepository.new,
+      // key: "ExpenseFirebaseRepository",
+    );
+    // i.addSingleton<ExpenseRepository>(() => OfflineFirstExpenseRepository(
+    //       localRepository: i.get(key: "ExpenseFirebaseRepository"),
+    //       remoteRepository: i.get(key: "ExpenseRealmRepository"),
+    //     ));
     i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
     i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
+
+    i.addLazySingleton<AuthService>(AuthFirebaseService.new);
     i.addSingleton<LocalNotificationService>(LocalNotificationServiceImpl.new);
     i.addSingleton<PushNotificationService>(
       FirebasePushNotificationService.new,
