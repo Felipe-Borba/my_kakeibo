@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = View.of(context).platformDispatcher.platformBrightness;
     TextTheme textTheme = createTextTheme(context, "Alice", "Anek Bangla");
     MaterialTheme theme = MaterialTheme(textTheme);
 
@@ -50,9 +49,7 @@ class MyApp extends StatelessWidget {
               //
               darkTheme: theme.dark(),
               themeMode: settingsController.themeMode,
-              theme: brightness == Brightness.light //
-                  ? theme.light()
-                  : theme.dark(),
+              theme: theme.light(),
               //TODO ver essa questão de dark theme e dispositivos que forçam o dark theme
               //
               routerConfig: Modular.routerConfig,
