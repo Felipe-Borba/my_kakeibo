@@ -81,6 +81,7 @@ Algumas dependências que vale mencionar e saber sobre
 **Para persistência de dados:**
 - [shared_preferences]()
 - [cloud_firestore]() *(DB do firebase)*
+- [realm](https://pub.dev/packages/realm)
 
 **Para controle de estado:**
 
@@ -94,6 +95,7 @@ Algumas dependências que vale mencionar e saber sobre
 - [Equatable](https://pub.dev/packages/equatable)
 - [flutter_modular](https://pub.dev/packages/flutter_modular)
 - [json_serializable](https://pub.dev/packages/json_serializable)
+- [uuid](https://pub.dev/packages/uuid)
 
 **Validação**
 

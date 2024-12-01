@@ -39,7 +39,7 @@ class OfflineFirstIncomeRepository implements IncomeRepository {
       var (remoteIncomes, remoteError) = await remoteRepository.findAll();
       if (remoteError is Empty) {
         for (var expense in remoteIncomes) {
-          await localRepository.insert(expense);//TODO pode dar problema aqui porque isso pode ser um registro existente ou novo e esse método é exclusivo para novos regsitros
+          await localRepository.insert(expense);//TODO pode dar problema aqui porque isso pode ser um registro existente ou novo e esse método é exclusivo para novos regsitros, se trocar pela update o firebase não se resolve???
         }
         return (remoteIncomes, Empty());
       }
