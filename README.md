@@ -139,6 +139,17 @@ flutter pub get
 dart run flutter_launcher_icons
 ```
 
+# Como buildar o projeto
+## AAB
+```console
+flutter build appbundle
+```
+## APK
+```console
+flutter build apk
+```
+
+
 ## Prototipação
 - [Figma](https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1)
 - [gerador de temas material3](https://material-foundation.github.io/material-theme-builder/)
