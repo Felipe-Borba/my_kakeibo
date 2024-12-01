@@ -118,6 +118,12 @@ existe uma modo maroto que ele fica vendo as mudanças e gerando automático
 flutter pub run build_runner watch
 ```
 
+### Usando o realm
+depois que mudar alguma coisa lá no model tem que gerar dnv o .realm file
+```console
+dart run realm generate
+```
+
 ### Geração de ícone de launcher
 
 Para simplificar o processo usarei a dependência [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)
@@ -163,16 +169,16 @@ flutter build apk
 - [ ] Teste tela escrolável dando overflow
 - [x] Traduzir o app todo para português
 - [ ] Empty state das listas
-- [ ] Recorrência de coisas
+- [x] Recorrência de coisas
 - [ ] Visão computacional
-- [ ] Colocar um gráficozinho mensal na dashboard comparando receita e despesa (pensei em uma barra azul ou verde com vermelho na horizontal)
+- [x] Colocar um gráficozinho mensal na dashboard comparando receita e despesa (pensei em uma barra azul ou verde com vermelho na horizontal)
 - [x] Notificações (fiz setup básico das push notification)
 - [ ] Lembretes de pagamentos de boletos, etc
 - [ ] Deploy
 - [ ] Observabilidade
 - [ ] Criar uma identidade visual (tema bonsai, verde)
 - [ ] Criar um design mais atrativo
-- [ ] Onboarding com possível paywall
+- [x] Onboarding com possível paywall
 - [ ] Incorporar a filosofia do kakeibo
 - [ ] Tema claro e escuro
 - [ ] Talvez uma tela de usuário mostrando o saldo dele, total gasto, ganho, anual? poder editar os dados dele...

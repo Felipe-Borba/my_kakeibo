@@ -3,6 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_kakeibo/data/repository/realm/expense_realm_repostory.dart';
+import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/user_realm_repository.dart';
 import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
 import 'package:my_kakeibo/data/repository/firebase/expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/fixed_expense_firebase_repository.dart';
@@ -65,17 +69,41 @@ class AppModule extends Module {
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
     i.addLazySingleton<FixedExpenseRepository>(
       FixedExpenseFirebaseRepository.new,
+      key: "FixedExpenseFirebaseRepository",
     );
+    i.addLazySingleton<FixedExpenseRepository>(
+      FixedExpenseRealmRepository.new,
+      key: "FixedExpenseRealmRepository",
+    );
+
     i.addLazySingleton<ExpenseRepository>(
       ExpenseFirebaseRepository.new,
-      // key: "ExpenseFirebaseRepository",
+      key: "ExpenseFirebaseRepository",
+    );
+    i.addLazySingleton<ExpenseRepository>(
+      ExpenseRealmRepository.new,
+      // key: "ExpenseRealmRepository", //ao tirar a key essa impl vira a default, contrario só acessa pela key
     );
     // i.addSingleton<ExpenseRepository>(() => OfflineFirstExpenseRepository(
     //       localRepository: i.get(key: "ExpenseFirebaseRepository"),
     //       remoteRepository: i.get(key: "ExpenseRealmRepository"),
     //     ));
-    i.addLazySingleton<IncomeRepository>(IncomeFirebaseRepository.new);
-    i.addLazySingleton<UserRepository>(UserFirebaseRepository.new);
+
+    i.addLazySingleton<IncomeRepository>(
+      IncomeFirebaseRepository.new,
+      key: "IncomeFirebaseRepository",
+    );
+    i.addLazySingleton<IncomeRepository>(
+      IncomeRealmRepository.new,
+    );
+
+    i.addLazySingleton<UserRepository>(
+      UserFirebaseRepository.new,
+      key: "UserFirebaseRepository",
+    );
+    i.addLazySingleton<UserRepository>(
+      UserRealmRepository.new,
+    );
 
     i.addLazySingleton<AuthService>(AuthFirebaseService.new);
     i.addSingleton<LocalNotificationService>(LocalNotificationServiceImpl.new);
@@ -92,7 +120,7 @@ class AppModule extends Module {
 
   @override
   void routes(r) {
-    r.redirect("/", to: LoginView.routeName);
+    // r.redirect("/", to: WelcomeView.routeName);
 
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
 
