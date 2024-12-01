@@ -12,7 +12,10 @@ class LifeBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double percentage = current / total;
+    double percentage = 0;
+    if (total != 0) {
+      percentage = current / total;
+    }
 
     return Stack(
       alignment: Alignment.center,
