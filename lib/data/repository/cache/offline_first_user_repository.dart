@@ -45,4 +45,10 @@ class OfflineFirstUserRepository extends UserRepository {
 
     return (null, remoteError);
   }
+  
+  @override
+  Future<(User?, AppError)> getSelf() {
+    // TODO: implement getSelf
+    throw UnimplementedError();
+  }
 }

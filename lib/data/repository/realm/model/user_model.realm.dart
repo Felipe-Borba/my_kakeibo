@@ -14,9 +14,11 @@ class UserModel extends _UserModel
     String name,
     String email,
     String password,
-    double balance, {
+    double balance,
+    bool hasOnboarding, {
     String? themeString,
     String? notificationToken,
+    String? authId,
   }) {
     RealmObjectBase.set(this, 'id', id);
     RealmObjectBase.set(this, 'name', name);
@@ -25,6 +27,8 @@ class UserModel extends _UserModel
     RealmObjectBase.set(this, 'themeString', themeString);
     RealmObjectBase.set(this, 'balance', balance);
     RealmObjectBase.set(this, 'notificationToken', notificationToken);
+    RealmObjectBase.set(this, 'hasOnboarding', hasOnboarding);
+    RealmObjectBase.set(this, 'authId', authId);
   }
 
   UserModel._();
@@ -70,6 +74,18 @@ class UserModel extends _UserModel
       RealmObjectBase.set(this, 'notificationToken', value);
 
   @override
+  bool get hasOnboarding =>
+      RealmObjectBase.get<bool>(this, 'hasOnboarding') as bool;
+  @override
+  set hasOnboarding(bool value) =>
+      RealmObjectBase.set(this, 'hasOnboarding', value);
+
+  @override
+  String? get authId => RealmObjectBase.get<String>(this, 'authId') as String?;
+  @override
+  set authId(String? value) => RealmObjectBase.set(this, 'authId', value);
+
+  @override
   Stream<RealmObjectChanges<UserModel>> get changes =>
       RealmObjectBase.getChanges<UserModel>(this);
 
@@ -89,6 +105,8 @@ class UserModel extends _UserModel
       'themeString': themeString.toEJson(),
       'balance': balance.toEJson(),
       'notificationToken': notificationToken.toEJson(),
+      'hasOnboarding': hasOnboarding.toEJson(),
+      'authId': authId.toEJson(),
     };
   }
 
@@ -102,6 +120,7 @@ class UserModel extends _UserModel
         'email': EJsonValue email,
         'password': EJsonValue password,
         'balance': EJsonValue balance,
+        'hasOnboarding': EJsonValue hasOnboarding,
       } =>
         UserModel(
           fromEJson(id),
@@ -109,8 +128,10 @@ class UserModel extends _UserModel
           fromEJson(email),
           fromEJson(password),
           fromEJson(balance),
+          fromEJson(hasOnboarding),
           themeString: fromEJson(ejson['themeString']),
           notificationToken: fromEJson(ejson['notificationToken']),
+          authId: fromEJson(ejson['authId']),
         ),
       _ => raiseInvalidEJson(ejson),
     };
@@ -128,6 +149,8 @@ class UserModel extends _UserModel
       SchemaProperty('balance', RealmPropertyType.double),
       SchemaProperty('notificationToken', RealmPropertyType.string,
           optional: true),
+      SchemaProperty('hasOnboarding', RealmPropertyType.bool),
+      SchemaProperty('authId', RealmPropertyType.string, optional: true),
     ]);
   }();
 

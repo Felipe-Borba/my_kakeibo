@@ -10,9 +10,11 @@ class _UserModel {
   late String name;
   late String email;
   late String password;
-  String? themeString;
+  late String? themeString;
   late double balance;
-  String? notificationToken;
+  late String? notificationToken;
+  late bool hasOnboarding;
+  late String? authId;
 
   UserTheme get theme => UserTheme.values
       .firstWhere((e) => e.toString().split('.').last == themeString);

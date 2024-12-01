@@ -5,6 +5,7 @@ import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
+import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
 
 class SettingsController with ChangeNotifier {
   SettingsController(this._context);
@@ -16,11 +17,11 @@ class SettingsController with ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
 
   loadSettings() async {
-    var (_, error) = await userUseCase.getUser();
+    var (user, error) = await userUseCase.getUser();
     if (error is Empty) {
       Modular.to.navigate(DashboardView.routeName);
     } else {
-      Modular.to.navigate(LoginView.routeName);
+      Modular.to.navigate(WelcomeView.routeName);
     }
   }
 

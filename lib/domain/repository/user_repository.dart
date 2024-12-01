@@ -4,5 +4,8 @@ import 'package:my_kakeibo/domain/entity/user/user.dart';
 abstract class UserRepository {
   Future<(Null, AppError)> save(User user);
 
+  @Deprecated("use getSelf instead")
   Future<(User?, AppError)> getUserById(String id);
+
+  Future<(User?, AppError)> getSelf();
 }

@@ -34,6 +34,21 @@ class UserRealmRepository extends UserRepository {
     }
   }
 
+  @override
+  Future<(User?, AppError)> getSelf() async {
+    try {
+      final users = realm.all<UserModel>();
+
+      if (users.isEmpty) {
+        return (null, Failure("User not found"));
+      }
+
+      return (_toEntity(users.first), Empty());
+    } catch (e) {
+      return (null, Failure(e.toString()));
+    }
+  }
+
   User _toEntity(UserModel model) {
     return User(
       name: model.name,
@@ -42,6 +57,8 @@ class UserRealmRepository extends UserRepository {
       balance: model.balance,
       id: model.id,
       notificationToken: model.notificationToken,
+      theme: model.theme,
+      hasOnboarding: model.hasOnboarding,
     );
   }
 
@@ -52,9 +69,10 @@ class UserRealmRepository extends UserRepository {
       user.email,
       user.password,
       user.balance,
+      user.hasOnboarding,
       notificationToken: user.notificationToken,
     );
-    // model.theme = user.theme;
+    model.theme = user.theme;
     return model;
   }
 }

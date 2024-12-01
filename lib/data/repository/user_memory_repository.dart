@@ -19,4 +19,13 @@ class UserMemoryRepository implements UserRepository {
       return (null, Failure("User not found"));
     }
   }
+
+  @override
+  Future<(User?, AppError)> getSelf() async {
+    if (_user != null) {
+      return (_user, Empty());
+    } else {
+      return (null, Failure("User not found"));
+    }
+  }
 }

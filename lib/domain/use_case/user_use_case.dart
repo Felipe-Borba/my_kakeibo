@@ -30,6 +30,7 @@ class UserUseCase {
 
   Future<(User?, AppError)> getUser() async {
     var (id, err) = await _authRepository.getLoggedUserId();
+    //verificar se já tem alguma coisa local
     if (err is! Empty) {
       return (null, err);
     }

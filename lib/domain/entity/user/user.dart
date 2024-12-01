@@ -3,9 +3,11 @@ class User {
   String name;
   String email;
   String password;
-  // UserTheme theme;
+  UserTheme theme;
   double balance;
   String? notificationToken;
+  bool hasOnboarding;
+  String? authId;
 
   User({
     this.id,
@@ -13,8 +15,10 @@ class User {
     required this.email,
     required this.password,
     this.notificationToken,
-    // required this.theme,
+    this.theme = UserTheme.light,
     this.balance = 0.0,
+    this.hasOnboarding = false,
+    this.authId,
   });
 
   decreaseBalance(double amount) {

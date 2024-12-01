@@ -9,6 +9,8 @@ class UserModel {
   String? themeString;
   double balance;
   String? notificationToken;
+  bool hasOnboarding;
+  String? authId;
 
   UserModel({
     required this.id,
@@ -18,6 +20,8 @@ class UserModel {
     this.themeString,
     this.balance = 0.0,
     this.notificationToken,
+    required this.hasOnboarding,
+    this.authId,
   });
 
   UserTheme get theme => UserTheme.values
@@ -36,20 +40,25 @@ class UserModel {
       themeString: json['theme'],
       notificationToken: json['notificationToken'],
       balance: json['balance'].toDouble(),
+      hasOnboarding: json['hasOnboarding'],
+      authId: json['authId'],
     );
   }
 
   factory UserModel.fromUser(User user) {
     const uuid = Uuid();
-    return UserModel(
+    var model = UserModel(
       id: user.id ?? uuid.v4(),
       name: user.name,
       email: user.email,
       password: user.password,
       balance: user.balance,
       notificationToken: user.notificationToken,
-      // themeString: 
+      hasOnboarding: user.hasOnboarding,
+      authId: user.authId,
     );
+    model.theme = user.theme;
+    return model;
   }
 
   Map<String, dynamic> toJson() {
@@ -60,17 +69,22 @@ class UserModel {
       'theme': themeString,
       'balance': balance,
       'notificationToken': notificationToken,
+      'hasOnboarding': hasOnboarding,
+      'authId': authId,
     };
   }
 
   User toEntity() {
     return User(
+      id: id,
       name: name,
       email: email,
+      theme: theme,
       password: password,
       balance: balance,
-      id: id,
       notificationToken: notificationToken,
+      hasOnboarding: hasOnboarding,
+      authId: authId,
     );
   }
 }
