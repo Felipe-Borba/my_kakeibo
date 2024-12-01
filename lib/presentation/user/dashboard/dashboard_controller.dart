@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 
-import 'package:my_kakeibo/core/components/chats/pie_chart_custom.dart';
+import 'package:my_kakeibo/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
