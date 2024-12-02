@@ -29,12 +29,7 @@ class UserUseCase {
   }
 
   Future<(User?, AppError)> getUser() async {
-    var (id, err) = await _authRepository.getLoggedUserId();
-    //verificar se já tem alguma coisa local
-    if (err is! Empty) {
-      return (null, err);
-    }
-    return await _userRepository.getUserById(id);
+    return await _userRepository.getSelf();
   }
 
   Future<(Null, AppError)> update(User user) async {
@@ -47,7 +42,7 @@ class UserUseCase {
       return (null, loginErr);
     }
 
-    var (user, userErr) = await _userRepository.getUserById(id);
+    var (user, userErr) = await _userRepository.getSelf();
     if (userErr is! Empty) {
       return (null, userErr);
     }

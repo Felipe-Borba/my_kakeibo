@@ -4,15 +4,15 @@ import 'package:my_kakeibo/data/repository/realm/model/income_model.dart';
 import 'package:my_kakeibo/data/repository/realm/model/user_model.dart';
 import 'package:realm/realm.dart';
 
-final config = Configuration.local(
-  [
-    UserModel.schema,
-    IncomeModel.schema,
-    ExpenseModel.schema,
-    FixedExpenseModel.schema,
-  ],
-);
+final realmSchemas = [
+  UserModel.schema,
+  IncomeModel.schema,
+  ExpenseModel.schema,
+  FixedExpenseModel.schema,
+];
+final config = Configuration.inMemory(realmSchemas); //TODO retornar para local
 
+//TODO seria mais inteligente ter injetado esse basculho do que ter criado um singleton pq fica mais dibas de trocar de local para in memory nos testes
 class RealmService {
   static Realm? _realm;
 
