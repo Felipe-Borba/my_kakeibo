@@ -1,13 +1,15 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/realm/model/user_model.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:realm/realm.dart' hide Uuid, User;
 import 'package:uuid/uuid.dart';
 
 class UserRealmRepository extends UserRepository {
-  final realm = RealmService.instance;
-  final uuid = const Uuid();
+  final Realm realm;
+  final Uuid uuid;//TODO preciso disso mesmo?
+
+  UserRealmRepository(this.realm, this.uuid);
 
   @override
   Future<(User?, AppError)> getUserById(String id) async {
@@ -62,6 +64,7 @@ class UserRealmRepository extends UserRepository {
     );
   }
 
+  //TODO analizando a doc e tutoriais eu não preciso disso tento em vista que o povo faz da mesma o save, fica o update do expense...
   UserModel _toModel(User user) {
     var model = UserModel(
       user.id ?? uuid.v4(),

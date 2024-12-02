@@ -6,6 +6,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/data/repository/realm/expense_realm_repostory.dart';
 import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/data/repository/realm/user_realm_repository.dart';
 import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
 import 'package:my_kakeibo/data/repository/firebase/expense_firebase_repository.dart';
@@ -38,7 +39,9 @@ import 'package:my_kakeibo/presentation/user/create_account/create_account_view.
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
 import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
+import 'package:realm/realm.dart' hide Uuid;
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:uuid/uuid.dart';
 
 import 'app.dart';
 
@@ -66,6 +69,9 @@ void main() async {
 class AppModule extends Module {
   @override
   void binds(i) {
+    i.add<Realm>(() => Realm(config));
+    i.add<Uuid>(Uuid.new);
+
     // i.addLazySingleton<UserRepository>(UserMemoryDatabase.new);
     i.addLazySingleton<FixedExpenseRepository>(
       FixedExpenseFirebaseRepository.new,

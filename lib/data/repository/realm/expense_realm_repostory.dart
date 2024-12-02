@@ -1,14 +1,15 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/realm/model/expense_model.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:uuid/uuid.dart';
 
 class ExpenseRealmRepository extends ExpenseRepository {
-  final realm = RealmService.instance;
-  final uuid = const Uuid();
+  final Realm realm;
+  final Uuid uuid; //TODO preciso disso mesmo?
+
+  ExpenseRealmRepository(this.realm, this.uuid);
 
   @override
   Future<(Expense?, AppError)> insert(Expense expense) async {
@@ -33,7 +34,8 @@ class ExpenseRealmRepository extends ExpenseRepository {
   }
 
   @override
-  Future<(List<Expense>, AppError)> findByMonth({required DateTime month}) async {
+  Future<(List<Expense>, AppError)> findByMonth(
+      {required DateTime month}) async {
     try {
       final start = DateTime(month.year, month.month, 1);
       final end = DateTime(month.year, month.month + 1, 0);
@@ -98,7 +100,7 @@ class ExpenseRealmRepository extends ExpenseRepository {
   }
 
   ExpenseModel _toModel(Expense expense) {
-    var model =  ExpenseModel(
+    var model = ExpenseModel(
       expense.id ?? uuid.v4(),
       expense.amount,
       expense.date,

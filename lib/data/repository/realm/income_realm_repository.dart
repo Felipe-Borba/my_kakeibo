@@ -1,14 +1,15 @@
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/realm/model/income_model.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:uuid/uuid.dart';
 
 class IncomeRealmRepository extends IncomeRepository {
-  final realm = RealmService.instance;
-  final uuid = const Uuid();
+  final Realm realm;
+  final Uuid uuid; //TODO preciso disso mesmo?
+
+  IncomeRealmRepository(this.realm, this.uuid);
 
   @override
   Future<(Income?, AppError)> insert(Income income) async {
