@@ -117,5 +117,13 @@
         "example": "R$ 500.00"
       }
     }
-  }
+  },
+  "fieldRequired": "Campo obrigatório",
+  "@fieldRequired": {},
+  "next": "Próximo",
+  "@next": {},
+  "firstThingsFirst": "Espere, Antes de começas a usar o app",
+  "@firstThingsFirst": {},
+  "yourName": "Qual é o seu nome?",
+  "@yourName": {}
 }

@@ -28,6 +28,10 @@ class UserUseCase {
     return (null, Empty());
   }
 
+  Future<(Null, AppError)> save(User user) async {
+    return await _userRepository.save(user);
+  }
+
   Future<(User?, AppError)> getUser() async {
     return await _userRepository.getSelf();
   }

@@ -5,7 +5,7 @@ import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
-import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 
 class SettingsController with ChangeNotifier {
   SettingsController(this._context);

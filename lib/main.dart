@@ -34,11 +34,12 @@ import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_e
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
-import 'package:my_kakeibo/presentation/welcome/welcome_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:uuid/uuid.dart';
@@ -79,7 +80,7 @@ class AppModule extends Module {
     );
     i.addLazySingleton<FixedExpenseRepository>(
       FixedExpenseRealmRepository.new,
-      key: "FixedExpenseRealmRepository",
+      // key: "FixedExpenseRealmRepository",
     );
 
     i.addLazySingleton<ExpenseRepository>(
@@ -131,6 +132,10 @@ class AppModule extends Module {
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
 
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
+    r.child(
+      UserInfoView.routeName,
+      child: (context) => const UserInfoView(),
+    );
 
     r.child(LoginView.routeName, child: (context) => const LoginView());
     r.child(

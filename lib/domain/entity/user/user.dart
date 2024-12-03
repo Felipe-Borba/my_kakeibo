@@ -21,6 +21,10 @@ class User {
     this.authId,
   });
 
+  factory User.createOnboardingUser(String name) {
+    return User(name: name, email: "", password: "");
+  }
+
   decreaseBalance(double amount) {
     balance -= amount;
   }

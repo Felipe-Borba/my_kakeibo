@@ -117,5 +117,13 @@
         "example": "$ 500.00"
       }
     }
-  }
+  },
+  "fieldRequired": "Field is required",
+  "@fieldRequired": {},
+  "next": "Next",
+  "@next": {},
+  "firstThingsFirst": "Wait, First things first",
+  "@firstThingsFirst": {},
+  "yourName": "What is you name?",
+  "@yourName": {}
 }

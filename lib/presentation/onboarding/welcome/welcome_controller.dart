@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_kakeibo/presentation/user/login/login_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_view.dart';
 
 class WelcomeController with ChangeNotifier {
   // Dependencies
@@ -9,6 +9,6 @@ class WelcomeController with ChangeNotifier {
 
   // Actions
   void onContinue() {
-    Modular.to.navigate(LoginView.routeName);
+    Modular.to.navigate(UserInfoView.routeName);
   }
 }
