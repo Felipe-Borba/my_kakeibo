@@ -34,6 +34,7 @@ import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_e
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
@@ -63,7 +64,7 @@ void main() async {
 
   tz.initializeTimeZones();
 
-  Modular.setInitialRoute(LoginView.routeName);
+  Modular.setInitialRoute(WelcomeView.routeName);
   return runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 
@@ -135,6 +136,10 @@ class AppModule extends Module {
     r.child(
       UserInfoView.routeName,
       child: (context) => const UserInfoView(),
+    );
+    r.child(
+      HelloView.routeName,
+      child: (context) => HelloView(name: r.args.data),
     );
 
     r.child(LoginView.routeName, child: (context) => const LoginView());

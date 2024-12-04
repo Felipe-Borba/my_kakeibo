@@ -125,5 +125,14 @@
   "firstThingsFirst": "Wait, First things first",
   "@firstThingsFirst": {},
   "yourName": "What is you name?",
-  "@yourName": {}
+  "@yourName": {},
+  "hello": "Hello, {name}",
+  "@hello": {
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Isis"
+      }
+    }
+  }
 }

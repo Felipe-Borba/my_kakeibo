@@ -5,7 +5,6 @@ import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
-import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 
 class SettingsController with ChangeNotifier {
   SettingsController(this._context);
@@ -20,11 +19,12 @@ class SettingsController with ChangeNotifier {
     var (user, error) = await userUseCase.getUser();
     if (error is Empty) {
       Modular.to.navigate(DashboardView.routeName);
-    } else {
-      Modular.to.navigate(WelcomeView.routeName);
     }
   }
 
+  //TODO adicionar funcionalidade de deletar os dados
+
+  //depois que o usuário configurar o backup na nuvem não tem como desativar só se deletar os dados
   logout() async {
     var (_, err) = await userUseCase.logOut();
     if (err is Failure) {

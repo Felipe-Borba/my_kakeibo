@@ -5,8 +5,7 @@ import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
-
-import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 
 class UserInfoController with ChangeNotifier {
   final _userUseCase = Modular.get<UserUseCase>();
@@ -39,6 +38,6 @@ class UserInfoController with ChangeNotifier {
       return;
     }
 
-    Modular.to.navigate(DashboardView.routeName);
+    Modular.to.navigate(HelloView.routeName, arguments: name);
   }
 }

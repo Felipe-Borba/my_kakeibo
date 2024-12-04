@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
         return FutureBuilder(
           future: settingsController.loadSettings(),
           builder: (context, snapshot) {
-            // if (snapshot.connectionState == ConnectionState.waiting) {
-            //   return const Center(child: CircularProgressIndicator());
-            // }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
             return MaterialApp.router(
               restorationScopeId: 'app',

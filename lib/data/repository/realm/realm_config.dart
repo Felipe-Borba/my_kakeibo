@@ -10,4 +10,4 @@ final realmSchemas = [
   ExpenseModel.schema,
   FixedExpenseModel.schema,
 ];
-final config = Configuration.local(realmSchemas);
+final config = Configuration.inMemory(realmSchemas);

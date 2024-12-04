@@ -125,5 +125,14 @@
   "firstThingsFirst": "Espere, Antes de começas a usar o app",
   "@firstThingsFirst": {},
   "yourName": "Qual é o seu nome?",
-  "@yourName": {}
+  "@yourName": {},
+  "hello": "Olá {name}",
+  "@hello": {
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Isis"
+      }
+    }
+  }
 }
