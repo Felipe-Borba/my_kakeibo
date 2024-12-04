@@ -25,6 +25,13 @@ class WelcomeView extends StatelessWidget {
                 const Expanded(child: SizedBox()),
                 ClipOval(child: Image.asset("assets/launcher/icon.png")),
                 const Expanded(child: SizedBox()),
+                Text(
+                  '${context.intl.appTitle} 家計簿',
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 16,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                   child: Text(
