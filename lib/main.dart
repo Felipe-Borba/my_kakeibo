@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:my_kakeibo/data/repository/realm/expense_realm_repostory.dart';
+import 'package:my_kakeibo/data/repository/realm/expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';

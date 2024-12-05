@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Income extends Transaction {
@@ -15,4 +17,13 @@ class Income extends Transaction {
 
 enum IncomeSource {
   salary,
+}
+
+extension IncomeSourceHelper on IncomeSource {
+  String getTranslation(BuildContext context) {
+    switch (this) {
+      case IncomeSource.salary:
+        return context.intl.salary;
+    }
+  }
 }

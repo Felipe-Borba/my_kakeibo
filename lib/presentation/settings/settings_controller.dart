@@ -22,8 +22,6 @@ class SettingsController with ChangeNotifier {
     }
   }
 
-  //TODO adicionar funcionalidade de deletar os dados
-
   //depois que o usuário configurar o backup na nuvem não tem como desativar só se deletar os dados
   logout() async {
     var (_, err) = await userUseCase.logOut();
@@ -44,6 +42,9 @@ class SettingsController with ChangeNotifier {
   }
 
   deleteData() async {
-    await userUseCase.deleteData();
+    var (res, error) = await userUseCase.deleteData();
+    if (error is Failure) {
+      showSnackbar(context: _context, text: error.message);
+    }
   }
 }
