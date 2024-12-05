@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 class UserRealmRepository extends UserRepository {
   final Realm realm;
-  final Uuid uuid;//TODO preciso disso mesmo?
+  final Uuid uuid; //TODO preciso disso mesmo?
 
   UserRealmRepository(this.realm, this.uuid);
 
@@ -64,18 +64,16 @@ class UserRealmRepository extends UserRepository {
     );
   }
 
-  //TODO analizando a doc e tutoriais eu não preciso disso tento em vista que o povo faz da mesma o save, fica o update do expense...
   UserModel _toModel(User user) {
-    var model = UserModel(
+    return UserModel(
       user.id ?? uuid.v4(),
       user.name,
       user.email,
       user.password,
+      user.theme.description,
       user.balance,
       user.hasOnboarding,
       notificationToken: user.notificationToken,
     );
-    model.theme = user.theme;
-    return model;
   }
 }

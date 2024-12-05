@@ -104,7 +104,7 @@ enum Frequency {
   annually,
 }
 
-extension FrequencyHelper on Frequency {
+extension FrequencyExtension on Frequency {
   String getTranslation(BuildContext context) {
     switch (this) {
       case Frequency.daily:
@@ -117,6 +117,14 @@ extension FrequencyHelper on Frequency {
         return context.intl.annually;
     }
   }
+
+  String get description => toString().split('.').last;
+}
+
+extension FrequencyExtensionListExtension on List<Frequency> {
+  Frequency getByDescription(String description) {
+    return firstWhere((e) => e.description == description);
+  }
 }
 
 enum Remember {
@@ -124,4 +132,14 @@ enum Remember {
   weekBefore,
   dayBefore,
   atDueDate,
+}
+
+extension RememberExtension on Remember {
+  String get description => toString().split('.').last;
+}
+
+extension RememberExtensionListExtension on List<Remember> {
+  Remember getByDescription(String description) {
+    return firstWhere((e) => e.description == description);
+  }
 }

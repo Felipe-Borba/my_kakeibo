@@ -16,21 +16,21 @@ class _FixedExpenseModel {
   late String categoryString;
   late double amount;
 
-  ExpenseCategory get category => ExpenseCategory.values
-      .firstWhere((e) => e.toString().split('.').last == categoryString);
+  ExpenseCategory get category =>
+      ExpenseCategory.values.getByDescription(categoryString);
+
   set category(ExpenseCategory category) {
-    categoryString = category.toString().split('.').last;
+    categoryString = category.description;
   }
 
-  Frequency get frequency => Frequency.values
-      .firstWhere((e) => e.toString().split('.').last == frequencyString);
+  Frequency get frequency => Frequency.values.getByDescription(frequencyString);
   set frequency(Frequency frequency) {
-    frequencyString = frequency.toString().split('.').last;
+    frequencyString = frequency.description;
   }
 
-  Remember get remember => Remember.values
-      .firstWhere((e) => e.toString().split('.').last == rememberString);
+  Remember get remember => Remember.values.getByDescription(rememberString);
+
   set remember(Remember remember) {
-    rememberString = remember.toString().split('.').last;
+    rememberString = remember.description;
   }
 }

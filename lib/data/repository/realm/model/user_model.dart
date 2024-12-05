@@ -10,14 +10,13 @@ class _UserModel {
   late String name;
   late String email;
   late String password;
-  late String? themeString;
+  late String themeString;
   late double balance;
   late String? notificationToken;
   late bool hasOnboarding;
   late String? authId;
 
-  UserTheme get theme => UserTheme.values
-      .firstWhere((e) => e.toString().split('.').last == themeString);
+  UserTheme get theme => UserTheme.values.getByDescription(themeString);
 
   set theme(UserTheme theme) {
     themeString = theme.toString().split('.').last;

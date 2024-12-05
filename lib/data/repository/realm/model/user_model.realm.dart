@@ -14,9 +14,9 @@ class UserModel extends _UserModel
     String name,
     String email,
     String password,
+    String themeString,
     double balance,
     bool hasOnboarding, {
-    String? themeString,
     String? notificationToken,
     String? authId,
   }) {
@@ -55,10 +55,10 @@ class UserModel extends _UserModel
   set password(String value) => RealmObjectBase.set(this, 'password', value);
 
   @override
-  String? get themeString =>
-      RealmObjectBase.get<String>(this, 'themeString') as String?;
+  String get themeString =>
+      RealmObjectBase.get<String>(this, 'themeString') as String;
   @override
-  set themeString(String? value) =>
+  set themeString(String value) =>
       RealmObjectBase.set(this, 'themeString', value);
 
   @override
@@ -119,6 +119,7 @@ class UserModel extends _UserModel
         'name': EJsonValue name,
         'email': EJsonValue email,
         'password': EJsonValue password,
+        'themeString': EJsonValue themeString,
         'balance': EJsonValue balance,
         'hasOnboarding': EJsonValue hasOnboarding,
       } =>
@@ -127,9 +128,9 @@ class UserModel extends _UserModel
           fromEJson(name),
           fromEJson(email),
           fromEJson(password),
+          fromEJson(themeString),
           fromEJson(balance),
           fromEJson(hasOnboarding),
-          themeString: fromEJson(ejson['themeString']),
           notificationToken: fromEJson(ejson['notificationToken']),
           authId: fromEJson(ejson['authId']),
         ),
@@ -145,7 +146,7 @@ class UserModel extends _UserModel
       SchemaProperty('name', RealmPropertyType.string),
       SchemaProperty('email', RealmPropertyType.string),
       SchemaProperty('password', RealmPropertyType.string),
-      SchemaProperty('themeString', RealmPropertyType.string, optional: true),
+      SchemaProperty('themeString', RealmPropertyType.string),
       SchemaProperty('balance', RealmPropertyType.double),
       SchemaProperty('notificationToken', RealmPropertyType.string,
           optional: true),

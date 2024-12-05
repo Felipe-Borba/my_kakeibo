@@ -54,4 +54,13 @@ extension ExpenseCategoryHelper on ExpenseCategory {
         return Icons.error;
     }
   }
+
+  String get description => toString().split('.').last;
+
+}
+
+extension ExpenseCategoryListExtension on List<ExpenseCategory> {
+  ExpenseCategory getByDescription(String description) {
+    return firstWhere((e) => e.description == description);
+  }
 }

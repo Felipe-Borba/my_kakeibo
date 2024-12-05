@@ -39,3 +39,20 @@ enum UserTheme {
   light,
   dark,
 }
+
+extension UserThemeExtension on UserTheme {
+  // String getTranslation(BuildContext context) {
+  //   switch (this) {
+  //     case UserTheme.system:
+  //       return context.intl.system;
+  //   }
+  // }
+
+  String get description => toString().split('.').last;
+}
+
+extension UserThemeListExtension on List<UserTheme> {
+  UserTheme getByDescription(String description) {
+    return firstWhere((e) => e.description == description);
+  }
+}

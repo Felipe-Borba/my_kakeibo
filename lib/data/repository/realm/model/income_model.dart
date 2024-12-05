@@ -12,10 +12,9 @@ class _IncomeModel {
   late String description;
   late String sourceString;
 
-  IncomeSource get source => IncomeSource.values
-      .firstWhere((e) => e.toString().split('.').last == sourceString);
+  IncomeSource get source => IncomeSource.values.getByDescription(sourceString);
 
   set source(IncomeSource source) {
-    sourceString = source.toString().split('.').last;
+    sourceString = source.description;
   }
 }

@@ -10,4 +10,7 @@ final realmSchemas = [
   ExpenseModel.schema,
   FixedExpenseModel.schema,
 ];
-final config = Configuration.local(realmSchemas);
+final config = Configuration.local(
+  realmSchemas,
+  shouldDeleteIfMigrationNeeded: true, //TODO enquanto o app está em alfa
+);
