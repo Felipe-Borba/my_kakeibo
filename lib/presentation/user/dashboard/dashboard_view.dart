@@ -4,7 +4,6 @@ import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/life_bar.dart';
-import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
@@ -173,7 +172,7 @@ class DashboardView extends StatelessWidget {
           const SizedBox(width: 16),
           Icon(
             transaction is Expense
-                ? ExpenseCategoryHelper.getIcon(transaction.category)
+                ? transaction.category.getIcon()
                 : Icons.monetization_on_outlined,
           ),
         ],

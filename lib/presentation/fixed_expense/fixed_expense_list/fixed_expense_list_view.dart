@@ -5,9 +5,8 @@ import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
-import 'package:my_kakeibo/core/expense_category_helper.dart';
-import 'package:my_kakeibo/core/frequency_helper.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -112,24 +111,16 @@ class FixedExpenseListView extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(ExpenseCategoryHelper.getIcon(
-                        fixedExpense.category,
-                      )),
+                      Icon(fixedExpense.category.getIcon()),
                       const SizedBox(width: 8),
-                      Text(ExpenseCategoryHelper.getTranslation(
-                        fixedExpense.category,
-                        context: context,
-                      )),
+                      Text(fixedExpense.category.getTranslation(context)),
                       const SizedBox(width: 8),
                       Text(fixedExpense.description),
                     ],
                   ),
                   Row(
                     children: [
-                      Text(FrequencyHelper.getTranslation(
-                        fixedExpense.frequency,
-                        context: context,
-                      )),
+                      Text(fixedExpense.frequency.getTranslation(context)),
                       const SizedBox(width: 8),
                       Text(formatter.format(fixedExpense.amount)),
                       const SizedBox(width: 8),

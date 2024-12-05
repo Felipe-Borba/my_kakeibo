@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 
 class FixedExpense {
@@ -100,6 +102,21 @@ enum Frequency {
   weekly,
   monthly,
   annually,
+}
+
+extension FrequencyHelper on Frequency {
+  String getTranslation(BuildContext context) {
+    switch (this) {
+      case Frequency.daily:
+        return context.intl.daily;
+      case Frequency.weekly:
+        return context.intl.weekly;
+      case Frequency.monthly:
+        return context.intl.monthly;
+      case Frequency.annually:
+        return context.intl.annually;
+    }
+  }
 }
 
 enum Remember {

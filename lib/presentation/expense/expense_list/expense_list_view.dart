@@ -6,7 +6,6 @@ import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/input_field/month_selector.dart';
 import 'package:my_kakeibo/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/core/components/sort_component.dart';
-import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_controller.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +105,7 @@ class ExpenseListView extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(ExpenseCategoryHelper.getIcon(expense.category)),
+          Icon(expense.category.getIcon()),
           const SizedBox(width: 16),
           Text(
             formatter.format(expense.amount),

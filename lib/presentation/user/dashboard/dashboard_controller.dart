@@ -1,10 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
-
 import 'package:my_kakeibo/core/components/charts/pie_chart_custom.dart';
-import 'package:my_kakeibo/core/expense_category_helper.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
@@ -12,7 +10,6 @@ import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardController with ChangeNotifier {
   DashboardController(this._context);
@@ -94,10 +91,7 @@ class DashboardController with ChangeNotifier {
         color: color,
         value: entry.value,
         title: moneyFormatter.format(entry.value),
-        label: ExpenseCategoryHelper.getTranslation(
-          entry.key,
-          context: _context,
-        ),
+        label: entry.key.getTranslation(_context),
       );
     }).toList();
   }
