@@ -42,4 +42,8 @@ class SettingsController with ChangeNotifier {
 
     notifyListeners();
   }
+
+  deleteData() async {
+    await userUseCase.deleteData();
+  }
 }

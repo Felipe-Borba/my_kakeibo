@@ -57,4 +57,8 @@ class UserUseCase {
   Future<(Null, AppError)> logOut() async {
     return _authRepository.logOut();
   }
+
+  Future<(Null, AppError)> deleteData() async {
+    throw UnimplementedError('TODO interfaces e implementar');
+  }
 }

@@ -8,4 +8,6 @@ abstract class UserRepository {
   Future<(User?, AppError)> getUserById(String id);
 
   Future<(User?, AppError)> getSelf();
+
+  // Future<(Null, AppError)> deleteById(String id);
 }

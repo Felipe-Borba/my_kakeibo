@@ -27,7 +27,7 @@ class SettingsView extends StatelessWidget {
             DropdownButton<ThemeMode>(
               value: controller.themeMode,
               onChanged: controller.updateThemeMode,
-              items:  [
+              items: [
                 DropdownMenuItem(
                   value: ThemeMode.system,
                   child: Text(intl.systemTheme),
@@ -45,8 +45,42 @@ class SettingsView extends StatelessWidget {
             ElevatedButton.icon(
               key: const Key("logout"),
               onPressed: controller.logout,
-              label:  Text(intl.logout),
+              label: Text(intl.logout),
               icon: const Icon(Icons.logout),
+            ),
+            ElevatedButton.icon(
+              key: const Key("deleteData"),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(intl.confirmDeleteData),
+                      content: Text(intl.confirmDeleteDataText),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(false);
+                          },
+                          child: Text(intl.cancel),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            await controller.deleteData();
+                            Navigator.of(context).pop(true);
+                          },
+                          style: const ButtonStyle(
+                            foregroundColor: WidgetStatePropertyAll(Colors.red),
+                          ),
+                          child: Text(intl.delete),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+              label: Text(intl.deleteData),
+              icon: const Icon(Icons.warning_amber_rounded),
             ),
           ],
         ),

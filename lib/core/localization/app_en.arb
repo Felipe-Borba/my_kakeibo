@@ -134,5 +134,11 @@
         "example": "Isis"
       }
     }
-  }
+  },
+  "deleteData": "Delete Data",
+  "@deleteData": {},
+  "confirmDeleteData": "Are you sure you want to delete your data?",
+  "@confirmDeleteData": {},
+  "confirmDeleteDataText": "Because we care for your privacy once deleted we can not restore your data",
+  "@confirmDeleteDataText": {}
 }

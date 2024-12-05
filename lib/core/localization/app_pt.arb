@@ -134,5 +134,11 @@
         "example": "Isis"
       }
     }
-  }
+  },
+  "deleteData": "Apagar Dados",
+  "@deleteData": {},
+  "confirmDeleteData": "Você tem certeza que quer deletar os seus dados?",
+  "@confirmDeleteData": {},
+  "confirmDeleteDataText": "Porque nos prezamos pela sua privacidade, uma ves deletado não será possível recuperar os seus dados",
+  "@confirmDeleteDataText": {}
 }
