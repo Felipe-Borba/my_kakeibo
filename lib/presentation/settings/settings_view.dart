@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/presentation/settings/settings_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -24,23 +25,17 @@ class SettingsView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DropdownButton<ThemeMode>(
-              value: controller.themeMode,
+            DropdownButton<UserTheme>(
+              value: controller.userTheme,
               onChanged: controller.updateThemeMode,
-              items: [
-                DropdownMenuItem(
-                  value: ThemeMode.system,
-                  child: Text(intl.systemTheme),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.light,
-                  child: Text(intl.lightTheme),
-                ),
-                DropdownMenuItem(
-                  value: ThemeMode.dark,
-                  child: Text(intl.darkTheme),
-                )
-              ],
+              items: UserTheme.values
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.getTranslation(context)),
+                    ),
+                  )
+                  .toList(),
             ),
             ElevatedButton.icon(
               key: const Key("logout"),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/login/login_view.dart';
@@ -12,8 +13,7 @@ class SettingsController with ChangeNotifier {
   final BuildContext _context;
   final userUseCase = Modular.get<UserUseCase>();
 
-  ThemeMode _themeMode = ThemeMode.system;
-  ThemeMode get themeMode => _themeMode;
+  UserTheme userTheme = UserTheme.system;
 
   loadSettings() async {
     var (user, error) = await userUseCase.getUser();
@@ -32,12 +32,9 @@ class SettingsController with ChangeNotifier {
     }
   }
 
-  updateThemeMode(ThemeMode? newThemeMode) async {
+  updateThemeMode(UserTheme? newThemeMode) async {
     if (newThemeMode == null) return;
-    if (newThemeMode == _themeMode) return;
-
-    _themeMode = newThemeMode;
-
+    userTheme = newThemeMode;
     notifyListeners();
   }
 

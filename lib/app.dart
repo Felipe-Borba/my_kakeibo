@@ -3,8 +3,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
-import 'package:my_kakeibo/core/theme.dart';
 import 'package:my_kakeibo/core/font.dart';
+import 'package:my_kakeibo/core/theme.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/settings/settings_controller.dart';
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
               onGenerateTitle: (context) => context.intl.appTitle,
               //
               darkTheme: theme.dark(),
-              themeMode: settingsController.themeMode,
+              themeMode: settingsController.userTheme.toThemeMode(),
               theme: theme.light(),
               //TODO ver essa questão de dark theme e dispositivos que forçam o dark theme
               //
