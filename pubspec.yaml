@@ -28,6 +28,7 @@ dependencies:
   realm: ^3.4.1
   uuid: ^4.5.1
   firebase_app_check: ^0.3.1+6
+  keyboard_dismisser: ^3.0.0
 
 dev_dependencies:
   flutter_test:
