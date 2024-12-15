@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 class ExpenseRealmRepository extends ExpenseRepository {
   final Realm realm;
-  final Uuid uuid; //TODO preciso disso mesmo?
+  final Uuid uuid; 
 
   ExpenseRealmRepository(this.realm, this.uuid);
 

@@ -7,7 +7,7 @@ import 'package:uuid/uuid.dart';
 
 class UserRealmRepository extends UserRepository {
   final Realm realm;
-  final Uuid uuid; //TODO preciso disso mesmo?
+  final Uuid uuid;
 
   UserRealmRepository(this.realm, this.uuid);
 
