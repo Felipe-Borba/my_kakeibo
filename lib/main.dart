@@ -35,6 +35,7 @@ import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_e
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
 import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
+import 'package:my_kakeibo/presentation/onboarding/terms_and_privacy/terms_and_privacy_view.dart';
 import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
@@ -133,6 +134,7 @@ class AppModule extends Module {
     r.child(SettingsView.routeName, child: (context) => const SettingsView());
 
     r.child(WelcomeView.routeName, child: (context) => const WelcomeView());
+    r.child(TermsAndPrivacyView.routeName, child: (context) => const TermsAndPrivacyView());
     r.child(
       UserInfoView.routeName,
       child: (context) => const UserInfoView(),

@@ -37,6 +37,7 @@ class WelcomeView extends StatelessWidget {
                   child: Text(
                     context.intl.welcomeToOurFinanceApp,
                     style: const TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
@@ -55,7 +56,13 @@ class WelcomeView extends StatelessWidget {
                   ),
                 ),
                 const Expanded(child: SizedBox()),
-                //TODO Termos de uso
+                TextButton(
+                  onPressed: controller.termsAndPrivacyClick,
+                  child: Text(
+                    context.intl.agreement_warning,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 ElevatedButton(
                   onPressed: controller.onContinue,
                   child: Text(context.intl.getStarted),
