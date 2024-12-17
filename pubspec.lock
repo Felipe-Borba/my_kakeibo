@@ -54,14 +54,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.11.0"
-  auto_injector:
-    dependency: transitive
-    description:
-      name: auto_injector
-      sha256: d2e204bc46d7349795364884d07ba79fe6a0f3a84a651b70dcbb68d82dcebab0
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.5"
   boolean_selector:
     dependency: transitive
     description:
@@ -477,14 +469,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_modular:
-    dependency: "direct main"
-    description:
-      name: flutter_modular
-      sha256: bc17a1eb1da676b9111e59d27834fb6673bdea01aead12f0803a0847ff9d451c
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.3.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -697,14 +681,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  modular_core:
-    dependency: transitive
-    description:
-      name: modular_core
-      sha256: bd60317c81cff3a510aca19d6ddd661c7c79e3cba97b9f39e9ad199156ff255d
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.3"
   nested:
     dependency: transitive
     description:
@@ -889,14 +865,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1"
-  result_dart:
-    dependency: transitive
-    description:
-      name: result_dart
-      sha256: "3c69c864a08df0f413a86be211d07405e9a53cc1ac111e3cc8365845a0fb5288"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   sane_uuid:
     dependency: transitive
     description:
