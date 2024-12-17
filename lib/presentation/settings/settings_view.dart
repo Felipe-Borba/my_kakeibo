@@ -9,8 +9,6 @@ import 'package:provider/provider.dart';
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
-  static const routeName = '/settings';
-
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<SettingsController>(context);

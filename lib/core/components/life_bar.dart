@@ -4,7 +4,7 @@ class LifeBar extends StatelessWidget {
   final double total;
   final double current;
 
-  LifeBar({
+  const LifeBar({
     super.key,
     required this.total,
     required this.current,

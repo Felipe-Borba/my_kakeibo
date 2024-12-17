@@ -8,8 +8,6 @@ import 'package:provider/provider.dart';
 class CreateAccountView extends StatelessWidget {
   const CreateAccountView({super.key});
 
-  static const routeName = '/create-account';
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

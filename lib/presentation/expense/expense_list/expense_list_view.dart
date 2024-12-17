@@ -13,8 +13,6 @@ import 'package:provider/provider.dart';
 class ExpenseListView extends StatelessWidget {
   const ExpenseListView({super.key});
 
-  static const routeName = '/expense-list';
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
