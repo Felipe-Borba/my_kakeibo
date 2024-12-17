@@ -7,12 +7,11 @@ class HelloView extends StatelessWidget {
   const HelloView({super.key, required this.name});
 
   final String name;
-  static const routeName = '/onboarding/hello';
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HelloController(),
+      create: (context) => HelloController(context),
       builder: (context, child) {
         final controller = Provider.of<HelloController>(context);
 

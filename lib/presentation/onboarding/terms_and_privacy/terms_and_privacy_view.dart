@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 
 class TermsAndPrivacyView extends StatelessWidget {
   const TermsAndPrivacyView({super.key});
-
-  static const routeName = '/terms-and-privacy';
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +42,7 @@ class TermsAndPrivacyView extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                Modular.to.pop();
+                context.popScreen();
               },
               child: Text(
                 context.intl.back,

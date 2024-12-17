@@ -10,8 +10,6 @@ import 'package:provider/provider.dart';
 class IncomeFormView extends StatelessWidget {
   const IncomeFormView({super.key, this.income});
 
-  static const routeName = "/income-form";
-
   final Income? income;
 
   @override

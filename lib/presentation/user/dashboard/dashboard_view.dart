@@ -15,8 +15,6 @@ import 'package:provider/provider.dart';
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
 
-  static const routeName = '/dashboard';
-
   @override
   Widget build(BuildContext context) {
     TextStyle? titleLarge = Theme.of(context).textTheme.titleLarge;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 
 class UserInfoController with ChangeNotifier {
-  final _userUseCase = Modular.get<UserUseCase>();
   final BuildContext _context;
+  late final _userUseCase = _context.dependencyManager.userUseCase;
 
   UserInfoController(this._context);
 
@@ -38,6 +38,6 @@ class UserInfoController with ChangeNotifier {
       return;
     }
 
-    Modular.to.navigate(HelloView.routeName, arguments: name);
+    _context.pushAndRemoveAllScreen(HelloView(name: name!));
   }
 }

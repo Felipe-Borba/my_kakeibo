@@ -6,8 +6,6 @@ import 'package:provider/provider.dart';
 class UserInfoView extends StatelessWidget {
   const UserInfoView({super.key});
 
-  static const routeName = '/onboarding/userInfo';
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -26,12 +24,12 @@ class UserInfoView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                     Text(
+                    Text(
                       context.intl.firstThingsFirst,
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 8),
-                     Text(
+                    Text(
                       context.intl.yourName,
                       style: const TextStyle(fontSize: 16),
                     ),

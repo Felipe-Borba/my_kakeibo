@@ -12,8 +12,6 @@ import 'package:provider/provider.dart';
 class FixedExpenseFormView extends StatelessWidget {
   const FixedExpenseFormView({super.key, this.fixedExpense});
 
-  static const routeName = "/fixed-expense-form";
-
   final FixedExpense? fixedExpense;
 
   @override

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 
 class ExpenseFormController with ChangeNotifier {
   ExpenseFormController(this._context, this._expense);
@@ -12,7 +12,7 @@ class ExpenseFormController with ChangeNotifier {
   // Dependencies
   final BuildContext _context;
   final Expense? _expense;
-  final expenseUseCase = Modular.get<ExpenseUseCase>();
+  late final expenseUseCase = _context.dependencyManager.expenseUseCase;
 
   // State
   final formKey = GlobalKey<FormState>();
@@ -76,7 +76,7 @@ class ExpenseFormController with ChangeNotifier {
     ));
 
     if (error is Empty) {
-      Modular.to.pop(true);
+      _context.popScreen(true);
     } else if (error is Failure) {
       showSnackbar(context: _context, text: error.message);
     }

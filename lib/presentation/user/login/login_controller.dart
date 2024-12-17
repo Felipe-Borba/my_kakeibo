@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class LoginController with ChangeNotifier {
-  LoginController(this._context); 
+  LoginController(this._context);
 
   // Dependencies
-  final userUseCase = Modular.get<UserUseCase>();
+  late final userUseCase = _context.dependencyManager.userUseCase;
   final BuildContext _context;
 
   // State
@@ -20,7 +20,7 @@ class LoginController with ChangeNotifier {
 
   // Actions
   onClickCreateAccount() async {
-    Modular.to.pushNamed(CreateAccountView.routeName);
+    _context.pushScreen(const CreateAccountView());
   }
 
   onLogin() async {
@@ -34,7 +34,7 @@ class LoginController with ChangeNotifier {
     if (error is Failure) {
       showSnackbar(context: _context, text: error.message);
     } else {
-      Modular.to.navigate(DashboardView.routeName);
+      _context.pushScreen(const DashboardView());
     }
 
     loading = false;

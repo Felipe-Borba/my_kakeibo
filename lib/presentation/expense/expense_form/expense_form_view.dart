@@ -10,8 +10,6 @@ import 'package:provider/provider.dart';
 class ExpenseFormView extends StatelessWidget {
   const ExpenseFormView({super.key, this.expense});
 
-  static const routeName = "/expense-form";
-
   final Expense? expense;
 
   @override

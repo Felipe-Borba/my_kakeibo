@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/presentation/expense/expense_form/expense_form_view.dart';
 
 class ExpenseListController with ChangeNotifier {
   ExpenseListController(this._context);
 
   // Dependencies
-  final expenseUseCase = Modular.get<ExpenseUseCase>();
+  late final expenseUseCase = _context.dependencyManager.expenseUseCase;
   final BuildContext _context;
 
   // State
@@ -53,16 +53,13 @@ class ExpenseListController with ChangeNotifier {
   }
 
   onEdit(Expense expense) async {
-    var refresh = await Modular.to.pushNamed<bool>(
-      ExpenseFormView.routeName,
-      arguments: expense,
-    );
+    var refresh = await _context.pushScreen(ExpenseFormView(expense: expense));
 
     await _doRefresh(refresh);
   }
 
   onAdd() async {
-    var refresh = await Modular.to.pushNamed<bool>(ExpenseFormView.routeName);
+    var refresh = await _context.pushScreen(const ExpenseFormView());
     await _doRefresh(refresh);
   }
 

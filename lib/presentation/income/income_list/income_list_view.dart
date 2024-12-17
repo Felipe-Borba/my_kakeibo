@@ -13,8 +13,6 @@ import 'package:provider/provider.dart';
 class IncomeListView extends StatelessWidget {
   const IncomeListView({super.key});
 
-  static const routeName = "/income-list";
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

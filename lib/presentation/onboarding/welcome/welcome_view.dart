@@ -6,12 +6,10 @@ import 'package:provider/provider.dart';
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
 
-  static const routeName = '/welcome';
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => WelcomeController(),
+      create: (context) => WelcomeController(context),
       builder: (context, child) {
         final controller = Provider.of<WelcomeController>(context);
 

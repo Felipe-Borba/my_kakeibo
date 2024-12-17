@@ -13,8 +13,6 @@ import 'package:provider/provider.dart';
 class FixedExpenseListView extends StatelessWidget {
   const FixedExpenseListView({super.key});
 
-  static const routeName = '/fixed-expense-list';
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

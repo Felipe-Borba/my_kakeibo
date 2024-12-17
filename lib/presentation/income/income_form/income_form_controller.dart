@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 
 class IncomeFormController with ChangeNotifier {
   IncomeFormController(this._context, this._income);
 
   // Dependencies
-  final incomeUseCase = Modular.get<IncomeUseCase>();
+  late final incomeUseCase = _context.dependencyManager.incomeUseCase;
   final BuildContext _context;
   final Income? _income;
   final formKey = GlobalKey<FormState>();
@@ -35,7 +35,7 @@ class IncomeFormController with ChangeNotifier {
 
     switch (error) {
       case Empty():
-        Modular.to.pop(true);
+        _context.popScreen(true);
         break;
       case Failure(:final message):
         showSnackbar(context: _context, text: message);

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class CreateAccountController with ChangeNotifier {
   CreateAccountController(this._context);
 
   // Dependencies
-  final formKey = GlobalKey<FormState>();
-  final userUseCase = Modular.get<UserUseCase>();
   final BuildContext _context;
+  final formKey = GlobalKey<FormState>();
+  late final userUseCase = _context.dependencyManager.userUseCase;
 
   // State
   String? email;
@@ -33,7 +34,7 @@ class CreateAccountController with ChangeNotifier {
 
     switch (error) {
       case Empty():
-        Modular.to.navigate(DashboardView.routeName);
+        _context.pushScreen(const DashboardView());
         break;
       case Failure(:final message):
         showSnackbar(context: _context, text: message);
@@ -70,7 +71,7 @@ class CreateAccountController with ChangeNotifier {
 
   String? validatePassword(String? value) {
     if (value == null) return "Field is required";
-    if (value.isEmpty) return "Field is required";
+    if (value.isEmpty) return _context.intl.fieldRequired;
     return null;
   }
 

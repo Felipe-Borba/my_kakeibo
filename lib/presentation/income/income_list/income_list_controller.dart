@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
 
 class IncomeListController with ChangeNotifier {
   IncomeListController(this._context);
 
   // Dependencies
-  final incomeUseCase = Modular.get<IncomeUseCase>();
+  late final incomeUseCase = _context.dependencyManager.incomeUseCase;
   final BuildContext _context;
 
   // State
@@ -53,15 +53,12 @@ class IncomeListController with ChangeNotifier {
   }
 
   onEdit(Income income) async {
-    final refresh = await Modular.to.pushNamed<bool>(
-      IncomeFormView.routeName,
-      arguments: income,
-    );
+    final refresh = await _context.pushScreen(IncomeFormView(income: income));
     await _doRefreshList(refresh);
   }
 
   onAdd() async {
-    var refresh = await Modular.to.pushNamed<bool>(IncomeFormView.routeName);
+    var refresh = await _context.pushScreen(const IncomeFormView());
     await _doRefreshList(refresh);
   }
 
