@@ -154,6 +154,12 @@ flutter build appbundle
 flutter build apk
 ```
 
+## Notes 
+verificar a experiência de atualizar pacotes antigos depois de criar testes automatizados
+```console
+69 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+```
 
 ## Prototipação
 - [Figma](https://www.figma.com/design/4vUcpYbgXym2421mm6m6wf/Untitled?node-id=0-1&t=gru349fF9GRNu7J4-1)

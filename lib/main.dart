@@ -66,6 +66,10 @@ void main() async {
   tz.initializeTimeZones();
 
   Modular.setInitialRoute(WelcomeView.routeName);
+  ///TODO por causa que eu to usando o Provider para di do viewModel 
+  ///e to achando meio pé no saco a navegação do modular 
+  ///e só to fazendo o app para android e ios acho que vale a pena usar a navegação padrão do flutter 
+  ///e seguir a nova guide line deles de arquitetura
   return runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 

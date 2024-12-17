@@ -890,7 +890,7 @@ packages:
     source: hosted
     version: "3.4.1"
   result_dart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: result_dart
       sha256: "3c69c864a08df0f413a86be211d07405e9a53cc1ac111e3cc8365845a0fb5288"
