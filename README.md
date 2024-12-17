@@ -5,7 +5,6 @@ Projeto de flutter MY KAKEIBO
 Aplicativo realizado com o flutter e o firebase .
 
 ## Setup your project
-TODO ver se precisa gerar os arquivos de automagicos de serialização
 instalar as depencias e pau no gato
 
 ## Getting Started

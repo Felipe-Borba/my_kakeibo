@@ -22,7 +22,6 @@ class CurrencyFormatter extends TextInputFormatter {
 
     final formattedText = _context.currency.format(value);
 
-    //TODO não fica mais simples usar esse treco direto lá nos input?
     return newValue.copyWith(
       text: formattedText,
       selection: TextSelection.collapsed(offset: formattedText.length),

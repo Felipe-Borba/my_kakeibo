@@ -14,8 +14,6 @@ class IncomeUseCase {
 
   // não usar o Income como parametro e mudar para os valores opcionais solitos
   Future<(Null, AppError)> insert(Income income) async {
-    //TODO validar campos
-
     var (user!, userErr) = await userUseCase.getUser();
     if (userErr is! Empty) {
       return (null, userErr);

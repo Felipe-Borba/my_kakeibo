@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/core/components/drawer_custom.dart';
 import 'package:my_kakeibo/core/components/life_bar.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
+import 'package:my_kakeibo/core/extensions/date_time_extension.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
@@ -163,10 +163,7 @@ class DashboardView extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Text(
-            //TODO aproveitando a vaibe das extentions fazer com isso tb
-            DateFormat.MMMEd(
-              Localizations.localeOf(context).toString(),
-            ).format(transaction.date),
+            transaction.date.formatToString(context),
             style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(width: 16),
