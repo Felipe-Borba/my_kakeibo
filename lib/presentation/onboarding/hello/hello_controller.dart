@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class HelloController with ChangeNotifier {
+  final BuildContext _context;
   double opacity = 0.0;
 
-  HelloController() {
+  HelloController(this._context) {
     _startAnimation();
   }
 
@@ -18,9 +19,9 @@ class HelloController with ChangeNotifier {
     _navigateToNextScreen();
   }
 
-  void _navigateToNextScreen() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Modular.to.navigate(DashboardView.routeName);
-    });
+  void _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 3));
+    if (!_context.mounted) return;
+    _context.pushScreen(const DashboardView());
   }
 }
