@@ -1,13 +1,13 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class AuthService {
-  Future<(String, AppError)> login(String email, String password);
+  Future<Result<String>> login(String email, String password);
 
-  Future<(Null, AppError)> logOut();
+  Future<Result<void>> logOut();
 
-  Future<(String, AppError)> createAccess(String email, String password);
+  Future<Result<String>> createAccess(String email, String password);
 
-  Future<(bool, AppError)> recoverPassword(String email);
+  Future<Result<bool>> recoverPassword(String email);
 
-  Future<(String, AppError)> getLoggedUserId();
+  Future<Result<String>> getLoggedUserId();
 }

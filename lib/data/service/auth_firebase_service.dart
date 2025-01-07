@@ -1,70 +1,66 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:result_dart/result_dart.dart';
 
 class AuthFirebaseService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<(String, AppError)> createAccess(String email, String password) async {
+  Future<Result<String>> createAccess(String email, String password) async {
     try {
       var userCredentials = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return (userCredentials.user!.uid, Empty());
-    } catch (e) {
-      return ("", Failure(e.toString()));
+      return Success(userCredentials.user!.uid);
+    } on FirebaseAuthException catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(String, AppError)> login(String email, String password) async {
+  Future<Result<String>> login(String email, String password) async {
     try {
       var userCredentials = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return (userCredentials.user!.uid, Empty());
+      return Success(userCredentials.user!.uid);
     } on FirebaseAuthException catch (e) {
-      return ("", Failure(e.message ?? e.code));
-    } catch (e) {
-      return ("", Failure(e.toString()));
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Null, AppError)> logOut() async {
+  Future<Result<void>> logOut() async {
     try {
       await _auth.signOut();
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return const Success("ok");
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(bool, AppError)> recoverPassword(String email) async {
+  Future<Result<bool>> recoverPassword(String email) async {
     try {
-      await _auth.sendPasswordResetEmail(
-        email: email,
-      );
+      await _auth.sendPasswordResetEmail(email: email);
 
-      return (true, Empty());
-    } catch (e) {
-      return (false, Failure(e.toString()));
+      return const Success(true);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(String, AppError)> getLoggedUserId() async {
+  Future<Result<String>> getLoggedUserId() async {
     var user = _auth.currentUser;
     if (user != null) {
-      return (user.uid, Empty());
+      return Success(user.uid);
     } else {
-      return ("", Failure("User not found"));
+      return Failure(Exception("User not found"));
     }
   }
 }

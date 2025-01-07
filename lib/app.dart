@@ -6,7 +6,6 @@ import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/font.dart';
 import 'package:my_kakeibo/core/theme.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/settings/settings_controller.dart';

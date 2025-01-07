@@ -1,7 +1,7 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
+import 'package:result_dart/result_dart.dart';
 
 class IncomeUseCase {
   IncomeRepository incomeRepository;
@@ -12,12 +12,8 @@ class IncomeUseCase {
     required this.userUseCase,
   });
 
-  // não usar o Income como parametro e mudar para os valores opcionais solitos
-  Future<(Null, AppError)> insert(Income income) async {
-    var (user!, userErr) = await userUseCase.getUser();
-    if (userErr is! Empty) {
-      return (null, userErr);
-    }
+  Future<Result<void>> insert(Income income) async {
+    var user = await userUseCase.getUser().getOrThrow();
 
     user.increaseBalance(income.amount);
     await userUseCase.update(user);
@@ -27,33 +23,29 @@ class IncomeUseCase {
       await incomeRepository.insert(income);
     }
 
-    return (null, Empty());
+    return const Success("ok");
   }
 
-  Future<(List<Income>, AppError)> findAll() async {
+  Future<Result<List<Income>>> findAll() async {
     return await incomeRepository.findAll();
   }
 
-  Future<(List<Income>, AppError)> findByMonth({
+  Future<Result<List<Income>>> findByMonth({
     required DateTime month,
   }) async {
     return await incomeRepository.findByMonth(month: month);
   }
 
-  Future<(Null, AppError)> delete(Income income) async {
+  Future<Result<void>> delete(Income income) async {
     return await incomeRepository.delete(income);
   }
 
-  Future<(double, AppError)> getMonthTotal() async {
-    var (incomeList, err) = await incomeRepository.findByMonth(
-      month: DateTime.now(),
-    );
-
-    if (err is! Empty) {
-      return (0.0, err);
-    }
+  Future<Result<double>> getMonthTotal() async {
+    var incomeList = await incomeRepository
+        .findByMonth(month: DateTime.now()) //
+        .getOrThrow();
 
     var total = incomeList.fold(0.0, (sum, income) => sum + income.amount);
-    return (total, Empty());
+    return Success(total);
   }
 }

@@ -1,8 +1,8 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/realm/model/user_model.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:realm/realm.dart' hide Uuid, User;
+import 'package:result_dart/result_dart.dart';
 import 'package:uuid/uuid.dart';
 
 class UserRealmRepository extends UserRepository {
@@ -12,42 +12,42 @@ class UserRealmRepository extends UserRepository {
   UserRealmRepository(this.realm, this.uuid);
 
   @override
-  Future<(User?, AppError)> getUserById(String id) async {
+  Future<Result<User>> getUserById(String id) async {
     try {
       final user = realm.find<UserModel>(id);
 
       if (user == null) {
-        return (null, Failure("User not found"));
+        return Failure(Exception("User not found"));
       }
 
-      return (_toEntity(user), Empty());
+      return Success(_toEntity(user));
     } catch (e) {
-      return (null, Failure(e.toString()));
+      return Failure(Exception(e.toString()));
     }
   }
 
   @override
-  Future<(Null, AppError)> save(User user) async {
+  Future<Result<void>> save(User user) async {
     try {
       realm.write(() => realm.add(_toModel(user)));
-      return (null, Empty());
+      return const Success("ok");
     } catch (e) {
-      return (null, Failure(e.toString()));
+      return Failure(Exception(e.toString()));
     }
   }
 
   @override
-  Future<(User?, AppError)> getSelf() async {
+  Future<Result<User>> getSelf() async {
     try {
       final users = realm.all<UserModel>();
 
       if (users.isEmpty) {
-        return (null, Failure("User not found"));
+        return Failure(Exception("User not found"));
       }
 
-      return (_toEntity(users.first), Empty());
+      return Success(_toEntity(users.first));
     } catch (e) {
-      return (null, Failure(e.toString()));
+      return Failure(Exception(e.toString()));
     }
   }
 

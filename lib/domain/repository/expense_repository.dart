@@ -1,16 +1,14 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class ExpenseRepository {
-  Future<(Expense?, AppError)> insert(Expense expense);
+  Future<Result<Expense>> insert(Expense expense);
 
-  // Future<(Expense?, AppError)> getOne(String id);
+  Future<Result<List<Expense>>> findAll();
 
-  Future<(List<Expense>, AppError)> findAll();
+  Future<Result<List<Expense>>> findByMonth({required DateTime month});
 
-  Future<(List<Expense>, AppError)> findByMonth({required DateTime month});
+  Future<Result<Expense>> update(Expense expense);
 
-  Future<(Expense?, AppError)> update(Expense expense);
-
-  Future<(Null, AppError)> delete(Expense expense);
+  Future<Result<void>> delete(Expense expense);
 }

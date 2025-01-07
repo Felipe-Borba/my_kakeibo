@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/income/income_form/income_form_view.dart';
 
@@ -20,14 +19,16 @@ class IncomeListController with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var (list, error) = await incomeUseCase.findByMonth(
+    var result = await incomeUseCase.findByMonth(
       month: monthFilter,
     );
-    if (error is Failure) {
-      showSnackbar(context: _context, text: error.message);
-    }
-    this.list = list;
-    sortBy(sortNumber);
+    result.onFailure((failure) {
+      showSnackbar(context: _context, text: failure.toString());
+    });
+    result.onSuccess((success) {
+      this.list = list;
+      sortBy(sortNumber);
+    });
   }
 
   setSortBy(int sortNumber) {
@@ -64,7 +65,7 @@ class IncomeListController with ChangeNotifier {
 
   _doRefreshList(bool? refresh) async {
     if (refresh == true) {
-      var (list, error) = await incomeUseCase.findAll();
+      var list = (await incomeUseCase.findAll()).getOrThrow();
       this.list = list;
       list.sort((a, b) => a.date.compareTo(b.date));
       notifyListeners();

@@ -1,6 +1,6 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 class OfflineFirstFixedExpenseRepository implements FixedExpenseRepository {
   final FixedExpenseRepository localRepository;
@@ -12,115 +12,77 @@ class OfflineFirstFixedExpenseRepository implements FixedExpenseRepository {
   });
 
   @override
-  Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense) async {
+  Future<Result<FixedExpense>> insert(FixedExpense fixedExpense) async {
     try {
-      var (localFixedExpense, localError) =
-          await localRepository.insert(fixedExpense);
-      if (localError is! Empty) return (null, localError);
+      var localResult = await localRepository.insert(fixedExpense);
+      if (localResult.isError()) return localResult;
 
-      var (_, remoteError) = await remoteRepository.insert(fixedExpense);
-      if (remoteError is! Empty) {
-        // if (remoteError.message.contains("not logged in")) {
-        //   return (
-        //     localFixedExpense,
-        //     Warning(
-        //         "Inserted locally, but remote sync failed: User not logged in.")
-        //   );
-        // }
-        return (
-          localFixedExpense,
-          Warning("Inserted locally, but remote sync failed.")
-        );
+      var remoteResult = await remoteRepository.insert(fixedExpense);
+      if (remoteResult.isError()) {
+        return Success(localResult.getOrThrow());
       }
 
-      return (localFixedExpense, Empty());
+      return remoteResult;
     } catch (e) {
-      return (null, Failure(e.toString()));
+      return Failure(Exception(e.toString()));
     }
   }
 
   @override
-  Future<(List<FixedExpense>, AppError)> findAll() async {
+  Future<Result<List<FixedExpense>>> findAll() async {
     try {
-      var (localFixedExpenses, localError) = await localRepository.findAll();
-      if (localError is Empty && localFixedExpenses.isNotEmpty) {
-        return (localFixedExpenses, Empty());
+      var localResult = await localRepository.findAll();
+      if (localResult.isError() || localResult.getOrThrow().isNotEmpty) {
+        return localResult;
       }
 
-      var (remoteFixedExpenses, remoteError) = await remoteRepository.findAll();
-      if (remoteError is Empty) {
-        for (var fixedExpense in remoteFixedExpenses) {
-          await localRepository.insert(fixedExpense);
-        }
-        return (remoteFixedExpenses, Empty());
+      var remoteResult = await remoteRepository.findAll();
+      if (remoteResult.isError()) {
+        return remoteResult;
       }
 
-      // if (remoteError.message.contains("not logged in")) {
-      //   return (
-      //     localFixedExpenses,
-      //     Warning(
-      //         "Used local data, but remote sync failed: User not logged in.")
-      //   );
-      // }
+      for (var fixedExpense in remoteResult.getOrThrow()) {
+        await localRepository.insert(fixedExpense);
+      }
 
-      return (
-        List<FixedExpense>.empty(),
-        Failure("Could not retrieve fixed expenses from local or remote.")
-      );
-    } catch (e) {
-      return (List<FixedExpense>.empty(), Failure(e.toString()));
+      return remoteResult;
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(FixedExpense?, AppError)> update(FixedExpense fixedExpense) async {
+  Future<Result<FixedExpense>> update(FixedExpense fixedExpense) async {
     try {
-      var (updatedFixedExpense, localError) =
-          await localRepository.update(fixedExpense);
-      if (localError is! Empty) return (null, localError);
+      var localResult = await localRepository.update(fixedExpense);
+      if (localResult.isError()) return localResult;
 
-      var (_, remoteError) = await remoteRepository.update(fixedExpense);
-      if (remoteError is! Empty) {
-        // if (remoteError.message.contains("not logged in")) {
-        //   return (
-        //     updatedFixedExpense,
-        //     Warning(
-        //         "Updated locally, but remote sync failed: User not logged in.")
-        //   );
-        // }
-        return (
-          updatedFixedExpense,
-          Warning("Updated locally, but remote sync failed.")
-        );
+      var remoteResult = await remoteRepository.update(fixedExpense);
+      if (remoteResult.isError()) {
+        return Success(localResult.getOrThrow());
       }
 
-      return (updatedFixedExpense, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return remoteResult;
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Null, AppError)> delete(FixedExpense fixedExpense) async {
+  Future<Result<void>> delete(FixedExpense fixedExpense) async {
     try {
-      var (_, localError) = await localRepository.delete(fixedExpense);
-      if (localError is! Empty) return (null, localError);
+      var localResult = await localRepository.delete(fixedExpense);
+      if (localResult.isError()) return localResult;
 
-      var (_, remoteError) = await remoteRepository.delete(fixedExpense);
-      if (remoteError is! Empty) {
-        // if (remoteError.message.contains("not logged in")) {//TODO para esse caso aqui tem um técnica que eu vi no app runique muito legal de parse de erro que talvez fique legal aqui
-        //   return (
-        //     null,
-        //     Warning(
-        //         "Deleted locally, but remote sync failed: User not logged in.")
-        //   );
-        // }
-        return (null, Warning("Deleted locally, but remote sync failed."));
+      var remoteResult = await remoteRepository.delete(fixedExpense);
+      if (remoteResult.isError()) {
+        //TODO para esse caso aqui tem um técnica que eu vi no app runique muito legal de parse de erro que talvez fique legal aqui
+        return Failure(Exception("Deleted locally but remote sync failed"));
       }
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return localResult;
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

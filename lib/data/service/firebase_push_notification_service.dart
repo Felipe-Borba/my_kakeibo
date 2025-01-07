@@ -1,13 +1,13 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
 import 'package:my_kakeibo/domain/service/push_notification_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:result_dart/result_dart.dart';
 
 class FirebasePushNotificationService implements PushNotificationService {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   @override
-  Future<(bool, AppError)> requestPermission() async {
+  Future<Result<bool>> requestPermission() async {
     NotificationSettings settings = await _firebaseMessaging.requestPermission(
       alert: true,
       badge: true,
@@ -15,26 +15,28 @@ class FirebasePushNotificationService implements PushNotificationService {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      return (true, Empty());
+      return const Success(true);
     } else {
-      return (false, Empty());
+      return const Success(false);
     }
   }
 
   @override
-  Future<(String, AppError)> getNotificationToken() async {
+  Future<Result<String>> getNotificationToken() async {
     try {
       String? token = await FirebaseMessaging.instance.getToken();
-      if (token == null) return ("", Failure("Token not found"));
 
-      return (token, Empty());
-    } catch (e) {
-      return ("", Failure(e.toString()));
+      if (token == null) return Failure(Exception("Token not found"));
+
+      return Success(token);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  void listenToForegroundMessage(void Function(NotificationMessage message) listener) {
+  void listenToForegroundMessage(
+      void Function(NotificationMessage message) listener) {
     FirebaseMessaging.onMessage.listen(
       (event) {
         listener(NotificationMessage(
@@ -48,7 +50,8 @@ class FirebasePushNotificationService implements PushNotificationService {
   }
 
   @override
-  void listenToBackgroundMessage(void Function(NotificationMessage message) listener) {
+  void listenToBackgroundMessage(
+      void Function(NotificationMessage message) listener) {
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       listener(NotificationMessage(
         id: event.messageId,

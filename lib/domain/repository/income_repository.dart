@@ -1,16 +1,14 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class IncomeRepository {
-  Future<(Income?, AppError)> insert(Income income);
+  Future<Result<Income>> insert(Income income);
 
-  // Future<(Income?, AppError)> getOne(String id);
+  Future<Result<List<Income>>> findAll();
 
-  Future<(List<Income>, AppError)> findAll();
+  Future<Result<List<Income>>> findByMonth({required DateTime month});
 
-  Future<(List<Income>, AppError)> findByMonth({required DateTime month});
+  Future<Result<Income>> update(Income income);
 
-  Future<(Income?, AppError)> update(Income income);
-
-  Future<(Null, AppError)> delete(Income income);
+  Future<Result<void>> delete(Income income);
 }

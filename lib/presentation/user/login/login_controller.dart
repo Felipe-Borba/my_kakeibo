@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/presentation/user/create_account/create_account_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
@@ -29,15 +28,18 @@ class LoginController with ChangeNotifier {
     loading = true;
     notifyListeners();
 
-    var (user, error) = await userUseCase.login(email, password);
+    var result = await userUseCase.login(email, password);
 
-    if (error is Failure) {
-      showSnackbar(context: _context, text: error.message);
-    } else {
+    result.onSuccess((success) {
       _context.pushScreen(const DashboardView());
-    }
+      loading = false;
+      notifyListeners();
+    });
 
-    loading = false;
-    notifyListeners();
+    result.onFailure((error) {
+      showSnackbar(context: _context, text: error.toString());
+      loading = false;
+      notifyListeners();
+    });
   }
 }

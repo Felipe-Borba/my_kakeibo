@@ -3,7 +3,6 @@ import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 
 class ExpenseFormController with ChangeNotifier {
@@ -67,7 +66,7 @@ class ExpenseFormController with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var (_, error) = await expenseUseCase.insert(Expense(
+    var result = await expenseUseCase.insert(Expense(
       id: _expense?.id,
       amount: amount!,
       date: date!,
@@ -75,11 +74,13 @@ class ExpenseFormController with ChangeNotifier {
       category: category!,
     ));
 
-    if (error is Empty) {
+    result.onFailure((error) {
+      showSnackbar(context: _context, text: error.toString());
+    });
+
+    result.onSuccess((success) {
       _context.popScreen(true);
-    } else if (error is Failure) {
-      showSnackbar(context: _context, text: error.message);
-    }
+    });
 
     notifyListeners();
   }

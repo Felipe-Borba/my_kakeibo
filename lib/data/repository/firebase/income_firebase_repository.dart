@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/firebase/model/income_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 class IncomeFirebaseRepository implements IncomeRepository {
   final _db = FirebaseFirestore.instance;
@@ -12,7 +12,7 @@ class IncomeFirebaseRepository implements IncomeRepository {
   final _table = "Income";
 
   @override
-  Future<(Null, AppError)> delete(Income income) async {
+  Future<Result<Income>> delete(Income income) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -24,14 +24,14 @@ class IncomeFirebaseRepository implements IncomeRepository {
 
       await docRef.delete();
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(income);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Income>, AppError)> findAll() async {
+  Future<Result<List<Income>>> findAll() async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -45,31 +45,32 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .map((doc) => IncomeModel.fromDoc(doc).toEntity())
           .toList();
 
-      return (incomes, Empty());
-    } catch (e) {
-      return (List<Income>.empty(), Failure(e.toString()));
+      return Success(incomes);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Income?, AppError)> insert(Income income) async {
+  Future<Result<Income>> insert(Income income) async {
     try {
       var userId = _auth.currentUser?.uid;
 
-      await _db
+      var docRef = await _db
           .collection(UserFirebaseRepository.table)
           .doc(userId)
           .collection(_table)
           .add(IncomeModel.fromEntity(income).toJson());
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      income.id = docRef.id;
+      return Success(income);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Income?, AppError)> update(Income income) async {
+  Future<Result<Income>> update(Income income) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -81,20 +82,20 @@ class IncomeFirebaseRepository implements IncomeRepository {
 
       await docRef.update(IncomeModel.fromEntity(income).toJson());
 
-      return (income, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(income);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Income>, AppError)> findByMonth({
+  Future<Result<List<Income>>> findByMonth({
     required DateTime month,
   }) async {
     try {
       var userId = _auth.currentUser?.uid;
       if (userId == null) {
-        return (List<Income>.empty(), Failure("User not authenticated"));
+        return Failure(Exception("User not authenticated"));
       }
 
       DateTime startOfMonth = DateTime(month.year, month.month, 1);
@@ -115,9 +116,9 @@ class IncomeFirebaseRepository implements IncomeRepository {
           .map((doc) => IncomeModel.fromDoc(doc).toEntity())
           .toList();
 
-      return (incomes, Empty());
-    } catch (e) {
-      return (List<Income>.empty(), Failure(e.toString()));
+      return Success(incomes);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

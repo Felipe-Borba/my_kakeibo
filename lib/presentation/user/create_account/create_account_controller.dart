@@ -3,7 +3,6 @@ import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
@@ -26,23 +25,20 @@ class CreateAccountController with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var (_, error) = await userUseCase.insert(User(
+    var result = await userUseCase.insert(User(
       password: password!,
       email: email!,
       name: name!,
     ));
 
-    switch (error) {
-      case Empty():
-        _context.pushScreen(const DashboardView());
-        break;
-      case Failure(:final message):
-        showSnackbar(context: _context, text: message);
-        break;
-      default:
-        showSnackbar(context: _context, text: "Erro desconhecido.");
-    }
-    notifyListeners();
+    result.onFailure((error) {
+      showSnackbar(context: _context, text: error.toString());
+    });
+
+    result.onSuccess((success) {
+      _context.pushScreen(const DashboardView());
+      notifyListeners();
+    });
   }
 
   void setEmail(String value) {

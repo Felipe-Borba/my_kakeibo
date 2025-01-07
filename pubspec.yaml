@@ -2,7 +2,7 @@ name: my_kakeibo
 description: "A new Flutter project."
 
 # Prevent accidental publishing to pub.dev.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.1.0+3
 
@@ -28,12 +28,11 @@ dependencies:
   uuid: ^4.5.1
   firebase_app_check: ^0.3.1+6
   keyboard_dismisser: ^3.0.0
-  result_dart: ^1.1.1
+  result_dart: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^4.0.0
   integration_test:
     sdk: flutter

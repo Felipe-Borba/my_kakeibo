@@ -15,7 +15,8 @@ class DashboardController with ChangeNotifier {
   late final userUseCase = _context.dependencyManager.userUseCase;
   late final expenseUseCase = _context.dependencyManager.expenseUseCase;
   late final incomeUseCase = _context.dependencyManager.incomeUseCase;
-  late final notificationUseCase = _context.dependencyManager.notificationUseCase;
+  late final notificationUseCase =
+      _context.dependencyManager.notificationUseCase;
   late final NumberFormat moneyFormatter = NumberFormat.currency(
     locale: Localizations.localeOf(_context).toString(),
     symbol: _context.intl.currencyTag,
@@ -32,29 +33,26 @@ class DashboardController with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var (totalIncome, totalIncomeError) = await incomeUseCase.getMonthTotal();
-    var (totalExpense, totalExpenseError) =
-        await expenseUseCase.getMonthTotal();
+    var totalIncome = (await incomeUseCase.getMonthTotal()).getOrDefault(0.0);
+    var totalExpense = (await expenseUseCase.getMonthTotal()).getOrDefault(0.0);
     total = totalIncome - totalExpense;
     this.totalIncome = totalIncome;
     this.totalExpense = totalExpense;
 
     var now = DateTime.now();
-    var (incomeList, incomeListError) = await incomeUseCase.findByMonth(
-      month: now,
-    );
-    var (expenseList, expenseListError) = await expenseUseCase.findByMonth(
-      month: now,
-    );
+    var incomeList = (await incomeUseCase.findByMonth(month: now))
+        .getOrDefault(List.empty());
+    var expenseList = (await expenseUseCase.findByMonth(month: now))
+        .getOrDefault(List.empty());
     list = [...incomeList, ...expenseList];
     list.sort((a, b) => a.date.compareTo(b.date));
     _makePieCartData(expenseList);
 
-    var (user, userError) = await userUseCase.getUser();
-    if (user != null) {
+    var result = await userUseCase.getUser();
+    result.onSuccess((user) async {
       await notificationUseCase.checkPushNotificationSettings(user);
-    }
-    this.user = user;
+      this.user = user;
+    });
   }
 
   void _makePieCartData(List<Expense> expenseList) {

@@ -1,8 +1,8 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/service/local_notification_service.dart';
 import 'package:my_kakeibo/domain/service/push_notification_service.dart';
+import 'package:result_dart/result_dart.dart';
 
 class NotificationUseCase {
   final UserRepository _userRepository;
@@ -28,20 +28,18 @@ class NotificationUseCase {
     );
   }
 
-  //testar como isso ficaria usado monad para tratamento de erro
-  Future<(Null, AppError)> checkPushNotificationSettings(User user) async {
-    var (permission, err1) = await _pushNotificationService.requestPermission();
-    if (err1 is Failure) return (null, err1);
-    if (permission == false) return (null, Empty());
+  Future<Result<void>> checkPushNotificationSettings(User user) async {
+    var permission = await _pushNotificationService
+        .requestPermission() //
+        .getOrThrow();
+    if (permission == false) return Failure(Exception("Permission denied")); //TODO ver uma forma melhor, ex. centralizar os erros ai qdo precisar usar o operador is
 
-    var (token, err2) = await _pushNotificationService.getNotificationToken();
+    var token = await _pushNotificationService
+        .getNotificationToken() //
+        .getOrThrow();
 
-    if (err2 is Failure) return (null, err2);
     user.notificationToken = token;
 
-    var (saved, err3) = await _userRepository.save(user);
-    if (err3 is Failure) return (null, err2);
-
-    return (null, Empty());
+    return await _userRepository.save(user);
   }
 }

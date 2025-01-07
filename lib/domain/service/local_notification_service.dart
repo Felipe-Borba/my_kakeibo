@@ -1,14 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class LocalNotificationService {
   /// Serve somente para mostrar um popup na tela mostrando a notificação quando o app está aberto
-  Future<void> displayNotification(NotificationMessage message);
+  Future<Result<void>> displayNotification(NotificationMessage message);
 
-  Future<(Null, AppError)> scheduleNotification(Notification notification);
+  Future<Result<void>> scheduleNotification(Notification notification);
 }
 
+//TODO pq isso não tá na entity mesmo?
 class Notification {
   int id;
   DateTime date;

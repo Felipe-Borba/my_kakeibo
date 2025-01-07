@@ -3,8 +3,7 @@ import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
-
-import '../../core/records/app_error.dart';
+import 'package:result_dart/result_dart.dart';
 
 class FixedExpenseUseCase {
   ExpenseRepository expenseRepository;
@@ -17,7 +16,7 @@ class FixedExpenseUseCase {
     required this.userUseCase,
   });
 
-  Future<(Null, AppError)> pay(FixedExpense fixedExpense) async {
+  Future<Result<void>> pay(FixedExpense fixedExpense) async {
     var expense = Expense(
       id: null,
       amount: fixedExpense.amount,
@@ -26,34 +25,30 @@ class FixedExpenseUseCase {
       category: fixedExpense.category,
     );
 
-    var (persistedExpense, persistedExpenseErr) = await expenseRepository.insert(expense);
-    if(persistedExpenseErr is Failure) {
-      return (null, persistedExpenseErr);
-    }
-    fixedExpense.pay(persistedExpense!);
-    var (persistedFixedExpense, persistedFixedExpenseErr) = await fixedExpenseRepository.update(fixedExpense);
-    if(persistedFixedExpenseErr is Failure) {
-      return (null, persistedFixedExpenseErr);
-    }
+    var persistedExpense = await expenseRepository.insert(expense).getOrThrow();
 
-    return (null, Empty());
+    fixedExpense.pay(persistedExpense);
+
+    await fixedExpenseRepository.update(fixedExpense).getOrThrow();
+
+    return const Success("ok");
   }
 
-  Future<(Null, AppError)> insert(FixedExpense fixedExpense) async {
+  Future<Result<void>> insert(FixedExpense fixedExpense) async {
     if (fixedExpense.id != null) {
       await fixedExpenseRepository.update(fixedExpense);
     } else {
       await fixedExpenseRepository.insert(fixedExpense);
     }
 
-    return (null, Empty());
+    return const Success("ok");
   }
 
-  Future<(List<FixedExpense>, AppError)> findAll() async {
+  Future<Result<List<FixedExpense>>> findAll() async {
     return await fixedExpenseRepository.findAll();
   }
 
-  Future<(Null, AppError)> delete(FixedExpense fixedExpense) async {
+  Future<Result<void>> delete(FixedExpense fixedExpense) async {
     return await fixedExpenseRepository.delete(fixedExpense);
   }
 }
