@@ -7,7 +7,8 @@ extension NavigatorExtension on BuildContext {
   }
 
   pushScreen(Widget widget) {
-    return Navigator.of(this).push(MaterialPageRoute(builder: (context) => widget));
+    return Navigator.of(this)
+        .push(MaterialPageRoute(builder: (context) => widget));
   }
 
   popScreen<T extends Object?>([T? result]) {

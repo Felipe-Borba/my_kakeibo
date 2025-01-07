@@ -45,5 +45,8 @@ class SettingsController with ChangeNotifier {
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });
+    result.onSuccess((success) {
+      Navigator.of(_context).pop(true);
+    });
   }
 }
