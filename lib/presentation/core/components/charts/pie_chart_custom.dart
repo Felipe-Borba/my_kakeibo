@@ -2,7 +2,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import 'package:my_kakeibo/core/components/charts/indicator.dart';
+import 'package:my_kakeibo/presentation/core/components/charts/indicator.dart';
 
 class PieChartCustom extends StatefulWidget {
   final List<PieData> data;

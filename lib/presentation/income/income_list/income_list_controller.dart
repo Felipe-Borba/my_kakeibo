@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
@@ -26,7 +26,7 @@ class IncomeListController with ChangeNotifier {
       showSnackbar(context: _context, text: failure.toString());
     });
     result.onSuccess((success) {
-      this.list = list;
+      list = list;
       sortBy(sortNumber);
     });
   }
