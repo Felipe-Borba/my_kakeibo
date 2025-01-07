@@ -8,8 +8,6 @@ import 'package:provider/provider.dart';
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
-  static const routeName = '/login';
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

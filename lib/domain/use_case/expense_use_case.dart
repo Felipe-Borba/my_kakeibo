@@ -1,8 +1,7 @@
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
-
-import '../../core/records/app_error.dart';
+import 'package:result_dart/result_dart.dart';
 
 class ExpenseUseCase {
   ExpenseRepository expenseRepository;
@@ -13,11 +12,8 @@ class ExpenseUseCase {
     required this.userUseCase,
   });
 
-  Future<(Null, AppError)> insert(Expense expense) async {
-    var (user!, userErr) = await userUseCase.getUser();
-    if (userErr is! Empty) {
-      return (null, userErr);
-    }
+  Future<Result<void>> insert(Expense expense) async {
+    var user = await userUseCase.getUser().getOrThrow();
 
     user.decreaseBalance(expense.amount);
     await userUseCase.update(user);
@@ -28,33 +24,29 @@ class ExpenseUseCase {
       await expenseRepository.insert(expense);
     }
 
-    return (null, Empty());
+    return const Success("ok");
   }
 
-  Future<(List<Expense>, AppError)> findAll() async {
+  Future<Result<List<Expense>>> findAll() async {
     return await expenseRepository.findAll();
   }
 
-  Future<(List<Expense>, AppError)> findByMonth({
+  Future<Result<List<Expense>>> findByMonth({
     required DateTime month,
   }) async {
     return await expenseRepository.findByMonth(month: month);
   }
 
-  Future<(Null, AppError)> delete(Expense expense) async {
+  Future<Result<void>> delete(Expense expense) async {
     return await expenseRepository.delete(expense);
   }
 
-  Future<(double, AppError)> getMonthTotal() async {
-    var (expenseList, err) = await expenseRepository.findByMonth(
-      month: DateTime.now(),
-    );
-
-    if (err is! Empty) {
-      return (0.0, err);
-    }
+  Future<Result<double>> getMonthTotal() async {
+    var expenseList = await expenseRepository
+        .findByMonth(month: DateTime.now()) //
+        .getOrThrow();
 
     var total = expenseList.fold(0.0, (sum, expense) => sum + expense.amount);
-    return (total, Empty());
+    return Success(total);
   }
 }

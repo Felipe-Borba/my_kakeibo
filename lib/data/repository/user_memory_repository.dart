@@ -1,31 +1,31 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 class UserMemoryRepository implements UserRepository {
   User? _user;
 
   @override
-  Future<(Null, AppError)> save(User user) async {
+  Future<Result<void>> save(User user) async {
     _user = user;
-    return (null, Empty());
+    return const Success("ok");
   }
 
   @override
-  Future<(User?, AppError)> getUserById(String id) async {
+  Future<Result<User>> getUserById(String id) async {
     if (_user != null) {
-      return (_user, Empty());
+      return Success(_user!);
     } else {
-      return (null, Failure("User not found"));
+      return Failure(Exception("User not found"));
     }
   }
 
   @override
-  Future<(User?, AppError)> getSelf() async {
+  Future<Result<User>> getSelf() async {
     if (_user != null) {
-      return (_user, Empty());
+      return Success(_user!);
     } else {
-      return (null, Failure("User not found"));
+      return Failure(Exception("User not found"));
     }
   }
 }

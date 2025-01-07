@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/core/components/charts/pie_chart_custom.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 class DashboardController with ChangeNotifier {
   DashboardController(this._context);
 
   // Dependencies
-  final userUseCase = Modular.get<UserUseCase>();
-  final expenseUseCase = Modular.get<ExpenseUseCase>();
-  final incomeUseCase = Modular.get<IncomeUseCase>();
-  final notificationUseCase = Modular.get<NotificationUseCase>();
   final BuildContext _context;
-  late final intl = AppLocalizations.of(_context)!;
+  late final userUseCase = _context.dependencyManager.userUseCase;
+  late final expenseUseCase = _context.dependencyManager.expenseUseCase;
+  late final incomeUseCase = _context.dependencyManager.incomeUseCase;
+  late final notificationUseCase =
+      _context.dependencyManager.notificationUseCase;
   late final NumberFormat moneyFormatter = NumberFormat.currency(
     locale: Localizations.localeOf(_context).toString(),
-    symbol: intl.currencyTag,
+    symbol: _context.intl.currencyTag,
     decimalDigits: 2,
   );
 
@@ -37,29 +33,26 @@ class DashboardController with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var (totalIncome, totalIncomeError) = await incomeUseCase.getMonthTotal();
-    var (totalExpense, totalExpenseError) =
-        await expenseUseCase.getMonthTotal();
+    var totalIncome = (await incomeUseCase.getMonthTotal()).getOrDefault(0.0);
+    var totalExpense = (await expenseUseCase.getMonthTotal()).getOrDefault(0.0);
     total = totalIncome - totalExpense;
     this.totalIncome = totalIncome;
     this.totalExpense = totalExpense;
 
     var now = DateTime.now();
-    var (incomeList, incomeListError) = await incomeUseCase.findByMonth(
-      month: now,
-    );
-    var (expenseList, expenseListError) = await expenseUseCase.findByMonth(
-      month: now,
-    );
+    var incomeList = (await incomeUseCase.findByMonth(month: now))
+        .getOrDefault(List.empty());
+    var expenseList = (await expenseUseCase.findByMonth(month: now))
+        .getOrDefault(List.empty());
     list = [...incomeList, ...expenseList];
     list.sort((a, b) => a.date.compareTo(b.date));
     _makePieCartData(expenseList);
 
-    var (user, userError) = await userUseCase.getUser();
-    if (user != null) {
+    var result = await userUseCase.getUser();
+    result.onSuccess((user) async {
       await notificationUseCase.checkPushNotificationSettings(user);
-    }
-    this.user = user;
+      this.user = user;
+    });
   }
 
   void _makePieCartData(List<Expense> expenseList) {
@@ -74,7 +67,7 @@ class DashboardController with ChangeNotifier {
       Color color;
       switch (entry.key) {
         case ExpenseCategory.food:
-          color = Colors.green;
+          color = Colors.brown;
           break;
         case ExpenseCategory.entertainment:
           color = Colors.purple;

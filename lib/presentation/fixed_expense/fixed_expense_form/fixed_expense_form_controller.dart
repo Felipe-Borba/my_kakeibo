@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
 
 class FixedExpenseFormController with ChangeNotifier {
   FixedExpenseFormController(this._context, this._fixedExpense);
@@ -13,7 +12,8 @@ class FixedExpenseFormController with ChangeNotifier {
   // Dependencies
   final BuildContext _context;
   final FixedExpense? _fixedExpense;
-  final fixedExpenseUseCase = Modular.get<FixedExpenseUseCase>();
+  late final fixedExpenseUseCase =
+      _context.dependencyManager.fixedExpenseUseCase;
 
   // State
   final formKey = GlobalKey<FormState>();
@@ -68,7 +68,7 @@ class FixedExpenseFormController with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var (_, error) = await fixedExpenseUseCase.insert(FixedExpense(
+    var result = await fixedExpenseUseCase.insert(FixedExpense(
       id: _fixedExpense?.id,
       description: description,
       category: category!,
@@ -79,11 +79,13 @@ class FixedExpenseFormController with ChangeNotifier {
       remember: Remember.no, //TODO implement local notifications
     ));
 
-    if (error is Empty) {
-      Modular.to.pop(true);
-    } else if (error is Failure) {
-      showSnackbar(context: _context, text: error.message);
-    }
+    result.onFailure((failure) {
+      showSnackbar(context: _context, text: failure.toString());
+    });
+
+    result.onSuccess((success) {
+      _context.popScreen(true);
+    });
 
     notifyListeners();
   }

@@ -1,7 +1,7 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/service/auth_service.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/domain/service/auth_service.dart';
+import 'package:result_dart/result_dart.dart';
 
 class UserUseCase {
   late final UserRepository _userRepository;
@@ -13,52 +13,42 @@ class UserUseCase {
   })  : _authRepository = authRepository,
         _userRepository = userRepository;
 
-  Future<(Null, AppError)> insert(User user) async {
-    var (id, err) = await _authRepository.createAccess(
-      user.email,
-      user.password,
-    );
-    if (err is! Empty) {
-      return (null, err);
-    }
+  Future<Result<void>> insert(User user) async {
+    var id = await _authRepository
+        .createAccess(
+          user.email,
+          user.password,
+        )
+        .getOrThrow();
 
     user.id = id;
-    await _userRepository.save(user);
-
-    return (null, Empty());
-  }
-
-  Future<(Null, AppError)> save(User user) async {
     return await _userRepository.save(user);
   }
 
-  Future<(User?, AppError)> getUser() async {
+  //TODO na nova arquitetura recomendada pelo flutter eles recomendam evitar isso e por isso permitem o uso direto do repository nos outros lugares inclusive viewModel
+  Future<Result<void>> save(User user) async {
+    return await _userRepository.save(user);
+  }
+
+  Future<Result<User>> getUser() async {
     return await _userRepository.getSelf();
   }
 
-  Future<(Null, AppError)> update(User user) async {
+  Future<Result<void>> update(User user) async {
     return await _userRepository.save(user);
   }
 
-  Future<(User?, AppError)> login(String email, String password) async {
-    var (id, loginErr) = await _authRepository.login(email, password);
-    if (loginErr is! Empty) {
-      return (null, loginErr);
-    }
+  Future<Result<User>> login(String email, String password) async {
+    await _authRepository.login(email, password).getOrThrow();
 
-    var (user, userErr) = await _userRepository.getSelf();
-    if (userErr is! Empty) {
-      return (null, userErr);
-    }
-
-    return (user, Empty());
+    return await _userRepository.getSelf();
   }
 
-  Future<(Null, AppError)> logOut() async {
+  Future<Result<void>> logOut() async {
     return _authRepository.logOut();
   }
 
-  Future<(Null, AppError)> deleteData() async {
+  Future<Result<void>> deleteData() async {
     throw UnimplementedError('TODO interfaces e implementar');
   }
 }

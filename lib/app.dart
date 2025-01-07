@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/font.dart';
 import 'package:my_kakeibo/core/theme.dart';
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            return MaterialApp.router(
+            return MaterialApp(
               restorationScopeId: 'app',
               debugShowCheckedModeBanner: false,
               //
@@ -55,7 +54,7 @@ class MyApp extends StatelessWidget {
               theme: theme.light(),
               //TODO ver essa questão de dark theme e dispositivos que forçam o dark theme
               //
-              routerConfig: Modular.routerConfig,
+              home: settingsController.initialRoute,
             );
           },
         );

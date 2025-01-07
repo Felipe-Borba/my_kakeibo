@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/firebase/model/fixed_expense_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   final _db = FirebaseFirestore.instance;
@@ -12,7 +12,7 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
   final _table = "FixedExpense";
 
   @override
-  Future<(Null, AppError)> delete(FixedExpense fixedExpense) async {
+  Future<Result<void>> delete(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -24,14 +24,14 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
 
       await docRef.delete();
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return const Success("ok");
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<FixedExpense>, AppError)> findAll() async {
+  Future<Result<List<FixedExpense>>> findAll() async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -45,14 +45,14 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
           .map((doc) => FixedExpenseModel.fromDoc(doc).toEntity())
           .toList();
 
-      return (fixedExpenses, Empty());
-    } catch (e) {
-      return (List<FixedExpense>.empty(), Failure(e.toString()));
+      return Success(fixedExpenses);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense) async {
+  Future<Result<FixedExpense>> insert(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -63,14 +63,14 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
           .add(FixedExpenseModel.fromEntity(fixedExpense).toJson());
 
       fixedExpense.id = res.id;
-      return (fixedExpense, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(fixedExpense);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(FixedExpense?, AppError)> update(FixedExpense fixedExpense) async {
+  Future<Result<FixedExpense>> update(FixedExpense fixedExpense) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -82,9 +82,9 @@ class FixedExpenseFirebaseRepository implements FixedExpenseRepository {
 
       await docRef.update(FixedExpenseModel.fromEntity(fixedExpense).toJson());
 
-      return (fixedExpense, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(fixedExpense);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

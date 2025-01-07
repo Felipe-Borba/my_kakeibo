@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:my_kakeibo/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
+import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 
 class IncomeFormController with ChangeNotifier {
   IncomeFormController(this._context, this._income);
 
   // Dependencies
-  final incomeUseCase = Modular.get<IncomeUseCase>();
+  late final incomeUseCase = _context.dependencyManager.incomeUseCase;
   final BuildContext _context;
   final Income? _income;
   final formKey = GlobalKey<FormState>();
@@ -25,7 +24,7 @@ class IncomeFormController with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var (_, error) = await incomeUseCase.insert(Income(
+    var result = await incomeUseCase.insert(Income(
       id: _income?.id,
       amount: amount!,
       source: IncomeSource.salary,
@@ -33,16 +32,14 @@ class IncomeFormController with ChangeNotifier {
       date: date ?? DateTime.now(),
     ));
 
-    switch (error) {
-      case Empty():
-        Modular.to.pop(true);
-        break;
-      case Failure(:final message):
-        showSnackbar(context: _context, text: message);
-        break;
-      default:
-        showSnackbar(context: _context, text: "Erro desconhecido.");
-    }
+    result.onSuccess((success) {
+      _context.popScreen(true);
+    });
+
+    result.onFailure((failure) {
+      showSnackbar(context: _context, text: failure.toString());
+    });
+
     notifyListeners();
   }
 

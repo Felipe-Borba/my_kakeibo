@@ -1,12 +1,12 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class FixedExpenseRepository {
-  Future<(FixedExpense?, AppError)> insert(FixedExpense fixedExpense);
+  Future<Result<FixedExpense>> insert(FixedExpense fixedExpense);
 
-  Future<(List<FixedExpense>, AppError)> findAll();
+  Future<Result<List<FixedExpense>>> findAll();
 
-  Future<(FixedExpense?, AppError)> update(FixedExpense fixedExpense);
+  Future<Result<FixedExpense>> update(FixedExpense fixedExpense);
 
-  Future<(Null, AppError)> delete(FixedExpense fixedExpense);
+  Future<Result<void>> delete(FixedExpense fixedExpense);
 }

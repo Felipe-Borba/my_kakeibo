@@ -1,6 +1,6 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 class OfflineFirstIncomeRepository implements IncomeRepository {
   final IncomeRepository localRepository;
@@ -12,107 +12,95 @@ class OfflineFirstIncomeRepository implements IncomeRepository {
   });
 
   @override
-  Future<(Income?, AppError)> insert(Income expense) async {
+  Future<Result<Income>> insert(Income income) async {
     try {
-      var (localIncome, localError) = await localRepository.insert(expense);
-      if (localError is! Empty) return (null, localError);
+      var localResult = await localRepository.insert(income);
+      if (localResult.isError()) return localResult;
 
-      var (_, remoteError) = await remoteRepository.insert(expense);
-      if (remoteError is! Empty) {
-        return (localIncome, Warning("Local saved but remote sync failed"));
+      var remoteResult = await remoteRepository.insert(income);
+      if (remoteResult.isError()) {
+        return Success(localResult.getOrThrow());
       }
 
-      return (localIncome, Empty());
+      return remoteResult;
     } catch (e) {
-      return (null, Failure(e.toString()));
+      return Failure(Exception(e.toString()));
     }
   }
 
   @override
-  Future<(List<Income>, AppError)> findAll() async {
+  Future<Result<List<Income>>> findAll() async {
     try {
-      var (localIncomes, localError) = await localRepository.findAll();
-      if (localError is Empty && localIncomes.isNotEmpty) {
-        return (localIncomes, Empty());
+      var localResult = await localRepository.findAll();
+      if (localResult.isError()) {
+        return localResult;
       }
 
-      var (remoteIncomes, remoteError) = await remoteRepository.findAll();
-      if (remoteError is Empty) {
-        for (var expense in remoteIncomes) {
-          await localRepository.insert(expense);//TODO pode dar problema aqui porque isso pode ser um registro existente ou novo e esse método é exclusivo para novos regsitros, se trocar pela update o firebase não se resolve???
-        }
-        return (remoteIncomes, Empty());
+      var remoteResult = await remoteRepository.findAll();
+      if (remoteResult.isError()) {
+        return Success(localResult.getOrThrow());
       }
 
-      return (
-        List<Income>.empty(),
-        Failure("Could not retrieve expenses from local or remote.")
-      );
-    } catch (e) {
-      return (List<Income>.empty(), Failure(e.toString()));
+      return remoteResult;
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Income>, AppError)> findByMonth({
-    required DateTime month,
-  }) async {
+  Future<Result<List<Income>>> findByMonth({required DateTime month}) async {
     try {
-      var (localIncomes, localError) =
-          await localRepository.findByMonth(month: month);
-      if (localError is Empty && localIncomes.isNotEmpty) {
-        return (localIncomes, Empty());
+      var localResult = await localRepository.findByMonth(month: month);
+      if (localResult.isError()) {
+        return localResult;
       }
 
-      var (remoteIncomes, remoteError) =
-          await remoteRepository.findByMonth(month: month);
-      if (remoteError is Empty) {
-        for (var expense in remoteIncomes) {
-          await localRepository.insert(expense);
-        }
-        return (remoteIncomes, Empty());
+      var remoteResult = await remoteRepository.findByMonth(month: month);
+      if (remoteResult.isError()) {
+        return Success(localResult.getOrThrow());
       }
 
-      return (
-        List<Income>.empty(),
-        Failure("Could not retrieve expenses for the specified month.")
-      );
-    } catch (e) {
-      return (List<Income>.empty(), Failure(e.toString()));
+      for (var expense in remoteResult.getOrThrow()) {
+        await localRepository.insert(expense);
+      }
+
+      return remoteResult;
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Income?, AppError)> update(Income expense) async {
+  Future<Result<Income>> update(Income expense) async {
     try {
-      var (localIncome, localError) = await localRepository.update(expense);
-      if (localError is! Empty) return (null, localError);
+      var localResult = await localRepository.update(expense);
+      if (localResult.isError()) return localResult;
 
-      var (_, remoteError) = await remoteRepository.update(expense);
-      if (remoteError is! Empty) {
-        return (localIncome, Warning("Local updated but remote sync failed"));
+      var remoteResult = await remoteRepository.update(expense);
+      if (remoteResult.isError()) {
+        return Success(localResult.getOrThrow());
       }
 
-      return (localIncome, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return remoteResult;
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Null, AppError)> delete(Income expense) async {
+  Future<Result<void>> delete(Income expense) async {
     try {
-      var (_, localError) = await localRepository.delete(expense);
-      if (localError is! Empty) return (null, localError);
+      var localResult = await localRepository.delete(expense);
+      if (localResult.isError()) return localResult;
 
-      var (_, remoteError) = await remoteRepository.delete(expense);
-      if (remoteError is! Empty) {
-        return (null, Warning("Deleted locally but remote sync failed"));
+      var remoteResult = await remoteRepository.delete(expense);
+      if (remoteResult.isError()) {
+        return Failure(Exception("Deleted locally but remote sync failed"));
       }
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return const Success("ok");
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

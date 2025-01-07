@@ -1,7 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
 import 'package:my_kakeibo/domain/service/local_notification_service.dart';
+import 'package:result_dart/result_dart.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationServiceImpl implements LocalNotificationService {
@@ -31,7 +31,7 @@ class LocalNotificationServiceImpl implements LocalNotificationService {
   }
 
   @override
-  Future<void> displayNotification(NotificationMessage message) async {
+  Future<Result<void>> displayNotification(NotificationMessage message) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
       "pushNotificationId",
@@ -50,10 +50,11 @@ class LocalNotificationServiceImpl implements LocalNotificationService {
       message.body,
       notificationDetails,
     );
+    return const Success("ok");
   }
 
   @override
-  Future<(Null, AppError)> scheduleNotification(
+  Future<Result<void>> scheduleNotification(
     Notification notification,
   ) async {
     try {
@@ -84,9 +85,9 @@ class LocalNotificationServiceImpl implements LocalNotificationService {
             UILocalNotificationDateInterpretation.absoluteTime,
       );
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return const Success("ok");
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

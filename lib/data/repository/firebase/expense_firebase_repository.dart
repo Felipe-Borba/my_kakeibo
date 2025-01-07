@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/firebase/model/expense_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 class ExpenseFirebaseRepository implements ExpenseRepository {
   final _db = FirebaseFirestore.instance;
@@ -12,7 +12,7 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
   final _table = "Expense";
 
   @override
-  Future<(Null, AppError)> delete(Expense expense) async {
+  Future<Result<Expense>> delete(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -24,14 +24,14 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
 
       await docRef.delete();
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(expense);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Expense>, AppError)> findAll() async {
+  Future<Result<List<Expense>>> findAll() async {
     try {
       var userId = _auth.currentUser?.uid;
 
@@ -45,14 +45,14 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .map((doc) => ExpenseModel.fromDoc(doc).toEntity())
           .toList();
 
-      return (expenses, Empty());
-    } catch (e) {
-      return (List<Expense>.empty(), Failure(e.toString()));
+      return Success(expenses);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Expense?, AppError)> insert(Expense expense) async {
+  Future<Result<Expense>> insert(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
       expense.date = expense.date.toUtc();
@@ -64,14 +64,14 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .add(ExpenseModel.fromEntity(expense).toJson());
 
       expense.id = res.id;
-      return (expense, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(expense);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Expense?, AppError)> update(Expense expense) async {
+  Future<Result<Expense>> update(Expense expense) async {
     try {
       var userId = _auth.currentUser?.uid;
       expense.date = expense.date.toUtc();
@@ -84,21 +84,21 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
 
       await docRef.update(ExpenseModel.fromEntity(expense).toJson());
 
-      return (expense, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(expense);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Expense>, AppError)> findByMonth({
+  Future<Result<List<Expense>>> findByMonth({
     required DateTime month,
   }) async {
     try {
       var userId = _auth.currentUser?.uid;
 
       if (userId == null) {
-        return (List<Expense>.empty(), Failure("User not authenticated"));
+        return Failure(Exception("User not authenticated"));
       }
 
       DateTime startOfMonth = DateTime(month.year, month.month, 1);
@@ -119,9 +119,9 @@ class ExpenseFirebaseRepository implements ExpenseRepository {
           .map((doc) => ExpenseModel.fromDoc(doc).toEntity())
           .toList();
 
-      return (expenses, Empty());
-    } catch (e) {
-      return (List<Expense>.empty(), Failure(e.toString()));
+      return Success(expenses);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

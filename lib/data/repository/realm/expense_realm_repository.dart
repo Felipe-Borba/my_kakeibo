@@ -1,41 +1,40 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/realm/model/expense_model.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:realm/realm.dart' hide Uuid;
+import 'package:result_dart/result_dart.dart';
 import 'package:uuid/uuid.dart';
 
 class ExpenseRealmRepository extends ExpenseRepository {
   final Realm realm;
-  final Uuid uuid; 
+  final Uuid uuid;
 
   ExpenseRealmRepository(this.realm, this.uuid);
 
   @override
-  Future<(Expense?, AppError)> insert(Expense expense) async {
+  Future<Result<Expense>> insert(Expense expense) async {
     try {
       final model = _toModel(expense);
       realm.write(() => realm.add(model));
-      return (_toEntity(model), Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(_toEntity(model));
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Expense>, AppError)> findAll() async {
+  Future<Result<List<Expense>>> findAll() async {
     try {
       final results = realm.all<ExpenseModel>();
       final expenses = results.map(_toEntity).toList();
-      return (expenses, Empty());
-    } catch (e) {
-      return (List<Expense>.empty(), Failure(e.toString()));
+      return Success(expenses);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(List<Expense>, AppError)> findByMonth(
-      {required DateTime month}) async {
+  Future<Result<List<Expense>>> findByMonth({required DateTime month}) async {
     try {
       final start = DateTime(month.year, month.month, 1);
       final end = DateTime(month.year, month.month + 1, 0);
@@ -45,19 +44,19 @@ class ExpenseRealmRepository extends ExpenseRepository {
           .query(r'date >= $0 AND date <= $1', [start, end]);
       final expenses = results.map(_toEntity).toList();
 
-      return (expenses, Empty());
-    } catch (e) {
-      return (List<Expense>.empty(), Failure(e.toString()));
+      return Success(expenses);
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Expense?, AppError)> update(Expense expense) async {
+  Future<Result<Expense>> update(Expense expense) async {
     try {
       final model = realm.find<ExpenseModel>(expense.id);
 
       if (model == null) {
-        return (null, Failure("Expense not found"));
+        return Failure(Exception(("Expense not found")));
       }
 
       realm.write(() {
@@ -67,25 +66,25 @@ class ExpenseRealmRepository extends ExpenseRepository {
         model.category = expense.category;
       });
 
-      return (_toEntity(model), Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(_toEntity(model));
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Null, AppError)> delete(Expense expense) async {
+  Future<Result<void>> delete(Expense expense) async {
     try {
       final model = realm.find<ExpenseModel>(expense.id);
 
       if (model == null) {
-        return (null, Failure("Expense not found"));
+        return Failure(Exception(("Expense not found")));
       }
 
       realm.write(() => realm.delete(model));
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return const Success("ok");
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 

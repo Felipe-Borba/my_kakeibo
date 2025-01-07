@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/data/repository/firebase/model/user_model.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:result_dart/result_dart.dart';
 import 'package:uuid/uuid.dart';
 
 class UserFirebaseRepository extends UserRepository {
@@ -13,47 +13,47 @@ class UserFirebaseRepository extends UserRepository {
   final uuid = const Uuid();
 
   @override
-  Future<(User?, AppError)> getUserById(String id) async {
+  Future<Result<User>> getUserById(String id) async {
     try {
       var userQuery = await _db.collection(table).doc(id).get();
 
       var userMap = userQuery.data();
 
-      if (userMap == null) return (null, Failure("User not found"));
+      if (userMap == null) return Failure(Exception("User not found"));
 
-      return (UserModel.fromJson(userMap).toEntity(), Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(UserModel.fromJson(userMap).toEntity());
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(Null, AppError)> save(User user) async {
+  Future<Result<void>> save(User user) async {
     try {
       var model = UserModel.fromUser(user);
       await _db.collection(table).doc(user.id).set(model.toJson());
 
-      return (null, Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return const Success("ok");
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 
   @override
-  Future<(User?, AppError)> getSelf() async {
+  Future<Result<User>> getSelf() async {
     try {
       var id = _auth.currentUser?.uid;
-      if (id == null) return (null, Warning("Unauthorized"));
+      if (id == null) return Failure(Exception("Unauthorized"));
 
       var userQuery = await _db.collection(table).doc(id).get();
 
       var userMap = userQuery.data();
 
-      if (userMap == null) return (null, Failure("User not found"));
+      if (userMap == null) return Failure(Exception("User not found"));
 
-      return (UserModel.fromJson(userMap).toEntity(), Empty());
-    } catch (e) {
-      return (null, Failure(e.toString()));
+      return Success(UserModel.fromJson(userMap).toEntity());
+    } on Exception catch (e) {
+      return Failure(e);
     }
   }
 }

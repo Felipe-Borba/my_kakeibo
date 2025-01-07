@@ -1,7 +1,7 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/service/auth_service.dart';
+import 'package:result_dart/result_dart.dart';
 
 class OfflineFirstUserRepository extends UserRepository {
   final UserRepository localRepository;
@@ -15,39 +15,34 @@ class OfflineFirstUserRepository extends UserRepository {
   });
 
   @override
-  Future<(Null, AppError)> save(User user) async {
-    var (localResult, localError) = await localRepository.save(user);
-    if (localError is! Empty) return (null, localError);
+  Future<Result<void>> save(User user) async {
+    var result = await localRepository.save(user);
 
-    //TODO talvez ver uma estratégia melhor para saber o que já foi e o que não foi sincronizado, ex. app Runique
-    var (loggedUserId, userError) = await authService.getLoggedUserId();
-    if (loggedUserId.isNotEmpty) return (null, Warning("Local saved but user is not"));
+    //TODO talvez ver uma estratégia melhor para saber o que j  foi e o que n o foi sincronizado, ex. app Runique
+    var loggedUserIdResult = await authService.getLoggedUserId().isError();
+    if (loggedUserIdResult) return result;
 
     return await remoteRepository.save(user);
   }
 
   @override
-  Future<(User?, AppError)> getUserById(String id) async {
-    var (localUser, localError) = await localRepository.getUserById(id);
-    if (localUser != null) {
-      return (localUser, Empty());
-    }
+  Future<Result<User>> getUserById(String id) async {
+    var result = await localRepository.getUserById(id);
 
-    //TODO talvez ver uma estratégia melhor para saber o que já foi e o que não foi sincronizado, ex. app Runique
-    var (loggedUserId, userError) = await authService.getLoggedUserId();
-    if (loggedUserId.isNotEmpty) return (localUser, Warning("Local saved but remote sync failed"));
+    //TODO talvez ver uma estratégia melhor para saber o que j  foi e o que n o foi sincronizado, ex. app Runique
+    var loggedUserIdResult = await authService.getLoggedUserId().isError();
+    if (loggedUserIdResult) return result;
 
-    var (remoteUser, remoteError) = await remoteRepository.getUserById(id);
-    if (remoteUser != null) {
-      await localRepository.save(remoteUser);
-      return (remoteUser, Empty());
-    }
+    result = await remoteRepository.getUserById(id);
+    result.onSuccess((user) async {
+      await localRepository.save(user);
+    });
 
-    return (null, remoteError);
+    return result;
   }
-  
+
   @override
-  Future<(User?, AppError)> getSelf() {
+  Future<Result<User>> getSelf() {
     // TODO: implement getSelf
     throw UnimplementedError();
   }

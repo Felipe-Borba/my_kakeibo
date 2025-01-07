@@ -1,9 +1,10 @@
-import 'package:my_kakeibo/core/records/app_error.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
+import 'package:result_dart/result_dart.dart';
 
 abstract class PushNotificationService {
-  Future<(bool, AppError)> requestPermission();
-  Future<(String, AppError)> getNotificationToken();
+  Future<Result<bool>> requestPermission();
+
+  Future<Result<String>> getNotificationToken();
 
   /// Ativado quando o app está em primeiro plano
   void listenToForegroundMessage(
