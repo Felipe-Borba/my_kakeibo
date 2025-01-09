@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/font.dart';
-import 'package:my_kakeibo/presentation/core/theme.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/presentation/core/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/settings/settings_controller.dart';
@@ -16,8 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    TextTheme textTheme = createTextTheme(context, "Delius", "Goldman");
-    MaterialTheme theme = MaterialTheme(textTheme);
+    final theme = getMaterialTheme(context);
 
     return ChangeNotifierProvider(
       create: (context) => SettingsController(context),
