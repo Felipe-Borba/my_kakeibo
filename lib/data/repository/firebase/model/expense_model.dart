@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:uuid/uuid.dart';
 
 class ExpenseModel {

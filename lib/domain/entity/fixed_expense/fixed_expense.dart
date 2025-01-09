@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 
 class FixedExpense {
   String? id;
@@ -94,52 +95,5 @@ class FixedExpense {
     int novoDia = data.day > ultimoDiaDoMes ? ultimoDiaDoMes : data.day;
 
     return DateTime(novoAno, data.month, novoDia);
-  }
-}
-
-enum Frequency {
-  daily,
-  weekly,
-  monthly,
-  annually,
-}
-
-extension FrequencyExtension on Frequency {
-  String getTranslation(BuildContext context) {
-    switch (this) {
-      case Frequency.daily:
-        return context.intl.daily;
-      case Frequency.weekly:
-        return context.intl.weekly;
-      case Frequency.monthly:
-        return context.intl.monthly;
-      case Frequency.annually:
-        return context.intl.annually;
-    }
-  }
-
-  String get description => toString().split('.').last;
-}
-
-extension FrequencyExtensionListExtension on List<Frequency> {
-  Frequency getByDescription(String description) {
-    return firstWhere((e) => e.description == description);
-  }
-}
-
-enum Remember {
-  no,
-  weekBefore,
-  dayBefore,
-  atDueDate,
-}
-
-extension RememberExtension on Remember {
-  String get description => toString().split('.').last;
-}
-
-extension RememberExtensionListExtension on List<Remember> {
-  Remember getByDescription(String description) {
-    return firstWhere((e) => e.description == description);
   }
 }

@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:realm/realm.dart';
 
 part 'expense_model.realm.dart';

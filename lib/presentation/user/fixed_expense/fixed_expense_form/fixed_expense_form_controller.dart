@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 
 class FixedExpenseFormController with ChangeNotifier {
   FixedExpenseFormController(this._context, this._fixedExpense);

@@ -1,4 +1,5 @@
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:uuid/uuid.dart';
 
 class UserModel {

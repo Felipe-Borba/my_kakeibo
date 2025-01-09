@@ -1,5 +1,6 @@
-import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:realm/realm.dart';
 
 part 'fixed_expense_model.realm.dart';

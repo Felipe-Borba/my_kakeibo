@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:uuid/uuid.dart';
 
 class IncomeModel {

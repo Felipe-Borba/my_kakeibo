@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:realm/realm.dart';
 
 part 'income_model.realm.dart';
