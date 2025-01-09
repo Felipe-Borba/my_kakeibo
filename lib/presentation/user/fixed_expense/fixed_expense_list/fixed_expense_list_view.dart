@@ -7,7 +7,7 @@ import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart'
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
+import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
 import 'package:provider/provider.dart';
 
 class FixedExpenseListView extends StatelessWidget {

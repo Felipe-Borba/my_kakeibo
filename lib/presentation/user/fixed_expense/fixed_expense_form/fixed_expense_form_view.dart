@@ -6,7 +6,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/date_form_fi
 import 'package:my_kakeibo/presentation/core/components/keyboard_aware.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_expense_form_controller.dart';
+import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_controller.dart';
 import 'package:provider/provider.dart';
 
 class FixedExpenseFormView extends StatelessWidget {

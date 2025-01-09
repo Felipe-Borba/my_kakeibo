@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
-import 'package:my_kakeibo/presentation/expense/expense_list/expense_list_view.dart';
-import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
-import 'package:my_kakeibo/presentation/income/income_list/income_list_view.dart';
+import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view.dart';
+import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
+import 'package:my_kakeibo/presentation/user/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 

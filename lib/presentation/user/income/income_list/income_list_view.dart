@@ -7,7 +7,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/month_select
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/presentation/income/income_list/income_list_controller.dart';
+import 'package:my_kakeibo/presentation/user/income/income_list/income_list_controller.dart';
 import 'package:provider/provider.dart';
 
 class IncomeListView extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/presentation/fixed_expense/fixed_expense_form/fixed_expense_form_view.dart';
+import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_view.dart';
 
 class FixedExpenseListController with ChangeNotifier {
   FixedExpenseListController(this._context);

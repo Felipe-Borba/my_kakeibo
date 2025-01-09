@@ -4,7 +4,7 @@ import 'package:my_kakeibo/presentation/core/components/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/presentation/income/income_form/income_form_controller.dart';
+import 'package:my_kakeibo/presentation/user/income/income_form/income_form_controller.dart';
 import 'package:provider/provider.dart';
 
 class IncomeFormView extends StatelessWidget {
