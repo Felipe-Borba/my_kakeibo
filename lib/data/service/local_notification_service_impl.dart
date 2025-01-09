@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
-import 'package:my_kakeibo/domain/service/local_notification_service.dart';
+import 'package:my_kakeibo/data/service/local_notification_service.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:timezone/timezone.dart' as tz;
 

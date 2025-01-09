@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_kakeibo/data/repository/firebase/model/income_model.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/repository/income_repository.dart';
+import 'package:my_kakeibo/data/repository/income_repository.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeFirebaseRepository implements IncomeRepository {

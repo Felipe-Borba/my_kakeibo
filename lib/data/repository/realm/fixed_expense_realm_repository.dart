@@ -1,6 +1,6 @@
 import 'package:my_kakeibo/data/repository/realm/model/fixed_expense_model.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
+import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:result_dart/result_dart.dart';
 import 'package:uuid/uuid.dart';

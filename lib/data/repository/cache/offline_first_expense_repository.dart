@@ -1,5 +1,5 @@
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/repository/expense_repository.dart';
+import 'package:my_kakeibo/data/repository/expense_repository.dart';
 import 'package:result_dart/result_dart.dart';
 
 class OfflineFirstExpenseRepository implements ExpenseRepository {

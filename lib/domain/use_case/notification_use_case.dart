@@ -1,7 +1,7 @@
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
-import 'package:my_kakeibo/domain/service/local_notification_service.dart';
-import 'package:my_kakeibo/domain/service/push_notification_service.dart';
+import 'package:my_kakeibo/data/repository/user_repository.dart';
+import 'package:my_kakeibo/data/service/local_notification_service.dart';
+import 'package:my_kakeibo/data/service/push_notification_service.dart';
 import 'package:result_dart/result_dart.dart';
 
 class NotificationUseCase {

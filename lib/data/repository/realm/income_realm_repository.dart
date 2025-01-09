@@ -1,6 +1,6 @@
 import 'package:my_kakeibo/data/repository/realm/model/income_model.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/repository/income_repository.dart';
+import 'package:my_kakeibo/data/repository/income_repository.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:result_dart/result_dart.dart';
 import 'package:uuid/uuid.dart';

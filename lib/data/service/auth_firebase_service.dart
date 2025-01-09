@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/domain/service/auth_service.dart';
+import 'package:my_kakeibo/data/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:result_dart/result_dart.dart';
 

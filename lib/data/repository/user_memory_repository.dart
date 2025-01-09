@@ -1,5 +1,5 @@
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/data/repository/user_repository.dart';
 import 'package:result_dart/result_dart.dart';
 
 class UserMemoryRepository implements UserRepository {
