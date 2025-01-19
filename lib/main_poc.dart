@@ -18,13 +18,13 @@ class MyApp extends StatelessWidget {
       darkTheme: theme.dark(),
       theme: theme.light(),
       themeMode: ThemeMode.light,
-      home: Dashboard(),
+      home: const Dashboard(),
     );
   }
 }
 
 class Dashboard extends StatelessWidget {
-  Dashboard({super.key});
+  const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
