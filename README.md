@@ -7,6 +7,9 @@ Aplicativo realizado com o flutter e o firebase .
 ## Setup your project
 instalar as depencias e pau no gato
 
+### Versões do flutter
+antes de mais nada é importante notar que o flutter tem várias versões e nem todos os projetos vão estar com as ultimas versões e as vezes você simplesmente precisa rodar uma versão antiga, dito isso o FVM (flutter version manager) trás uma simples solução tipo o nvm
+
 ## Getting Started
 
 This project is a starting point for a Flutter application that follows the

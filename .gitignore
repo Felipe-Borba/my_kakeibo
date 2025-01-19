@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/release
 coverage
 certs
+
+# FVM Version Cache
+.fvm/
