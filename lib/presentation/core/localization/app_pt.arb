@@ -39,7 +39,7 @@
       }
     }
   },
-  "income": "Renda",
+  "income": "Receita",
   "@income": {},
   "expense": "Despesa",
   "@expense": {},
