@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AppBarDrawer extends StatelessWidget implements PreferredSizeWidget {
+class AppBarUser extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  const AppBarDrawer({
+  const AppBarUser({
     super.key,
     required this.title,
   });
@@ -24,19 +24,16 @@ class AppBarDrawer extends StatelessWidget implements PreferredSizeWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 15,
-              child: Icon(
-                Icons.person,
-                size: 15,
-              ),
+              child: ClipOval(child: Image.asset("assets/launcher/icon.png")),
             ),
-            // const Expanded(child: SizedBox(width: 10)),
-            const SizedBox(width: 10),
+            const Expanded(child: SizedBox(width: 10)),
+            // const SizedBox(width: 10),
             Text(title),
             const Expanded(child: SizedBox(width: 10)),
             const SizedBox(width: 30),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+            // IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
           ],
         ),
       ),

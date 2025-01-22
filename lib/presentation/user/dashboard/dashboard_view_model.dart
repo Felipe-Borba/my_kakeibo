@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/profile_view.dart';
 
 class DashboardViewModel with ChangeNotifier {
   DashboardViewModel(this._context) {
@@ -36,13 +35,13 @@ class DashboardViewModel with ChangeNotifier {
   List<Transaction> list = List.empty();
   List<PieData> pieChartData = List.empty();
   User? user;
-  int selectedIndex = 0;
+  final selectedIndex = ValueNotifier<int>(0);
   List<Widget> screens = [
     const HomeView(),
     const InsightsView(),
-    const ProfileView(),
+    // const ProfileView(),
   ];
-  Widget get screen => screens[selectedIndex];
+  Widget get screen => screens[selectedIndex.value];
 
   // Actions
   getInitialData() async {
@@ -123,7 +122,7 @@ class DashboardViewModel with ChangeNotifier {
   }
 
   onTabTapped(int selectedIndex) {
-    this.selectedIndex = selectedIndex;
+    this.selectedIndex.value = selectedIndex;
     notifyListeners();
   }
 }

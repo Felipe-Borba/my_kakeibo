@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/components/app_bar_drawer.dart';
+import 'package:my_kakeibo/presentation/core/components/app_bar_user.dart';
 import 'package:my_kakeibo/presentation/core/components/bottom_navigation_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
@@ -17,12 +17,14 @@ class DashboardView extends StatelessWidget {
         final controller = Provider.of<DashboardViewModel>(context);
 
         return ScaffoldCustom(
-          appBar: AppBarDrawer(
+          appBar: AppBarUser(
             title: context.intl.welcomeMessage(controller.user?.name ?? ""),
           ),
           body: controller.screen,
-          bottomNavigationBar:
-              BottomNavigationBarCustom(onTabTapped: controller.onTabTapped),
+          bottomNavigationBar: BottomNavigationBarCustom(
+            currentIndexNotifier: controller.selectedIndex,
+            onTabTapped: controller.onTabTapped,
+          ),
         );
       },
     );
