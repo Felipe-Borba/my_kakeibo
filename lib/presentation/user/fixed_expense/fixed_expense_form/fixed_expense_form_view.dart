@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/core/components/app_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/keyboard_aware.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/components/app_bar_user.dart';
-import 'package:my_kakeibo/presentation/core/components/bottom_navigation_bar_custom.dart';
-import 'package:my_kakeibo/presentation/core/components/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/app_bar_user.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/bottom_navigation_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 

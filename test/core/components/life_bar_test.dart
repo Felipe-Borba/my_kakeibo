@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:my_kakeibo/presentation/core/components/life_bar.dart';
+import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
 
 import '../../utils_test.dart';
 

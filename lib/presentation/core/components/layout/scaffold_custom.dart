@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/components/drawer_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/drawer_custom.dart';
 
 class ScaffoldCustom extends StatelessWidget {
   final PreferredSizeWidget? appBar;

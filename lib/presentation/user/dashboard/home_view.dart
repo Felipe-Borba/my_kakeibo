@@ -7,7 +7,7 @@ import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
-import 'package:my_kakeibo/presentation/core/components/life_bar.dart';
+import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_title_large.dart';
