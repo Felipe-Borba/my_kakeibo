@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -11,9 +12,9 @@ class WelcomeView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => WelcomeController(context),
       builder: (context, child) {
-        final controller = Provider.of<WelcomeController>(context);
+        final viewModel = Provider.of<WelcomeController>(context);
 
-        return Scaffold(
+        return ScaffoldCustom(
           body: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
             child: Column(
@@ -55,14 +56,14 @@ class WelcomeView extends StatelessWidget {
                 ),
                 const Expanded(child: SizedBox()),
                 TextButton(
-                  onPressed: controller.termsAndPrivacyClick,
+                  onPressed: viewModel.termsAndPrivacyClick,
                   child: Text(
                     context.intl.agreement_warning,
                     textAlign: TextAlign.center,
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: controller.onContinue,
+                  onPressed: viewModel.onContinue,
                   child: Text(context.intl.getStarted),
                 ),
                 const Expanded(child: SizedBox()),

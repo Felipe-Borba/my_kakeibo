@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<DashboardViewModel>(context);
+    final viewModel = Provider.of<DashboardViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -28,8 +28,8 @@ class HomeView extends StatelessWidget {
       ),
       child: Column(
         children: [
-          summary(context, controller),
-          itemList(context, controller),
+          summary(context, viewModel),
+          itemList(context, viewModel),
         ],
       ),
     );
@@ -78,14 +78,6 @@ class HomeView extends StatelessWidget {
             topRight: Radius.circular(16),
           ),
           border: Border(
-            left: BorderSide(
-              color: Colors.grey,
-              width: 1,
-            ),
-            right: BorderSide(
-              color: Colors.grey,
-              width: 1,
-            ),
             top: BorderSide(
               color: Colors.grey,
               width: 1,

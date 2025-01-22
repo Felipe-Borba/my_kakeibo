@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:my_kakeibo/core/extensions/currency.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/drawer_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
@@ -19,80 +20,63 @@ class FixedExpenseListView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => FixedExpenseListController(context),
       builder: (context, child) {
-        final controller = Provider.of<FixedExpenseListController>(context);
-        final intl = AppLocalizations.of(context)!;
-        final NumberFormat formatter = NumberFormat.currency(
-          locale: Localizations.localeOf(context).toString(),
-          symbol: intl.currencyTag,
-          decimalDigits: 2,
-        );
-
-        return FutureBuilder(
-          future: controller.getInitialData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
-            }
-
-            return Scaffold(
-              appBar: AppBarCustom(title: intl.fixedExpense),
-              endDrawer: const DrawerCustom(),
-              floatingActionButton: FloatingActionButton.small(
-                onPressed: () => controller.onAdd(),
-                child: const Icon(Icons.add),
-              ),
-              body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SortComponent(
-                          onSortChanged: controller.setSortBy,
-                          sortNumber: controller.sortNumber,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 8,
-                        ),
-                        itemCount: controller.list.length,
-                        itemBuilder: (context, index) {
-                          var expense = controller.list[index];
-
-                          return item(
-                            expense,
-                            formatter,
-                            controller,
-                            context,
-                            intl,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
+        final viewModel = Provider.of<FixedExpenseListController>(context);
+        return ScaffoldCustom(
+          appBar: AppBarCustom(title: context.intl.fixedExpense),
+          floatingActionButton: FloatingActionButton.small(
+            onPressed: () => viewModel.onAdd(),
+            child: const Icon(Icons.add),
+          ),
+          body: body(viewModel, context),
         );
       },
     );
   }
 
+  Widget body(FixedExpenseListController viewModel, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SortComponent(
+                onSortChanged: viewModel.setSortBy,
+                sortNumber: viewModel.sortNumber,
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          itemList(viewModel, context),
+        ],
+      ),
+    );
+  }
+
+  Widget itemList(FixedExpenseListController viewModel, BuildContext context) {
+    if (viewModel.list.isEmpty) {
+      return Expanded(child: Center(child: Text(context.intl.no_fixed_expenses)));
+    }
+    return Expanded(
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(
+          height: 8,
+        ),
+        itemCount: viewModel.list.length,
+        itemBuilder: (context, index) {
+          var expense = viewModel.list[index];
+
+          return item(expense, viewModel, context);
+        },
+      ),
+    );
+  }
+
   Widget item(
     FixedExpense fixedExpense,
-    NumberFormat formatter,
     FixedExpenseListController controller,
     BuildContext context,
-    AppLocalizations intl,
   ) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -121,7 +105,7 @@ class FixedExpenseListView extends StatelessWidget {
                     children: [
                       Text(fixedExpense.frequency.getTranslation(context)),
                       const SizedBox(width: 8),
-                      Text(formatter.format(fixedExpense.amount)),
+                      Text(context.currency.format(fixedExpense.amount)),
                       const SizedBox(width: 8),
                       Text(
                         DateFormat.Md(
@@ -155,20 +139,20 @@ class FixedExpenseListView extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(intl.confirmPayment),
-                            content: Text(intl.confirmPaymentText),
+                            title: Text(context.intl.confirmPayment),
+                            content: Text(context.intl.confirmPaymentText),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop(false);
                                 },
-                                child: Text(intl.cancel),
+                                child: Text(context.intl.cancel),
                               ),
                               TextButton(
                                 onPressed: () async {
                                   Navigator.of(context).pop(true);
                                 },
-                                child: Text(intl.pay),
+                                child: Text(context.intl.pay),
                               ),
                             ],
                           );

@@ -69,6 +69,7 @@ class DashboardViewModel with ChangeNotifier {
       this.user = user;
       notifyListeners();
     });
+    notifyListeners();
   }
 
   void _makePieCartData(List<Expense> expenseList) {

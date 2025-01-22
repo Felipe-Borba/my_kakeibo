@@ -10,7 +10,7 @@ class InsightsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<DashboardViewModel>(context);
+    final viewModel = Provider.of<DashboardViewModel>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -20,10 +20,10 @@ class InsightsView extends StatelessWidget {
       child: Column(
         children: [
           const TextTitleMedium("Gasto mensal por categoria"),
-          if (controller.pieChartData.isEmpty)
+          if (viewModel.pieChartData.isEmpty)
             Expanded(child: Center(child: Text(context.intl.no_transactions)))
           else
-            PieChartCustom(data: controller.pieChartData),
+            PieChartCustom(data: viewModel.pieChartData),
         ],
       ),
     );

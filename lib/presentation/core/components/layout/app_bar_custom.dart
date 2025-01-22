@@ -28,6 +28,8 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
         AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
+          actions: const [SizedBox()],
+          centerTitle: true,
           title: Text(
             title,
             style: const TextStyle(

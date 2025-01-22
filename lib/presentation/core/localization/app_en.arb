@@ -170,5 +170,11 @@
   "menu": "Menu",
   "@menu": {},
   "profile": "Profile",
-  "@profile": {}
+  "@profile": {},
+  "no_expenses": "No expenses found",
+  "@no_expenses": {},
+  "no_incomes": "No incomes found",
+  "@no_incomes": {},
+  "no_fixed_expenses": "No fixed expenses found",
+  "@no_fixed_expenses": {}
 }

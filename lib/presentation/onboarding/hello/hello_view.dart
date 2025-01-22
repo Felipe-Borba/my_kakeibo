@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -13,12 +14,12 @@ class HelloView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => HelloController(context),
       builder: (context, child) {
-        final controller = Provider.of<HelloController>(context);
+        final viewModel = Provider.of<HelloController>(context);
 
-        return Scaffold(
+        return ScaffoldCustom(
           body: Center(
             child: AnimatedOpacity(
-              opacity: controller.opacity,
+              opacity: viewModel.opacity,
               duration: const Duration(seconds: 2),
               child: Text(
                 // 'Bem-vindo',

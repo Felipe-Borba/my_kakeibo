@@ -6,7 +6,9 @@ import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view.dart';
 
 class ExpenseListController with ChangeNotifier {
-  ExpenseListController(this._context);
+  ExpenseListController(this._context) {
+    getInitialData();
+  }
 
   // Dependencies
   late final expenseUseCase = _context.dependencyManager.expenseUseCase;
@@ -29,6 +31,8 @@ class ExpenseListController with ChangeNotifier {
       list = success;
       sortByNumber(sortNumber);
     });
+
+    notifyListeners();
   }
 
   setSortBy(int sortNumber) {

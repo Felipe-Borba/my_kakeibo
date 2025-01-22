@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/drawer_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/settings/settings_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -11,21 +11,17 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<SettingsController>(context);
-    final intl = AppLocalizations.of(context)!;
+    final viewModel = Provider.of<SettingsController>(context);
 
-    return Scaffold(
-      appBar: AppBarCustom(
-        title: intl.settings,
-      ),
-      endDrawer: const DrawerCustom(),
+    return ScaffoldCustom(
+      appBar: AppBarCustom(title: context.intl.settings),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DropdownButton<UserTheme>(
-              value: controller.userTheme,
-              onChanged: controller.updateThemeMode,
+              value: viewModel.userTheme,
+              onChanged: viewModel.updateThemeMode,
               items: UserTheme.values
                   .map(
                     (e) => DropdownMenuItem(
@@ -42,30 +38,30 @@ class SettingsView extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text(intl.confirmDeleteData),
-                      content: Text(intl.confirmDeleteDataText),
+                      title: Text(context.intl.confirmDeleteData),
+                      content: Text(context.intl.confirmDeleteDataText),
                       actions: [
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).pop(false);
                           },
-                          child: Text(intl.cancel),
+                          child: Text(context.intl.cancel),
                         ),
                         TextButton(
                           onPressed: () async {
-                            await controller.deleteData();
+                            await viewModel.deleteData();
                           },
                           style: const ButtonStyle(
                             foregroundColor: WidgetStatePropertyAll(Colors.red),
                           ),
-                          child: Text(intl.delete),
+                          child: Text(context.intl.delete),
                         ),
                       ],
                     );
                   },
                 );
               },
-              label: Text(intl.deleteData),
+              label: Text(context.intl.deleteData),
               icon: const Icon(Icons.warning_amber_rounded),
             ),
           ],

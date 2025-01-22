@@ -25,10 +25,10 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
       type: BottomNavigationBarType.fixed,
       currentIndex: widget.currentIndexNotifier.value,
       onTap: (index) {
-        widget.currentIndexNotifier.value = index;
         if (index == 2) {
           scaffold.openEndDrawer();
         } else {
+          widget.currentIndexNotifier.value = index;
           widget.onTabTapped(index);
         }
       },

@@ -14,16 +14,16 @@ class DashboardView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => DashboardViewModel(context),
       builder: (BuildContext context, Widget? child) {
-        final controller = Provider.of<DashboardViewModel>(context);
+        final viewModel = Provider.of<DashboardViewModel>(context);
 
         return ScaffoldCustom(
           appBar: AppBarUser(
-            title: context.intl.welcomeMessage(controller.user?.name ?? ""),
+            title: context.intl.welcomeMessage(viewModel.user?.name ?? ""),
           ),
-          body: controller.screen,
+          body: viewModel.screen,
           bottomNavigationBar: BottomNavigationBarCustom(
-            currentIndexNotifier: controller.selectedIndex,
-            onTabTapped: controller.onTabTapped,
+            currentIndexNotifier: viewModel.selectedIndex,
+            onTabTapped: viewModel.onTabTapped,
           ),
         );
       },

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
-import 'package:my_kakeibo/presentation/core/components/keyboard_aware.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -20,18 +21,15 @@ class FixedExpenseFormView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => FixedExpenseFormController(context, fixedExpense),
       builder: (context, child) {
-        final controller = Provider.of<FixedExpenseFormController>(context);
-        final intl = AppLocalizations.of(context)!;
+        final viewModel = Provider.of<FixedExpenseFormController>(context);
 
-        return KeyboardAware(
-          child: Scaffold(
-            appBar: AppBarCustom(title: intl.fixedExpense),
-            body: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
-                child: Center(
-                  child: formView(controller, intl, context),
-                ),
+        return ScaffoldCustom(
+          appBar: AppBarCustom(title: context.intl.fixedExpense),
+          body: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
+              child: Center(
+                child: formView(viewModel, context.intl, context),
               ),
             ),
           ),

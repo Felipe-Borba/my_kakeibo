@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/drawer_custom.dart';
+import 'package:my_kakeibo/core/extensions/currency.dart';
+import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/month_selector.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/user/income/income_list/income_list_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -18,81 +19,64 @@ class IncomeListView extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => IncomeListController(context),
       builder: (context, child) {
-        final controller = Provider.of<IncomeListController>(context);
-        final intl = AppLocalizations.of(context)!;
-        final NumberFormat formatter = NumberFormat.currency(
-          locale: Localizations.localeOf(context).toString(),
-          symbol: intl.currencyTag,
-          decimalDigits: 2,
-        );
+        final viewModel = Provider.of<IncomeListController>(context);
 
-        return FutureBuilder(
-          future: controller.getInitialData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Scaffold(
-                body: Center(child: CircularProgressIndicator()),
-              );
-            }
-
-            return Scaffold(
-              appBar: AppBarCustom(title: intl.income),
-              endDrawer: const DrawerCustom(),
-              floatingActionButton: FloatingActionButton.small(
-                onPressed: () => controller.onAdd(),
-                child: const Icon(Icons.add),
-              ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 24,
-                ),
-                child: Column(
+        return ScaffoldCustom(
+          appBar: AppBarCustom(title: context.intl.income),
+          floatingActionButton: FloatingActionButton.small(
+            onPressed: () => viewModel.onAdd(),
+            child: const Icon(Icons.add),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 24,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(width: 32, height: 24),
-                        MonthSelector(
-                          onMonthSelected: controller.setMonthFilter,
-                          initialDate: controller.monthFilter,
-                        ),
-                        SortComponent(
-                          onSortChanged: controller.setSortBy,
-                          sortNumber: controller.sortNumber,
-                        ),
-                      ],
+                    const SizedBox(width: 32, height: 24),
+                    MonthSelector(
+                      onMonthSelected: viewModel.setMonthFilter,
+                      initialDate: viewModel.monthFilter,
                     ),
-                    const SizedBox(height: 16),
-                    Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 8),
-                        itemCount: controller.list.length,
-                        itemBuilder: (context, index) {
-                          var income = controller.list[index];
-
-                          return item(
-                            formatter,
-                            income,
-                            controller,
-                            context,
-                          );
-                        },
-                      ),
+                    SortComponent(
+                      onSortChanged: viewModel.setSortBy,
+                      sortNumber: viewModel.sortNumber,
                     ),
                   ],
                 ),
-              ),
-            );
-          },
+                const SizedBox(height: 16),
+                itemList(viewModel, context),
+              ],
+            ),
+          ),
         );
       },
     );
   }
 
+  Widget itemList(IncomeListController viewModel, BuildContext context) {
+    if (viewModel.list.isEmpty) {
+      return Expanded(child: Center(child: Text(context.intl.no_incomes)));
+    }
+
+    return Expanded(
+      child: ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        itemCount: viewModel.list.length,
+        itemBuilder: (context, index) {
+          var income = viewModel.list[index];
+
+          return item(income, viewModel, context);
+        },
+      ),
+    );
+  }
+
   Widget item(
-    NumberFormat formatter,
     Income income,
     IncomeListController controller,
     BuildContext context,
@@ -106,7 +90,7 @@ class IncomeListView extends StatelessWidget {
           const Icon(Icons.monetization_on_outlined),
           const SizedBox(width: 16),
           Text(
-            formatter.format(income.amount),
+            context.currency.format(income.amount),
           ),
           const SizedBox(width: 16),
           Text(

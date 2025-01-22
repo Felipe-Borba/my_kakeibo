@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view.dart';
 
 class IncomeListController with ChangeNotifier {
-  IncomeListController(this._context);
+  IncomeListController(this._context) {
+    getInitialData();
+  }
 
   // Dependencies
   late final incomeUseCase = _context.dependencyManager.incomeUseCase;
@@ -22,12 +24,15 @@ class IncomeListController with ChangeNotifier {
     var result = await incomeUseCase.findByMonth(
       month: monthFilter,
     );
+
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });
+
     result.onSuccess((success) {
-      list = list;
+      list = success;
       sortBy(sortNumber);
+      notifyListeners();
     });
   }
 

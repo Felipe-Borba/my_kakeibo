@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 
 class TermsAndPrivacyView extends StatelessWidget {
   const TermsAndPrivacyView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldCustom(
       appBar: AppBarCustom(title: context.intl.terms_and_privacy_title),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
