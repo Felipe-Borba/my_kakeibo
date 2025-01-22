@@ -7,9 +7,14 @@ import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/profile_view.dart';
 
-class DashboardController with ChangeNotifier {
-  DashboardController(this._context);
+class DashboardViewModel with ChangeNotifier {
+  DashboardViewModel(this._context) {
+    getInitialData();
+  }
 
   // Dependencies
   final BuildContext _context;
@@ -31,14 +36,24 @@ class DashboardController with ChangeNotifier {
   List<Transaction> list = List.empty();
   List<PieData> pieChartData = List.empty();
   User? user;
+  int selectedIndex = 0;
+  List<Widget> screens = [
+    const HomeView(),
+    const InsightsView(),
+    const ProfileView(),
+  ];
+  Widget get screen => screens[selectedIndex];
 
   // Actions
   getInitialData() async {
     var totalIncome = (await incomeUseCase.getMonthTotal()).getOrDefault(0.0);
     var totalExpense = (await expenseUseCase.getMonthTotal()).getOrDefault(0.0);
-    total = totalIncome - totalExpense;
     this.totalIncome = totalIncome;
     this.totalExpense = totalExpense;
+    total = totalIncome - totalExpense;
+    if (total < 0) {
+      total = 0;
+    }
 
     var now = DateTime.now();
     var incomeList = (await incomeUseCase.findByMonth(month: now))
@@ -53,6 +68,7 @@ class DashboardController with ChangeNotifier {
     result.onSuccess((user) async {
       await notificationUseCase.checkPushNotificationSettings(user);
       this.user = user;
+      notifyListeners();
     });
   }
 
@@ -104,5 +120,10 @@ class DashboardController with ChangeNotifier {
     }
 
     return totalByCategory;
+  }
+
+  onTabTapped(int selectedIndex) {
+    this.selectedIndex = selectedIndex;
+    notifyListeners();
   }
 }

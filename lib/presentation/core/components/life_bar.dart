@@ -24,7 +24,7 @@ class LifeBar extends StatelessWidget {
           value: percentage,
           backgroundColor: Colors.red,
           color: Colors.green,
-          minHeight: 10,
+          minHeight: 8,
           borderRadius: const BorderRadius.all(Radius.circular(4)),
         ),
         // Text(

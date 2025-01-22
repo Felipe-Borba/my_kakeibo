@@ -22,6 +22,6 @@ class HelloController with ChangeNotifier {
   void _navigateToNextScreen() async {
     await Future.delayed(const Duration(seconds: 3));
     if (!_context.mounted) return;
-    _context.pushScreen(const DashboardView());
+    _context.pushAndRemoveAllScreen(const DashboardView());
   }
 }

@@ -2,127 +2,123 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/app_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     final theme = getMaterialTheme(context);
 
     return MaterialApp(
-      restorationScopeId: 'poc',
       debugShowCheckedModeBanner: false,
-      darkTheme: theme.dark(),
       theme: theme.light(),
-      themeMode: ThemeMode.light,
-      home: const Dashboard(),
+      home: HomeScreen(),
     );
   }
 }
 
-class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+class HomeScreen extends StatelessWidget {
+  final double available = 2000.00;
+  final double goal = 2500.00;
+  final double spent = 600.00;
+
+  final List<Map<String, dynamic>> transactions = [
+    {
+      "date": "Today",
+      "items": [
+        {"title": "Heades", "subtitle": "Subhead", "amount": 30.01},
+        {"title": "Heades", "subtitle": "Subhead", "amount": 30.01},
+      ]
+    },
+    {
+      "date": "Yesterday",
+      "items": [
+        {"title": "Heades", "subtitle": "Subhead", "amount": 30.01},
+        {"title": "Heades", "subtitle": "Subhead", "amount": 30.01},
+      ]
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarCustom(),
-      endDrawer: Drawer(
-        child: ListView(
-          children: const [
-            ListTile(
-              title: Text("Item 1."),
-            ),
-            ListTile(
-              title: Text("Item 2"),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: const BottomNavigationBarCustom(),
-      body: const Center(
-        child: Text("Conteúdo da página"),
-      ),
-    );
-  }
-}
-
-class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarCustom({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60.0),
-      child: AppBar(
-        actions: const [
-          //Esconde o ícone padrão do drawer
-          SizedBox(),
-          // IconButton(
-          //   icon: Icon(Icons.notifications),
-          //   onPressed: () {},
-          // ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart), label: "Insights"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "More"),
         ],
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 15,
-              child: Icon(
-                Icons.person,
-                size: 15,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              Text("Bem-vindo, Felipe!",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Text("Available",
+                  style: TextStyle(fontSize: 16, color: Colors.grey)),
+              Text("R\$ ${available.toStringAsFixed(2)}",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("meta", style: TextStyle(fontSize: 16)),
+                  Text(goal.toStringAsFixed(2),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                ],
               ),
-            ),
-            Expanded(child: SizedBox(width: 10)),
-            Text("Dashboard"),
-            Expanded(child: SizedBox(width: 10)),
-            SizedBox(width: 30),
-          ],
+              Divider(),
+              Text("gasto: ${spent.toStringAsFixed(2)}",
+                  style: TextStyle(fontSize: 14, color: Colors.grey)),
+              const SizedBox(height: 16),
+              Expanded(
+                child: ListView(
+                  children: transactions.map((group) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            group["date"],
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        ...group["items"].map<Widget>((item) {
+                          return Card(
+                            margin: EdgeInsets.symmetric(vertical: 4),
+                            child: ListTile(
+                              leading: CircleAvatar(child: Text("A")),
+                              title: Text(item["title"]),
+                              subtitle: Text(item["subtitle"]),
+                              trailing: Text(
+                                item["amount"].toStringAsFixed(2),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(60);
-}
-
-class BottomNavigationBarCustom extends StatelessWidget {
-  const BottomNavigationBarCustom({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final scaffold = Scaffold.of(context);
-
-    return BottomNavigationBar(
-      onTap: (index) {
-        if (index == 2) {
-          scaffold.openEndDrawer();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("Ação para o item $index"),
-            ),
-          );
-        }
-      },
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.pie_chart),
-          label: "Gráfico 1",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart),
-          label: "Gráfico 2",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.menu),
-          label: "Menu",
-        ),
-      ],
     );
   }
 }

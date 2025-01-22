@@ -154,5 +154,21 @@
   "back": "Voltar",
   "@back": {},
   "agreement_warning": "Ao utilizar esse app você concorda com os Termos de uso e Politica de privacidade",
-  "@agreement_warning": {}
+  "@agreement_warning": {},
+  "available": "Disponível",
+  "@available": {},
+  "no_transactions": "Nenhuma transação encontrada",
+  "@no_transactions": {},
+  "transactions": "Transações",
+  "@transactions": {},
+  "seeAll": "Ver tudo",
+  "@seeAll": {},
+  "home": "Início",
+  "@home": {},
+  "insights": "Insights",
+  "@insights": {},
+  "menu": "Menu",
+  "@menu": {},
+  "profile": "Perfil",
+  "@profile": {}
 }

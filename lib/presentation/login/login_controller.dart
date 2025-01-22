@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/create_account/create_account_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 

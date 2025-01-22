@@ -154,5 +154,21 @@
   "back": "Back",
   "@back": {},
   "agreement_warning": "By using this app you agree with the Term of use and Privacy policy",
-  "@agreement_warning": {}
+  "@agreement_warning": {},
+  "available": "Available",
+  "@available": {},
+  "no_transactions": "No transactions found",
+  "@no_transactions": {},
+  "transactions": "Transactions",
+  "@transactions": {},
+  "seeAll": "See all",
+  "@seeAll": {},
+  "home": "Home",
+  "@home": {},
+  "insights": "Insights",
+  "@insights": {},
+  "menu": "Menu",
+  "@menu": {},
+  "profile": "Profile",
+  "@profile": {}
 }

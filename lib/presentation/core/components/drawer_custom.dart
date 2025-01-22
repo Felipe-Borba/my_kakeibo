@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/settings/settings_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
 import 'package:my_kakeibo/presentation/user/income/income_list/income_list_view.dart';
-import 'package:my_kakeibo/presentation/settings/settings_view.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class DrawerCustom extends StatelessWidget {
   const DrawerCustom({
@@ -14,6 +14,8 @@ class DrawerCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+
     return Drawer(
       child: Column(
         children: [
@@ -47,30 +49,33 @@ class DrawerCustom extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.home),
-            title: Text(context.intl.dashboard),
+            title: Text(context.intl.home),
             onTap: () {
-              context.pushReplacementScreen(const DashboardView());
+              context.pushAndRemoveAllScreen(const DashboardView());
             },
           ),
           ListTile(
             leading: const Icon(Icons.account_balance_wallet_outlined),
             title: Text(context.intl.expense),
             onTap: () {
-              context.pushReplacementScreen(const ExpenseListView());
+              scaffold.closeEndDrawer();
+              context.pushScreen(const ExpenseListView());
             },
           ),
           ListTile(
             leading: const Icon(Icons.card_membership),
             title: Text(context.intl.fixedExpense),
             onTap: () {
-              context.pushReplacementScreen(const FixedExpenseListView());
+              scaffold.closeEndDrawer();
+              context.pushScreen(const FixedExpenseListView());
             },
           ),
           ListTile(
             leading: const Icon(Icons.attach_money),
             title: Text(context.intl.income),
             onTap: () {
-              context.pushReplacementScreen(const IncomeListView());
+              scaffold.closeEndDrawer();
+              context.pushScreen(const IncomeListView());
             },
           ),
           const Expanded(child: SizedBox(width: double.maxFinite)),
@@ -81,7 +86,8 @@ class DrawerCustom extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: Text(context.intl.settings),
               onTap: () {
-                context.pushReplacementScreen(const SettingsView());
+                scaffold.closeEndDrawer();
+                context.pushScreen(const SettingsView());
               },
             ),
           ),
