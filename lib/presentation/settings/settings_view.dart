@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/core/extensions/user_theme_extension.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
