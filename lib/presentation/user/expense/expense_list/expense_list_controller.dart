@@ -16,7 +16,7 @@ class ExpenseListController with ChangeNotifier {
 
   // State
   List<Expense> list = List.empty();
-  int sortNumber = 1;
+  int sortNumber = 2;
   DateTime monthFilter = DateTime.now();
 
   // Actions

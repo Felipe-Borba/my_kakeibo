@@ -60,7 +60,7 @@ class DashboardViewModel with ChangeNotifier {
     var expenseList = (await expenseUseCase.findByMonth(month: now))
         .getOrDefault(List.empty());
     list = [...incomeList, ...expenseList];
-    list.sort((a, b) => a.date.compareTo(b.date));
+    list.sort((a, b) => b.date.compareTo(a.date));
     _makePieCartData(expenseList);
 
     var result = await userUseCase.getUser();
