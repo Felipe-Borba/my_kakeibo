@@ -8,7 +8,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/user/income/income_list/income_list_controller.dart';
+import 'package:my_kakeibo/presentation/user/income/income_list/income_list_view_model.dart';
 import 'package:provider/provider.dart';
 
 class IncomeListView extends StatelessWidget {
@@ -17,9 +17,9 @@ class IncomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => IncomeListController(context),
+      create: (context) => IncomeListViewModel(context),
       builder: (context, child) {
-        final viewModel = Provider.of<IncomeListController>(context);
+        final viewModel = Provider.of<IncomeListViewModel>(context);
 
         return ScaffoldCustom(
           appBar: AppBarCustom(title: context.intl.income),
@@ -58,7 +58,7 @@ class IncomeListView extends StatelessWidget {
     );
   }
 
-  Widget itemList(IncomeListController viewModel, BuildContext context) {
+  Widget itemList(IncomeListViewModel viewModel, BuildContext context) {
     if (viewModel.list.isEmpty) {
       return Expanded(child: Center(child: Text(context.intl.no_incomes)));
     }
@@ -78,7 +78,7 @@ class IncomeListView extends StatelessWidget {
 
   Widget item(
     Income income,
-    IncomeListController controller,
+    IncomeListViewModel controller,
     BuildContext context,
   ) {
     return Padding(

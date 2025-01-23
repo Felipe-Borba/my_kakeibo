@@ -6,7 +6,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_d
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
-import 'package:my_kakeibo/presentation/user/income/income_form/income_form_controller.dart';
+import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view_model.dart';
 import 'package:provider/provider.dart';
 
 class IncomeFormView extends StatelessWidget {
@@ -17,9 +17,9 @@ class IncomeFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => IncomeFormController(context, income),
+      create: (context) => IncomeFormViewModel(context, income),
       builder: (context, child) {
-        final viewModel = Provider.of<IncomeFormController>(context);
+        final viewModel = Provider.of<IncomeFormViewModel>(context);
 
         return ScaffoldCustom(
           appBar: AppBarCustom(

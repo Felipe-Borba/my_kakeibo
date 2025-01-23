@@ -6,11 +6,11 @@ import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 
-class UserInfoController with ChangeNotifier {
+class UserInfoViewModel with ChangeNotifier {
   final BuildContext _context;
   late final _userUseCase = _context.dependencyManager.userUseCase;
 
-  UserInfoController(this._context);
+  UserInfoViewModel(this._context);
 
   // State
   final formKey = GlobalKey<FormState>();

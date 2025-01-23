@@ -8,7 +8,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_f
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
-import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_controller.dart';
+import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FixedExpenseFormView extends StatelessWidget {
@@ -19,9 +19,9 @@ class FixedExpenseFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => FixedExpenseFormController(context, fixedExpense),
+      create: (context) => FixedExpenseFormViewModel(context, fixedExpense),
       builder: (context, child) {
-        final viewModel = Provider.of<FixedExpenseFormController>(context);
+        final viewModel = Provider.of<FixedExpenseFormViewModel>(context);
 
         return ScaffoldCustom(
           appBar: AppBarCustom(title: context.intl.fixedExpense),
@@ -39,7 +39,7 @@ class FixedExpenseFormView extends StatelessWidget {
   }
 
   Form formView(
-    FixedExpenseFormController controller,
+    FixedExpenseFormViewModel controller,
     BuildContext context,
   ) {
     return Form(

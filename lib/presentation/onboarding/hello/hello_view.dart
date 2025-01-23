@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
-import 'package:my_kakeibo/presentation/onboarding/hello/hello_controller.dart';
+import 'package:my_kakeibo/presentation/onboarding/hello/hello_view_model.dart';
 import 'package:provider/provider.dart';
 
 class HelloView extends StatelessWidget {
@@ -12,9 +12,9 @@ class HelloView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HelloController(context),
+      create: (context) => HelloViewModel(context),
       builder: (context, child) {
-        final viewModel = Provider.of<HelloController>(context);
+        final viewModel = Provider.of<HelloViewModel>(context);
 
         return ScaffoldCustom(
           body: Center(

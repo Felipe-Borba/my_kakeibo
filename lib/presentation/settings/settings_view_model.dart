@@ -5,8 +5,8 @@ import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
-class SettingsController with ChangeNotifier {
-  SettingsController(this._context);
+class SettingsViewModel with ChangeNotifier {
+  SettingsViewModel(this._context);
 
   final BuildContext _context;
   late final userUseCase = _context.dependencyManager.userUseCase;

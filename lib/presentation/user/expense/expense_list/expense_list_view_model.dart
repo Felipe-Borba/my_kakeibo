@@ -5,8 +5,8 @@ import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view.dart';
 
-class ExpenseListController with ChangeNotifier {
-  ExpenseListController(this._context) {
+class ExpenseListViewModel with ChangeNotifier {
+  ExpenseListViewModel(this._context) {
     getInitialData();
   }
 

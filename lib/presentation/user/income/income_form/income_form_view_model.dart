@@ -6,8 +6,8 @@ import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 
-class IncomeFormController with ChangeNotifier {
-  IncomeFormController(this._context, this._income);
+class IncomeFormViewModel with ChangeNotifier {
+  IncomeFormViewModel(this._context, this._income);
 
   // Dependencies
   late final incomeUseCase = _context.dependencyManager.incomeUseCase;

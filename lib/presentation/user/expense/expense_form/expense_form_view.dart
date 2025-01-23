@@ -7,7 +7,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_e
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
-import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_controller.dart';
+import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseFormView extends StatelessWidget {
@@ -18,9 +18,9 @@ class ExpenseFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ExpenseFormController(context, expense),
+      create: (context) => ExpenseFormViewModel(context, expense),
       builder: (context, child) {
-        final viewModel = Provider.of<ExpenseFormController>(context);
+        final viewModel = Provider.of<ExpenseFormViewModel>(context);
 
         return ScaffoldCustom(
           appBar: AppBarCustom(

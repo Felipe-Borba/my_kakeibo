@@ -8,7 +8,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_controller.dart';
+import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ExpenseListView extends StatelessWidget {
@@ -17,9 +17,9 @@ class ExpenseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ExpenseListController(context),
+      create: (context) => ExpenseListViewModel(context),
       builder: (context, child) {
-        final viewModel = Provider.of<ExpenseListController>(context);
+        final viewModel = Provider.of<ExpenseListViewModel>(context);
 
         return ScaffoldCustom(
           appBar: AppBarCustom(title: context.intl.expense),
@@ -55,7 +55,7 @@ class ExpenseListView extends StatelessWidget {
     );
   }
 
-  Widget itemList(ExpenseListController viewModel, BuildContext context) {
+  Widget itemList(ExpenseListViewModel viewModel, BuildContext context) {
     if (viewModel.list.isEmpty) {
       return Expanded(child: Center(child: Text(context.intl.no_expenses)));
     }
@@ -77,7 +77,7 @@ class ExpenseListView extends StatelessWidget {
 
   Widget item(
     Expense expense,
-    ExpenseListController controller,
+    ExpenseListViewModel controller,
     BuildContext context,
   ) {
     return Padding(

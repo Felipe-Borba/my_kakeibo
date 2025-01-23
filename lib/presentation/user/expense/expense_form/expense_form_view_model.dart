@@ -6,8 +6,8 @@ import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_exten
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 
-class ExpenseFormController with ChangeNotifier {
-  ExpenseFormController(this._context, this._expense);
+class ExpenseFormViewModel with ChangeNotifier {
+  ExpenseFormViewModel(this._context, this._expense);
 
   // Dependencies
   final BuildContext _context;

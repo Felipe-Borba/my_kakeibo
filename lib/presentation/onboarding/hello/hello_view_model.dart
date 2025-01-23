@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
-class HelloController with ChangeNotifier {
+class HelloViewModel with ChangeNotifier {
   final BuildContext _context;
   double opacity = 0.0;
 
-  HelloController(this._context) {
+  HelloViewModel(this._context) {
     _startAnimation();
   }
 

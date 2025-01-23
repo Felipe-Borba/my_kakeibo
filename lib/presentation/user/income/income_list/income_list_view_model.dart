@@ -5,8 +5,8 @@ import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view.dart';
 
-class IncomeListController with ChangeNotifier {
-  IncomeListController(this._context) {
+class IncomeListViewModel with ChangeNotifier {
+  IncomeListViewModel(this._context) {
     getInitialData();
   }
 

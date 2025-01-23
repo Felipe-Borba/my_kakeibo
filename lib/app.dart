@@ -7,7 +7,7 @@ import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dar
 import 'package:my_kakeibo/presentation/core/app_theme.dart';
 import 'package:provider/provider.dart';
 
-import 'presentation/settings/settings_controller.dart';
+import 'presentation/settings/settings_view_model.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
     final theme = getMaterialTheme(context);
 
     return ChangeNotifierProvider(
-      create: (context) => SettingsController(context),
+      create: (context) => SettingsViewModel(context),
       builder: (context, child) {
-        final settingsController = Provider.of<SettingsController>(context);
+        final settingsController = Provider.of<SettingsViewModel>(context);
 
         return FutureBuilder(
           future: settingsController.loadSettings(),

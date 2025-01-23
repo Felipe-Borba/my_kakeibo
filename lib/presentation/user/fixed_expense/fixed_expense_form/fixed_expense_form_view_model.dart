@@ -8,8 +8,8 @@ import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 
-class FixedExpenseFormController with ChangeNotifier {
-  FixedExpenseFormController(this._context, this._fixedExpense);
+class FixedExpenseFormViewModel with ChangeNotifier {
+  FixedExpenseFormViewModel(this._context, this._fixedExpense);
 
   // Dependencies
   final BuildContext _context;

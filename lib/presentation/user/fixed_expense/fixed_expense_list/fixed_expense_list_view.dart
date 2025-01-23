@@ -7,7 +7,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_controller.dart';
+import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FixedExpenseListView extends StatelessWidget {
@@ -16,9 +16,9 @@ class FixedExpenseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => FixedExpenseListController(context),
+      create: (context) => FixedExpenseListViewModel(context),
       builder: (context, child) {
-        final viewModel = Provider.of<FixedExpenseListController>(context);
+        final viewModel = Provider.of<FixedExpenseListViewModel>(context);
         return ScaffoldCustom(
           appBar: AppBarCustom(title: context.intl.fixedExpense),
           floatingActionButton: FloatingActionButton.small(
@@ -31,7 +31,7 @@ class FixedExpenseListView extends StatelessWidget {
     );
   }
 
-  Widget body(FixedExpenseListController viewModel, BuildContext context) {
+  Widget body(FixedExpenseListViewModel viewModel, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Column(
@@ -52,7 +52,7 @@ class FixedExpenseListView extends StatelessWidget {
     );
   }
 
-  Widget itemList(FixedExpenseListController viewModel, BuildContext context) {
+  Widget itemList(FixedExpenseListViewModel viewModel, BuildContext context) {
     if (viewModel.list.isEmpty) {
       return Expanded(
           child: Center(child: Text(context.intl.no_fixed_expenses)));
@@ -74,7 +74,7 @@ class FixedExpenseListView extends StatelessWidget {
 
   Widget item(
     FixedExpense fixedExpense,
-    FixedExpenseListController controller,
+    FixedExpenseListViewModel controller,
     BuildContext context,
   ) {
     return Card(

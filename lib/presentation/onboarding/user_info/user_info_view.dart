@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
-import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_controller.dart';
+import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_view_model.dart';
 import 'package:provider/provider.dart';
 
 class UserInfoView extends StatelessWidget {
@@ -11,9 +11,9 @@ class UserInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => UserInfoController(context),
+      create: (context) => UserInfoViewModel(context),
       builder: (context, child) {
-        final viewModel = Provider.of<UserInfoController>(context);
+        final viewModel = Provider.of<UserInfoViewModel>(context);
 
         return ScaffoldCustom(
           body: Padding(
