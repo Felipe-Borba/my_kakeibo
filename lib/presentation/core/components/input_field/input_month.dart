@@ -50,6 +50,8 @@ class _InputMonthState extends State<InputMonth> {
           _notifyDateChanged();
         });
       },
+      underline: Container(),
+      isDense: true,
     );
   }
 }
