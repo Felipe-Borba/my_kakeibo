@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
@@ -43,20 +43,11 @@ class ExpenseFormView extends StatelessWidget {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   const SizedBox(height: 8),
-                  DropdownButtonFormField<ExpenseCategory?>(
+                  InputFormExpenseCategory(
                     key: const Key("category"),
-                    hint: Text(context.intl.category),
                     value: viewModel.category,
                     onChanged: viewModel.setCategory,
-                    items:
-                        ExpenseCategory.values.map((ExpenseCategory category) {
-                      return DropdownMenuItem(
-                        value: category,
-                        child: Text(category.getTranslation(context)),
-                      );
-                    }).toList(),
                     validator: viewModel.validateCategory,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   const SizedBox(height: 8),
                   DateFormField(

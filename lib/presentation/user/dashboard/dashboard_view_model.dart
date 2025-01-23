@@ -67,7 +67,7 @@ class DashboardViewModel with ChangeNotifier {
     result.onSuccess((user) async {
       await notificationUseCase.checkPushNotificationSettings(user);
       this.user = user;
-      notifyListeners();
+      // notifyListeners();
     });
     notifyListeners();
   }

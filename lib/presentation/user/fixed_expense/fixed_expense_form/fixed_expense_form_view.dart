@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_expense_category.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_frequency.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
@@ -57,19 +57,11 @@ class FixedExpenseFormView extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           const SizedBox(height: 8),
-          DropdownButtonFormField<ExpenseCategory?>(
+          InputFormExpenseCategory(
             key: const Key("category"),
-            hint: Text(context.intl.category),
             value: controller.category,
             onChanged: controller.setCategory,
-            items: ExpenseCategory.values.map((ExpenseCategory category) {
-              return DropdownMenuItem(
-                value: category,
-                child: Text(category.getTranslation(context)),
-              );
-            }).toList(),
             validator: controller.validateCategory,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           const SizedBox(height: 8),
           DateFormField(
@@ -83,19 +75,11 @@ class FixedExpenseFormView extends StatelessWidget {
             onChanged: controller.setDueDate,
           ),
           const SizedBox(height: 8),
-          DropdownButtonFormField<Frequency?>(
+          InputFormFrequency(
             key: const Key("frequency"),
-            hint: Text(context.intl.frequency),
             value: controller.frequency,
             onChanged: (value) => controller.frequency = value,
-            items: Frequency.values.map((Frequency category) {
-              return DropdownMenuItem(
-                value: category,
-                child: Text(category.getTranslation(context)),
-              );
-            }).toList(),
             validator: controller.validateFrequency,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           const SizedBox(height: 8),
           InputFormString(
