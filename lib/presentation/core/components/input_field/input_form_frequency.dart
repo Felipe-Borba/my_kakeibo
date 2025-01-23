@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 
 class InputFormFrequency extends StatelessWidget {

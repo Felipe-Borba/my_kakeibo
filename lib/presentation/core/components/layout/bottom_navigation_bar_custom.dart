@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   final ValueNotifier<int> currentIndexNotifier;

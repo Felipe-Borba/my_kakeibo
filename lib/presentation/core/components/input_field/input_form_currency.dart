@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/currency.dart';
-import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/formatter/currency_formatter.dart';
 
 class InputFormCurrency extends StatelessWidget {
   final String? Function(String? value)? validator;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class HelloController with ChangeNotifier {

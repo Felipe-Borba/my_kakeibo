@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_controller.dart';
 import 'package:provider/provider.dart';

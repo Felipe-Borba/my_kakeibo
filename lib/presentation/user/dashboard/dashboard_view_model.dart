@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';

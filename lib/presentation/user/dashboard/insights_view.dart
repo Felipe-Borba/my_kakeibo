@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_title_medium.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';

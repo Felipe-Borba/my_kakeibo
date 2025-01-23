@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/currency.dart';
-import 'package:my_kakeibo/core/extensions/date_time_extension.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';

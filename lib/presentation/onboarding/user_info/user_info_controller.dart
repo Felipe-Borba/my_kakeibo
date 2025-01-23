@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
-import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:my_kakeibo/core/extensions/currency.dart';
-import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
@@ -56,7 +54,8 @@ class FixedExpenseListView extends StatelessWidget {
 
   Widget itemList(FixedExpenseListController viewModel, BuildContext context) {
     if (viewModel.list.isEmpty) {
-      return Expanded(child: Center(child: Text(context.intl.no_fixed_expenses)));
+      return Expanded(
+          child: Center(child: Text(context.intl.no_fixed_expenses)));
     }
     return Expanded(
       child: ListView.separated(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/core/extensions/currency.dart';
-import 'package:my_kakeibo/core/extensions/dependency_manager_extension.dart';
-import 'package:my_kakeibo/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
