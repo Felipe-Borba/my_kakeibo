@@ -1,9 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:my_kakeibo/data/repository/expense_repository.dart';
-import 'package:my_kakeibo/data/repository/firebase/expense_firebase_repository.dart';
-import 'package:my_kakeibo/data/repository/firebase/fixed_expense_firebase_repository.dart';
-import 'package:my_kakeibo/data/repository/firebase/income_firebase_repository.dart';
-import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/data/repository/income_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/expense_realm_repository.dart';
@@ -24,16 +20,12 @@ import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
 class DependencyManager extends ChangeNotifier {
-  late final FixedExpenseRepository fixedExpenseFirebaseRepository;
   late final FixedExpenseRepository fixedExpenseRealmRepository;
 
-  late final ExpenseRepository expenseFirebaseRepository;
   late final ExpenseRepository expenseRealmRepository;
 
-  late final IncomeRepository incomeFirebaseRepository;
   late final IncomeRepository incomeRealmRepository;
 
-  late final UserRepository userFirebaseRepository;
   late final UserRepository userRealmRepository;
 
   late final AuthService authService;
@@ -48,16 +40,12 @@ class DependencyManager extends ChangeNotifier {
   late final NotificationUseCase notificationUseCase;
 
   DependencyManager() {
-    fixedExpenseFirebaseRepository = FixedExpenseFirebaseRepository();
     fixedExpenseRealmRepository = FixedExpenseRealmRepository();
 
-    expenseFirebaseRepository = ExpenseFirebaseRepository();
     expenseRealmRepository = ExpenseRealmRepository();
 
-    incomeFirebaseRepository = IncomeFirebaseRepository();
     incomeRealmRepository = IncomeRealmRepository();
 
-    userFirebaseRepository = UserFirebaseRepository();
     userRealmRepository = UserRealmRepository();
 
     authService = AuthFirebaseService();
