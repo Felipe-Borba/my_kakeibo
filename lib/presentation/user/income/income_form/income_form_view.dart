@@ -3,6 +3,7 @@ import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_controller.dart';
@@ -49,14 +50,12 @@ class IncomeFormView extends StatelessWidget {
                     validator: viewModel.validateDate,
                   ),
                   const SizedBox(height: 8),
-                  TextFormField(
+                  InputFormString(
                     key: const Key("description"),
                     initialValue: viewModel.description,
                     onChanged: viewModel.setDescription,
                     validator: viewModel.validateDescription,
-                    decoration: InputDecoration(
-                      labelText: context.intl.description,
-                    ),
+                    labelText: context.intl.description,
                   ),
                   const SizedBox(height: 24),
                   Center(

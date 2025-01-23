@@ -4,6 +4,7 @@ import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_controller.dart';
@@ -59,19 +60,17 @@ class ExpenseFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   DateFormField(
-                      key: const Key("date"),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: viewModel.validateDate,
-                      value: viewModel.date,
-                      onChanged: viewModel.setDate),
+                    key: const Key("date"),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: viewModel.validateDate,
+                    value: viewModel.date,
+                    onChanged: viewModel.setDate,
+                  ),
                   const SizedBox(height: 8),
-                  TextFormField(
+                  InputFormString(
                     key: const Key("description"),
                     validator: viewModel.validateDescription,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      labelText: context.intl.description,
-                    ),
+                    labelText: context.intl.description,
                     initialValue: viewModel.description,
                     onChanged: viewModel.setDescription,
                   ),

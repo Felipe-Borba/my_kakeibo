@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_controller.dart';
@@ -29,7 +29,7 @@ class FixedExpenseFormView extends StatelessWidget {
             child: SingleChildScrollView(
               padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
               child: Center(
-                child: formView(viewModel, context.intl, context),
+                child: formView(viewModel, context),
               ),
             ),
           ),
@@ -40,7 +40,6 @@ class FixedExpenseFormView extends StatelessWidget {
 
   Form formView(
     FixedExpenseFormController controller,
-    AppLocalizations intl,
     BuildContext context,
   ) {
     return Form(
@@ -53,14 +52,14 @@ class FixedExpenseFormView extends StatelessWidget {
             key: const Key("amount"),
             value: controller.amount,
             onChanged: controller.setAmount,
-            decoration: InputDecoration(labelText: intl.amount),
+            decoration: InputDecoration(labelText: context.intl.amount),
             validator: controller.validateAmount,
             autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           const SizedBox(height: 8),
           DropdownButtonFormField<ExpenseCategory?>(
             key: const Key("category"),
-            hint: Text(intl.category),
+            hint: Text(context.intl.category),
             value: controller.category,
             onChanged: controller.setCategory,
             items: ExpenseCategory.values.map((ExpenseCategory category) {
@@ -75,7 +74,7 @@ class FixedExpenseFormView extends StatelessWidget {
           const SizedBox(height: 8),
           DateFormField(
             decoration: InputDecoration(
-              labelText: intl.dueDate,
+              labelText: context.intl.dueDate,
             ),
             key: const Key("dueDate"),
             autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -86,7 +85,7 @@ class FixedExpenseFormView extends StatelessWidget {
           const SizedBox(height: 8),
           DropdownButtonFormField<Frequency?>(
             key: const Key("frequency"),
-            hint: Text(intl.frequency),
+            hint: Text(context.intl.frequency),
             value: controller.frequency,
             onChanged: (value) => controller.frequency = value,
             items: Frequency.values.map((Frequency category) {
@@ -99,11 +98,10 @@ class FixedExpenseFormView extends StatelessWidget {
             autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           const SizedBox(height: 8),
-          TextFormField(
+          InputFormString(
             key: const Key("description"),
             validator: controller.validateDescription,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            decoration: InputDecoration(labelText: intl.description),
+            labelText: context.intl.description,
             initialValue: controller.description,
             onChanged: controller.setDescription,
           ),
@@ -112,7 +110,7 @@ class FixedExpenseFormView extends StatelessWidget {
             child: ElevatedButton(
               key: const Key("save-expense"),
               onPressed: controller.onClickSave,
-              child: Text(intl.save),
+              child: Text(context.intl.save),
             ),
           ),
         ],

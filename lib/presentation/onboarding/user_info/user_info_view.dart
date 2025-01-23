@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_controller.dart';
 import 'package:provider/provider.dart';
@@ -35,17 +36,11 @@ class UserInfoView extends StatelessWidget {
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 8),
-                    TextFormField(
+                    InputFormString(
                       key: const Key("name"),
                       onChanged: (value) => viewModel.name = value,
                       validator: viewModel.validateName,
-                      decoration: InputDecoration(
-                        labelText: context.intl.name,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
+                      labelText: context.intl.name,
                     ),
                     const SizedBox(height: 16),
                     Center(
