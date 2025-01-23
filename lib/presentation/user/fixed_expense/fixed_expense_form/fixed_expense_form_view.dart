@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
-import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_currency.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_date.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_frequency.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
@@ -48,13 +48,12 @@ class FixedExpenseFormView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CurrencyFormField(
+          InputFormCurrency(
             key: const Key("amount"),
             value: controller.amount,
             onChanged: controller.setAmount,
-            decoration: InputDecoration(labelText: context.intl.amount),
+            labelText: context.intl.amount,
             validator: controller.validateAmount,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
           ),
           const SizedBox(height: 8),
           InputFormExpenseCategory(
@@ -64,12 +63,9 @@ class FixedExpenseFormView extends StatelessWidget {
             validator: controller.validateCategory,
           ),
           const SizedBox(height: 8),
-          DateFormField(
-            decoration: InputDecoration(
-              labelText: context.intl.dueDate,
-            ),
+          InputFormDate(
             key: const Key("dueDate"),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            labelText: context.intl.dueDate,
             validator: controller.validateDueDate,
             value: controller.dueDate,
             onChanged: controller.setDueDate,

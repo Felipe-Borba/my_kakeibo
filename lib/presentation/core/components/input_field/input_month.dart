@@ -1,23 +1,21 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class MonthSelector extends StatefulWidget {
+class InputMonth extends StatefulWidget {
   final Function(DateTime) onMonthSelected;
   final DateTime initialDate;
 
-  const MonthSelector({
+  const InputMonth({
     super.key,
     required this.onMonthSelected,
     required this.initialDate,
   });
 
   @override
-  _MonthSelectorState createState() => _MonthSelectorState();
+  _InputMonthState createState() => _InputMonthState();
 }
 
-class _MonthSelectorState extends State<MonthSelector> {
+class _InputMonthState extends State<InputMonth> {
   late int selectedMonth;
   late int selectedYear;
 
@@ -34,7 +32,6 @@ class _MonthSelectorState extends State<MonthSelector> {
 
   @override
   Widget build(BuildContext context) {
-
     return DropdownButton<int>(
       value: selectedMonth,
       items: List.generate(12, (index) {

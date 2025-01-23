@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
-class DateFormField extends StatelessWidget {
+class InputFormDate extends StatelessWidget {
   final String? Function(String? value)? validator;
-  final AutovalidateMode autovalidateMode;
-  final InputDecoration decoration;
+  final String? labelText;
   final DateTime? value;
   final void Function(DateTime?)? onChanged;
 
-  const DateFormField({
+  const InputFormDate({
     super.key,
     this.validator,
     this.value,
     this.onChanged,
-    this.autovalidateMode = AutovalidateMode.onUserInteraction,
-    this.decoration = const InputDecoration(),
+    this.labelText,
   });
 
   @override
@@ -31,7 +29,7 @@ class DateFormField extends StatelessWidget {
     return TextFormField(
       // key: key,
       readOnly: true,
-      autovalidateMode: autovalidateMode,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
       controller: controller,
       onTap: () async {
@@ -45,7 +43,8 @@ class DateFormField extends StatelessWidget {
         if (onChanged != null) onChanged!(pickedDate);
         if (pickedDate != null) controller.text = formatter.format(pickedDate);
       },
-      decoration: decoration.copyWith(
+      decoration: InputDecoration(
+        labelText: labelText,
         hintText: intl.selectDate,
         suffixIcon: const Icon(Icons.calendar_today),
       ),

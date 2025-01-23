@@ -4,7 +4,7 @@ import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/core/components/input_field/month_selector.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_month.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
@@ -36,7 +36,7 @@ class ExpenseListView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const SizedBox(width: 32, height: 24),
-                    MonthSelector(
+                    InputMonth(
                       onMonthSelected: viewModel.setMonthFilter,
                       initialDate: viewModel.monthFilter,
                     ),

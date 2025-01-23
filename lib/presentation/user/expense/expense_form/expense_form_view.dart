@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/presentation/core/components/input_field/currency_form_field.dart';
-import 'package:my_kakeibo/presentation/core/components/input_field/date_form_field.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_currency.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_date.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
@@ -34,13 +34,12 @@ class ExpenseFormView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CurrencyFormField(
+                  InputFormCurrency(
                     key: const Key("amount"),
                     value: viewModel.amount,
                     onChanged: viewModel.setAmount,
-                    decoration: InputDecoration(labelText: context.intl.amount),
+                    labelText: context.intl.amount,
                     validator: viewModel.validateAmount,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                   ),
                   const SizedBox(height: 8),
                   InputFormExpenseCategory(
@@ -50,9 +49,8 @@ class ExpenseFormView extends StatelessWidget {
                     validator: viewModel.validateCategory,
                   ),
                   const SizedBox(height: 8),
-                  DateFormField(
+                  InputFormDate(
                     key: const Key("date"),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: viewModel.validateDate,
                     value: viewModel.date,
                     onChanged: viewModel.setDate,

@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/core/extensions/currency.dart';
 import 'package:my_kakeibo/core/formatter/currency_formatter.dart';
 
-class CurrencyFormField extends StatelessWidget {
+class InputFormCurrency extends StatelessWidget {
   final String? Function(String? value)? validator;
-  final AutovalidateMode? autovalidateMode;
-  final InputDecoration? decoration;
+  final String? labelText;
   final double? value;
   final void Function(double?)? onChanged;
 
-  const CurrencyFormField({
+  const InputFormCurrency({
     super.key,
     this.validator,
-    this.autovalidateMode = AutovalidateMode.onUserInteraction,
-    this.decoration,
+    this.labelText,
     this.value,
     this.onChanged,
   });
@@ -27,9 +25,9 @@ class CurrencyFormField extends StatelessWidget {
       controller: controller,
       keyboardType: TextInputType.number,
       inputFormatters: [CurrencyFormatter(context)],
-      decoration: decoration,
+      decoration: InputDecoration(labelText: labelText),
       validator: validator,
-      autovalidateMode: autovalidateMode,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: (value) {
         if (onChanged != null) {
           onChanged!(context.currency.parse(value).toDouble());
