@@ -1,35 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:my_kakeibo/data/repository/expense_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/fixed_expense_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/income_firebase_repository.dart';
 import 'package:my_kakeibo/data/repository/firebase/user_firebase_repository.dart';
+import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
+import 'package:my_kakeibo/data/repository/income_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/data/repository/realm/user_realm_repository.dart';
-import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
-import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
-import 'package:my_kakeibo/data/service/local_notification_service_impl.dart';
-import 'package:my_kakeibo/data/repository/expense_repository.dart';
-import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
-import 'package:my_kakeibo/data/repository/income_repository.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
+import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
 import 'package:my_kakeibo/data/service/auth_service.dart';
+import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
 import 'package:my_kakeibo/data/service/local_notification_service.dart';
+import 'package:my_kakeibo/data/service/local_notification_service_impl.dart';
 import 'package:my_kakeibo/data/service/push_notification_service.dart';
 import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
-import 'package:realm/realm.dart' hide Uuid;
-import 'package:uuid/uuid.dart';
 
 class DependencyManager extends ChangeNotifier {
-  late final Realm realm;
-  late final Uuid uuid;
-
   late final FixedExpenseRepository fixedExpenseFirebaseRepository;
   late final FixedExpenseRepository fixedExpenseRealmRepository;
 
@@ -54,20 +48,17 @@ class DependencyManager extends ChangeNotifier {
   late final NotificationUseCase notificationUseCase;
 
   DependencyManager() {
-    realm = Realm(config);
-    uuid = const Uuid();
-
     fixedExpenseFirebaseRepository = FixedExpenseFirebaseRepository();
-    fixedExpenseRealmRepository = FixedExpenseRealmRepository(realm, uuid);
+    fixedExpenseRealmRepository = FixedExpenseRealmRepository();
 
     expenseFirebaseRepository = ExpenseFirebaseRepository();
-    expenseRealmRepository = ExpenseRealmRepository(realm, uuid);
+    expenseRealmRepository = ExpenseRealmRepository();
 
     incomeFirebaseRepository = IncomeFirebaseRepository();
-    incomeRealmRepository = IncomeRealmRepository(realm, uuid);
+    incomeRealmRepository = IncomeRealmRepository();
 
     userFirebaseRepository = UserFirebaseRepository();
-    userRealmRepository = UserRealmRepository(realm, uuid);
+    userRealmRepository = UserRealmRepository();
 
     authService = AuthFirebaseService();
     localNotificationService = LocalNotificationServiceImpl();

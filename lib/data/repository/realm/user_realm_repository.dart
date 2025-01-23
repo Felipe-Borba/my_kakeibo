@@ -1,16 +1,13 @@
 import 'package:my_kakeibo/data/repository/realm/model/user_model.dart';
+import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
-import 'package:realm/realm.dart' hide Uuid, User;
 import 'package:result_dart/result_dart.dart';
-import 'package:uuid/uuid.dart';
 
 class UserRealmRepository extends UserRepository {
-  final Realm realm;
-  final Uuid uuid;
-
-  UserRealmRepository(this.realm, this.uuid);
+  final realm = RealmConfig().realm;
+  final uuid = RealmConfig().uuid;
 
   @override
   Future<Result<User>> getUserById(String id) async {

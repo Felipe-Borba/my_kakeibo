@@ -15,8 +15,20 @@ import 'package:my_kakeibo/presentation/core/components/text/text_title_medium.d
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final viewModel = Provider.of<DashboardViewModel>(context);
+    viewModel.getInitialData();
+  }
 
   @override
   Widget build(BuildContext context) {

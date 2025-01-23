@@ -1,15 +1,13 @@
-import 'package:my_kakeibo/data/repository/realm/model/expense_model.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/data/repository/expense_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/model/expense_model.dart';
+import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:result_dart/result_dart.dart';
-import 'package:uuid/uuid.dart';
 
 class ExpenseRealmRepository extends ExpenseRepository {
-  final Realm realm;
-  final Uuid uuid;
-
-  ExpenseRealmRepository(this.realm, this.uuid);
+  final realm = RealmConfig().realm;
+  final uuid = RealmConfig().uuid;
 
   @override
   Future<Result<Expense>> insert(Expense expense) async {
