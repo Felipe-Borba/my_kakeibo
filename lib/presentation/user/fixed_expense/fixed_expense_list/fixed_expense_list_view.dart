@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
+import 'package:my_kakeibo/presentation/core/components/card_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -77,96 +80,82 @@ class FixedExpenseListView extends StatelessWidget {
     FixedExpenseListViewModel controller,
     BuildContext context,
   ) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(fixedExpense.category.getIcon()),
-                      const SizedBox(width: 8),
-                      Text(fixedExpense.category.getTranslation(context)),
-                      const SizedBox(width: 8),
-                      Text(fixedExpense.description),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(fixedExpense.frequency.getTranslation(context)),
-                      const SizedBox(width: 8),
-                      Text(context.currency.format(fixedExpense.amount)),
-                      const SizedBox(width: 8),
-                      Text(
-                        DateFormat.Md(
-                          Localizations.localeOf(context).toString(),
-                        ).format(fixedExpense.dueDate),
-                      ),
-                    ],
-                  )
-                ],
+    return CardCustom(
+      children: [
+        const SizedBox(width: 16),
+        Icon(fixedExpense.category.getIcon()),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (fixedExpense.description.isNotEmpty)
+                TextBodyMedium(fixedExpense.description)
+              else
+                TextBodyMedium(fixedExpense.category.getTranslation(context)),
+              TextBodyMedium(
+                context.currency.format(fixedExpense.amount),
+                prominent: true,
               ),
-            ),
-            IconButton(
-              onPressed: () => controller.onEdit(fixedExpense),
-              icon: const Icon(Icons.edit),
-            ),
-            IconButton(
-              icon: const Icon(Icons.delete),
-              color: Colors.red,
-              onPressed: () async {
-                var confirm = await showDeleteDialog(context);
-                if (confirm == true) {
-                  controller.onDelete(fixedExpense);
-                }
-              },
-            ),
-            IconButton(
-              onPressed: fixedExpense.alreadyPaid
-                  ? null
-                  : () async {
-                      var response = await showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(context.intl.confirmPayment),
-                            content: Text(context.intl.confirmPaymentText),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop(false);
-                                },
-                                child: Text(context.intl.cancel),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  Navigator.of(context).pop(true);
-                                },
-                                child: Text(context.intl.pay),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-
-                      if (response == true) {
-                        await controller.pay(fixedExpense);
-                      }
-                    },
-              icon: const Icon(Icons.payment),
-            )
-          ],
+              TextLabelMedium(
+                fixedExpense.frequency.getTranslation(context),
+              ),
+              TextLabelMedium(
+                fixedExpense.dueDate.formatToString(context),
+              )
+            ],
+          ),
         ),
-      ),
+        const SizedBox(width: 16),
+        IconButton(
+          onPressed: () => controller.onEdit(fixedExpense),
+          icon: const Icon(Icons.edit),
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          color: Colors.red,
+          onPressed: () async {
+            var confirm = await showDeleteDialog(context);
+            if (confirm == true) {
+              controller.onDelete(fixedExpense);
+            }
+          },
+        ),
+        IconButton(
+          onPressed: fixedExpense.alreadyPaid
+              ? null
+              : () async {
+                  var response = await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(context.intl.confirmPayment),
+                        content: Text(context.intl.confirmPaymentText),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(false);
+                            },
+                            child: Text(context.intl.cancel),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              Navigator.of(context).pop(true);
+                            },
+                            child: Text(context.intl.pay),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+                  if (response == true) {
+                    await controller.pay(fixedExpense);
+                  }
+                },
+          icon: const Icon(Icons.payment),
+        ),
+      ],
     );
   }
 }

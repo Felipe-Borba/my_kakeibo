@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/presentation/core/components/card_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_month.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -80,43 +83,45 @@ class ExpenseListView extends StatelessWidget {
     ExpenseListViewModel controller,
     BuildContext context,
   ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(expense.category.getIcon()),
-          const SizedBox(width: 16),
-          Text(
-            context.currency.format(expense.amount),
+    return CardCustom(
+      children: [
+        const SizedBox(width: 16),
+        Icon(expense.category.getIcon()),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (expense.description.isNotEmpty)
+                TextBodyMedium(expense.description)
+              else
+                TextBodyMedium(expense.category.getTranslation(context)),
+              TextBodyMedium(
+                context.currency.format(expense.amount),
+                prominent: true,
+              ),
+              TextLabelMedium(
+                expense.date.formatToString(context),
+              ),
+            ],
           ),
-          const SizedBox(width: 16),
-          Text(
-            DateFormat.Md(
-              Localizations.localeOf(context).toString(),
-            ).format(expense.date),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(width: 16),
-          Expanded(child: Text(expense.description)),
-          const SizedBox(width: 16),
-          IconButton(
-            onPressed: () => controller.onEdit(expense),
-            icon: const Icon(Icons.edit),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            color: Colors.red,
-            onPressed: () async {
-              var confirm = await showDeleteDialog(context);
-              if (confirm == true) {
-                controller.onDelete(expense);
-              }
-            },
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 16),
+        IconButton(
+          onPressed: () => controller.onEdit(expense),
+          icon: const Icon(Icons.edit),
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          color: Colors.red,
+          onPressed: () async {
+            var confirm = await showDeleteDialog(context);
+            if (confirm == true) {
+              controller.onDelete(expense);
+            }
+          },
+        ),
+      ],
     );
   }
 }

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/presentation/core/components/card_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_month.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/income/income_list/income_list_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -81,43 +84,45 @@ class IncomeListView extends StatelessWidget {
     IncomeListViewModel controller,
     BuildContext context,
   ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Icon(Icons.monetization_on_outlined),
-          const SizedBox(width: 16),
-          Text(
-            context.currency.format(income.amount),
+    return CardCustom(
+      children: [
+        const SizedBox(width: 16),
+        const Icon(Icons.monetization_on_outlined),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (income.description.isNotEmpty)
+                TextBodyMedium(income.description)
+              else
+                TextBodyMedium(income.source.getTranslation(context)),
+              TextBodyMedium(
+                context.currency.format(income.amount),
+                prominent: true,
+              ),
+              TextLabelMedium(
+                income.date.formatToString(context),
+              ),
+            ],
           ),
-          const SizedBox(width: 16),
-          Text(
-            DateFormat.Md(
-              Localizations.localeOf(context).toString(),
-            ).format(income.date),
-            style: const TextStyle(fontSize: 16),
-          ),
-          const SizedBox(width: 16),
-          Expanded(child: Text(income.description)),
-          const SizedBox(width: 16),
-          IconButton(
-            onPressed: () => controller.onEdit(income),
-            icon: const Icon(Icons.edit),
-          ),
-          IconButton(
-            icon: const Icon(Icons.delete),
-            color: Colors.red,
-            onPressed: () async {
-              var confirm = await showDeleteDialog(context);
-              if (confirm == true) {
-                controller.onDelete(income);
-              }
-            },
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 16),
+        IconButton(
+          onPressed: () => controller.onEdit(income),
+          icon: const Icon(Icons.edit),
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete),
+          color: Colors.red,
+          onPressed: () async {
+            var confirm = await showDeleteDialog(context);
+            if (confirm == true) {
+              controller.onDelete(income);
+            }
+          },
+        ),
+      ],
     );
   }
 }
