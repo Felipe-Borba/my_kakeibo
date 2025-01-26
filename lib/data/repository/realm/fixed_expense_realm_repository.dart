@@ -1,19 +1,25 @@
 import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/fixed_expense_model.dart';
+import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
-import 'package:realm/realm.dart' hide Uuid;
+import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
 class FixedExpenseRealmRepository extends FixedExpenseRepository {
   final realm = RealmConfig().realm;
-  final uuid = RealmConfig().uuid;
 
   @override
   Future<Result<FixedExpense>> insert(FixedExpense fixedExpense) async {
     try {
       final model = _toModel(fixedExpense);
-      realm.write(() => realm.add(model));
+      realm.write(() {
+        var category =
+            realm.find<ExpenseCategoryModel>(fixedExpense.category.id);
+        realm.add(model..category = category);
+      });
       return Success(_toEntity(model));
     } on Exception catch (e) {
       return Failure(e);
@@ -44,7 +50,9 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
         model.amount = fixedExpense.amount;
         model.dueDate = fixedExpense.dueDate;
         model.description = fixedExpense.description;
-        model.category = fixedExpense.category;
+        model.category = realm.find<ExpenseCategoryModel>(
+          fixedExpense.category.id,
+        );
         model.frequency = fixedExpense.frequency;
         model.remember = fixedExpense.remember;
         model.expenseIdList = RealmList(fixedExpense.expenseIdList);
@@ -72,33 +80,30 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
     }
   }
 
-  FixedExpense _toEntity(FixedExpenseModel model) {
+  static FixedExpense _toEntity(FixedExpenseModel model) {
     return FixedExpense(
       id: model.id,
       amount: model.amount,
       dueDate: model.dueDate,
       description: model.description,
-      category: model.category,
+      category: ExpenseCategoryRealmRepository.toEntity(model.category!),
       frequency: model.frequency,
       remember: model.remember,
       expenseIdList: model.expenseIdList,
     );
   }
 
-  FixedExpenseModel _toModel(FixedExpense fixedExpense) {
-    var model = FixedExpenseModel(
+  static FixedExpenseModel _toModel(FixedExpense fixedExpense) {
+    final uuid = RealmConfig().uuid;
+
+    return FixedExpenseModel(
       fixedExpense.id ?? uuid.v4(),
       fixedExpense.dueDate,
       fixedExpense.description,
-      "",
-      "",
-      "",
       fixedExpense.amount,
+      fixedExpense.frequency.description,
+      fixedExpense.remember.description,
       expenseIdList: fixedExpense.expenseIdList,
     );
-    model.category = fixedExpense.category;
-    model.remember = fixedExpense.remember;
-    model.frequency = fixedExpense.frequency;
-    return model;
   }
 }

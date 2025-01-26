@@ -1,5 +1,5 @@
 import 'package:my_kakeibo/data/repository/income_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/income_model.dart';
+import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:realm/realm.dart';

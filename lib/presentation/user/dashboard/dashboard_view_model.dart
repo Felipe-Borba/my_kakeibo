@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/color_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
@@ -65,9 +66,9 @@ class DashboardViewModel with ChangeNotifier {
 
     var result = await userUseCase.getUser();
     result.onSuccess((user) async {
-      await notificationUseCase.checkPushNotificationSettings(user);
+      // await notificationUseCase.checkPushNotificationSettings(user);
       this.user = user;
-      // notifyListeners();
+      notifyListeners();
     });
     notifyListeners();
   }
@@ -81,27 +82,11 @@ class DashboardViewModel with ChangeNotifier {
     Map<ExpenseCategory, double> totalByCategory,
   ) {
     return totalByCategory.entries.map((entry) {
-      Color color;
-      switch (entry.key) {
-        case ExpenseCategory.food:
-          color = Colors.brown;
-          break;
-        case ExpenseCategory.entertainment:
-          color = Colors.purple;
-          break;
-        case ExpenseCategory.rent:
-          color = Colors.blue;
-          break;
-        case ExpenseCategory.misc:
-          color = Colors.orange;
-          break;
-      }
-
       return PieData(
-        color: color,
+        color: entry.key.color.toColor(),
         value: entry.value,
         title: moneyFormatter.format(entry.value),
-        label: entry.key.getTranslation(_context),
+        label: entry.key.name,
       );
     }).toList();
   }

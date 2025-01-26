@@ -1,37 +1,25 @@
-import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
-import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:realm/realm.dart';
-
-part 'fixed_expense_model.realm.dart';
+part of 'models.dart';
 
 @RealmModel()
 class _FixedExpenseModel {
   @PrimaryKey()
   late String id;
-  late List<String> expenseIdList;
+
   late DateTime dueDate;
+
   late String description;
-  late String frequencyString;
-  late String rememberString;
-  late String categoryString;
+
   late double amount;
 
-  ExpenseCategory get category =>
-      ExpenseCategory.values.getByDescription(categoryString);
-
-  set category(ExpenseCategory category) {
-    categoryString = category.description;
-  }
-
+  late String frequencyString;
   Frequency get frequency => Frequency.values.getByDescription(frequencyString);
-  set frequency(Frequency frequency) {
-    frequencyString = frequency.description;
-  }
+  set frequency(Frequency frequency) => frequencyString = frequency.description;
 
+  late String rememberString;
   Remember get remember => Remember.values.getByDescription(rememberString);
+  set remember(Remember remember) => rememberString = remember.description;
 
-  set remember(Remember remember) {
-    rememberString = remember.description;
-  }
+  late List<String> expenseIdList;
+
+  late _ExpenseCategoryModel? category;
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:result_dart/result_dart.dart';
 
 class InputFormExpenseCategory extends StatefulWidget {
   final ExpenseCategory? value;
@@ -21,6 +23,7 @@ class InputFormExpenseCategory extends StatefulWidget {
 
 class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
   bool _showLabel = false;
+  List<ExpenseCategory> _list = List.empty();
 
   @override
   void initState() {
@@ -30,6 +33,16 @@ class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
     } else {
       _showLabel = true;
     }
+
+    final expenseCategoryRepository =
+        context.dependencyManager.expenseCategoryRealmRepository;
+    expenseCategoryRepository.findAll().onSuccess(
+      (success) {
+        setState(() {
+          _list = success;
+        });
+      },
+    );
   }
 
   _onChange(ExpenseCategory? value) {
@@ -47,10 +60,10 @@ class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
       hint: Text(context.intl.category),
       value: widget.value,
       onChanged: _onChange,
-      items: ExpenseCategory.values.map((ExpenseCategory category) {
+      items: _list.map((ExpenseCategory category) {
         return DropdownMenuItem(
           value: category,
-          child: Text(category.getTranslation(context)),
+          child: Text(category.name),
         );
       }).toList(),
       validator: widget.validator,

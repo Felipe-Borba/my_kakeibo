@@ -31,12 +31,14 @@ class NotificationUseCase {
   Future<Result<void>> checkPushNotificationSettings(User user) async {
     var permission = await _pushNotificationService
         .requestPermission() //
-        .getOrThrow();
-    if (permission == false) return Failure(Exception("Permission denied")); //TODO ver uma forma melhor, ex. centralizar os erros ai qdo precisar usar o operador is
+        .getOrDefault(false);
+
+    //TODO ver uma forma melhor, ex. centralizar os erros ai qdo precisar usar o operador is
+    if (permission == false) return Failure(Exception("Permission denied"));
 
     var token = await _pushNotificationService
         .getNotificationToken() //
-        .getOrThrow();
+        .getOrNull();
 
     user.notificationToken = token;
 

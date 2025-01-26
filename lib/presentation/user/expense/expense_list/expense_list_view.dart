@@ -10,6 +10,7 @@ import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.da
 import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view_model.dart';
 import 'package:provider/provider.dart';
@@ -86,7 +87,7 @@ class ExpenseListView extends StatelessWidget {
     return CardCustom(
       children: [
         const SizedBox(width: 16),
-        Icon(expense.category.getIcon()),
+        Icon(expense.category.icon.toIconData()),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
@@ -95,7 +96,7 @@ class ExpenseListView extends StatelessWidget {
               if (expense.description.isNotEmpty)
                 TextBodyMedium(expense.description)
               else
-                TextBodyMedium(expense.category.getTranslation(context)),
+                TextBodyMedium(expense.category.name),
               TextBodyMedium(
                 context.currency.format(expense.amount),
                 prominent: true,

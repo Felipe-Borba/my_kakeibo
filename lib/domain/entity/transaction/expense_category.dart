@@ -1,18 +1,32 @@
-// TODO depois no futuro seria legal deixar o usuário criar isso
-enum ExpenseCategory {
+class ExpenseCategory {
+  String? id;
+  String name;
+  IconCustom icon;
+  ColorCustom color;
+
+  ExpenseCategory({
+    this.id,
+    required this.name,
+    required this.icon,
+    required this.color,
+  });
+}
+
+enum IconCustom {
   misc,
-  rent,
+  dog,
+  home,
+  book,
   food,
+  rent,
+  doctor,
   entertainment,
 }
 
-extension ExpenseCategoryHelper on ExpenseCategory {
-
-  String get description => toString().split('.').last;
-}
-
-extension ExpenseCategoryListExtension on List<ExpenseCategory> {
-  ExpenseCategory getByDescription(String description) {
-    return firstWhere((e) => e.description == description);
-  }
+enum ColorCustom {
+  brown,
+  blue,
+  purple,
+  orange,
+  yellow,
 }

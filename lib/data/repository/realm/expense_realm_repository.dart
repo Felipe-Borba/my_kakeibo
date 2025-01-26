@@ -1,19 +1,22 @@
 import 'package:my_kakeibo/data/repository/expense_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/expense_model.dart';
+import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:realm/realm.dart' hide Uuid;
+import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseRealmRepository extends ExpenseRepository {
   final realm = RealmConfig().realm;
-  final uuid = RealmConfig().uuid;
 
   @override
   Future<Result<Expense>> insert(Expense expense) async {
     try {
       final model = _toModel(expense);
-      realm.write(() => realm.add(model));
+      realm.write(() {
+        var category = realm.find<ExpenseCategoryModel>(expense.category.id);
+        realm.add(model..category=category);
+      });
       return Success(_toEntity(model));
     } on Exception catch (e) {
       return Failure(e);
@@ -61,7 +64,9 @@ class ExpenseRealmRepository extends ExpenseRepository {
         model.amount = expense.amount;
         model.date = expense.date;
         model.description = expense.description;
-        model.category = expense.category;
+        model.category = realm.find<ExpenseCategoryModel>(
+          expense.category.id,
+        );
       });
 
       return Success(_toEntity(model));
@@ -86,25 +91,24 @@ class ExpenseRealmRepository extends ExpenseRepository {
     }
   }
 
-  Expense _toEntity(ExpenseModel model) {
+  static Expense _toEntity(ExpenseModel model) {
     return Expense(
       id: model.id,
       amount: model.amount,
       date: model.date,
       description: model.description,
-      category: model.category,
+      category: ExpenseCategoryRealmRepository.toEntity(model.category!),
     );
   }
 
-  ExpenseModel _toModel(Expense expense) {
-    var model = ExpenseModel(
+  static ExpenseModel _toModel(Expense expense) {
+    final uuid = RealmConfig().uuid;
+
+    return ExpenseModel(
       expense.id ?? uuid.v4(),
       expense.amount,
       expense.date,
       expense.description,
-      '',
     );
-    model.category = expense.category;
-    return model;
   }
 }

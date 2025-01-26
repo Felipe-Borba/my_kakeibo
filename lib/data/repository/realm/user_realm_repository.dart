@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/data/repository/realm/model/user_model.dart';
+import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
@@ -68,9 +68,9 @@ class UserRealmRepository extends UserRepository {
       user.name,
       user.email,
       user.password,
-      user.theme.description,
       user.balance,
       user.hasOnboarding,
+      user.theme.description,
       notificationToken: user.notificationToken,
     );
   }

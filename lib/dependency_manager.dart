@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/data/repository/expense_repository.dart';
 import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/data/repository/income_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
@@ -28,6 +30,8 @@ class DependencyManager extends ChangeNotifier {
 
   late final UserRepository userRealmRepository;
 
+  late final ExpenseCategoryRepository expenseCategoryRealmRepository;
+
   late final AuthService authService;
   late final LocalNotificationService localNotificationService;
   late final PushNotificationService pushNotificationService;
@@ -47,6 +51,8 @@ class DependencyManager extends ChangeNotifier {
     incomeRealmRepository = IncomeRealmRepository();
 
     userRealmRepository = UserRealmRepository();
+
+    expenseCategoryRealmRepository = ExpenseCategoryRealmRepository();
 
     authService = AuthFirebaseService();
     localNotificationService = LocalNotificationServiceImpl();

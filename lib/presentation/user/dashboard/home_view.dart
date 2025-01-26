@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
@@ -131,7 +132,7 @@ class _HomeViewState extends State<HomeView> {
       child: ListTile(
         leading: Icon(
           transaction is Expense
-              ? transaction.category.getIcon()
+              ? transaction.category.icon.toIconData()
               : Icons.monetization_on_outlined,
         ),
         title: TextTitleMedium(
@@ -140,7 +141,7 @@ class _HomeViewState extends State<HomeView> {
         subtitle: transaction.description.isNotEmpty
             ? TextBodyMedium(transaction.description)
             : transaction is Expense
-                ? TextBodyMedium(transaction.category.getTranslation(context))
+                ? TextBodyMedium(transaction.category.name)
                 : transaction is Income
                     ? TextBodyMedium(transaction.source.getTranslation(context))
                     : null,

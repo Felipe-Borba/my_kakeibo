@@ -32,32 +32,29 @@ extension IncomeSourceTranslation on IncomeSource {
   }
 }
 
-extension ExpenseCategoryTranslation on ExpenseCategory {
+extension ColorTranslation on ColorCustom {
   String getTranslation(BuildContext context) {
-    switch (this) {
-      case ExpenseCategory.misc:
-        return context.intl.misc;
-      case ExpenseCategory.rent:
-        return context.intl.rent;
-      case ExpenseCategory.food:
-        return context.intl.food;
-      case ExpenseCategory.entertainment:
-        return context.intl.entertainment;
-    }
+    return switch (this) {
+      ColorCustom.brown => context.intl.brown,
+      ColorCustom.blue => context.intl.blue,
+      ColorCustom.purple => context.intl.purple,
+      ColorCustom.orange => context.intl.orange,
+      ColorCustom.yellow => context.intl.yellow,
+    };
   }
+}
 
-  IconData getIcon() {
-    switch (this) {
-      case ExpenseCategory.misc:
-        return Icons.help;
-      case ExpenseCategory.rent:
-        return Icons.house;
-      case ExpenseCategory.food:
-        return Icons.fastfood;
-      case ExpenseCategory.entertainment:
-        return Icons.theater_comedy;
-      default:
-        return Icons.error;
-    }
+extension IconCustomTranslation on IconCustom {
+  String getTranslation(BuildContext context) {
+    return switch (this) {
+      IconCustom.dog => context.intl.dog,
+      IconCustom.home => context.intl.home,
+      IconCustom.book => context.intl.book,
+      IconCustom.food => context.intl.food,
+      IconCustom.rent => context.intl.rent,
+      IconCustom.misc => context.intl.misc,
+      IconCustom.doctor => context.intl.doctor,
+      IconCustom.entertainment => context.intl.entertainment,
+    };
   }
 }
