@@ -1,3 +1,6 @@
+import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
+import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
+
 class ExpenseCategory {
   String? id;
   String name;
@@ -10,23 +13,4 @@ class ExpenseCategory {
     required this.icon,
     required this.color,
   });
-}
-
-enum IconCustom {
-  misc,
-  dog,
-  home,
-  book,
-  food,
-  rent,
-  doctor,
-  entertainment,
-}
-
-enum ColorCustom {
-  brown,
-  blue,
-  purple,
-  orange,
-  yellow,
 }

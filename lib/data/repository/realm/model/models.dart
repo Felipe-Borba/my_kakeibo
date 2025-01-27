@@ -1,6 +1,7 @@
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
+import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:realm/realm.dart';

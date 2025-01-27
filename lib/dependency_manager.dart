@@ -21,6 +21,7 @@ import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 
+//TODO acho que tem uma forma melhor de fazer isso com um multipleProvider...
 class DependencyManager extends ChangeNotifier {
   late final FixedExpenseRepository fixedExpenseRealmRepository;
 

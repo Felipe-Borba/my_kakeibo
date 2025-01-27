@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
 class InputFormColorCustom extends StatelessWidget {

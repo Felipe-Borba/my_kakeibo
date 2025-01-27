@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
 extension IconExtension on IconCustom {
   IconData toIconData() {

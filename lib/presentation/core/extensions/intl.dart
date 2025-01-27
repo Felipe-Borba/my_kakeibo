@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
+import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 
 extension LocalizationsExtension on BuildContext {
