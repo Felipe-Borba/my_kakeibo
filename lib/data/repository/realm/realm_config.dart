@@ -23,25 +23,8 @@ class RealmConfig {
     uuid = const Uuid();
     final config = Configuration.local(
       realmSchemas,
-      schemaVersion: 1,
+      schemaVersion: 2,
       shouldDeleteIfMigrationNeeded: true, //TODO enquanto o app está em alfa
-      initialDataCallback: (realm) {
-        realm.add(
-          ExpenseCategoryModel(uuid.v4(), "misc", 0, 0),
-        );
-        realm.add(
-          ExpenseCategoryModel(uuid.v4(), "dog", 1, 1),
-        );
-        realm.add(
-          ExpenseCategoryModel(uuid.v4(), "home", 2, 2),
-        );
-        realm.add(
-          ExpenseCategoryModel(uuid.v4(), "book", 3, 3),
-        );
-        realm.add(
-          ExpenseCategoryModel(uuid.v4(), "food", 4, 4),
-        );
-      },
     );
     realm = Realm(config);
   }
