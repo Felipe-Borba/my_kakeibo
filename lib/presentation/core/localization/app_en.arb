@@ -198,5 +198,7 @@
   "icon": "Icon",
   "@icon": {},
   "yellow": "Yellow",
-  "@yellow": {}
+  "@yellow": {},
+  "expense_category": "Expense category",
+  "@expense_category": {}
 }
