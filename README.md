@@ -2,9 +2,7 @@
 
 O seu app de finanças pessoais
 
-# For Developers
-
-## Setup your project
+## For Developers
 
 Recomendo usar o vscode pq tem uns plugin legais que ajudam a desenvolver, caso queira usar outra ide fique a vontade mas o meu suporte fica limitado
 
