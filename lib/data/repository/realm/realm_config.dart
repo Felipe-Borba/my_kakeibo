@@ -8,6 +8,7 @@ final realmSchemas = [
   ExpenseModel.schema,
   FixedExpenseModel.schema,
   ExpenseCategoryModel.schema,
+  IncomeSourceModel.schema,
 ];
 
 class RealmConfig {
@@ -23,7 +24,7 @@ class RealmConfig {
     uuid = const Uuid();
     final config = Configuration.local(
       realmSchemas,
-      schemaVersion: 2,
+      schemaVersion: 1,
       shouldDeleteIfMigrationNeeded: true, //TODO enquanto o app está em alfa
     );
     realm = Realm(config);

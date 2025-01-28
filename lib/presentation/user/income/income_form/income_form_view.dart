@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_income_source.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_currency.dart';
@@ -36,22 +37,29 @@ class IncomeFormView extends StatelessWidget {
                   InputFormCurrency(
                     key: const Key("amount"),
                     value: viewModel.amount,
-                    onChanged: viewModel.setAmount,
+                    onChanged: (value) => viewModel.amount = value,
                     labelText: context.intl.amount,
                     validator: viewModel.validateAmount,
+                  ),
+                  const SizedBox(height: 8),
+                  InputFormIncomeSource(
+                    key: const Key("source"),
+                    value: viewModel.source,
+                    onChanged: (value) => viewModel.source = value,
+                    validator: viewModel.validateSource,
                   ),
                   const SizedBox(height: 8),
                   InputFormDate(
                     key: const Key("date"),
                     value: viewModel.date,
-                    onChanged: viewModel.setDate,
+                    onChanged: (value) => viewModel.date = value,
                     validator: viewModel.validateDate,
                   ),
                   const SizedBox(height: 8),
                   InputFormString(
                     key: const Key("description"),
                     initialValue: viewModel.description,
-                    onChanged: viewModel.setDescription,
+                    onChanged: (value) => viewModel.description = value,
                     validator: viewModel.validateDescription,
                     labelText: context.intl.description,
                   ),

@@ -12,6 +12,7 @@ extension IconExtension on IconCustom {
       IconCustom.misc => Icons.task_alt_rounded,
       IconCustom.doctor => Icons.medication_liquid_rounded,
       IconCustom.entertainment => Icons.theater_comedy_rounded,
+      IconCustom.salary => Icons.monetization_on_rounded,
     };
   }
 }

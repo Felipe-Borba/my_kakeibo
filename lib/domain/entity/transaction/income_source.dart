@@ -1,14 +1,16 @@
-// TODO depois no futuro seria legal deixar o usuário criar isso
-enum IncomeSource {
-  salary,
-}
+import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
+import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
-extension IncomeSourceHelper on IncomeSource {
-  String get description => toString().split('.').last;
-}
+class IncomeSource {
+  String? id;
+  String name;
+  IconCustom icon;
+  ColorCustom color;
 
-extension IncomeSourceListExtension on List<IncomeSource> {
-  IncomeSource getByDescription(String description) {
-    return firstWhere((e) => e.description == description);
-  }
+  IncomeSource({
+    this.id,
+    required this.name,
+    required this.icon,
+    required this.color,
+  });
 }

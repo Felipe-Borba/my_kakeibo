@@ -8,7 +8,9 @@ extension IconExtension on ColorCustom {
       ColorCustom.blue => Colors.blue,
       ColorCustom.purple => Colors.purple,
       ColorCustom.orange => Colors.orange,
-      ColorCustom.yellow => Colors.yellow
+      ColorCustom.yellow => Colors.yellow,
+      ColorCustom.green => Colors.green,
+      ColorCustom.grey => Colors.grey
     };
   }
 }

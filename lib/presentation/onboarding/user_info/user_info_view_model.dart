@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
@@ -14,6 +15,8 @@ class UserInfoViewModel with ChangeNotifier {
   late final _userUseCase = _context.dependencyManager.userUseCase;
   late final _expenseCategoryRepository =
       _context.dependencyManager.expenseCategoryRealmRepository;
+  late final _incomeSourceRepository =
+      _context.dependencyManager.incomeSourceRealmRepository;
 
   UserInfoViewModel(this._context);
 
@@ -32,7 +35,7 @@ class UserInfoViewModel with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    //TODO essas 3 linhas acho que deveria ser um único caso de uso createOnboardingUser
+    //TODO essas linhas acho que deveria ser um único caso de uso createOnboardingUser
     var expenseCategories = [
       ExpenseCategory(
         name: _context.intl.misc,
@@ -63,6 +66,18 @@ class UserInfoViewModel with ChangeNotifier {
     for (var element in expenseCategories) {
       _expenseCategoryRepository.insert(element);
     }
+    _incomeSourceRepository.insert(
+      IncomeSource(
+          name: _context.intl.salary,
+          icon: IconCustom.salary,
+          color: ColorCustom.green),
+    );
+    _incomeSourceRepository.insert(
+      IncomeSource(
+          name: _context.intl.misc,
+          icon: IconCustom.misc,
+          color: ColorCustom.grey),
+    );
     var result = await _userUseCase.getUser();
     var user = result.getOrDefault(User.createOnboardingUser(name!));
     var saveResult = await _userUseCase.save(user);

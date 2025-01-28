@@ -120,6 +120,8 @@
   },
   "fieldRequired": "Campo obrigatório",
   "@fieldRequired": {},
+  "fieldGreaterThenZero": "Valor deve ser maior que zero",
+  "@fieldGreaterThenZero": {},
   "next": "Próximo",
   "@next": {},
   "firstThingsFirst": "Espere, Antes de começas a usar o app",
@@ -200,5 +202,9 @@
   "yellow": "Amarelo",
   "@yellow": {},
   "expense_category": "Categoria de despesa",
-  "@expense_category": {}
+  "@expense_category": {},
+  "green": "Verde",
+  "@green": {},
+  "grey": "Cinza",
+  "@grey": {}
 }

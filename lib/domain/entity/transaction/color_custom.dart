@@ -4,4 +4,6 @@ enum ColorCustom {
   purple,
   orange,
   yellow,
+  green,
+  grey,
 }

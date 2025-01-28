@@ -7,4 +7,5 @@ enum IconCustom {
   rent,
   doctor,
   entertainment,
+  salary,
 }

@@ -3,10 +3,12 @@ import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/data/repository/expense_repository.dart';
 import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/data/repository/income_repository.dart';
+import 'package:my_kakeibo/data/repository/income_source_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/income_source_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/user_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
 import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
@@ -33,6 +35,8 @@ class DependencyManager extends ChangeNotifier {
 
   late final ExpenseCategoryRepository expenseCategoryRealmRepository;
 
+  late final IncomeSourceRepository incomeSourceRealmRepository;
+
   late final AuthService authService;
   late final LocalNotificationService localNotificationService;
   late final PushNotificationService pushNotificationService;
@@ -54,6 +58,8 @@ class DependencyManager extends ChangeNotifier {
     userRealmRepository = UserRealmRepository();
 
     expenseCategoryRealmRepository = ExpenseCategoryRealmRepository();
+
+    incomeSourceRealmRepository = IncomeSourceRealmRepository();
 
     authService = AuthFirebaseService();
     localNotificationService = LocalNotificationServiceImpl();

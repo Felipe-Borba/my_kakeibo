@@ -143,7 +143,7 @@ class _HomeViewState extends State<HomeView> {
             : transaction is Expense
                 ? TextBodyMedium(transaction.category.name)
                 : transaction is Income
-                    ? TextBodyMedium(transaction.source.getTranslation(context))
+                    ? TextBodyMedium(transaction.source.name)
                     : null,
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.end,

@@ -11,7 +11,5 @@ class _IncomeModel {
 
   late String description;
 
-  late String sourceString;
-  IncomeSource get source => IncomeSource.values.getByDescription(sourceString);
-  set source(IncomeSource source) => sourceString = source.description;
+  late _IncomeSourceModel? source;
 }

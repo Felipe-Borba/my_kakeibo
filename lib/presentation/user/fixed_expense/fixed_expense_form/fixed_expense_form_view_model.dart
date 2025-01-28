@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
@@ -32,10 +33,10 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateAmount(String? value) {
-    if (value == null) return "valor obrigatório";
+    if (value == null) return _context.intl.fieldRequired;
     double? amount = _context.currency.tryParse(value)?.toDouble();
-    if (amount == null) return "valor obrigatório";
-    if (amount <= 0) return "valor deve ser maior que zero";
+    if (amount == null) return _context.intl.fieldRequired;
+    if (amount <= 0) return _context.intl.fieldGreaterThenZero;
     return null;
   }
 
@@ -44,7 +45,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateCategory(ExpenseCategory? value) {
-    if (value == null) return "Select a category";
+    if (value == null) return _context.intl.fieldRequired;
     return null;
   }
 
@@ -53,8 +54,8 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateDueDate(String? value) {
-    if (value == null) return "Select a date";
-    if (value.isEmpty) return "Select a date";
+    if (value == null) return _context.intl.fieldRequired;
+    if (value.isEmpty) return _context.intl.fieldRequired;
     return null;
   }
 
@@ -93,7 +94,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateFrequency(Frequency? value) {
-    if (value == null) return "Selecione uma opção";
+    if (value == null) return _context.intl.fieldRequired;
     return null;
   }
 }

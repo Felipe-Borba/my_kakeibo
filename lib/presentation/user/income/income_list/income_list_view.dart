@@ -96,7 +96,7 @@ class IncomeListView extends StatelessWidget {
               if (income.description.isNotEmpty)
                 TextBodyMedium(income.description)
               else
-                TextBodyMedium(income.source.getTranslation(context)),
+                TextBodyMedium(income.source.name),
               TextBodyMedium(
                 context.currency.format(income.amount),
                 prominent: true,

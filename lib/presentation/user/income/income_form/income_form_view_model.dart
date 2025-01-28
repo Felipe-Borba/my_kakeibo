@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 
 class IncomeFormViewModel with ChangeNotifier {
   IncomeFormViewModel(this._context, this._income);
@@ -19,6 +20,7 @@ class IncomeFormViewModel with ChangeNotifier {
   late double? amount = _income?.amount;
   late DateTime? date = _income?.date;
   late String description = _income?.description ?? '';
+  late IncomeSource? source = _income?.source;
 
   // Actions
   onClickSave() async {
@@ -28,7 +30,7 @@ class IncomeFormViewModel with ChangeNotifier {
     var result = await incomeUseCase.insert(Income(
       id: _income?.id,
       amount: amount!,
-      source: IncomeSource.salary,
+      source: source!,
       description: description,
       date: date ?? DateTime.now(),
     ));
@@ -45,32 +47,25 @@ class IncomeFormViewModel with ChangeNotifier {
   }
 
   String? validateAmount(String? value) {
-    if (value == null) return "valor obrigatório";
+    if (value == null) return _context.intl.fieldRequired;
     double? amount = _context.currency.tryParse(value)?.toDouble();
-    if (amount == null) return "valor obrigatório";
-    if (amount <= 0) return "valor deve ser maior que zero";
+    if (amount == null) return _context.intl.fieldRequired;
+    if (amount <= 0) return _context.intl.fieldGreaterThenZero;
     return null;
-  }
-
-  void setAmount(double? value) {
-    amount = value;
-  }
-
-  void setDate(DateTime? value) {
-    date = value;
   }
 
   String? validateDate(String? value) {
-    if (value == null) return "Select a date";
-    if (value.isEmpty) return "Select a date";
+    if (value == null) return _context.intl.fieldRequired;
+    if (value.isEmpty) return _context.intl.fieldRequired;
     return null;
   }
 
-  void setDescription(String value) {
-    description = value;
+  String? validateDescription(String? value) {
+    return null;
   }
 
-  String? validateDescription(String? value) {
+  String? validateSource(IncomeSource? value) {
+    if (value == null) return _context.intl.fieldRequired;
     return null;
   }
 }

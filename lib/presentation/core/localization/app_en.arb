@@ -120,6 +120,8 @@
   },
   "fieldRequired": "Field is required",
   "@fieldRequired": {},
+  "fieldGreaterThenZero": "Field must be grater then zero",
+  "@fieldGreaterThenZero": {},
   "next": "Next",
   "@next": {},
   "firstThingsFirst": "Wait, First things first",
@@ -179,9 +181,9 @@
   "@no_fixed_expenses": {},
   "brown": "Brown",
   "@brown": {},
-  "red":"Red",
-  "@red":{},
-  "blue":"Blue",
+  "red": "Red",
+  "@red": {},
+  "blue": "Blue",
   "@blue": {},
   "purple": "Purple",
   "@purple": {},
@@ -200,5 +202,9 @@
   "yellow": "Yellow",
   "@yellow": {},
   "expense_category": "Expense category",
-  "@expense_category": {}
+  "@expense_category": {},
+  "green": "Green",
+  "@green": {},
+  "grey": "Grey",
+  "@grey": {}
 }

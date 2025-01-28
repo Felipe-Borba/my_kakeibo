@@ -1,4 +1,5 @@
 import 'package:my_kakeibo/data/repository/income_repository.dart';
+import 'package:my_kakeibo/data/repository/realm/income_source_realm_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
@@ -13,7 +14,12 @@ class IncomeRealmRepository extends IncomeRepository {
   Future<Result<Income>> insert(Income income) async {
     try {
       final model = _toModel(income);
-      realm.write(() => realm.add(model));
+
+      realm.write(() {
+        var source = realm.find<IncomeSourceModel>(income.source.id);
+        realm.add(model..source = source);
+      });
+
       return Success(_toEntity(model));
     } on Exception catch (e) {
       return Failure(e);
@@ -61,7 +67,9 @@ class IncomeRealmRepository extends IncomeRepository {
         model.amount = income.amount;
         model.date = income.date;
         model.description = income.description;
-        model.source = income.source;
+        model.source = realm.find<IncomeSourceModel>(
+          income.source.id,
+        );
       });
 
       return Success(_toEntity(model));
@@ -92,19 +100,16 @@ class IncomeRealmRepository extends IncomeRepository {
       amount: model.amount,
       date: model.date,
       description: model.description,
-      source: model.source,
+      source: IncomeSourceRealmRepository.toEntity(model.source!),
     );
   }
 
   IncomeModel _toModel(Income income) {
-    var model = IncomeModel(
+    return IncomeModel(
       income.id ?? uuid.v4(),
       income.amount,
       income.date,
       income.description,
-      '',
     );
-    model.source = income.source;
-    return model;
   }
 }

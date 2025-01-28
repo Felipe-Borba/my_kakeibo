@@ -398,14 +398,14 @@ class IncomeModel extends _IncomeModel
     String id,
     double amount,
     DateTime date,
-    String description,
-    String sourceString,
-  ) {
+    String description, {
+    IncomeSourceModel? source,
+  }) {
     RealmObjectBase.set(this, 'id', id);
     RealmObjectBase.set(this, 'amount', amount);
     RealmObjectBase.set(this, 'date', date);
     RealmObjectBase.set(this, 'description', description);
-    RealmObjectBase.set(this, 'sourceString', sourceString);
+    RealmObjectBase.set(this, 'source', source);
   }
 
   IncomeModel._();
@@ -433,11 +433,12 @@ class IncomeModel extends _IncomeModel
       RealmObjectBase.set(this, 'description', value);
 
   @override
-  String get sourceString =>
-      RealmObjectBase.get<String>(this, 'sourceString') as String;
+  IncomeSourceModel? get source =>
+      RealmObjectBase.get<IncomeSourceModel>(this, 'source')
+          as IncomeSourceModel?;
   @override
-  set sourceString(String value) =>
-      RealmObjectBase.set(this, 'sourceString', value);
+  set source(covariant IncomeSourceModel? value) =>
+      RealmObjectBase.set(this, 'source', value);
 
   @override
   Stream<RealmObjectChanges<IncomeModel>> get changes =>
@@ -457,7 +458,7 @@ class IncomeModel extends _IncomeModel
       'amount': amount.toEJson(),
       'date': date.toEJson(),
       'description': description.toEJson(),
-      'sourceString': sourceString.toEJson(),
+      'source': source.toEJson(),
     };
   }
 
@@ -470,14 +471,13 @@ class IncomeModel extends _IncomeModel
         'amount': EJsonValue amount,
         'date': EJsonValue date,
         'description': EJsonValue description,
-        'sourceString': EJsonValue sourceString,
       } =>
         IncomeModel(
           fromEJson(id),
           fromEJson(amount),
           fromEJson(date),
           fromEJson(description),
-          fromEJson(sourceString),
+          source: fromEJson(ejson['source']),
         ),
       _ => raiseInvalidEJson(ejson),
     };
@@ -492,7 +492,117 @@ class IncomeModel extends _IncomeModel
       SchemaProperty('amount', RealmPropertyType.double),
       SchemaProperty('date', RealmPropertyType.timestamp),
       SchemaProperty('description', RealmPropertyType.string),
-      SchemaProperty('sourceString', RealmPropertyType.string),
+      SchemaProperty('source', RealmPropertyType.object,
+          optional: true, linkTarget: 'IncomeSourceModel'),
+    ]);
+  }();
+
+  @override
+  SchemaObject get objectSchema => RealmObjectBase.getSchema(this) ?? schema;
+}
+
+class IncomeSourceModel extends _IncomeSourceModel
+    with RealmEntity, RealmObjectBase, RealmObject {
+  IncomeSourceModel(
+    String id,
+    String name,
+    int _colorValue,
+    int _iconValue, {
+    Iterable<IncomeModel> incomes = const [],
+  }) {
+    RealmObjectBase.set(this, 'id', id);
+    RealmObjectBase.set(this, 'name', name);
+    RealmObjectBase.set(this, 'color', _colorValue);
+    RealmObjectBase.set(this, 'icon', _iconValue);
+    RealmObjectBase.set<RealmList<IncomeModel>>(
+        this, 'incomes', RealmList<IncomeModel>(incomes));
+  }
+
+  IncomeSourceModel._();
+
+  @override
+  String get id => RealmObjectBase.get<String>(this, 'id') as String;
+  @override
+  set id(String value) => RealmObjectBase.set(this, 'id', value);
+
+  @override
+  String get name => RealmObjectBase.get<String>(this, 'name') as String;
+  @override
+  set name(String value) => RealmObjectBase.set(this, 'name', value);
+
+  @override
+  int get _colorValue => RealmObjectBase.get<int>(this, 'color') as int;
+  @override
+  set _colorValue(int value) => RealmObjectBase.set(this, 'color', value);
+
+  @override
+  int get _iconValue => RealmObjectBase.get<int>(this, 'icon') as int;
+  @override
+  set _iconValue(int value) => RealmObjectBase.set(this, 'icon', value);
+
+  @override
+  RealmList<IncomeModel> get incomes =>
+      RealmObjectBase.get<IncomeModel>(this, 'incomes')
+          as RealmList<IncomeModel>;
+  @override
+  set incomes(covariant RealmList<IncomeModel> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
+  Stream<RealmObjectChanges<IncomeSourceModel>> get changes =>
+      RealmObjectBase.getChanges<IncomeSourceModel>(this);
+
+  @override
+  Stream<RealmObjectChanges<IncomeSourceModel>> changesFor(
+          [List<String>? keyPaths]) =>
+      RealmObjectBase.getChangesFor<IncomeSourceModel>(this, keyPaths);
+
+  @override
+  IncomeSourceModel freeze() =>
+      RealmObjectBase.freezeObject<IncomeSourceModel>(this);
+
+  EJsonValue toEJson() {
+    return <String, dynamic>{
+      'id': id.toEJson(),
+      'name': name.toEJson(),
+      'color': _colorValue.toEJson(),
+      'icon': _iconValue.toEJson(),
+      'incomes': incomes.toEJson(),
+    };
+  }
+
+  static EJsonValue _toEJson(IncomeSourceModel value) => value.toEJson();
+  static IncomeSourceModel _fromEJson(EJsonValue ejson) {
+    if (ejson is! Map<String, dynamic>) return raiseInvalidEJson(ejson);
+    return switch (ejson) {
+      {
+        'id': EJsonValue id,
+        'name': EJsonValue name,
+        'color': EJsonValue _colorValue,
+        'icon': EJsonValue _iconValue,
+      } =>
+        IncomeSourceModel(
+          fromEJson(id),
+          fromEJson(name),
+          fromEJson(_colorValue),
+          fromEJson(_iconValue),
+          incomes: fromEJson(ejson['incomes']),
+        ),
+      _ => raiseInvalidEJson(ejson),
+    };
+  }
+
+  static final schema = () {
+    RealmObjectBase.registerFactory(IncomeSourceModel._);
+    register(_toEJson, _fromEJson);
+    return const SchemaObject(
+        ObjectType.realmObject, IncomeSourceModel, 'IncomeSourceModel', [
+      SchemaProperty('id', RealmPropertyType.string, primaryKey: true),
+      SchemaProperty('name', RealmPropertyType.string),
+      SchemaProperty('_colorValue', RealmPropertyType.int, mapTo: 'color'),
+      SchemaProperty('_iconValue', RealmPropertyType.int, mapTo: 'icon'),
+      SchemaProperty('incomes', RealmPropertyType.object,
+          linkTarget: 'IncomeModel', collectionType: RealmCollectionType.list),
     ]);
   }();
 

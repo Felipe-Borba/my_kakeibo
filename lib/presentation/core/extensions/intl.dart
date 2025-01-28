@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
-import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 
 extension LocalizationsExtension on BuildContext {
   AppLocalizations get intl => AppLocalizations.of(this)!;
@@ -24,15 +23,6 @@ extension FrequencyTranslation on Frequency {
   }
 }
 
-extension IncomeSourceTranslation on IncomeSource {
-  String getTranslation(BuildContext context) {
-    switch (this) {
-      case IncomeSource.salary:
-        return context.intl.salary;
-    }
-  }
-}
-
 extension ColorTranslation on ColorCustom {
   String getTranslation(BuildContext context) {
     return switch (this) {
@@ -41,6 +31,8 @@ extension ColorTranslation on ColorCustom {
       ColorCustom.purple => context.intl.purple,
       ColorCustom.orange => context.intl.orange,
       ColorCustom.yellow => context.intl.yellow,
+      ColorCustom.green => context.intl.green,
+      ColorCustom.grey => context.intl.grey,
     };
   }
 }
@@ -56,6 +48,7 @@ extension IconCustomTranslation on IconCustom {
       IconCustom.misc => context.intl.misc,
       IconCustom.doctor => context.intl.doctor,
       IconCustom.entertainment => context.intl.entertainment,
+      IconCustom.salary => context.intl.salary,
     };
   }
 }
