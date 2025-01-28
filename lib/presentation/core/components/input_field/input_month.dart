@@ -12,7 +12,7 @@ class InputMonth extends StatefulWidget {
   });
 
   @override
-  _InputMonthState createState() => _InputMonthState();
+  createState() => _InputMonthState();
 }
 
 class _InputMonthState extends State<InputMonth> {
