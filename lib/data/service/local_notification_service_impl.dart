@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:my_kakeibo/domain/entity/notification/notification.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
 import 'package:my_kakeibo/data/service/local_notification_service.dart';
 import 'package:result_dart/result_dart.dart';
@@ -17,14 +18,9 @@ class LocalNotificationServiceImpl implements LocalNotificationService {
       '@mipmap/launcher_icon',
     );
     const initializationSettingsDarwin = DarwinInitializationSettings();
-    const initializationSettingsLinux = LinuxInitializationSettings(
-      defaultActionName: "Open notification",
-    );
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
-      macOS: initializationSettingsDarwin,
-      linux: initializationSettingsLinux,
     );
 
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);

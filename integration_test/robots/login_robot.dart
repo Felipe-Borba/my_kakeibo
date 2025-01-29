@@ -14,7 +14,7 @@ class LoginRobot {
   }
 
   enterPassword(String password) async {
-    final inputField = find.byKey(const Key('password')); //TODO criar um arquivo de widgeet_keys para centralizar as key do projeto e não repetir aqui e lá na pasta de test
+    final inputField = find.byKey(const Key('password'));
     expect(inputField, findsOneWidget);
     await tester.enterText(inputField, password);
     await tester.pump();
