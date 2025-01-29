@@ -3,6 +3,7 @@ import 'package:my_kakeibo/data/repository/realm/expense_category_realm_reposito
 import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -15,7 +16,7 @@ class ExpenseRealmRepository extends ExpenseRepository {
       final model = _toModel(expense);
       realm.write(() {
         var category = realm.find<ExpenseCategoryModel>(expense.category.id);
-        realm.add(model..category=category);
+        realm.add(model..category = category);
       });
       return Success(_toEntity(model));
     } on Exception catch (e) {
@@ -57,7 +58,7 @@ class ExpenseRealmRepository extends ExpenseRepository {
       final model = realm.find<ExpenseModel>(expense.id);
 
       if (model == null) {
-        return Failure(Exception(("Expense not found")));
+        return Failure(CustomException.expenseNotFound());
       }
 
       realm.write(() {
@@ -81,7 +82,7 @@ class ExpenseRealmRepository extends ExpenseRepository {
       final model = realm.find<ExpenseModel>(expense.id);
 
       if (model == null) {
-        return Failure(Exception(("Expense not found")));
+        return Failure(CustomException.expenseNotFound());
       }
 
       realm.write(() => realm.delete(model));

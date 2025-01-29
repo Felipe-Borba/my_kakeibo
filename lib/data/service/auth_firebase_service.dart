@@ -1,5 +1,6 @@
 import 'package:my_kakeibo/data/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class AuthFirebaseService implements AuthService {
@@ -60,7 +61,7 @@ class AuthFirebaseService implements AuthService {
     if (user != null) {
       return Success(user.uid);
     } else {
-      return Failure(Exception("User not found"));
+      return Failure(CustomException.userNotFound());
     }
   }
 }

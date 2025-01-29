@@ -5,6 +5,7 @@ import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -43,7 +44,7 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
       final model = realm.find<FixedExpenseModel>(fixedExpense.id);
 
       if (model == null) {
-        return Failure(Exception("Fixed expense not found"));
+        return Failure(CustomException.fixedExpenseNotFound());
       }
 
       realm.write(() {
@@ -70,7 +71,7 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
       final model = realm.find<FixedExpenseModel>(fixedExpense.id);
 
       if (model == null) {
-        return Failure(Exception("Fixed expense not found"));
+        return Failure(CustomException.fixedExpenseNotFound());
       }
 
       realm.write(() => realm.delete(model));

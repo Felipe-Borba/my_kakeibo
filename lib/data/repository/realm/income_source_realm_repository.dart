@@ -2,14 +2,14 @@ import 'package:my_kakeibo/data/repository/income_source_repository.dart';
 import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeSourceRealmRepository extends IncomeSourceRepository {
   final realm = RealmConfig().realm;
 
   @override
-  Future<Result<IncomeSource>> insert(
-      IncomeSource incomeSource) async {
+  Future<Result<IncomeSource>> insert(IncomeSource incomeSource) async {
     try {
       final model = toModel(incomeSource);
       realm.write(() => realm.add(model));
@@ -38,7 +38,7 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
       final model = realm.find<IncomeSourceModel>(incomeSource.id);
 
       if (model == null) {
-        return Failure(Exception(("IncomeSource not found")));
+        return Failure(CustomException.incomeSourceNotFound());
       }
 
       return Success(toEntity(model));
@@ -48,13 +48,12 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
   }
 
   @override
-  Future<Result<IncomeSource>> update(
-      IncomeSource incomeSource) async {
+  Future<Result<IncomeSource>> update(IncomeSource incomeSource) async {
     try {
       final model = realm.find<IncomeSourceModel>(incomeSource.id);
 
       if (model == null) {
-        return Failure(Exception(("IncomeSource not found")));
+        return Failure(CustomException.incomeSourceNotFound());
       }
 
       realm.write(() {
@@ -75,7 +74,7 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
       final model = realm.find<IncomeSourceModel>(incomeSource.id);
 
       if (model == null) {
-        return Failure(Exception(("IncomeSource not found")));
+        return Failure(CustomException.incomeSourceNotFound());
       }
 
       realm.write(() => realm.delete(model));

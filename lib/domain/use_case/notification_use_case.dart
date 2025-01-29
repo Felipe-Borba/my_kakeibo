@@ -1,7 +1,8 @@
-import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
 import 'package:my_kakeibo/data/service/local_notification_service.dart';
 import 'package:my_kakeibo/data/service/push_notification_service.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class NotificationUseCase {
@@ -33,8 +34,7 @@ class NotificationUseCase {
         .requestPermission() //
         .getOrDefault(false);
 
-    //TODO ver uma forma melhor, ex. centralizar os erros ai qdo precisar usar o operador is
-    if (permission == false) return Failure(Exception("Permission denied"));
+    if (permission == false) return Failure(CustomException.permissionDenied());
 
     var token = await _pushNotificationService
         .getNotificationToken() //

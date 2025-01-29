@@ -206,5 +206,21 @@
   "green": "Green",
   "@green": {},
   "grey": "Grey",
-  "@grey": {}
+  "@grey": {},
+  "permissionDenied": "Permission denied",
+  "@permissionDenied": {},
+  "userNotFound": "User not found",
+  "@userNotFound": {},
+  "incomeNotFound": "Income not found",
+  "@incomeNotFound": {},
+  "incomeSourceNotFound": "Income source not found",
+  "@incomeSourceNotFound": {},
+  "expenseNotFound": "Expense not found",
+  "@expenseNotFound": {},
+  "expenseCategoryNotFound": "Expense category not found",
+  "@expenseCategoryNotFound": {},
+  "fixedExpenseNotFound": "Fixed expense not found",
+  "@fixedExpenseNotFound": {},
+  "unknownError": "An unknown error occurred",
+  "@unknownError": {}
 }

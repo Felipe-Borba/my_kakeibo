@@ -3,6 +3,7 @@ import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class UserRealmRepository extends UserRepository {
@@ -15,12 +16,12 @@ class UserRealmRepository extends UserRepository {
       final user = realm.find<UserModel>(id);
 
       if (user == null) {
-        return Failure(Exception("User not found"));
+        return Failure(CustomException.userNotFound());
       }
 
       return Success(_toEntity(user));
     } catch (e) {
-      return Failure(Exception(e.toString()));
+      return Failure(CustomException.unknownError());
     }
   }
 
@@ -30,7 +31,7 @@ class UserRealmRepository extends UserRepository {
       realm.write(() => realm.add(_toModel(user)));
       return const Success("ok");
     } catch (e) {
-      return Failure(Exception(e.toString()));
+      return Failure(CustomException.unknownError());
     }
   }
 
@@ -40,12 +41,12 @@ class UserRealmRepository extends UserRepository {
       final users = realm.all<UserModel>();
 
       if (users.isEmpty) {
-        return Failure(Exception("User not found"));
+        return Failure(CustomException.userNotFound());
       }
 
       return Success(_toEntity(users.first));
     } catch (e) {
-      return Failure(Exception(e.toString()));
+      return Failure(CustomException.unknownError());
     }
   }
 

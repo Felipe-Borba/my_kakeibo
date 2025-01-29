@@ -1,5 +1,6 @@
-import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/data/repository/user_repository.dart';
+import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class UserMemoryRepository implements UserRepository {
@@ -16,7 +17,7 @@ class UserMemoryRepository implements UserRepository {
     if (_user != null) {
       return Success(_user!);
     } else {
-      return Failure(Exception("User not found"));
+      return Failure(CustomException.userNotFound());
     }
   }
 
@@ -25,7 +26,7 @@ class UserMemoryRepository implements UserRepository {
     if (_user != null) {
       return Success(_user!);
     } else {
-      return Failure(Exception("User not found"));
+      return Failure(CustomException.userNotFound());
     }
   }
 }

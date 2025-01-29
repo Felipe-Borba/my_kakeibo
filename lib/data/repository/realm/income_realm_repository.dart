@@ -3,6 +3,7 @@ import 'package:my_kakeibo/data/repository/realm/income_source_realm_repository.
 import 'package:my_kakeibo/data/repository/realm/model/models.dart';
 import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -60,7 +61,7 @@ class IncomeRealmRepository extends IncomeRepository {
       final model = realm.find<IncomeModel>(income.id);
 
       if (model == null) {
-        return Failure(Exception("Income not found"));
+        return Failure(CustomException.incomeNotFound());
       }
 
       realm.write(() {
@@ -84,7 +85,7 @@ class IncomeRealmRepository extends IncomeRepository {
       final model = realm.find<IncomeModel>(income.id);
 
       if (model == null) {
-        return Failure(Exception("Income not found"));
+        return Failure(CustomException.incomeNotFound());
       }
 
       realm.write(() => realm.delete(model));

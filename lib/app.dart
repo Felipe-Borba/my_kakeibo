@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              locale: const Locale("pt"),
+              locale: const Locale("pt"), //TODO permitir trocar o idioma do app default Localizations.locale
               supportedLocales: const [
                 Locale('en'),
                 Locale('pt'),
