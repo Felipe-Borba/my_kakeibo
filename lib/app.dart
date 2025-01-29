@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             }
 
             return MaterialApp(
-              restorationScopeId: 'app',
+              restorationScopeId: 'myKakeibo',
               debugShowCheckedModeBanner: false,
               //
               localizationsDelegates: const [
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
               ],
-              locale: const Locale("pt"), //TODO permitir trocar o idioma do app default Localizations.locale
+              // locale: const Locale("pt"),
               supportedLocales: const [
                 Locale('en'),
                 Locale('pt'),
@@ -47,10 +47,11 @@ class MyApp extends StatelessWidget {
               //
               onGenerateTitle: (context) => context.intl.appTitle,
               //
-              darkTheme: theme.dark(),
               themeMode: settingsController.userTheme.toThemeMode(),
               theme: theme.light(),
-              //TODO ver essa questão de dark theme e dispositivos que forçam o dark theme
+              darkTheme: theme.dark(),
+              highContrastTheme: theme.lightHighContrast(),
+              highContrastDarkTheme: theme.darkHighContrast(),
               //
               home: settingsController.initialRoute,
             );

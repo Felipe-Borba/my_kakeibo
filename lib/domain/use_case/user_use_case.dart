@@ -25,7 +25,6 @@ class UserUseCase {
     return await _userRepository.save(user);
   }
 
-  //TODO na nova arquitetura recomendada pelo flutter eles recomendam evitar isso e por isso permitem o uso direto do repository nos outros lugares inclusive viewModel
   Future<Result<void>> save(User user) async {
     return await _userRepository.save(user);
   }
