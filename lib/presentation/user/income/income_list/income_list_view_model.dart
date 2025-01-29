@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
+import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view.dart';
 
 class IncomeListViewModel with ChangeNotifier {
@@ -16,7 +17,7 @@ class IncomeListViewModel with ChangeNotifier {
 
   // State
   List<Income> list = List.empty();
-  int sortNumber = 1;
+  SortEnum sort = SortEnum.dateAsc;
   DateTime monthFilter = DateTime.now();
 
   // Actions
@@ -31,25 +32,25 @@ class IncomeListViewModel with ChangeNotifier {
 
     result.onSuccess((success) {
       list = success;
-      sortBy(sortNumber);
+      sortBy(sort);
       notifyListeners();
     });
   }
 
-  setSortBy(int sortNumber) {
-    this.sortNumber = sortNumber;
-    sortBy(sortNumber);
+  setSortBy(SortEnum sort) {
+    this.sort = sort;
+    sortBy(sort);
     notifyListeners();
   }
 
-  void sortBy(int sortNumber) {
-    switch (sortNumber) {
-      case 1:
+  void sortBy(SortEnum sort) {
+    switch (sort) {
+      case SortEnum.dateAsc:
         list.sort((a, b) => a.date.compareTo(b.date));
         break;
-      case 2:
+      case SortEnum.dateDesc:
         list.sort((a, b) => b.date.compareTo(a.date));
-      default:
+        break;
     }
   }
 

@@ -4,12 +4,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SortComponent extends StatelessWidget {
   const SortComponent({
     super.key,
-    required this.sortNumber,
+    required this.sort,
     required this.onSortChanged,
   });
 
-  final int sortNumber; //TODO eventualmente mudar isso para um enum
-  final ValueChanged<int> onSortChanged;
+  final SortEnum sort;
+  final ValueChanged<SortEnum> onSortChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -18,29 +18,29 @@ class SortComponent extends StatelessWidget {
     return Container(
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.only(right: 8),
-      child: PopupMenuButton<int>(
+      child: PopupMenuButton<SortEnum>(
         tooltip: intl.sortOptions,
         onSelected: onSortChanged,
         child: const Icon(Icons.filter_alt),
         itemBuilder: (context) => [
           PopupMenuItem(
-            value: 1,
+            value: SortEnum.dateAsc,
             child: Row(
               children: [
                 Text(intl.dateAsc),
                 const SizedBox(width: 8),
-                if (sortNumber == 1)
+                if (sort == SortEnum.dateAsc)
                   const Icon(Icons.check, color: Colors.green),
               ],
             ),
           ),
           PopupMenuItem(
-            value: 2,
+            value: SortEnum.dateDesc,
             child: Row(
               children: [
                 Text(intl.dateDesc),
                 const SizedBox(width: 8),
-                if (sortNumber == 2)
+                if (sort == SortEnum.dateDesc)
                   const Icon(Icons.check, color: Colors.green),
               ],
             ),
@@ -49,4 +49,9 @@ class SortComponent extends StatelessWidget {
       ),
     );
   }
+}
+
+enum SortEnum {
+  dateAsc,
+  dateDesc,
 }

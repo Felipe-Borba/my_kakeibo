@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
 import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
@@ -17,14 +18,14 @@ class FixedExpenseListViewModel with ChangeNotifier {
 
   // State
   List<FixedExpense> list = List.empty();
-  int sortNumber = 1;
+  SortEnum sort = SortEnum.dateAsc;
 
   // Actions
   getInitialData() async {
     var result = await fixedExpenseUseCase.findAll();
     result.onSuccess((success) {
       list = success;
-      sortByNumber(sortNumber);
+      sortByNumber(sort);
       notifyListeners();
     });
 
@@ -33,20 +34,20 @@ class FixedExpenseListViewModel with ChangeNotifier {
     });
   }
 
-  setSortBy(int sortNumber) {
-    this.sortNumber = sortNumber;
-    sortByNumber(sortNumber);
+  setSortBy(SortEnum sort) {
+    this.sort = sort;
+    sortByNumber(sort);
     notifyListeners();
   }
 
-  void sortByNumber(int sortNumber) {
-    switch (sortNumber) {
-      case 1:
+  void sortByNumber(SortEnum sort) {
+    switch (sort) {
+      case SortEnum.dateAsc:
         list.sort((a, b) => a.dueDate.compareTo(b.dueDate));
         break;
-      case 2:
+      case SortEnum.dateDesc:
         list.sort((a, b) => b.dueDate.compareTo(a.dueDate));
-      default:
+        break;
     }
   }
 

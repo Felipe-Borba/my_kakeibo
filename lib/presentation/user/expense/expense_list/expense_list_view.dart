@@ -45,7 +45,7 @@ class ExpenseListView extends StatelessWidget {
                     ),
                     SortComponent(
                       onSortChanged: viewModel.setSortBy,
-                      sortNumber: viewModel.sortNumber,
+                      sort: viewModel.sort,
                     ),
                   ],
                 ),

@@ -45,7 +45,7 @@ class FixedExpenseListView extends StatelessWidget {
             children: [
               SortComponent(
                 onSortChanged: viewModel.setSortBy,
-                sortNumber: viewModel.sortNumber,
+                sort: viewModel.sort,
               ),
             ],
           ),
