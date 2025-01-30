@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/dependency_manager.dart';
 import 'package:my_kakeibo/firebase_options.dart';
-import 'package:provider/provider.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
 import 'app.dart';
@@ -29,10 +28,5 @@ void main() async {
 
   tz.initializeTimeZones();
 
-  return runApp(
-    ChangeNotifierProvider(
-      create: (_) => DependencyManager(),
-      child: const MyApp(),
-    ),
-  );
+  return runApp(const DependencyManager(child: MyApp()));
 }

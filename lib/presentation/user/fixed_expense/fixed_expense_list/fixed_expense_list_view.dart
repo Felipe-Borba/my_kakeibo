@@ -20,7 +20,7 @@ class FixedExpenseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => FixedExpenseListViewModel(context),
+      create: (context) => FixedExpenseListViewModel(context, context.read()),
       builder: (context, child) {
         final viewModel = Provider.of<FixedExpenseListViewModel>(context);
         return ScaffoldCustom(

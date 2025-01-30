@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseCategoryFormViewModel with ChangeNotifier {
-  ExpenseCategoryFormViewModel(this._context, this._expenseCategory);
+  ExpenseCategoryFormViewModel(
+    this._context,
+    this._expenseCategory,
+    this._expenseCategoryRepository,
+  );
 
   // Dependencies
   final BuildContext _context;
   final ExpenseCategory? _expenseCategory;
-  late final expenseRepository =
-      _context.dependencyManager.expenseCategoryRealmRepository;
+  final ExpenseCategoryRepository _expenseCategoryRepository;
 
   // State
   final formKey = GlobalKey<FormState>();
@@ -54,9 +57,9 @@ class ExpenseCategoryFormViewModel with ChangeNotifier {
 
     ResultDart<ExpenseCategory, Exception> result;
     if (expenseCategory.id != null) {
-      result = await expenseRepository.update(expenseCategory);
+      result = await _expenseCategoryRepository.update(expenseCategory);
     } else {
-      result = await expenseRepository.insert(expenseCategory);
+      result = await _expenseCategoryRepository.insert(expenseCategory);
     }
 
     result.onFailure((error) {

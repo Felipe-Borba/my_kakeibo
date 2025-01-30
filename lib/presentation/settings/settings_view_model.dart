@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
+import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class SettingsViewModel with ChangeNotifier {
-  SettingsViewModel(this._context);
+  SettingsViewModel(this._context, this._userUseCase);
 
   final BuildContext _context;
-  late final userUseCase = _context.dependencyManager.userUseCase;
+  final UserUseCase _userUseCase;
 
   UserTheme userTheme = UserTheme.system;
   Widget initialRoute = const WelcomeView();
 
   loadSettings() async {
-    var result = await userUseCase.getUser();
+    var result = await _userUseCase.getUser();
     result.onSuccess((user) {
       initialRoute = const DashboardView();
+
+      // userTheme = user.theme;
+      /// TODO existe um problema aqui por causa do FutureBuilder sempre recarrega a pagina toda
+      /// acho que se eu seguir o role do flutter com o repository exportando um Stream resolva
     });
   }
 
@@ -28,7 +32,7 @@ class SettingsViewModel with ChangeNotifier {
   }
 
   deleteData() async {
-    var result = await userUseCase.deleteData();
+    var result = await _userUseCase.deleteData();
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });

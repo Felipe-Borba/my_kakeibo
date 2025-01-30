@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view.dart';
 
 class ExpenseListViewModel with ChangeNotifier {
-  ExpenseListViewModel(this._context) {
+  ExpenseListViewModel(this._context, this._expenseUseCase) {
     getInitialData();
   }
 
   // Dependencies
-  late final expenseUseCase = _context.dependencyManager.expenseUseCase;
+  final ExpenseUseCase _expenseUseCase;
   final BuildContext _context;
 
   // State
@@ -22,7 +22,7 @@ class ExpenseListViewModel with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var result = await expenseUseCase.findByMonth(
+    var result = await _expenseUseCase.findByMonth(
       month: monthFilter,
     );
     result.onFailure((failure) {
@@ -54,7 +54,7 @@ class ExpenseListViewModel with ChangeNotifier {
   }
 
   onDelete(Expense expense) async {
-    await expenseUseCase.delete(expense);
+    await _expenseUseCase.delete(expense);
     _doRefresh(true);
   }
 
@@ -71,7 +71,7 @@ class ExpenseListViewModel with ChangeNotifier {
 
   _doRefresh(bool? refresh) async {
     if (refresh == true) {
-      var result = await expenseUseCase.findAll();
+      var result = await _expenseUseCase.findAll();
       result.onSuccess((success) {
         list = success;
         list.sort((a, b) => a.date.compareTo(b.date));

@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_view.dart';
 
 class FixedExpenseListViewModel with ChangeNotifier {
-  FixedExpenseListViewModel(this._context) {
+  FixedExpenseListViewModel(this._context, this._fixedExpenseUseCase) {
     getInitialData();
   }
 
   // Dependencies
-  late final fixedExpenseUseCase =
-      _context.dependencyManager.fixedExpenseUseCase;
+  final FixedExpenseUseCase _fixedExpenseUseCase;
   final BuildContext _context;
 
   // State
@@ -22,7 +21,7 @@ class FixedExpenseListViewModel with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var result = await fixedExpenseUseCase.findAll();
+    var result = await _fixedExpenseUseCase.findAll();
     result.onSuccess((success) {
       list = success;
       sortByNumber(sort);
@@ -52,7 +51,7 @@ class FixedExpenseListViewModel with ChangeNotifier {
   }
 
   onDelete(FixedExpense fixedExpense) async {
-    await fixedExpenseUseCase.delete(fixedExpense);
+    await _fixedExpenseUseCase.delete(fixedExpense);
     _doRefresh(true);
   }
 
@@ -71,7 +70,7 @@ class FixedExpenseListViewModel with ChangeNotifier {
 
   _doRefresh(bool? refresh) async {
     if (refresh == true) {
-      var result = await fixedExpenseUseCase.findAll();
+      var result = await _fixedExpenseUseCase.findAll();
       result.onSuccess((success) {
         list = success;
         list.sort((a, b) => a.dueDate.compareTo(b.dueDate));
@@ -81,7 +80,7 @@ class FixedExpenseListViewModel with ChangeNotifier {
   }
 
   pay(FixedExpense fixedExpense) async {
-    var result = await fixedExpenseUseCase.pay(fixedExpense);
+    var result = await _fixedExpenseUseCase.pay(fixedExpense);
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });

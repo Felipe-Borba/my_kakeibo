@@ -12,7 +12,12 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => DashboardViewModel(context),
+      create: (context) => DashboardViewModel(
+        context,
+        context.read(),
+        context.read(),
+        context.read(),
+      ),
       builder: (BuildContext context, Widget? child) {
         final viewModel = Provider.of<DashboardViewModel>(context);
 

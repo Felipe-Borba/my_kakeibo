@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
     final theme = getMaterialTheme(context);
 
     return ChangeNotifierProvider(
-      create: (context) => SettingsViewModel(context),
+      create: (context) => SettingsViewModel(context, context.read()),
       builder: (context, child) {
         final settingsController = Provider.of<SettingsViewModel>(context);
 

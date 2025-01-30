@@ -22,70 +22,85 @@ import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
 import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
+import 'package:provider/provider.dart';
 
-//TODO acho que tem uma forma melhor de fazer isso com um multipleProvider...
-class DependencyManager extends ChangeNotifier {
-  late final FixedExpenseRepository fixedExpenseRealmRepository;
+class DependencyManager extends StatelessWidget {
+  final Widget child;
+  const DependencyManager({super.key, required this.child});
 
-  late final ExpenseRepository expenseRealmRepository;
-
-  late final IncomeRepository incomeRealmRepository;
-
-  late final UserRepository userRealmRepository;
-
-  late final ExpenseCategoryRepository expenseCategoryRealmRepository;
-
-  late final IncomeSourceRepository incomeSourceRealmRepository;
-
-  late final AuthService authService;
-  late final LocalNotificationService localNotificationService;
-  late final PushNotificationService pushNotificationService;
-
-  // UseCases
-  late final FixedExpenseUseCase fixedExpenseUseCase;
-  late final ExpenseUseCase expenseUseCase;
-  late final IncomeUseCase incomeUseCase;
-  late final UserUseCase userUseCase;
-  late final NotificationUseCase notificationUseCase;
-
-  DependencyManager() {
-    fixedExpenseRealmRepository = FixedExpenseRealmRepository();
-
-    expenseRealmRepository = ExpenseRealmRepository();
-
-    incomeRealmRepository = IncomeRealmRepository();
-
-    userRealmRepository = UserRealmRepository();
-
-    expenseCategoryRealmRepository = ExpenseCategoryRealmRepository();
-
-    incomeSourceRealmRepository = IncomeSourceRealmRepository();
-
-    authService = AuthFirebaseService();
-    localNotificationService = LocalNotificationServiceImpl();
-    pushNotificationService = FirebasePushNotificationService();
-
-    userUseCase = UserUseCase(
-      authRepository: authService,
-      userRepository: userRealmRepository,
-    );
-    fixedExpenseUseCase = FixedExpenseUseCase(
-      expenseRepository: expenseRealmRepository,
-      fixedExpenseRepository: fixedExpenseRealmRepository,
-      userUseCase: userUseCase,
-    );
-    expenseUseCase = ExpenseUseCase(
-      expenseRepository: expenseRealmRepository,
-      userUseCase: userUseCase,
-    );
-    incomeUseCase = IncomeUseCase(
-      incomeRepository: incomeRealmRepository,
-      userUseCase: userUseCase,
-    );
-    notificationUseCase = NotificationUseCase(
-      userRealmRepository,
-      pushNotificationService,
-      localNotificationService,
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        Provider(create: (_) {
+          return UserRealmRepository() as UserRepository;
+        }),
+        Provider(create: (_) {
+          return ExpenseCategoryRealmRepository() as ExpenseCategoryRepository;
+        }),
+        Provider(create: (_) {
+          return FixedExpenseRealmRepository() as FixedExpenseRepository;
+        }),
+        Provider(create: (_) {
+          return IncomeRealmRepository() as IncomeRepository;
+        }),
+        Provider(create: (context) {
+          return ExpenseRealmRepository() as ExpenseRepository;
+        }),
+        Provider(create: (context) {
+          return IncomeSourceRealmRepository() as IncomeSourceRepository;
+        }),
+        Provider(create: (_) {
+          return LocalNotificationServiceImpl() as LocalNotificationService;
+        }),
+        Provider(create: (_) {
+          return FirebasePushNotificationService() as PushNotificationService;
+        }),
+        Provider(create: (_) {
+          return AuthFirebaseService() as AuthService;
+        }),
+        Provider(
+          create: (context) {
+            return UserUseCase(
+              userRepository: context.read(),
+              authRepository: context.read(),
+            );
+          },
+        ),
+        Provider(
+          create: (context) {
+            return ExpenseUseCase(
+              expenseRepository: context.read<ExpenseRepository>(),
+              userUseCase: context.read<UserUseCase>(),
+            );
+          },
+        ),
+        Provider(
+          create: (context) {
+            return IncomeUseCase(
+              incomeRepository: context.read(),
+              userUseCase: context.read(),
+            );
+          },
+        ),
+        Provider(
+          create: (context) {
+            return FixedExpenseUseCase(
+              fixedExpenseRepository: context.read(),
+              expenseRepository: context.read(),
+              userUseCase: context.read(),
+            );
+          },
+        ),
+        Provider(create: (context) {
+          return NotificationUseCase(
+            context.read<UserRepository>(),
+            context.read<PushNotificationService>(),
+            context.read<LocalNotificationService>(),
+          );
+        }),
+      ],
+      child: child,
     );
   }
 }

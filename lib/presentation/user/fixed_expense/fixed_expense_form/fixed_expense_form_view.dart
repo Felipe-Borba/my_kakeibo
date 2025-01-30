@@ -19,7 +19,11 @@ class FixedExpenseFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => FixedExpenseFormViewModel(context, fixedExpense),
+      create: (context) => FixedExpenseFormViewModel(
+        context,
+        fixedExpense,
+        context.read(),
+      ),
       builder: (context, child) {
         final viewModel = Provider.of<FixedExpenseFormViewModel>(context);
 

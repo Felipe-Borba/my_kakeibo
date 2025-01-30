@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view.dart';
 
 class IncomeListViewModel with ChangeNotifier {
-  IncomeListViewModel(this._context) {
+  IncomeListViewModel(this._context, this._incomeUseCase) {
     getInitialData();
   }
 
   // Dependencies
-  late final incomeUseCase = _context.dependencyManager.incomeUseCase;
+  final IncomeUseCase _incomeUseCase;
   final BuildContext _context;
 
   // State
@@ -22,7 +22,7 @@ class IncomeListViewModel with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var result = await incomeUseCase.findByMonth(
+    var result = await _incomeUseCase.findByMonth(
       month: monthFilter,
     );
 
@@ -55,7 +55,7 @@ class IncomeListViewModel with ChangeNotifier {
   }
 
   onDelete(Income income) async {
-    await incomeUseCase.delete(income);
+    await _incomeUseCase.delete(income);
     _doRefreshList(true);
   }
 
@@ -71,7 +71,7 @@ class IncomeListViewModel with ChangeNotifier {
 
   _doRefreshList(bool? refresh) async {
     if (refresh == true) {
-      var list = (await incomeUseCase.findAll()).getOrThrow();
+      var list = (await _incomeUseCase.findAll()).getOrThrow();
       this.list = list;
       list.sort((a, b) => a.date.compareTo(b.date));
       notifyListeners();

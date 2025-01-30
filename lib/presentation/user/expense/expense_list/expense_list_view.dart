@@ -21,7 +21,7 @@ class ExpenseListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ExpenseListViewModel(context),
+      create: (context) => ExpenseListViewModel(context, context.read()),
       builder: (context, child) {
         final viewModel = Provider.of<ExpenseListViewModel>(context);
 

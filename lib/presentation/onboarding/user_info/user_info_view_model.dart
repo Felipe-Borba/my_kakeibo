@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
+import 'package:my_kakeibo/data/repository/income_source_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 
 class UserInfoViewModel with ChangeNotifier {
   final BuildContext _context;
-  late final _userUseCase = _context.dependencyManager.userUseCase;
-  late final _expenseCategoryRepository =
-      _context.dependencyManager.expenseCategoryRealmRepository;
-  late final _incomeSourceRepository =
-      _context.dependencyManager.incomeSourceRealmRepository;
+  final UserUseCase _userUseCase;
+  final ExpenseCategoryRepository _expenseCategoryRepository;
+  final IncomeSourceRepository _incomeSourceRepository;
 
-  UserInfoViewModel(this._context);
+  UserInfoViewModel(
+    this._context,
+    this._userUseCase,
+    this._expenseCategoryRepository,
+    this._incomeSourceRepository,
+  );
 
   // State
   final formKey = GlobalKey<FormState>();

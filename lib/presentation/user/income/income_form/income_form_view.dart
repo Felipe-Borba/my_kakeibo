@@ -18,7 +18,7 @@ class IncomeFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => IncomeFormViewModel(context, income),
+      create: (context) => IncomeFormViewModel(context, income, context.read()),
       builder: (context, child) {
         final viewModel = Provider.of<IncomeFormViewModel>(context);
 

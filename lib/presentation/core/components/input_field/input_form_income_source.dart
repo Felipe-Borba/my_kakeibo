@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/data/repository/income_source_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:result_dart/result_dart.dart';
 
 class InputFormIncomeSource extends StatefulWidget {
@@ -17,8 +18,7 @@ class InputFormIncomeSource extends StatefulWidget {
   });
 
   @override
-  State<InputFormIncomeSource> createState() =>
-      _InputFormIncomeSourceState();
+  State<InputFormIncomeSource> createState() => _InputFormIncomeSourceState();
 }
 
 class _InputFormIncomeSourceState extends State<InputFormIncomeSource> {
@@ -34,8 +34,10 @@ class _InputFormIncomeSourceState extends State<InputFormIncomeSource> {
       _showLabel = true;
     }
 
-    final incomeSourceRepository =
-        context.dependencyManager.incomeSourceRealmRepository;
+    final incomeSourceRepository = Provider.of<IncomeSourceRepository>(
+      context,
+      listen: false,
+    );
     incomeSourceRepository.findAll().onSuccess(
       (success) {
         setState(() {

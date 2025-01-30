@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/user/expense_category/expense_category_form/expense_category_form_view.dart';
 
 class ExpenseCategoryListViewModel with ChangeNotifier {
-  ExpenseCategoryListViewModel(this._context) {
+  ExpenseCategoryListViewModel(this._context, this._expenseCategoryRepository) {
     getInitialData();
   }
 
   // Dependencies
-  late final expenseUseCase =
-      _context.dependencyManager.expenseCategoryRealmRepository;
+  final ExpenseCategoryRepository _expenseCategoryRepository;
   final BuildContext _context;
 
   // State
@@ -20,7 +19,7 @@ class ExpenseCategoryListViewModel with ChangeNotifier {
 
   // Actions
   getInitialData() async {
-    var result = await expenseUseCase.findAll();
+    var result = await _expenseCategoryRepository.findAll();
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });
@@ -32,7 +31,7 @@ class ExpenseCategoryListViewModel with ChangeNotifier {
   }
 
   onDelete(ExpenseCategory expense) async {
-    await expenseUseCase.delete(expense);
+    await _expenseCategoryRepository.delete(expense);
     _doRefresh(true);
   }
 
@@ -50,7 +49,7 @@ class ExpenseCategoryListViewModel with ChangeNotifier {
 
   _doRefresh(bool? refresh) async {
     if (refresh == true) {
-      var result = await expenseUseCase.findAll();
+      var result = await _expenseCategoryRepository.findAll();
       result.onSuccess((success) {
         list = success;
         notifyListeners();

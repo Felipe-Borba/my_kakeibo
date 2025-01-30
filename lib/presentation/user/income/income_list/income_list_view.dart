@@ -20,7 +20,7 @@ class IncomeListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => IncomeListViewModel(context),
+      create: (context) => IncomeListViewModel(context, context.read()),
       builder: (context, child) {
         final viewModel = Provider.of<IncomeListViewModel>(context);
 

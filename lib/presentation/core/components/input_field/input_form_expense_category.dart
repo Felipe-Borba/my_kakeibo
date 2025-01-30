@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/presentation/core/extensions/dependency_manager_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:result_dart/result_dart.dart';
 
 class InputFormExpenseCategory extends StatefulWidget {
@@ -23,7 +24,7 @@ class InputFormExpenseCategory extends StatefulWidget {
 
 class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
   bool _showLabel = false;
-  List<ExpenseCategory> _list = List.empty();
+  List<ExpenseCategory> _list = [];
 
   @override
   void initState() {
@@ -34,8 +35,10 @@ class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
       _showLabel = true;
     }
 
-    final expenseCategoryRepository =
-        context.dependencyManager.expenseCategoryRealmRepository;
+    final expenseCategoryRepository = Provider.of<ExpenseCategoryRepository>(
+      context,
+      listen: false,
+    );
     expenseCategoryRepository.findAll().onSuccess(
       (success) {
         setState(() {

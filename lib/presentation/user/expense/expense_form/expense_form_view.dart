@@ -18,7 +18,7 @@ class ExpenseFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ExpenseFormViewModel(context, expense),
+      create: (context) => ExpenseFormViewModel(context, expense, context.read(),),
       builder: (context, child) {
         final viewModel = Provider.of<ExpenseFormViewModel>(context);
 
