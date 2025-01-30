@@ -35,7 +35,6 @@ class UserInfoViewModel with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    //TODO essas linhas acho que deveria ser um único caso de uso createOnboardingUser
     var expenseCategories = [
       ExpenseCategory(
         name: _context.intl.misc,

@@ -79,7 +79,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
       amount: amount!,
       expenseIdList: _fixedExpense?.expenseIdList ?? [],
       frequency: frequency!,
-      remember: Remember.no, //TODO implement local notifications
+      remember: Remember.no,
     ));
 
     result.onFailure((failure) {
