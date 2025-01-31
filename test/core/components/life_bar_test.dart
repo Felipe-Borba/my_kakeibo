@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 
 import '../../utils_test.dart';
 
 void main() {
   double total = 1000.0;
   double current = 500.0;
-  const key = Key("life-bar");
+  const key = WidgetKeys.lifeBar;
 
   testWidgets('Should render correctly if inputs are valid', (tester) async {
     total = 1000.0;
@@ -16,7 +16,6 @@ void main() {
     await tester.pumpWidget(
       createTestableWidget(
         LifeBar(
-          key: key,
           current: current,
           total: total,
         ),

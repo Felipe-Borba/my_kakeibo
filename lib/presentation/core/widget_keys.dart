@@ -1,8 +1,20 @@
 import 'package:flutter/widgets.dart';
 
-//TODO centralizar keys dos inputs
 class WidgetKeys {
-  static const Key button = Key('myButtonKey');
-  static const Key form = Key('myFormKey');
-  static const Key listItem = Key('myListItemKey');
+  static const settings = Key("settings");
+  static const name = Key("name");
+  static const createAccount = Key("create-account");
+  static const deleteData = Key("deleteData");
+  static const amount = Key("amount");
+  static const category = Key("category");
+  static const date = Key("date");
+  static const description = Key("description");
+  static const saveExpense = Key("save-expense");
+  static const color = Key("color");
+  static const icon = Key("icon");
+  static const save = Key("save");
+  static const dueDate = Key("due-date");
+  static const frequency = Key("frequency");
+  static const source = Key("source");
+  static const lifeBar = Key("life-bar");
 }

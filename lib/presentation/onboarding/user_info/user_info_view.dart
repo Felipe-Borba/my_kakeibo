@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/onboarding/user_info/user_info_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,7 @@ class UserInfoView extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     InputFormString(
-                      key: const Key("name"),
+                      key: WidgetKeys.name,
                       onChanged: (value) => viewModel.name = value,
                       validator: viewModel.validateName,
                       labelText: context.intl.name,
@@ -50,7 +51,7 @@ class UserInfoView extends StatelessWidget {
                     const SizedBox(height: 16),
                     Center(
                       child: ElevatedButton(
-                        key: const Key("create-account"),
+                        key: WidgetKeys.createAccount,
                         onPressed: viewModel.onSubmit,
                         child: Text(context.intl.next),
                       ),

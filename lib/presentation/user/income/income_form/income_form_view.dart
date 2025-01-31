@@ -7,6 +7,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_d
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class IncomeFormView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   InputFormCurrency(
-                    key: const Key("amount"),
+                    key: WidgetKeys.amount,
                     value: viewModel.amount,
                     onChanged: (value) => viewModel.amount = value,
                     labelText: context.intl.amount,
@@ -43,21 +44,21 @@ class IncomeFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   InputFormIncomeSource(
-                    key: const Key("source"),
+                    key: WidgetKeys.source,
                     value: viewModel.source,
                     onChanged: (value) => viewModel.source = value,
                     validator: viewModel.validateSource,
                   ),
                   const SizedBox(height: 8),
                   InputFormDate(
-                    key: const Key("date"),
+                    key: WidgetKeys.date,
                     value: viewModel.date,
                     onChanged: (value) => viewModel.date = value,
                     validator: viewModel.validateDate,
                   ),
                   const SizedBox(height: 8),
                   InputFormString(
-                    key: const Key("description"),
+                    key: WidgetKeys.description,
                     initialValue: viewModel.description,
                     onChanged: (value) => viewModel.description = value,
                     validator: viewModel.validateDescription,
@@ -66,7 +67,7 @@ class IncomeFormView extends StatelessWidget {
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
-                      key: const Key("save-income"),
+                      key: WidgetKeys.save,
                       onPressed: viewModel.onClickSave,
                       child: Text(context.intl.save),
                     ),

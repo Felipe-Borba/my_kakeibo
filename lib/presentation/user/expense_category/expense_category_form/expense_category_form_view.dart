@@ -6,6 +6,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_s
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/user/expense_category/expense_category_form/expense_category_form_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,7 @@ class ExpenseCategoryFormView extends StatelessWidget {
                 children: [
                   const SizedBox(height: 8),
                   InputFormString(
-                    key: const Key("name"),
+                    key: WidgetKeys.name,
                     validator: viewModel.validateName,
                     labelText: context.intl.name,
                     initialValue: viewModel.name,
@@ -47,14 +48,14 @@ class ExpenseCategoryFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   InputFormColorCustom(
-                    key: const Key("color"),
+                    key: WidgetKeys.color,
                     validator: viewModel.validateColor,
                     value: viewModel.color,
                     onChanged: (value) => viewModel.color = value,
                   ),
                   const SizedBox(height: 8),
                   InputFormIconCustom(
-                    key: const Key("icon"),
+                    key: WidgetKeys.icon,
                     validator: viewModel.validateIcon,
                     value: viewModel.icon,
                     onChanged: (value) => viewModel.icon = value,
@@ -62,7 +63,7 @@ class ExpenseCategoryFormView extends StatelessWidget {
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
-                      key: const Key("save-expense"),
+                      key: WidgetKeys.save,
                       onPressed: viewModel.onClickSave,
                       child: Text(context.intl.save),
                     ),

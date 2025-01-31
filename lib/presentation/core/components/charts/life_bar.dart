@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 
 class LifeBar extends StatelessWidget {
   final double total;
   final double current;
 
   const LifeBar({
-    super.key,
+    super.key = WidgetKeys.lifeBar,
     required this.total,
     required this.current,
   });

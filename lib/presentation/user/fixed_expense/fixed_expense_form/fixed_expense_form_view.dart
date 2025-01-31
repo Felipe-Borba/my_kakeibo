@@ -8,6 +8,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_f
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +54,7 @@ class FixedExpenseFormView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           InputFormCurrency(
-            key: const Key("amount"),
+            key: WidgetKeys.amount,
             value: controller.amount,
             onChanged: controller.setAmount,
             labelText: context.intl.amount,
@@ -61,14 +62,14 @@ class FixedExpenseFormView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           InputFormExpenseCategory(
-            key: const Key("category"),
+            key: WidgetKeys.category,
             value: controller.category,
             onChanged: controller.setCategory,
             validator: controller.validateCategory,
           ),
           const SizedBox(height: 8),
           InputFormDate(
-            key: const Key("dueDate"),
+            key: WidgetKeys.dueDate,
             labelText: context.intl.dueDate,
             validator: controller.validateDueDate,
             value: controller.dueDate,
@@ -76,14 +77,14 @@ class FixedExpenseFormView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           InputFormFrequency(
-            key: const Key("frequency"),
+            key: WidgetKeys.frequency,
             value: controller.frequency,
             onChanged: (value) => controller.frequency = value,
             validator: controller.validateFrequency,
           ),
           const SizedBox(height: 8),
           InputFormString(
-            key: const Key("description"),
+            key: WidgetKeys.description,
             validator: controller.validateDescription,
             labelText: context.intl.description,
             initialValue: controller.description,
@@ -92,7 +93,7 @@ class FixedExpenseFormView extends StatelessWidget {
           const SizedBox(height: 24),
           Center(
             child: ElevatedButton(
-              key: const Key("save-expense"),
+              key: WidgetKeys.save,
               onPressed: controller.onClickSave,
               child: Text(context.intl.save),
             ),

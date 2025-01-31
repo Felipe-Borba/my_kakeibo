@@ -7,6 +7,7 @@ import 'package:my_kakeibo/presentation/core/components/input_field/input_form_e
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,11 @@ class ExpenseFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ExpenseFormViewModel(context, expense, context.read(),),
+      create: (context) => ExpenseFormViewModel(
+        context,
+        expense,
+        context.read(),
+      ),
       builder: (context, child) {
         final viewModel = Provider.of<ExpenseFormViewModel>(context);
 
@@ -35,7 +40,7 @@ class ExpenseFormView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   InputFormCurrency(
-                    key: const Key("amount"),
+                    key: WidgetKeys.amount,
                     value: viewModel.amount,
                     onChanged: viewModel.setAmount,
                     labelText: context.intl.amount,
@@ -43,21 +48,21 @@ class ExpenseFormView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   InputFormExpenseCategory(
-                    key: const Key("category"),
+                    key: WidgetKeys.category,
                     value: viewModel.category,
                     onChanged: viewModel.setCategory,
                     validator: viewModel.validateCategory,
                   ),
                   const SizedBox(height: 8),
                   InputFormDate(
-                    key: const Key("date"),
+                    key: WidgetKeys.date,
                     validator: viewModel.validateDate,
                     value: viewModel.date,
                     onChanged: viewModel.setDate,
                   ),
                   const SizedBox(height: 8),
                   InputFormString(
-                    key: const Key("description"),
+                    key: WidgetKeys.description,
                     validator: viewModel.validateDescription,
                     labelText: context.intl.description,
                     initialValue: viewModel.description,
@@ -66,7 +71,7 @@ class ExpenseFormView extends StatelessWidget {
                   const SizedBox(height: 24),
                   Center(
                     child: ElevatedButton(
-                      key: const Key("save-expense"),
+                      key: WidgetKeys.saveExpense,
                       onPressed: viewModel.onClickSave,
                       child: Text(context.intl.save),
                     ),

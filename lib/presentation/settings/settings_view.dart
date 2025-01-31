@@ -4,6 +4,7 @@ import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dar
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class SettingsView extends StatelessWidget {
                   .toList(),
             ),
             ElevatedButton.icon(
-              key: const Key("deleteData"),
+              key: WidgetKeys.deleteData,
               onPressed: () {
                 showDialog(
                   context: context,
