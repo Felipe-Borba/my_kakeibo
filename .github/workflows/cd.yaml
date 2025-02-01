@@ -65,7 +65,7 @@ jobs:
       - run: flutter clean
       - run: flutter build appbundle
       - name: Upload appbundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: appbundle
           path: build/app/outputs/bundle/release/app-release.aab
