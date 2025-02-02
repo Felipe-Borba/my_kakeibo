@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 
-import '../../utils_test.dart';
+import '../../../utils_test.dart';
 
 void main() {
   double total = 1000.0;
