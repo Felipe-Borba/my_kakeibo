@@ -1,14 +1,12 @@
-import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/models.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
+import 'package:my_kakeibo/data/realm/model/models.dart';
+import 'package:my_kakeibo/data/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
-class ExpenseCategoryRealmRepository extends ExpenseCategoryRepository {
+class ExpenseCategoryRealmService {
   final realm = RealmConfig().realm;
 
-  @override
   Future<Result<ExpenseCategory>> insert(
       ExpenseCategory expenseCategory) async {
     try {
@@ -20,7 +18,6 @@ class ExpenseCategoryRealmRepository extends ExpenseCategoryRepository {
     }
   }
 
-  @override
   Future<Result<List<ExpenseCategory>>> findAll() async {
     try {
       final results = realm.all<ExpenseCategoryModel>();
@@ -31,7 +28,6 @@ class ExpenseCategoryRealmRepository extends ExpenseCategoryRepository {
     }
   }
 
-  @override
   Future<Result<ExpenseCategory>> findOne(
     ExpenseCategory expenseCategory,
   ) async {
@@ -48,7 +44,6 @@ class ExpenseCategoryRealmRepository extends ExpenseCategoryRepository {
     }
   }
 
-  @override
   Future<Result<ExpenseCategory>> update(
       ExpenseCategory expenseCategory) async {
     try {
@@ -70,7 +65,6 @@ class ExpenseCategoryRealmRepository extends ExpenseCategoryRepository {
     }
   }
 
-  @override
   Future<Result<void>> delete(ExpenseCategory expenseCategory) async {
     try {
       final model = realm.find<ExpenseCategoryModel>(expenseCategory.id);

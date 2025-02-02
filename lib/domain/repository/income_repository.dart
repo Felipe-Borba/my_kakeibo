@@ -1,0 +1,51 @@
+import 'package:my_kakeibo/data/income/income_realm_service.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income.dart';
+import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:result_dart/result_dart.dart';
+
+class IncomeRepository {
+  final IncomeRealmService _incomeRealmService;
+  final UserRepository _userRepository;
+
+  IncomeRepository(
+    this._incomeRealmService,
+    this._userRepository,
+  );
+
+  Future<Result<void>> save(Income income) async {
+    var user = await _userRepository.getUser().getOrThrow();
+
+    user.increaseBalance(income.amount);
+    await _userRepository.update(user);
+    if (income.id != null) {
+      await _incomeRealmService.update(income);
+    } else {
+      await _incomeRealmService.insert(income);
+    }
+
+    return const Success("ok");
+  }
+
+  Future<Result<List<Income>>> findAll() async {
+    return await _incomeRealmService.findAll();
+  }
+
+  Future<Result<List<Income>>> findByMonth({
+    required DateTime month,
+  }) async {
+    return await _incomeRealmService.findByMonth(month: month);
+  }
+
+  Future<Result<void>> delete(Income income) async {
+    return await _incomeRealmService.delete(income);
+  }
+
+  Future<Result<double>> getMonthTotal() async {
+    var incomeList = await _incomeRealmService
+        .findByMonth(month: DateTime.now()) //
+        .getOrThrow();
+
+    var total = incomeList.fold(0.0, (sum, income) => sum + income.amount);
+    return Success(total);
+  }
+}

@@ -1,16 +1,14 @@
-import 'package:my_kakeibo/data/repository/expense_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/models.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
+import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
+import 'package:my_kakeibo/data/realm/model/models.dart';
+import 'package:my_kakeibo/data/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
-class ExpenseRealmRepository extends ExpenseRepository {
+class ExpenseRealmService {
   final realm = RealmConfig().realm;
 
-  @override
   Future<Result<Expense>> insert(Expense expense) async {
     try {
       final model = _toModel(expense);
@@ -24,7 +22,6 @@ class ExpenseRealmRepository extends ExpenseRepository {
     }
   }
 
-  @override
   Future<Result<List<Expense>>> findAll() async {
     try {
       final results = realm.all<ExpenseModel>();
@@ -35,7 +32,6 @@ class ExpenseRealmRepository extends ExpenseRepository {
     }
   }
 
-  @override
   Future<Result<List<Expense>>> findByMonth({required DateTime month}) async {
     try {
       final start = DateTime(month.year, month.month, 1);
@@ -52,7 +48,6 @@ class ExpenseRealmRepository extends ExpenseRepository {
     }
   }
 
-  @override
   Future<Result<Expense>> update(Expense expense) async {
     try {
       final model = realm.find<ExpenseModel>(expense.id);
@@ -76,7 +71,6 @@ class ExpenseRealmRepository extends ExpenseRepository {
     }
   }
 
-  @override
   Future<Result<void>> delete(Expense expense) async {
     try {
       final model = realm.find<ExpenseModel>(expense.id);
@@ -98,7 +92,7 @@ class ExpenseRealmRepository extends ExpenseRepository {
       amount: model.amount,
       date: model.date,
       description: model.description,
-      category: ExpenseCategoryRealmRepository.toEntity(model.category!),
+      category: ExpenseCategoryRealmService.toEntity(model.category!),
     );
   }
 

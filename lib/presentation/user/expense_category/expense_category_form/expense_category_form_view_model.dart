@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
+import 'package:my_kakeibo/domain/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
-import 'package:result_dart/result_dart.dart';
 
 class ExpenseCategoryFormViewModel with ChangeNotifier {
   ExpenseCategoryFormViewModel(
@@ -55,12 +54,7 @@ class ExpenseCategoryFormViewModel with ChangeNotifier {
       icon: icon!,
     );
 
-    ResultDart<ExpenseCategory, Exception> result;
-    if (expenseCategory.id != null) {
-      result = await _expenseCategoryRepository.update(expenseCategory);
-    } else {
-      result = await _expenseCategoryRepository.insert(expenseCategory);
-    }
+    final result = await _expenseCategoryRepository.save(expenseCategory);
 
     result.onFailure((error) {
       showSnackbar(context: _context, text: error.toString());

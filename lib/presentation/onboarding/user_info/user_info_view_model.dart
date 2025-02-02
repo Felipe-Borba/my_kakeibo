@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
-import 'package:my_kakeibo/data/repository/income_source_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
+import 'package:my_kakeibo/domain/repository/expense_category_repository.dart';
+import 'package:my_kakeibo/domain/repository/income_source_repository.dart';
+import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
@@ -14,13 +14,13 @@ import 'package:my_kakeibo/presentation/onboarding/hello/hello_view.dart';
 
 class UserInfoViewModel with ChangeNotifier {
   final BuildContext _context;
-  final UserUseCase _userUseCase;
+  final UserRepository _userRepository;
   final ExpenseCategoryRepository _expenseCategoryRepository;
   final IncomeSourceRepository _incomeSourceRepository;
 
   UserInfoViewModel(
     this._context,
-    this._userUseCase,
+    this._userRepository,
     this._expenseCategoryRepository,
     this._incomeSourceRepository,
   );
@@ -68,23 +68,23 @@ class UserInfoViewModel with ChangeNotifier {
       ),
     ];
     for (var element in expenseCategories) {
-      _expenseCategoryRepository.insert(element);
+      _expenseCategoryRepository.save(element);
     }
-    _incomeSourceRepository.insert(
+    _incomeSourceRepository.save(
       IncomeSource(
           name: _context.intl.salary,
           icon: IconCustom.salary,
           color: ColorCustom.green),
     );
-    _incomeSourceRepository.insert(
+    _incomeSourceRepository.save(
       IncomeSource(
           name: _context.intl.misc,
           icon: IconCustom.misc,
           color: ColorCustom.grey),
     );
-    var result = await _userUseCase.getUser();
+    var result = await _userRepository.getUser();
     var user = result.getOrDefault(User.createOnboardingUser(name!));
-    var saveResult = await _userUseCase.save(user);
+    var saveResult = await _userRepository.save(user);
 
     saveResult.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());

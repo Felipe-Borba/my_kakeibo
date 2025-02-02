@@ -1,27 +1,18 @@
 import 'package:flutter/widgets.dart';
-import 'package:my_kakeibo/data/repository/expense_category_repository.dart';
-import 'package:my_kakeibo/data/repository/expense_repository.dart';
-import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
-import 'package:my_kakeibo/data/repository/income_repository.dart';
-import 'package:my_kakeibo/data/repository/income_source_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/expense_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/fixed_expense_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/income_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/income_source_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/user_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/user_repository.dart';
-import 'package:my_kakeibo/data/service/auth_firebase_service.dart';
-import 'package:my_kakeibo/data/service/auth_service.dart';
-import 'package:my_kakeibo/data/service/firebase_push_notification_service.dart';
-import 'package:my_kakeibo/data/service/local_notification_service.dart';
-import 'package:my_kakeibo/data/service/local_notification_service_impl.dart';
-import 'package:my_kakeibo/data/service/push_notification_service.dart';
-import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/notification_use_case.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
+import 'package:my_kakeibo/data/expense/expense_realm_service.dart';
+import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
+import 'package:my_kakeibo/data/fixed_expense/fixed_expense_realm_service.dart';
+import 'package:my_kakeibo/data/income/income_realm_service.dart';
+import 'package:my_kakeibo/data/income_source/income_source_realm_service.dart';
+import 'package:my_kakeibo/data/notification/local_notification_service.dart';
+import 'package:my_kakeibo/data/notification/push_notification_service.dart';
+import 'package:my_kakeibo/data/user/user_realm_service.dart';
+import 'package:my_kakeibo/domain/repository/expense_category_repository.dart';
+import 'package:my_kakeibo/domain/repository/expense_repository.dart';
+import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
+import 'package:my_kakeibo/domain/repository/income_repository.dart';
+import 'package:my_kakeibo/domain/repository/income_source_repository.dart';
+import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:provider/provider.dart';
 
 class DependencyManager extends StatelessWidget {
@@ -32,71 +23,61 @@ class DependencyManager extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //Services
         Provider(create: (_) {
-          return UserRealmRepository() as UserRepository;
+          return UserRealmService();
         }),
         Provider(create: (_) {
-          return ExpenseCategoryRealmRepository() as ExpenseCategoryRepository;
+          return ExpenseCategoryRealmService();
         }),
         Provider(create: (_) {
-          return FixedExpenseRealmRepository() as FixedExpenseRepository;
+          return FixedExpenseRealmService();
         }),
         Provider(create: (_) {
-          return IncomeRealmRepository() as IncomeRepository;
+          return IncomeRealmService();
         }),
         Provider(create: (context) {
-          return ExpenseRealmRepository() as ExpenseRepository;
+          return ExpenseRealmService();
         }),
         Provider(create: (context) {
-          return IncomeSourceRealmRepository() as IncomeSourceRepository;
+          return IncomeSourceRealmService();
         }),
         Provider(create: (_) {
-          return LocalNotificationServiceImpl() as LocalNotificationService;
+          return LocalNotificationService();
         }),
         Provider(create: (_) {
-          return FirebasePushNotificationService() as PushNotificationService;
+          return PushNotificationService();
         }),
-        Provider(create: (_) {
-          return AuthFirebaseService() as AuthService;
-        }),
-        Provider(
-          create: (context) {
-            return UserUseCase(
-              userRepository: context.read(),
-              authRepository: context.read(),
-            );
-          },
-        ),
-        Provider(
-          create: (context) {
-            return ExpenseUseCase(
-              expenseRepository: context.read<ExpenseRepository>(),
-              userUseCase: context.read<UserUseCase>(),
-            );
-          },
-        ),
-        Provider(
-          create: (context) {
-            return IncomeUseCase(
-              incomeRepository: context.read(),
-              userUseCase: context.read(),
-            );
-          },
-        ),
-        Provider(
-          create: (context) {
-            return FixedExpenseUseCase(
-              fixedExpenseRepository: context.read(),
-              expenseRepository: context.read(),
-              userUseCase: context.read(),
-            );
-          },
-        ),
+        //Repositories
         Provider(create: (context) {
-          return NotificationUseCase(
+          return UserRepository(context.read<UserRealmService>());
+        }),
+        Provider(create: (context) {
+          return ExpenseRepository(
+            context.read<ExpenseRealmService>(),
             context.read<UserRepository>(),
-            context.read<PushNotificationService>(),
-            context.read<LocalNotificationService>(),
+          );
+        }),
+        Provider(create: (context) {
+          return ExpenseCategoryRepository(
+            context.read<ExpenseCategoryRealmService>(),
+          );
+        }),
+        Provider(create: (context) {
+          return FixedExpenseRepository(
+            context.read<FixedExpenseRealmService>(),
+            context.read<ExpenseRealmService>(),
+          );
+        }),
+        Provider(create: (context) {
+          return IncomeRepository(
+            context.read<IncomeRealmService>(),
+            context.read<UserRepository>(),
+          );
+        }),
+        Provider(create: (context) {
+          return IncomeSourceRepository(
+            context.read<IncomeSourceRealmService>(),
           );
         }),
       ],

@@ -1,17 +1,15 @@
-import 'package:my_kakeibo/data/repository/income_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/income_source_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/models.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
+import 'package:my_kakeibo/data/income_source/income_source_realm_service.dart';
+import 'package:my_kakeibo/data/realm/model/models.dart';
+import 'package:my_kakeibo/data/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
-class IncomeRealmRepository extends IncomeRepository {
+class IncomeRealmService {
   final realm = RealmConfig().realm;
   final uuid = RealmConfig().uuid;
 
-  @override
   Future<Result<Income>> insert(Income income) async {
     try {
       final model = _toModel(income);
@@ -27,7 +25,6 @@ class IncomeRealmRepository extends IncomeRepository {
     }
   }
 
-  @override
   Future<Result<List<Income>>> findAll() async {
     try {
       final results = realm.all<IncomeModel>();
@@ -38,7 +35,6 @@ class IncomeRealmRepository extends IncomeRepository {
     }
   }
 
-  @override
   Future<Result<List<Income>>> findByMonth({required DateTime month}) async {
     try {
       final start = DateTime(month.year, month.month, 1);
@@ -55,7 +51,6 @@ class IncomeRealmRepository extends IncomeRepository {
     }
   }
 
-  @override
   Future<Result<Income>> update(Income income) async {
     try {
       final model = realm.find<IncomeModel>(income.id);
@@ -79,7 +74,6 @@ class IncomeRealmRepository extends IncomeRepository {
     }
   }
 
-  @override
   Future<Result<void>> delete(Income income) async {
     try {
       final model = realm.find<IncomeModel>(income.id);
@@ -101,7 +95,7 @@ class IncomeRealmRepository extends IncomeRepository {
       amount: model.amount,
       date: model.date,
       description: model.description,
-      source: IncomeSourceRealmRepository.toEntity(model.source!),
+      source: IncomeSourceRealmService.toEntity(model.source!),
     );
   }
 

@@ -1,14 +1,12 @@
-import 'package:my_kakeibo/data/repository/income_source_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/models.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
+import 'package:my_kakeibo/data/realm/model/models.dart';
+import 'package:my_kakeibo/data/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
-class IncomeSourceRealmRepository extends IncomeSourceRepository {
+class IncomeSourceRealmService {
   final realm = RealmConfig().realm;
 
-  @override
   Future<Result<IncomeSource>> insert(IncomeSource incomeSource) async {
     try {
       final model = toModel(incomeSource);
@@ -19,7 +17,6 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
     }
   }
 
-  @override
   Future<Result<List<IncomeSource>>> findAll() async {
     try {
       final results = realm.all<IncomeSourceModel>();
@@ -30,7 +27,6 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
     }
   }
 
-  @override
   Future<Result<IncomeSource>> findOne(
     IncomeSource incomeSource,
   ) async {
@@ -47,7 +43,6 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
     }
   }
 
-  @override
   Future<Result<IncomeSource>> update(IncomeSource incomeSource) async {
     try {
       final model = realm.find<IncomeSourceModel>(incomeSource.id);
@@ -68,7 +63,6 @@ class IncomeSourceRealmRepository extends IncomeSourceRepository {
     }
   }
 
-  @override
   Future<Result<void>> delete(IncomeSource incomeSource) async {
     try {
       final model = realm.find<IncomeSourceModel>(incomeSource.id);

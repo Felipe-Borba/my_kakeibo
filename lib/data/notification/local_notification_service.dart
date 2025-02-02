@@ -1,15 +1,14 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification.dart';
 import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
-import 'package:my_kakeibo/data/service/local_notification_service.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-class LocalNotificationServiceImpl implements LocalNotificationService {
+class LocalNotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  LocalNotificationServiceImpl() {
+  LocalNotificationService() {
     _initialize();
   }
 
@@ -26,7 +25,6 @@ class LocalNotificationServiceImpl implements LocalNotificationService {
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  @override
   Future<Result<void>> displayNotification(NotificationMessage message) async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
@@ -49,7 +47,6 @@ class LocalNotificationServiceImpl implements LocalNotificationService {
     return const Success("ok");
   }
 
-  @override
   Future<Result<void>> scheduleNotification(
     Notification notification,
   ) async {

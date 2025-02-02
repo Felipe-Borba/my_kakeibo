@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/domain/use_case/user_use_case.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
+import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 
 class SettingsViewModel with ChangeNotifier {
-  SettingsViewModel(this._context, this._userUseCase);
+  SettingsViewModel(this._context, this._userRepository);
 
   final BuildContext _context;
-  final UserUseCase _userUseCase;
+  final UserRepository _userRepository;
 
   UserTheme userTheme = UserTheme.system;
   Widget initialRoute = const WelcomeView();
 
   loadSettings() async {
-    var result = await _userUseCase.getUser();
+    var result = await _userRepository.getUser();
     result.onSuccess((user) {
       initialRoute = const DashboardView();
 
@@ -32,7 +32,7 @@ class SettingsViewModel with ChangeNotifier {
   }
 
   deleteData() async {
-    var result = await _userUseCase.deleteData();
+    var result = await _userRepository.deleteData();
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });

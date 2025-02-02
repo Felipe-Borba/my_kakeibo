@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/domain/use_case/expense_use_case.dart';
+import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
@@ -8,12 +8,12 @@ import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 
 class ExpenseFormViewModel with ChangeNotifier {
-  ExpenseFormViewModel(this._context, this._expense, this._expenseUseCase);
+  ExpenseFormViewModel(this._context, this._expense, this._expenseRepository);
 
   // Dependencies
   final BuildContext _context;
   final Expense? _expense;
-  final ExpenseUseCase _expenseUseCase;
+  final ExpenseRepository _expenseRepository;
 
   // State
   final formKey = GlobalKey<FormState>();
@@ -68,7 +68,7 @@ class ExpenseFormViewModel with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var result = await _expenseUseCase.insert(Expense(
+    var result = await _expenseRepository.insert(Expense(
       id: _expense?.id,
       amount: amount!,
       date: date!,

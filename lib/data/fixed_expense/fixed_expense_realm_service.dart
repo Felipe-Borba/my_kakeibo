@@ -1,7 +1,6 @@
-import 'package:my_kakeibo/data/repository/fixed_expense_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/expense_category_realm_repository.dart';
-import 'package:my_kakeibo/data/repository/realm/model/models.dart';
-import 'package:my_kakeibo/data/repository/realm/realm_config.dart';
+import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
+import 'package:my_kakeibo/data/realm/model/models.dart';
+import 'package:my_kakeibo/data/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
@@ -9,10 +8,9 @@ import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
-class FixedExpenseRealmRepository extends FixedExpenseRepository {
+class FixedExpenseRealmService {
   final realm = RealmConfig().realm;
 
-  @override
   Future<Result<FixedExpense>> insert(FixedExpense fixedExpense) async {
     try {
       final model = _toModel(fixedExpense);
@@ -27,7 +25,6 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
     }
   }
 
-  @override
   Future<Result<List<FixedExpense>>> findAll() async {
     try {
       final results = realm.all<FixedExpenseModel>();
@@ -38,7 +35,6 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
     }
   }
 
-  @override
   Future<Result<FixedExpense>> update(FixedExpense fixedExpense) async {
     try {
       final model = realm.find<FixedExpenseModel>(fixedExpense.id);
@@ -65,7 +61,6 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
     }
   }
 
-  @override
   Future<Result<void>> delete(FixedExpense fixedExpense) async {
     try {
       final model = realm.find<FixedExpenseModel>(fixedExpense.id);
@@ -87,7 +82,7 @@ class FixedExpenseRealmRepository extends FixedExpenseRepository {
       amount: model.amount,
       dueDate: model.dueDate,
       description: model.description,
-      category: ExpenseCategoryRealmRepository.toEntity(model.category!),
+      category: ExpenseCategoryRealmService.toEntity(model.category!),
       frequency: model.frequency,
       remember: model.remember,
       expenseIdList: model.expenseIdList,

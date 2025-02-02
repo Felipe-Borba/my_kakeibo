@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/domain/use_case/fixed_expense_use_case.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 
 class FixedExpenseFormViewModel with ChangeNotifier {
   FixedExpenseFormViewModel(
     this._context,
     this._fixedExpense,
-    this._fixedExpenseUseCase,
+    this._fixedExpenseRepository,
   );
 
   // Dependencies
   final BuildContext _context;
   final FixedExpense? _fixedExpense;
-  final FixedExpenseUseCase _fixedExpenseUseCase;
+  final FixedExpenseRepository _fixedExpenseRepository;
 
   // State
   final formKey = GlobalKey<FormState>();
@@ -74,7 +74,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var result = await _fixedExpenseUseCase.insert(FixedExpense(
+    var result = await _fixedExpenseRepository.insert(FixedExpense(
       id: _fixedExpense?.id,
       description: description,
       category: category!,

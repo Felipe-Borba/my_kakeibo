@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/data/repository/realm/model/models.dart';
+import 'package:my_kakeibo/data/realm/model/models.dart';
 import 'package:realm/realm.dart' hide Uuid;
 import 'package:uuid/uuid.dart';
 

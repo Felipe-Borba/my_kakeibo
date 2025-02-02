@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
-import 'package:my_kakeibo/domain/use_case/income_use_case.dart';
+import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 
 class IncomeFormViewModel with ChangeNotifier {
-  IncomeFormViewModel(this._context, this._income, this._incomeUseCase);
+  IncomeFormViewModel(this._context, this._income, this._incomeRepository);
 
   // Dependencies
-  final IncomeUseCase _incomeUseCase;
+  final IncomeRepository _incomeRepository;
   final BuildContext _context;
   final Income? _income;
   final formKey = GlobalKey<FormState>();
@@ -27,7 +27,7 @@ class IncomeFormViewModel with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
-    var result = await _incomeUseCase.insert(Income(
+    var result = await _incomeRepository.save(Income(
       id: _income?.id,
       amount: amount!,
       source: source!,

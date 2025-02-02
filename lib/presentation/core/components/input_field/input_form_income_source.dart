@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/data/repository/income_source_repository.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
+import 'package:my_kakeibo/domain/repository/income_source_repository.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:result_dart/result_dart.dart';
