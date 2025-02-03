@@ -24,7 +24,7 @@ class ExpenseCategoryListView extends StatelessWidget {
         final viewModel = Provider.of<ExpenseCategoryListViewModel>(context);
 
         return ScaffoldCustom(
-          appBar: AppBarCustom(title: context.intl.expense),
+          appBar: AppBarCustom(title: context.intl.expense_category),
           floatingActionButton: FloatingActionButton.small(
             onPressed: () => viewModel.onAdd(),
             child: const Icon(Icons.add),

@@ -28,7 +28,7 @@ class ExpenseCategoryFormView extends StatelessWidget {
 
         return ScaffoldCustom(
           appBar: AppBarCustom(
-            title: context.intl.expense,
+            title: context.intl.expense_category,
           ),
           body: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
