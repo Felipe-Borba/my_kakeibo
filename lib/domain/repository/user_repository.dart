@@ -27,8 +27,4 @@ class UserRepository {
   AsyncResult<User> getUser() async {
     return await _userService.getSelf();
   }
-
-  Future<Result<void>> deleteData() async {
-    throw UnimplementedError('TODO interfaces e implementar');
-  }
 }

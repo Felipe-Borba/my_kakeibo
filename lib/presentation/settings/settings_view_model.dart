@@ -29,12 +29,6 @@ class SettingsViewModel with ChangeNotifier {
   }
 
   deleteData() async {
-    var result = await _userRepository.deleteData();
-    result.onFailure((failure) {
-      showSnackbar(context: _context, text: failure.toString());
-    });
-    result.onSuccess((success) {
-      Navigator.of(_context).pop(true);
-    });
+    throw UnimplementedError('TODO interfaces e implementar');
   }
 }
