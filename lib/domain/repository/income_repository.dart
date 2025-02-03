@@ -16,7 +16,7 @@ class IncomeRepository {
     var user = await _userRepository.getUser().getOrThrow();
 
     user.increaseBalance(income.amount);
-    await _userRepository.update(user);
+    await _userRepository.save(user);
     if (income.id != null) {
       await _incomeRealmService.update(income);
     } else {

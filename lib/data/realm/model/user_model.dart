@@ -20,7 +20,7 @@ class _UserModel {
   late String? authId;
 
   @MapTo('theme')
-  late String _themeString;
-  UserTheme get theme => UserTheme.values.getByDescription(_themeString);
-  set theme(UserTheme theme) => _themeString = theme.description;
+  late int _themeValue;
+  UserTheme get theme => UserTheme.values[_themeValue];
+  set theme(UserTheme theme) => _themeValue = theme.index;
 }

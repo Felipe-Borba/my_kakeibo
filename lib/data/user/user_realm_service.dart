@@ -1,7 +1,6 @@
 import 'package:my_kakeibo/data/realm/model/models.dart';
 import 'package:my_kakeibo/data/realm/realm_config.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -9,10 +8,37 @@ class UserRealmService {
   final realm = RealmConfig().realm;
   final uuid = RealmConfig().uuid;
 
-  Future<Result<void>> save(User user) async {
+  AsyncResult<User> insert(User user) async {
     try {
-      realm.write(() => realm.add(_toModel(user)));
-      return const Success("ok");
+      final model = _toModel(user);
+      realm.write(() {
+        realm.add(model);
+      });
+      return Success(_toEntity(model));
+    } catch (e) {
+      return Failure(CustomException.unknownError());
+    }
+  }
+
+  AsyncResult<User> update(User user) async {
+    try {
+      final users = realm.all<UserModel>();
+      if (users.isEmpty) {
+        return Failure(CustomException.userNotFound());
+      }
+      final model = users.first;
+
+      realm.write(() {
+        model.name = user.name;
+        model.email = user.email;
+        model.password = user.password;
+        model.balance = user.balance;
+        model.notificationToken = user.notificationToken;
+        model.theme = user.theme;
+        model.hasOnboarding = user.hasOnboarding;
+        model.authId = user.authId;
+      });
+      return Success(_toEntity(model));
     } catch (e) {
       return Failure(CustomException.unknownError());
     }
@@ -53,7 +79,7 @@ class UserRealmService {
       user.password,
       user.balance,
       user.hasOnboarding,
-      user.theme.description,
+      user.theme.index,
       notificationToken: user.notificationToken,
     );
   }

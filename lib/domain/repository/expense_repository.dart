@@ -16,7 +16,7 @@ class ExpenseRepository {
     var user = await _userRepository.getUser().getOrThrow();
 
     user.decreaseBalance(expense.amount);
-    await _userRepository.update(user);
+    await _userRepository.save(user);
 
     if (expense.id != null) {
       await _expenseRealmService.update(expense);

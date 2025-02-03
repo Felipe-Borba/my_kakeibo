@@ -28,5 +28,5 @@ void main() async {
 
   tz.initializeTimeZones();
 
-  return runApp(const DependencyManager(child: MyApp()));
+  return runApp(const DependencyManager(child: App()));
 }

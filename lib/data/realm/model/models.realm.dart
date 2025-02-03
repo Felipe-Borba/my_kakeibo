@@ -619,7 +619,7 @@ class UserModel extends _UserModel
     String password,
     double balance,
     bool hasOnboarding,
-    String _themeString, {
+    int _themeValue, {
     String? notificationToken,
     String? authId,
   }) {
@@ -631,7 +631,7 @@ class UserModel extends _UserModel
     RealmObjectBase.set(this, 'notificationToken', notificationToken);
     RealmObjectBase.set(this, 'hasOnboarding', hasOnboarding);
     RealmObjectBase.set(this, 'authId', authId);
-    RealmObjectBase.set(this, 'theme', _themeString);
+    RealmObjectBase.set(this, 'theme', _themeValue);
   }
 
   UserModel._();
@@ -682,10 +682,9 @@ class UserModel extends _UserModel
   set authId(String? value) => RealmObjectBase.set(this, 'authId', value);
 
   @override
-  String get _themeString =>
-      RealmObjectBase.get<String>(this, 'theme') as String;
+  int get _themeValue => RealmObjectBase.get<int>(this, 'theme') as int;
   @override
-  set _themeString(String value) => RealmObjectBase.set(this, 'theme', value);
+  set _themeValue(int value) => RealmObjectBase.set(this, 'theme', value);
 
   @override
   Stream<RealmObjectChanges<UserModel>> get changes =>
@@ -708,7 +707,7 @@ class UserModel extends _UserModel
       'notificationToken': notificationToken.toEJson(),
       'hasOnboarding': hasOnboarding.toEJson(),
       'authId': authId.toEJson(),
-      'theme': _themeString.toEJson(),
+      'theme': _themeValue.toEJson(),
     };
   }
 
@@ -723,7 +722,7 @@ class UserModel extends _UserModel
         'password': EJsonValue password,
         'balance': EJsonValue balance,
         'hasOnboarding': EJsonValue hasOnboarding,
-        'theme': EJsonValue _themeString,
+        'theme': EJsonValue _themeValue,
       } =>
         UserModel(
           fromEJson(id),
@@ -732,7 +731,7 @@ class UserModel extends _UserModel
           fromEJson(password),
           fromEJson(balance),
           fromEJson(hasOnboarding),
-          fromEJson(_themeString),
+          fromEJson(_themeValue),
           notificationToken: fromEJson(ejson['notificationToken']),
           authId: fromEJson(ejson['authId']),
         ),
@@ -753,7 +752,7 @@ class UserModel extends _UserModel
           optional: true),
       SchemaProperty('hasOnboarding', RealmPropertyType.bool),
       SchemaProperty('authId', RealmPropertyType.string, optional: true),
-      SchemaProperty('_themeString', RealmPropertyType.string, mapTo: 'theme'),
+      SchemaProperty('_themeValue', RealmPropertyType.int, mapTo: 'theme'),
     ]);
   }();
 

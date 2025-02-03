@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
-import 'package:my_kakeibo/presentation/settings/settings_view.dart';
+import 'package:my_kakeibo/presentation/settings/settings_screen.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view.dart';
 import 'package:my_kakeibo/presentation/user/expense_category/expense_category_list/expense_category_list_view.dart';
@@ -97,7 +97,7 @@ class DrawerCustom extends StatelessWidget {
               title: Text(context.intl.settings),
               onTap: () {
                 scaffold.closeEndDrawer();
-                context.pushScreen(const SettingsView());
+                context.pushScreen(const SettingsScreen());
               },
             ),
           ),

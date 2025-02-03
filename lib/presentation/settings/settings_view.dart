@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view_model.dart';
-import 'package:provider/provider.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
+  final SettingsViewModel viewModel;
+
+  const SettingsView({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<SettingsViewModel>(context);
-
     return ScaffoldCustom(
       appBar: AppBarCustom(title: context.intl.settings),
       body: Center(
