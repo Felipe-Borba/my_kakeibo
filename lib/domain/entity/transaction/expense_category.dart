@@ -2,7 +2,7 @@ import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
 class ExpenseCategory {
-  String? id;
+  int? id;
   String name;
   IconCustom icon;
   ColorCustom color;
@@ -24,7 +24,21 @@ class ExpenseCategory {
   @override
   int get hashCode => id.hashCode;
 
-    Map<String, dynamic> toMap() {
+  ExpenseCategory copyWith({
+    int? id,
+    String? name,
+    IconCustom? icon,
+    ColorCustom? color,
+  }) {
+    return ExpenseCategory(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      icon: icon ?? this.icon,
+      color: color ?? this.color,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,

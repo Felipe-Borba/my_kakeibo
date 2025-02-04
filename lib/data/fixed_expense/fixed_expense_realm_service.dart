@@ -1,9 +1,11 @@
-import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:my_kakeibo/data/expense_category/expense_category_service_sqlite.dart';
 import 'package:my_kakeibo/data/realm/model/models.dart';
 import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
@@ -82,16 +84,7 @@ class FixedExpenseRealmService {
   }
 
   FixedExpense _toEntity(FixedExpenseModel model) {
-    return FixedExpense(
-      id: model.id,
-      amount: model.amount,
-      dueDate: model.dueDate,
-      description: model.description,
-      category: ExpenseCategoryRealmService.toEntity(model.category!),
-      frequency: model.frequency,
-      remember: model.remember,
-      expenseIdList: model.expenseIdList,
-    );
+    throw UnimplementedError();
   }
 
   FixedExpenseModel _toModel(FixedExpense fixedExpense) {

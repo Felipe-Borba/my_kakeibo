@@ -20,6 +20,7 @@ void main() {
     sqliteService = SQLiteService();
     await sqliteService.initialize();
     userService = UserServiceSqlite(sqliteService);
+    await sqliteService.database.delete('users');
   });
 
   tearDownAll(() async {
@@ -29,8 +30,7 @@ void main() {
 
   group('UserServiceSqlite', () {
     tearDown(() async {
-      final db = sqliteService.database;
-      await db.delete('users');
+      await sqliteService.database.delete('users');
     });
 
     test('should insert a user', () async {

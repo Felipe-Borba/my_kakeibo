@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
+import 'package:my_kakeibo/data/expense_category/expense_category_service_sqlite.dart';
 import 'package:my_kakeibo/data/realm/model/models.dart';
 import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
@@ -90,13 +90,7 @@ class ExpenseRealmService {
   }
 
   Expense _toEntity(ExpenseModel model) {
-    return Expense(
-      id: model.id,
-      amount: model.amount,
-      date: model.date,
-      description: model.description,
-      category: ExpenseCategoryRealmService.toEntity(model.category!),
-    );
+    throw UnimplementedError();
   }
 
   ExpenseModel _toModel(Expense expense) {
