@@ -2,7 +2,7 @@ import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
 class IncomeSource {
-  String? id;
+  int? id;
   String name;
   IconCustom icon;
   ColorCustom color;
@@ -14,15 +14,19 @@ class IncomeSource {
     required this.color,
   });
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is IncomeSource && other.id == id;
+  IncomeSource copyWith({
+    int? id,
+    String? name,
+    IconCustom? icon,
+    ColorCustom? color,
+  }) {
+    return IncomeSource(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      icon: icon ?? this.icon,
+      color: color ?? this.color,
+    );
   }
-
-  @override
-  int get hashCode => id.hashCode;
 
   Map<String, dynamic> toMap() {
     return {
@@ -40,5 +44,20 @@ class IncomeSource {
       icon: IconCustom.values[map['icon']],
       color: ColorCustom.values[map['color']],
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is IncomeSource && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'IncomeSource{id: $id, name: $name, icon: $icon, color: $color}';
   }
 }

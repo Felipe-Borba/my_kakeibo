@@ -1,4 +1,4 @@
-import 'package:my_kakeibo/data/income_source/income_source_realm_service.dart';
+import 'package:my_kakeibo/data/income_source/income_source_service_sqlite.dart';
 import 'package:my_kakeibo/data/realm/model/models.dart';
 import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
@@ -91,13 +91,7 @@ class IncomeRealmService {
   }
 
   Income _toEntity(IncomeModel model) {
-    return Income(
-      id: model.id,
-      amount: model.amount,
-      date: model.date,
-      description: model.description,
-      source: IncomeSourceRealmService.toEntity(model.source!),
-    );
+    throw UnimplementedError();
   }
 
   IncomeModel _toModel(Income income) {

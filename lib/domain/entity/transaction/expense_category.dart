@@ -14,16 +14,6 @@ class ExpenseCategory {
     required this.color,
   });
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is ExpenseCategory && other.id == id;
-  }
-
-  @override
-  int get hashCode => id.hashCode;
-
   ExpenseCategory copyWith({
     int? id,
     String? name,
@@ -54,5 +44,20 @@ class ExpenseCategory {
       icon: IconCustom.values[map['icon']],
       color: ColorCustom.values[map['color']],
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ExpenseCategory && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() {
+    return 'ExpenseCategory(id: $id, name: $name, icon: $icon, color: $color)';
   }
 }
