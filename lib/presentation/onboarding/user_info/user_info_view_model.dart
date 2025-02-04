@@ -83,7 +83,7 @@ class UserInfoViewModel with ChangeNotifier {
           color: ColorCustom.grey),
     );
     var result = await _userRepository.getUser();
-    var user = result.getOrDefault(User.createOnboardingUser(name!));
+    var user = result.getOrDefault(User(name: name!));
     var saveResult = await _userRepository.save(user);
 
     saveResult.onFailure((failure) {

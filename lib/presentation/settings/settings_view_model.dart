@@ -21,8 +21,9 @@ class SettingsViewModel with ChangeNotifier {
     userTheme = newThemeMode;
 
     final user = await _userRepository.getUser().getOrThrow();
-    user.theme = newThemeMode;
-    _userRepository.save(user).onFailure((failure) {
+    _userRepository
+        .save(user.copyWith(theme: newThemeMode))
+        .onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });
     notifyListeners();

@@ -34,6 +34,7 @@
     "Autovalidate",
     "Backlink",
     "desaturate",
+    "dismisser",
     "grayscale",
     "grey",
     "kakeibo",
@@ -41,6 +42,9 @@
     "leoafarias",
     "mipmap",
     "mocktail",
+    "sqflite",
+    "sqlite",
+    "Sqlite",
     "STEB",
     "uuid"
   ],

@@ -15,4 +15,25 @@ class Expense extends Transaction {
     required super.description,
     required this.category,
   });
+
+   Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'amount': amount,
+      'date': date.toIso8601String(),
+      'description': description,
+      'sourceId': category.id,
+    };
+  }
+
+  factory Expense.fromMap(Map<String, dynamic> map, ExpenseCategory category) {
+    return Expense(
+      id: map['id'],
+      amount: map['amount'],
+      date: DateTime.parse(map['date']),
+      description: map['description'],
+      category: category,
+    );
+  } 
 }
+

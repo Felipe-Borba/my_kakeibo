@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:my_kakeibo/data/user/user_realm_service.dart';
+import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:result_dart/result_dart.dart';
 
 class UserRepository {
-  late final UserRealmService _userService;
+  late final UserServiceSqlite _userService;
 
   UserRepository(this._userService);
 

@@ -23,4 +23,22 @@ class ExpenseCategory {
 
   @override
   int get hashCode => id.hashCode;
+
+    Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'icon': icon.index,
+      'color': color.index,
+    };
+  }
+
+  factory ExpenseCategory.fromMap(Map<String, dynamic> map) {
+    return ExpenseCategory(
+      id: map['id'],
+      name: map['name'],
+      icon: IconCustom.values[map['icon']],
+      color: ColorCustom.values[map['color']],
+    );
+  }
 }

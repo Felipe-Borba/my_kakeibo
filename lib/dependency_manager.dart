@@ -7,7 +7,7 @@ import 'package:my_kakeibo/data/income_source/income_source_realm_service.dart';
 import 'package:my_kakeibo/data/notification/local_notification_service.dart';
 import 'package:my_kakeibo/data/notification/push_notification_service.dart';
 import 'package:my_kakeibo/data/realm/realm_service.dart';
-import 'package:my_kakeibo/data/user/user_realm_service.dart';
+import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
@@ -24,11 +24,8 @@ class DependencyManager extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(create: (context) => RealmService()),
         //Services
-        Provider(create: (context) {
-          return UserRealmService(context.read<RealmService>());
-        }),
+        Provider(create: (context) => UserServiceSqlite(context.read())),
         Provider(create: (context) {
           return ExpenseCategoryRealmService(context.read<RealmService>());
         }),
@@ -51,13 +48,10 @@ class DependencyManager extends StatelessWidget {
           return PushNotificationService();
         }),
         //Repositories
-        Provider(create: (context) {
-          return UserRepository(context.read<UserRealmService>());
-        }),
+        Provider(create: (context) => UserRepository(context.read())),
         Provider(create: (context) {
           return ExpenseRepository(
             context.read<ExpenseRealmService>(),
-            context.read<UserRepository>(),
           );
         }),
         Provider(create: (context) {
@@ -74,7 +68,6 @@ class DependencyManager extends StatelessWidget {
         Provider(create: (context) {
           return IncomeRepository(
             context.read<IncomeRealmService>(),
-            context.read<UserRepository>(),
           );
         }),
         Provider(create: (context) {

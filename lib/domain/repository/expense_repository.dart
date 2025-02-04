@@ -1,22 +1,15 @@
 import 'package:my_kakeibo/data/expense/expense_realm_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseRepository {
   final ExpenseRealmService _expenseRealmService;
-  final UserRepository _userRepository;
 
   ExpenseRepository(
     this._expenseRealmService,
-    this._userRepository,
   );
 
   Future<Result<void>> insert(Expense expense) async {
-    var user = await _userRepository.getUser().getOrThrow();
-
-    user.decreaseBalance(expense.amount);
-    await _userRepository.save(user);
 
     if (expense.id != null) {
       await _expenseRealmService.update(expense);

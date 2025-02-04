@@ -94,4 +94,32 @@ class FixedExpense {
 
     return DateTime(novoAno, data.month, novoDia);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'amount': amount,
+      'dueDate': dueDate.toIso8601String(),
+      'description': description,
+      'frequency': frequency.index,
+      'remember': remember.index,
+      'expenseIdList': expenseIdList,
+    };
+  }
+
+  factory FixedExpense.fromMap(
+    Map<String, dynamic> map,
+    ExpenseCategory category,
+  ) {
+    return FixedExpense(
+      id: map['id'],
+      amount: map['amount'],
+      dueDate: DateTime.parse(map['dueDate']),
+      description: map['description'],
+      frequency: Frequency.values[map['frequency']],
+      remember: Remember.values[map['remember']],
+      expenseIdList: List<String>.from(map['expenseIdList']),
+      category: category,
+    );
+  }
 }

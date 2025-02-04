@@ -23,4 +23,22 @@ class IncomeSource {
 
   @override
   int get hashCode => id.hashCode;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'icon': icon.index,
+      'color': color.index,
+    };
+  }
+
+  factory IncomeSource.fromMap(Map<String, dynamic> map) {
+    return IncomeSource(
+      id: map['id'],
+      name: map['name'],
+      icon: IconCustom.values[map['icon']],
+      color: ColorCustom.values[map['color']],
+    );
+  }
 }
