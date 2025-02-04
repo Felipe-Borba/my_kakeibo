@@ -1,18 +1,19 @@
 import 'package:my_kakeibo/data/realm/model/models.dart';
-import 'package:my_kakeibo/data/realm/realm_config.dart';
+import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class UserRealmService {
-  final realm = RealmConfig().realm;
-  final uuid = RealmConfig().uuid;
+  final RealmService _realmService;
+
+  UserRealmService(this._realmService);
 
   AsyncResult<User> insert(User user) async {
     try {
       final model = _toModel(user);
-      realm.write(() {
-        realm.add(model);
+      _realmService.realm.write(() {
+        _realmService.realm.add(model);
       });
       return Success(_toEntity(model));
     } catch (e) {
@@ -22,13 +23,13 @@ class UserRealmService {
 
   AsyncResult<User> update(User user) async {
     try {
-      final users = realm.all<UserModel>();
+      final users = _realmService.realm.all<UserModel>();
       if (users.isEmpty) {
         return Failure(CustomException.userNotFound());
       }
       final model = users.first;
 
-      realm.write(() {
+      _realmService.realm.write(() {
         model.name = user.name;
         model.email = user.email;
         model.password = user.password;
@@ -46,7 +47,7 @@ class UserRealmService {
 
   Future<Result<User>> getSelf() async {
     try {
-      final users = realm.all<UserModel>();
+      final users = _realmService.realm.all<UserModel>();
 
       if (users.isEmpty) {
         return Failure(CustomException.userNotFound());
@@ -73,7 +74,7 @@ class UserRealmService {
 
   UserModel _toModel(User user) {
     return UserModel(
-      user.id ?? uuid.v4(),
+      user.id ?? RealmService.generateUuid(),
       user.name,
       user.email,
       user.password,

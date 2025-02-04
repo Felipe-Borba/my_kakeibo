@@ -1,20 +1,23 @@
 import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
 import 'package:my_kakeibo/data/realm/model/models.dart';
-import 'package:my_kakeibo/data/realm/realm_config.dart';
+import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseRealmService {
-  final realm = RealmConfig().realm;
+  final RealmService _realmService;
+
+  ExpenseRealmService(this._realmService);
 
   Future<Result<Expense>> insert(Expense expense) async {
     try {
       final model = _toModel(expense);
-      realm.write(() {
-        var category = realm.find<ExpenseCategoryModel>(expense.category.id);
-        realm.add(model..category = category);
+      _realmService.realm.write(() {
+        var category =
+            _realmService.realm.find<ExpenseCategoryModel>(expense.category.id);
+        _realmService.realm.add(model..category = category);
       });
       return Success(_toEntity(model));
     } on Exception catch (e) {
@@ -24,7 +27,7 @@ class ExpenseRealmService {
 
   Future<Result<List<Expense>>> findAll() async {
     try {
-      final results = realm.all<ExpenseModel>();
+      final results = _realmService.realm.all<ExpenseModel>();
       final expenses = results.map(_toEntity).toList();
       return Success(expenses);
     } on Exception catch (e) {
@@ -37,7 +40,7 @@ class ExpenseRealmService {
       final start = DateTime(month.year, month.month, 1);
       final end = DateTime(month.year, month.month + 1, 0);
 
-      final results = realm
+      final results = _realmService.realm
           .all<ExpenseModel>()
           .query(r'date >= $0 AND date <= $1', [start, end]);
       final expenses = results.map(_toEntity).toList();
@@ -50,17 +53,17 @@ class ExpenseRealmService {
 
   Future<Result<Expense>> update(Expense expense) async {
     try {
-      final model = realm.find<ExpenseModel>(expense.id);
+      final model = _realmService.realm.find<ExpenseModel>(expense.id);
 
       if (model == null) {
         return Failure(CustomException.expenseNotFound());
       }
 
-      realm.write(() {
+      _realmService.realm.write(() {
         model.amount = expense.amount;
         model.date = expense.date;
         model.description = expense.description;
-        model.category = realm.find<ExpenseCategoryModel>(
+        model.category = _realmService.realm.find<ExpenseCategoryModel>(
           expense.category.id,
         );
       });
@@ -73,20 +76,20 @@ class ExpenseRealmService {
 
   Future<Result<void>> delete(Expense expense) async {
     try {
-      final model = realm.find<ExpenseModel>(expense.id);
+      final model = _realmService.realm.find<ExpenseModel>(expense.id);
 
       if (model == null) {
         return Failure(CustomException.expenseNotFound());
       }
 
-      realm.write(() => realm.delete(model));
+      _realmService.realm.write(() => _realmService.realm.delete(model));
       return const Success("ok");
     } on Exception catch (e) {
       return Failure(e);
     }
   }
 
-  static Expense _toEntity(ExpenseModel model) {
+  Expense _toEntity(ExpenseModel model) {
     return Expense(
       id: model.id,
       amount: model.amount,
@@ -96,11 +99,9 @@ class ExpenseRealmService {
     );
   }
 
-  static ExpenseModel _toModel(Expense expense) {
-    final uuid = RealmConfig().uuid;
-
+  ExpenseModel _toModel(Expense expense) {
     return ExpenseModel(
-      expense.id ?? uuid.v4(),
+      expense.id ?? RealmService.generateUuid(),
       expense.amount,
       expense.date,
       expense.description,

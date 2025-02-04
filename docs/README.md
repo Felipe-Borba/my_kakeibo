@@ -135,6 +135,12 @@ depois que mudar alguma coisa lá no model tem que gerar dnv o .realm file
 dart run realm generate
 ```
 
+para rodar os teste do realm, tem que instalar os binários do realm na máquina [issue](https://github.com/realm/realm-dart/issues/1619)
+
+```console
+dart run realm install
+```
+
 ### Geração de ícone de launcher
 
 Para simplificar o processo usarei a dependência [flutter_launcher_icons](https://pub.dev/packages/flutter_launcher_icons)

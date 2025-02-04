@@ -1,22 +1,23 @@
 import 'package:my_kakeibo/data/income_source/income_source_realm_service.dart';
 import 'package:my_kakeibo/data/realm/model/models.dart';
-import 'package:my_kakeibo/data/realm/realm_config.dart';
+import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:realm/realm.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeRealmService {
-  final realm = RealmConfig().realm;
-  final uuid = RealmConfig().uuid;
+  final RealmService _realmService;
+
+  IncomeRealmService(this._realmService);
 
   Future<Result<Income>> insert(Income income) async {
     try {
       final model = _toModel(income);
 
-      realm.write(() {
-        var source = realm.find<IncomeSourceModel>(income.source.id);
-        realm.add(model..source = source);
+      _realmService.realm.write(() {
+        var source = _realmService.realm.find<IncomeSourceModel>(income.source.id);
+        _realmService.realm.add(model..source = source);
       });
 
       return Success(_toEntity(model));
@@ -27,7 +28,7 @@ class IncomeRealmService {
 
   Future<Result<List<Income>>> findAll() async {
     try {
-      final results = realm.all<IncomeModel>();
+      final results = _realmService.realm.all<IncomeModel>();
       final incomes = results.map(_toEntity).toList();
       return Success(incomes);
     } on Exception catch (e) {
@@ -40,7 +41,7 @@ class IncomeRealmService {
       final start = DateTime(month.year, month.month, 1);
       final end = DateTime(month.year, month.month + 1, 0);
 
-      final results = realm
+      final results = _realmService.realm
           .all<IncomeModel>()
           .query(r'date >= $0 AND date <= $1', [start, end]);
       final incomes = results.map(_toEntity).toList();
@@ -53,17 +54,17 @@ class IncomeRealmService {
 
   Future<Result<Income>> update(Income income) async {
     try {
-      final model = realm.find<IncomeModel>(income.id);
+      final model = _realmService.realm.find<IncomeModel>(income.id);
 
       if (model == null) {
         return Failure(CustomException.incomeNotFound());
       }
 
-      realm.write(() {
+      _realmService.realm.write(() {
         model.amount = income.amount;
         model.date = income.date;
         model.description = income.description;
-        model.source = realm.find<IncomeSourceModel>(
+        model.source = _realmService.realm.find<IncomeSourceModel>(
           income.source.id,
         );
       });
@@ -76,13 +77,13 @@ class IncomeRealmService {
 
   Future<Result<void>> delete(Income income) async {
     try {
-      final model = realm.find<IncomeModel>(income.id);
+      final model = _realmService.realm.find<IncomeModel>(income.id);
 
       if (model == null) {
         return Failure(CustomException.incomeNotFound());
       }
 
-      realm.write(() => realm.delete(model));
+      _realmService.realm.write(() => _realmService.realm.delete(model));
       return const Success("ok");
     } on Exception catch (e) {
       return Failure(e);
@@ -101,7 +102,7 @@ class IncomeRealmService {
 
   IncomeModel _toModel(Income income) {
     return IncomeModel(
-      income.id ?? uuid.v4(),
+      income.id ?? RealmService.generateUuid(),
       income.amount,
       income.date,
       income.description,

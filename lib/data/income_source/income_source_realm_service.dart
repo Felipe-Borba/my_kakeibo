@@ -1,16 +1,18 @@
 import 'package:my_kakeibo/data/realm/model/models.dart';
-import 'package:my_kakeibo/data/realm/realm_config.dart';
+import 'package:my_kakeibo/data/realm/realm_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeSourceRealmService {
-  final realm = RealmConfig().realm;
+  final RealmService _realmService;
+
+  IncomeSourceRealmService(this._realmService);
 
   Future<Result<IncomeSource>> insert(IncomeSource incomeSource) async {
     try {
       final model = toModel(incomeSource);
-      realm.write(() => realm.add(model));
+      _realmService.realm.write(() => _realmService.realm.add(model));
       return Success(toEntity(model));
     } on Exception catch (e) {
       return Failure(e);
@@ -19,7 +21,7 @@ class IncomeSourceRealmService {
 
   Future<Result<List<IncomeSource>>> findAll() async {
     try {
-      final results = realm.all<IncomeSourceModel>();
+      final results = _realmService.realm.all<IncomeSourceModel>();
       final expenseCategories = results.map(toEntity).toList();
       return Success(expenseCategories);
     } on Exception catch (e) {
@@ -31,7 +33,7 @@ class IncomeSourceRealmService {
     IncomeSource incomeSource,
   ) async {
     try {
-      final model = realm.find<IncomeSourceModel>(incomeSource.id);
+      final model = _realmService.realm.find<IncomeSourceModel>(incomeSource.id);
 
       if (model == null) {
         return Failure(CustomException.incomeSourceNotFound());
@@ -45,13 +47,13 @@ class IncomeSourceRealmService {
 
   Future<Result<IncomeSource>> update(IncomeSource incomeSource) async {
     try {
-      final model = realm.find<IncomeSourceModel>(incomeSource.id);
+      final model = _realmService.realm.find<IncomeSourceModel>(incomeSource.id);
 
       if (model == null) {
         return Failure(CustomException.incomeSourceNotFound());
       }
 
-      realm.write(() {
+      _realmService.realm.write(() {
         model.name = incomeSource.name;
         model.color = incomeSource.color;
         model.icon = incomeSource.icon;
@@ -65,13 +67,13 @@ class IncomeSourceRealmService {
 
   Future<Result<void>> delete(IncomeSource incomeSource) async {
     try {
-      final model = realm.find<IncomeSourceModel>(incomeSource.id);
+      final model = _realmService.realm.find<IncomeSourceModel>(incomeSource.id);
 
       if (model == null) {
         return Failure(CustomException.incomeSourceNotFound());
       }
 
-      realm.write(() => realm.delete(model));
+      _realmService.realm.write(() => _realmService.realm.delete(model));
       return const Success("ok");
     } on Exception catch (e) {
       return Failure(e);
@@ -87,10 +89,9 @@ class IncomeSourceRealmService {
     );
   }
 
-  static IncomeSourceModel toModel(IncomeSource incomeSource) {
-    final uuid = RealmConfig().uuid;
+   IncomeSourceModel toModel(IncomeSource incomeSource) {
     return IncomeSourceModel(
-      incomeSource.id ?? uuid.v4(),
+      incomeSource.id ?? RealmService.generateUuid(),
       incomeSource.name,
       incomeSource.color.index,
       incomeSource.icon.index,
