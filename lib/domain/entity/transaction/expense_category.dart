@@ -2,7 +2,7 @@ import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
 class ExpenseCategory {
-  int? id;
+  String? id;
   String name;
   IconCustom icon;
   ColorCustom color;
@@ -15,7 +15,7 @@ class ExpenseCategory {
   });
 
   ExpenseCategory copyWith({
-    int? id,
+    String? id,
     String? name,
     IconCustom? icon,
     ColorCustom? color,

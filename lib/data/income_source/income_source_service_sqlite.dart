@@ -12,12 +12,15 @@ class IncomeSourceServiceSqlite {
     IncomeSource incomeSource,
   ) async {
     try {
-      final id = await _sqliteService.database.insert(
-        'income_sources',
-        incomeSource.toMap(),
+      final insertedCategory = incomeSource.copyWith(
+        id: _sqliteService.generateId(),
       );
 
-      final insertedCategory = incomeSource.copyWith(id: id);
+      await _sqliteService.database.insert(
+        'income_sources',
+        insertedCategory.toMap(),
+      );
+
       return Success(insertedCategory);
     } on Exception catch (e) {
       return Failure(e);

@@ -12,12 +12,14 @@ class ExpenseCategoryServiceSqlite {
     ExpenseCategory expenseCategory,
   ) async {
     try {
-      final id = await _sqliteService.database.insert(
+      final insertedCategory = expenseCategory.copyWith(
+        id: _sqliteService.generateId(),
+      );
+      await _sqliteService.database.insert(
         'expense_categories',
-        expenseCategory.toMap(),
+        insertedCategory.toMap(),
       );
 
-      final insertedCategory = expenseCategory.copyWith(id: id);
       return Success(insertedCategory);
     } on Exception catch (e) {
       return Failure(e);

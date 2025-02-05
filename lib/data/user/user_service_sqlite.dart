@@ -11,9 +11,9 @@ class UserServiceSqlite {
   AsyncResult<User> insert(User user) async {
     try {
       final db = _sqlite.database;
-      final map = user.toMap();
-      final id = await db.insert('users', map);
-      return Success(user.copyWith(id: id));
+      final insertedUser = user.copyWith(id: _sqlite.generateId());
+      await db.insert('users', insertedUser.toMap());
+      return Success(insertedUser);
     } catch (e) {
       return Failure(CustomException.unknownError());
     }

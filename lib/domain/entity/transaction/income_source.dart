@@ -2,7 +2,7 @@ import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
 class IncomeSource {
-  int? id;
+  String? id;
   String name;
   IconCustom icon;
   ColorCustom color;
@@ -15,7 +15,7 @@ class IncomeSource {
   });
 
   IncomeSource copyWith({
-    int? id,
+    String? id,
     String? name,
     IconCustom? icon,
     ColorCustom? color,

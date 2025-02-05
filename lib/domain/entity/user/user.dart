@@ -1,7 +1,7 @@
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 
 class User {
-  final int? id;
+  final String? id;
   final String name;
   final UserTheme theme;
   final String? notificationToken;
@@ -14,7 +14,7 @@ class User {
   });
 
   User copyWith({
-    int? id,
+    String? id,
     String? name,
     UserTheme? theme,
     String? notificationToken,
