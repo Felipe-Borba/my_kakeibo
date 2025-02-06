@@ -39,7 +39,7 @@ class IncomeSource {
 
   factory IncomeSource.fromMap(Map<String, dynamic> map) {
     return IncomeSource(
-      id: map['id'],
+      id: map['sourceId'] ?? map['id'],
       name: map['name'],
       icon: IconCustom.values[map['icon']],
       color: ColorCustom.values[map['color']],

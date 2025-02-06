@@ -1,9 +1,9 @@
-import 'package:my_kakeibo/data/income/income_realm_service.dart';
+import 'package:my_kakeibo/data/income/income_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeRepository {
-  final IncomeRealmService _incomeRealmService;
+  final IncomeServiceSqlite _incomeRealmService;
 
   IncomeRepository(
     this._incomeRealmService,
