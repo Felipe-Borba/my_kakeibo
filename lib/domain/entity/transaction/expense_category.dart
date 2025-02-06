@@ -39,7 +39,7 @@ class ExpenseCategory {
 
   factory ExpenseCategory.fromMap(Map<String, dynamic> map) {
     return ExpenseCategory(
-      id: map['id'],
+      id: map['categoryId'] ?? map['id'],
       name: map['name'],
       icon: IconCustom.values[map['icon']],
       color: ColorCustom.values[map['color']],
