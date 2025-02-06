@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/expense_category/expense_category_service_sqlite.dart';
-import 'package:my_kakeibo/data/fixed_expense/fixed_expense_realm_service.dart';
+import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/income/income_service_sqlite.dart';
 import 'package:my_kakeibo/data/income_source/income_source_service_sqlite.dart';
 import 'package:my_kakeibo/data/notification/local_notification_service.dart';
@@ -30,10 +30,14 @@ class DependencyManager extends StatelessWidget {
         Provider(
           create: (context) => ExpenseCategoryServiceSqlite(context.read()),
         ),
-        Provider(create: (context) => FixedExpenseRealmService(context.read())),
+        Provider(
+          create: (context) => FixedExpenseServiceSqlite(context.read()),
+        ),
         Provider(create: (context) => IncomeServiceSqlite(context.read())),
         Provider(create: (context) => ExpenseServiceSqlite(context.read())),
-        Provider(create: (context) => IncomeSourceServiceSqlite(context.read())),
+        Provider(
+          create: (context) => IncomeSourceServiceSqlite(context.read()),
+        ),
         Provider(create: (context) => LocalNotificationService()),
         Provider(create: (context) => PushNotificationService()),
         //Repositories

@@ -1,12 +1,12 @@
-import 'package:my_kakeibo/data/expense/expense_realm_service.dart';
-import 'package:my_kakeibo/data/fixed_expense/fixed_expense_realm_service.dart';
+import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
+import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:result_dart/result_dart.dart';
 
 class FixedExpenseRepository {
-  final FixedExpenseRealmService _fixedExpenseRealmService;
-  final ExpenseRealmService _expenseRealmService;
+  final FixedExpenseServiceSqlite _fixedExpenseRealmService;
+  final ExpenseServiceSqlite _expenseRealmService;
 
   FixedExpenseRepository(
     this._fixedExpenseRealmService,
