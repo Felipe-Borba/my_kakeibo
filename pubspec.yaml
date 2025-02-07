@@ -24,8 +24,7 @@ dependencies:
   google_fonts: ^6.2.1
   fl_chart: ^0.69.2
   timezone: ^0.10.0
-  realm: ^3.4.1 # TODO deletar pq to achando ruim de testar e achar doc
-  uuid: ^4.5.1 # TODO talvez caia junto com o realm
+  uuid: ^4.5.1 
   firebase_app_check: ^0.3.1+6 #TODO ver melhor as questão do firebase
   keyboard_dismisser: ^3.0.0
   result_dart: ^2.0.0
