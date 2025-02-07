@@ -6,7 +6,6 @@ import 'package:result_dart/result_dart.dart';
 
 class ExpenseServiceSqlite {
   final SQLiteService _service;
-  final schema = "expenses";
 
   ExpenseServiceSqlite(this._service);
 
@@ -15,7 +14,7 @@ class ExpenseServiceSqlite {
       final model = expense.toMap();
       model['id'] = _service.generateId();
 
-      _service.database.insert(schema, model);
+      _service.database.insert(_service.expenseTable, model);
 
       return Success(expense.copyWith(id: model['id']));
     } on Exception catch (e) {
@@ -72,7 +71,7 @@ class ExpenseServiceSqlite {
       final id = expense.id;
 
       final count = await _service.database.update(
-        schema,
+        _service.expenseTable,
         model,
         where: 'id = ?',
         whereArgs: [id],
@@ -93,7 +92,7 @@ class ExpenseServiceSqlite {
       final id = expense.id;
 
       final count = await _service.database.delete(
-        schema,
+        _service.expenseTable,
         where: 'id = ?',
         whereArgs: [id],
       );

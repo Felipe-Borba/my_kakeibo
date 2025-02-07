@@ -17,7 +17,7 @@ class IncomeSourceServiceSqlite {
       );
 
       await _sqliteService.database.insert(
-        'income_sources',
+        _sqliteService.incomeSourceTable,
         insertedCategory.toMap(),
       );
 
@@ -29,7 +29,9 @@ class IncomeSourceServiceSqlite {
 
   AsyncResult<List<IncomeSource>> findAll() async {
     try {
-      final result = await _sqliteService.database.query('income_sources');
+      final result = await _sqliteService.database.query(
+        _sqliteService.incomeSourceTable,
+      );
       final expenseCategories =
           result.map((e) => IncomeSource.fromMap(e)).toList();
 
@@ -44,7 +46,7 @@ class IncomeSourceServiceSqlite {
   ) async {
     try {
       final result = await _sqliteService.database.query(
-        'income_sources',
+        _sqliteService.incomeSourceTable,
         where: 'id = ?',
         whereArgs: [incomeSource.id],
       );
@@ -66,7 +68,7 @@ class IncomeSourceServiceSqlite {
   ) async {
     try {
       final rowsAffected = await _sqliteService.database.update(
-        'income_sources',
+        _sqliteService.incomeSourceTable,
         incomeSource.toMap(),
         where: 'id = ?',
         whereArgs: [incomeSource.id],
@@ -85,7 +87,7 @@ class IncomeSourceServiceSqlite {
   AsyncResult<Unit> delete(IncomeSource incomeSource) async {
     try {
       final rowsDeleted = await _sqliteService.database.delete(
-        'income_sources',
+        _sqliteService.incomeSourceTable,
         where: 'id = ?',
         whereArgs: [incomeSource.id],
       );

@@ -24,8 +24,8 @@ void main() {
     sqliteService = SQLiteService();
     await sqliteService.initialize();
     incomeService = IncomeServiceSqlite(sqliteService);
-    await sqliteService.database.delete('income');
-    await sqliteService.database.delete('income_sources');
+    await sqliteService.database.delete(sqliteService.incomeTable);
+    await sqliteService.database.delete(sqliteService.incomeSourceTable);
     source = await IncomeSourceServiceSqlite(sqliteService)
         .insert(IncomeSource(
           color: ColorCustom.blue,
@@ -36,14 +36,14 @@ void main() {
   });
 
   tearDown(() async {
-    await sqliteService.database.delete('income_sources');
+    await sqliteService.database.delete(sqliteService.incomeSourceTable);
     final db = sqliteService.database;
     await db.close();
   });
 
   group('IncomeServiceSqlite', () {
     tearDown(() async {
-      await sqliteService.database.delete('income');
+      await sqliteService.database.delete(sqliteService.incomeTable);
     });
 
     test('should insert an income', () async {

@@ -21,7 +21,7 @@ void main() {
     sqliteService = SQLiteService();
     await sqliteService.initialize();
     service = ExpenseCategoryServiceSqlite(sqliteService);
-    await sqliteService.database.delete('expense_categories');
+    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
   });
 
   tearDownAll(() async {
@@ -30,7 +30,7 @@ void main() {
 
   group('ExpenseCategoryServiceSqlite', () {
     tearDown(() async {
-      await sqliteService.database.delete('expense_categories');
+      await sqliteService.database.delete(sqliteService.expenseCategoryTable);
     });
 
     test('should insert a expenseCategory', () async {

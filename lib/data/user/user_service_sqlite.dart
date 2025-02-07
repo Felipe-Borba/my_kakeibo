@@ -12,7 +12,7 @@ class UserServiceSqlite {
     try {
       final db = _sqlite.database;
       final insertedUser = user.copyWith(id: _sqlite.generateId());
-      await db.insert('users', insertedUser.toMap());
+      await db.insert(_sqlite.userTable, insertedUser.toMap());
       return Success(insertedUser);
     } catch (e) {
       return Failure(CustomException.unknownError());
@@ -24,7 +24,12 @@ class UserServiceSqlite {
       if (user.id == null) return Failure(CustomException.userNotFound());
       final db = _sqlite.database;
       final map = user.toMap();
-      await db.update('users', map, where: 'id = ?', whereArgs: [user.id]);
+      await db.update(
+        _sqlite.userTable,
+        map,
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
       return Success(user);
     } catch (e) {
       return Failure(CustomException.unknownError());
@@ -34,7 +39,7 @@ class UserServiceSqlite {
   Future<Result<User>> getSelf() async {
     try {
       final db = _sqlite.database;
-      final result = await db.query('users', limit: 1);
+      final result = await db.query(_sqlite.userTable, limit: 1);
       if (result.isEmpty) {
         return Failure(CustomException.userNotFound());
       }

@@ -10,7 +10,13 @@ class SQLiteService {
   static final SQLiteService _instance = SQLiteService._internal();
   late Database _database;
   final _uuid = const Uuid();
+
+  final userTable = "users";
   final fixedExpenseTable = "fixed_expenses";
+  final expenseTable = "expenses"; 
+  final expenseCategoryTable = "expense_categories";
+  final incomeTable = "income";
+  final incomeSourceTable = "income_sources";
 
   factory SQLiteService() {
     return _instance;

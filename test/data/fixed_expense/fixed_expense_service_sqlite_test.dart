@@ -30,7 +30,7 @@ void main() {
     fixedExpenseService = FixedExpenseServiceSqlite(sqliteService);
     await sqliteService.database.delete(sqliteService.fixedExpenseTable);
 
-    await sqliteService.database.delete('expense_categories');
+    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
     final categoryService = ExpenseCategoryServiceSqlite(sqliteService);
     category = await categoryService
         .insert(ExpenseCategory(

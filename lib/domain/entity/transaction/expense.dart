@@ -3,6 +3,7 @@ import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Expense extends Transaction {
   final ExpenseCategory category;
+  //TODO adicionar campo FixedExpense opcional
 
   Expense({
     super.id,

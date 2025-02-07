@@ -24,8 +24,8 @@ void main() {
     sqliteService = SQLiteService();
     await sqliteService.initialize();
     expenseService = ExpenseServiceSqlite(sqliteService);
-    await sqliteService.database.delete('expenses');
-    await sqliteService.database.delete('expense_categories');
+    await sqliteService.database.delete(sqliteService.expenseTable);
+    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
     category = await ExpenseCategoryServiceSqlite(sqliteService)
         .insert(ExpenseCategory(
           color: ColorCustom.blue,
@@ -36,14 +36,14 @@ void main() {
   });
 
   tearDown(() async {
-    await sqliteService.database.delete('expense_categories');
+    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
     final db = sqliteService.database;
     await db.close();
   });
 
   group('ExpenseServiceSqlite', () {
     tearDown(() async {
-      await sqliteService.database.delete('expenses');
+      await sqliteService.database.delete(sqliteService.expenseTable);
     });
 
     test('should insert an expense', () async {
