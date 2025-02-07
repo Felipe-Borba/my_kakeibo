@@ -1,7 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/expense_category/expense_category_service_sqlite.dart';
+import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/sqlite/sqlite_service.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
@@ -14,6 +18,7 @@ void main() {
   late ExpenseServiceSqlite expenseService;
 
   late ExpenseCategory category;
+  late FixedExpense fixedExpense;
 
   setUpAll(() {
     sqfliteFfiInit();
@@ -31,6 +36,17 @@ void main() {
           color: ColorCustom.blue,
           icon: IconCustom.book,
           name: "Stub",
+        ))
+        .getOrThrow();
+    fixedExpense = await FixedExpenseServiceSqlite(sqliteService)
+        .insert(FixedExpense(
+          amount: 50.0,
+          dueDate: DateTime.now(),
+          description: 'Stub',
+          frequency: Frequency.daily,
+          remember: Remember.no,
+          category: category,
+          expenseList: [],
         ))
         .getOrThrow();
   });
@@ -76,6 +92,7 @@ void main() {
             date: DateTime.now(),
             description: 'Groceries',
             category: category,
+            fixedExpense: fixedExpense,
           ))
           .getOrThrow();
 
@@ -85,6 +102,7 @@ void main() {
             date: DateTime.now(),
             description: 'Restaurant',
             category: category,
+            fixedExpense: fixedExpense,
           ))
           .getOrThrow();
 
@@ -98,11 +116,13 @@ void main() {
         expect(data[0].date, expense1.date);
         expect(data[0].description, expense1.description);
         expect(data[0].category.id, expense1.category.id);
+        expect(data[0].fixedExpense?.id, expense1.fixedExpense?.id);
         expect(data[1].amount, expense2.amount);
         expect(data[1].date, expense2.date);
         expect(data[1].description, expense2.description);
         expect(data[1].category.id, expense2.category.id);
         expect(data[1].id, expense2.id);
+        expect(data[1].fixedExpense?.id, expense2.fixedExpense?.id);
       });
       result.onFailure((error) {
         fail('Find all failed');

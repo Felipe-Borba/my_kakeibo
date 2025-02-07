@@ -130,7 +130,7 @@ class FixedExpense {
     List<Expense> expenseList,
   ) {
     return FixedExpense(
-      id: map['id'],
+      id: map['fixedExpenseId'] ?? map['id'],
       amount: map['amount'],
       dueDate: DateTime.parse(map['dueDate']),
       description: map['description'],

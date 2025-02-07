@@ -1,4 +1,5 @@
 import 'package:my_kakeibo/data/sqlite/sqlite_service.dart';
+import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
@@ -25,13 +26,18 @@ class ExpenseServiceSqlite {
   AsyncResult<List<Expense>> findAll() async {
     try {
       const query = '''
-        SELECT expense_categories.*, expenses.*, expense_categories.id as categoryId 
+        SELECT expense_categories.*, fixed_expenses.*, expenses.* 
         FROM expenses
         LEFT JOIN expense_categories ON expenses.categoryId = expense_categories.id
+        LEFT JOIN fixed_expenses ON expenses.fixedExpenseId = fixed_expenses.id
       ''';
       final result = await _service.database.rawQuery(query);
       final list = result
-          .map((e) => Expense.fromMap(e, ExpenseCategory.fromMap(e)))
+          .map((e) => Expense.fromMap(
+                e,
+                ExpenseCategory.fromMap(e),
+                FixedExpense.fromMap(e, ExpenseCategory.fromMap(e), []),
+              ))
           .toList();
 
       return Success(list);
@@ -56,7 +62,11 @@ class ExpenseServiceSqlite {
         [start.toIso8601String(), end.toIso8601String()],
       );
       final list = result
-          .map((e) => Expense.fromMap(e, ExpenseCategory.fromMap(e)))
+          .map((e) => Expense.fromMap(
+                e,
+                ExpenseCategory.fromMap(e),
+                FixedExpense.fromMap(e, ExpenseCategory.fromMap(e), []),
+              ))
           .toList();
 
       return Success(list);

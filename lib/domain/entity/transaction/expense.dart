@@ -1,9 +1,10 @@
+import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 
 class Expense extends Transaction {
   final ExpenseCategory category;
-  //TODO adicionar campo FixedExpense opcional
+  final FixedExpense? fixedExpense;
 
   Expense({
     super.id,
@@ -11,6 +12,7 @@ class Expense extends Transaction {
     required super.date,
     required super.description,
     required this.category,
+    this.fixedExpense,
   });
 
   Expense copyWith({
@@ -19,6 +21,7 @@ class Expense extends Transaction {
     DateTime? date,
     String? description,
     ExpenseCategory? category,
+    FixedExpense? fixedExpense,
   }) {
     return Expense(
       id: id ?? this.id,
@@ -26,6 +29,7 @@ class Expense extends Transaction {
       date: date ?? this.date,
       description: description ?? this.description,
       category: category ?? this.category,
+      fixedExpense: fixedExpense ?? this.fixedExpense,
     );
   }
 
@@ -36,16 +40,22 @@ class Expense extends Transaction {
       'date': date.toIso8601String(),
       'description': description,
       'categoryId': category.id,
+      'fixedExpenseId': fixedExpense?.id,
     };
   }
 
-  factory Expense.fromMap(Map<String, dynamic> map, ExpenseCategory category) {
+  factory Expense.fromMap(
+    Map<String, dynamic> map,
+    ExpenseCategory category,
+    FixedExpense? fixedExpense,
+  ) {
     return Expense(
       id: map['id'],
       amount: map['amount'],
       date: DateTime.parse(map['date']),
       description: map['description'],
       category: category,
+      fixedExpense: fixedExpense,
     );
   }
 }
