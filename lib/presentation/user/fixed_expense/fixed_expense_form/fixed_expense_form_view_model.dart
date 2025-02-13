@@ -80,7 +80,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
       category: category!,
       dueDate: dueDate!,
       amount: amount!,
-      expenseIdList: _fixedExpense?.expenseIdList ?? [],
+      expenseList: _fixedExpense?.expenseList ?? [],
       frequency: frequency!,
       remember: Remember.no,
     ));

@@ -1,37 +1,52 @@
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 
 class User {
-  String? id;
-  String name;
-  String email;
-  String password;
-  UserTheme theme;
-  double balance;
-  String? notificationToken;
-  bool hasOnboarding;
-  String? authId;
+  final String? id;
+  final String name;
+  final UserTheme theme;
+  final String? notificationToken;
 
   User({
     this.id,
     required this.name,
-    required this.email,
-    required this.password,
     this.notificationToken,
     this.theme = UserTheme.light,
-    this.balance = 0.0,
-    this.hasOnboarding = false,
-    this.authId,
   });
 
-  factory User.createOnboardingUser(String name) {
-    return User(name: name, email: "", password: "");
+  User copyWith({
+    String? id,
+    String? name,
+    UserTheme? theme,
+    String? notificationToken,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      theme: theme ?? this.theme,
+      notificationToken: notificationToken ?? this.notificationToken,
+    );
   }
 
-  decreaseBalance(double amount) {
-    balance -= amount;
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'theme': theme.index,
+      'notificationToken': notificationToken,
+    };
   }
 
-  increaseBalance(double amount) {
-    balance += amount;
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
+      id: map['id'],
+      name: map['name'],
+      theme: UserTheme.values[map['theme']],
+      notificationToken: map['notificationToken'],
+    );
+  }
+
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, theme: $theme, notificationToken: $notificationToken}';
   }
 }

@@ -1,9 +1,9 @@
-import 'package:my_kakeibo/data/expense_category/expense_category_realm_service.dart';
+import 'package:my_kakeibo/data/expense_category/expense_category_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseCategoryRepository {
-  final ExpenseCategoryRealmService _expenseCategoryRealmService;
+  final ExpenseCategoryServiceSqlite _expenseCategoryRealmService;
 
   ExpenseCategoryRepository(this._expenseCategoryRealmService);
 

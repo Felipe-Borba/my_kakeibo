@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 
-import '../../../utils_test.dart';
+import '../../../../testing/app.dart';
 
 void main() {
   double total = 1000.0;
@@ -13,12 +13,11 @@ void main() {
     total = 1000.0;
     current = 500.0;
 
-    await tester.pumpWidget(
-      createTestableWidget(
-        LifeBar(
-          current: current,
-          total: total,
-        ),
+    await createTestableWidget(
+      tester,
+      child: LifeBar(
+        current: current,
+        total: total,
       ),
     );
 
@@ -29,13 +28,12 @@ void main() {
     total = 0.0;
     current = 500.0;
 
-    await tester.pumpWidget(
-      createTestableWidget(
-        LifeBar(
-          key: key,
-          current: current,
-          total: total,
-        ),
+    await createTestableWidget(
+      tester,
+      child: LifeBar(
+        key: key,
+        current: current,
+        total: total,
       ),
     );
 

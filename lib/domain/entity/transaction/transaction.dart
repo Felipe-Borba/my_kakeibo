@@ -1,8 +1,8 @@
 abstract class Transaction {
-  String? id;
-  double amount;
-  DateTime date;
-  String description;
+  final String? id;
+  final double amount;
+  final DateTime date;
+  final String description;
 
   Transaction({
     required this.id,

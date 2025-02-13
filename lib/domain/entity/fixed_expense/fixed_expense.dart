@@ -4,19 +4,19 @@ import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 
 class FixedExpense {
-  String? id;
-  List<String> expenseIdList;
-  DateTime dueDate;
-  String description;
-  Frequency frequency;
-  Remember remember;
-  ExpenseCategory category;
-  double amount;
+  final String? id;
+  final List<Expense> expenseList;
+  final DateTime dueDate;
+  final String description;
+  final Frequency frequency;
+  final Remember remember;
+  final ExpenseCategory category;
+  final double amount;
 
   FixedExpense({
     this.id,
     required this.amount,
-    required this.expenseIdList,
+    required this.expenseList,
     required this.dueDate,
     required this.description,
     required this.frequency,
@@ -50,25 +50,20 @@ class FixedExpense {
     }
   }
 
-  void pay(Expense expense) {
-    if (expense.id != null) {
-      expenseIdList.add(expense.id!);
-    }
+  FixedExpense pay(Expense expense) {
+    expenseList.add(expense);
 
-    switch (frequency) {
-      case Frequency.daily:
-        dueDate = dueDate.add(const Duration(days: 1));
-        break;
-      case Frequency.weekly:
-        dueDate = dueDate.add(const Duration(days: 7));
-        break;
-      case Frequency.monthly:
-        dueDate = _addMonth(dueDate);
-        break;
-      case Frequency.annually:
-        dueDate = _addYear(dueDate);
-        break;
-    }
+    DateTime dueDate = switch (frequency) {
+      Frequency.daily => this.dueDate.add(const Duration(days: 1)),
+      Frequency.weekly => this.dueDate.add(const Duration(days: 7)),
+      Frequency.monthly => _addMonth(this.dueDate),
+      Frequency.annually => _addYear(this.dueDate),
+    };
+
+    return copyWith(
+      expenseList: List.from(expenseList),
+      dueDate: dueDate,
+    );
   }
 
   DateTime _addMonth(DateTime data) {
@@ -93,5 +88,56 @@ class FixedExpense {
     int novoDia = data.day > ultimoDiaDoMes ? ultimoDiaDoMes : data.day;
 
     return DateTime(novoAno, data.month, novoDia);
+  }
+
+  FixedExpense copyWith({
+    String? id,
+    List<Expense>? expenseList,
+    DateTime? dueDate,
+    String? description,
+    Frequency? frequency,
+    Remember? remember,
+    ExpenseCategory? category,
+    double? amount,
+  }) {
+    return FixedExpense(
+      id: id ?? this.id,
+      expenseList: expenseList ?? this.expenseList,
+      dueDate: dueDate ?? this.dueDate,
+      description: description ?? this.description,
+      frequency: frequency ?? this.frequency,
+      remember: remember ?? this.remember,
+      category: category ?? this.category,
+      amount: amount ?? this.amount,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'amount': amount,
+      'dueDate': dueDate.toIso8601String(),
+      'description': description,
+      'frequency': frequency.index,
+      'remember': remember.index,
+      'categoryId': category.id,
+    };
+  }
+
+  factory FixedExpense.fromMap(
+    Map<String, dynamic> map,
+    ExpenseCategory category,
+    List<Expense> expenseList,
+  ) {
+    return FixedExpense(
+      id: map['fixedExpenseId'] ?? map['id'],
+      amount: map['amount'],
+      dueDate: DateTime.parse(map['dueDate']),
+      description: map['description'],
+      frequency: Frequency.values[map['frequency']],
+      remember: Remember.values[map['remember']],
+      expenseList: expenseList,
+      category: category,
+    );
   }
 }

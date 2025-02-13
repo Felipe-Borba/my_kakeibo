@@ -1,22 +1,15 @@
-import 'package:my_kakeibo/data/income/income_realm_service.dart';
+import 'package:my_kakeibo/data/income/income_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeRepository {
-  final IncomeRealmService _incomeRealmService;
-  final UserRepository _userRepository;
+  final IncomeServiceSqlite _incomeRealmService;
 
   IncomeRepository(
     this._incomeRealmService,
-    this._userRepository,
   );
 
   Future<Result<void>> save(Income income) async {
-    var user = await _userRepository.getUser().getOrThrow();
-
-    user.increaseBalance(income.amount);
-    await _userRepository.save(user);
     if (income.id != null) {
       await _incomeRealmService.update(income);
     } else {
