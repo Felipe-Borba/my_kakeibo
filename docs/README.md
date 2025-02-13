@@ -182,12 +182,22 @@ flutter build apk
 
 ## Manutenção do app
 
-verificar a experiência de atualizar pacotes antigos depois de criar testes automatizados
+Para verificar quais pacotes estão antigos e podem ser atualizados rode
 
 ```console
 69 packages have newer versions incompatible with dependency constraints.
 Try `flutter pub outdated` for more information.
 ```
+
+Depois de analisar o que pode ser atualizado, alterar as versão lá no `pubspec.yaml` e dale o comando.
+
+Para atualizar as dependências para a versão mais recente permitidas pelas restrições de versão no `pubspec.yaml` rode
+
+```console
+flutter pub upgrade
+```
+
+Depois rode os testes e verifique se o fusca ainda funciona.
 
 ## Prototipação
 
