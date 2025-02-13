@@ -12,11 +12,11 @@ class FixedExpenseServiceSqlite {
   Future<Result<FixedExpense>> insert(FixedExpense fixedExpense) async {
     try {
       final model = fixedExpense.toMap();
-      model['id'] = _service.generateId();
+      model['fixed_expense_id'] = _service.generateId();
 
       _service.database.insert(_service.fixedExpenseTable, model);
 
-      return Success(fixedExpense.copyWith(id: model['id']));
+      return Success(fixedExpense.copyWith(id: model['fixed_expense_id']));
     } on Exception catch (e) {
       return Failure(e);
     }
@@ -25,9 +25,9 @@ class FixedExpenseServiceSqlite {
   Future<Result<List<FixedExpense>>> findAll() async {
     try {
       const query = '''
-        SELECT expense_categories.*, fixed_expenses.*, expense_categories.id as categoryId 
+        SELECT *
         FROM fixed_expenses
-        LEFT JOIN expense_categories ON fixed_expenses.categoryId = expense_categories.id
+        LEFT JOIN expense_categories ON fixed_expenses.expense_category_id = expense_categories.expense_category_id
       ''';
       final result = await _service.database.rawQuery(query);
       final list = result
@@ -48,7 +48,7 @@ class FixedExpenseServiceSqlite {
       final count = await _service.database.update(
         _service.fixedExpenseTable,
         model,
-        where: 'id = ?',
+        where: 'fixed_expense_id = ?',
         whereArgs: [id],
       );
 
@@ -68,7 +68,7 @@ class FixedExpenseServiceSqlite {
 
       final count = await _service.database.delete(
         _service.fixedExpenseTable,
-        where: 'id = ?',
+        where: 'fixed_expense_id = ?',
         whereArgs: [id],
       );
 

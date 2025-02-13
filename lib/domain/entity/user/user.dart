@@ -29,19 +29,19 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'theme': theme.index,
-      'notificationToken': notificationToken,
+      'user_id': id,
+      'user_name': name,
+      'user_theme': theme.index,
+      'user_notification_token': notificationToken,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      id: map['id'],
-      name: map['name'],
-      theme: UserTheme.values[map['theme']],
-      notificationToken: map['notificationToken'],
+      id: map['user_id'],
+      name: map['user_name'],
+      theme: UserTheme.values[map['user_theme']],
+      notificationToken: map['user_notification_token'],
     );
   }
 

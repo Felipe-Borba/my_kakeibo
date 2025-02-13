@@ -47,7 +47,7 @@ class IncomeSourceServiceSqlite {
     try {
       final result = await _sqliteService.database.query(
         _sqliteService.incomeSourceTable,
-        where: 'id = ?',
+        where: 'income_source_id = ?',
         whereArgs: [incomeSource.id],
       );
 
@@ -70,7 +70,7 @@ class IncomeSourceServiceSqlite {
       final rowsAffected = await _sqliteService.database.update(
         _sqliteService.incomeSourceTable,
         incomeSource.toMap(),
-        where: 'id = ?',
+        where: 'income_source_id = ?',
         whereArgs: [incomeSource.id],
       );
 
@@ -88,7 +88,7 @@ class IncomeSourceServiceSqlite {
     try {
       final rowsDeleted = await _sqliteService.database.delete(
         _sqliteService.incomeSourceTable,
-        where: 'id = ?',
+        where: 'income_source_id = ?',
         whereArgs: [incomeSource.id],
       );
 

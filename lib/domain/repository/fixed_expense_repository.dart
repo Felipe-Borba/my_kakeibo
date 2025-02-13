@@ -1,5 +1,6 @@
 import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart';
+import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:result_dart/result_dart.dart';
@@ -7,10 +8,12 @@ import 'package:result_dart/result_dart.dart';
 class FixedExpenseRepository {
   final FixedExpenseServiceSqlite _fixedExpenseRealmService;
   final ExpenseServiceSqlite _expenseRealmService;
+  final UserServiceSqlite _userServiceSqlite;
 
   FixedExpenseRepository(
     this._fixedExpenseRealmService,
     this._expenseRealmService,
+    this._userServiceSqlite,
   );
 
   Future<Result<void>> pay(FixedExpense fixedExpense) async {
@@ -20,6 +23,7 @@ class FixedExpenseRepository {
       date: DateTime.now(),
       description: fixedExpense.description,
       category: fixedExpense.category,
+      userId: fixedExpense.userId,
     );
 
     var persistedExpense =
@@ -36,7 +40,11 @@ class FixedExpenseRepository {
     if (fixedExpense.id != null) {
       await _fixedExpenseRealmService.update(fixedExpense);
     } else {
-      await _fixedExpenseRealmService.insert(fixedExpense);
+      await _userServiceSqlite.getSelf().flatMap((user) {
+        return _fixedExpenseRealmService.insert(
+          fixedExpense.copyWith(userId: user.id),
+        );
+      });
     }
 
     return const Success("ok");

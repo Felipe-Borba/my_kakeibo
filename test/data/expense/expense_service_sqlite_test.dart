@@ -20,17 +20,13 @@ void main() {
   late ExpenseCategory category;
   late FixedExpense fixedExpense;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_expense');
     expenseService = ExpenseServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.expenseTable);
-    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
+
     category = await ExpenseCategoryServiceSqlite(sqliteService)
         .insert(ExpenseCategory(
           color: ColorCustom.blue,
@@ -51,14 +47,13 @@ void main() {
         .getOrThrow();
   });
 
-  tearDown(() async {
-    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
-    final db = sqliteService.database;
-    await db.close();
+  tearDownAll(() async {
+    await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_expense');
   });
 
   group('ExpenseServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.expenseTable);
     });
 
@@ -70,10 +65,12 @@ void main() {
         category: category,
       );
 
-      final result = await expenseService.insert(expense);
+      await expenseService.insert(expense);
+      final result = await expenseService.findAll();
 
       expect(result.isSuccess(), true);
-      result.onSuccess((data) {
+      result.onSuccess((list) {
+        final data  = list.first;
         expect(data.id, isNotNull);
         expect(data.amount, expense.amount);
         expect(data.date, expense.date);

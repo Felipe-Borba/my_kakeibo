@@ -12,24 +12,21 @@ void main() {
   late SQLiteService sqliteService;
   late IncomeSourceServiceSqlite service;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_income_source');
     service = IncomeSourceServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.incomeSourceTable);
   });
 
   tearDownAll(() async {
     await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_income_source');
   });
 
   group('ExpenseCategoryServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.incomeSourceTable);
     });
 
@@ -40,10 +37,13 @@ void main() {
         icon: IconCustom.entertainment,
       );
 
-      final result = await service.insert(incomeSource);
+      await service.insert(incomeSource);
+      final result = await service.findAll();
+
       expect(result.isSuccess(), true);
       result.fold(
-        (data) {
+        (list) {
+          final data = list.first;
           expect(data.id, isNotNull);
           expect(data.name, incomeSource.name);
           expect(data.color, incomeSource.color);
@@ -91,6 +91,7 @@ void main() {
       ));
 
       final userWithoutId = IncomeSource(
+        id: sqliteService.generateId(),
         name: "Test ExpenseCategory2",
         color: ColorCustom.blue,
         icon: IconCustom.entertainment,

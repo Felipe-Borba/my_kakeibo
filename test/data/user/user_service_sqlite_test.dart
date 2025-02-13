@@ -11,25 +11,21 @@ void main() {
   late SQLiteService sqliteService;
   late UserServiceSqlite userService;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_user');
     userService = UserServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.userTable);
   });
 
   tearDownAll(() async {
-    final db = sqliteService.database;
-    await db.close();
+    await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_user');
   });
 
   group('UserServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.userTable);
     });
 

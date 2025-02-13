@@ -13,6 +13,7 @@ class Expense extends Transaction {
     required super.description,
     required this.category,
     this.fixedExpense,
+    super.userId,
   });
 
   Expense copyWith({
@@ -22,6 +23,7 @@ class Expense extends Transaction {
     String? description,
     ExpenseCategory? category,
     FixedExpense? fixedExpense,
+    String? userId,
   }) {
     return Expense(
       id: id ?? this.id,
@@ -30,17 +32,19 @@ class Expense extends Transaction {
       description: description ?? this.description,
       category: category ?? this.category,
       fixedExpense: fixedExpense ?? this.fixedExpense,
+      userId: userId ?? this.userId,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'amount': amount,
-      'date': date.toIso8601String(),
-      'description': description,
-      'categoryId': category.id,
-      'fixedExpenseId': fixedExpense?.id,
+      'expense_id': id,
+      'expense_amount': amount,
+      'expense_date': date.toIso8601String(),
+      'expense_description': description,
+      'expense_category_id': category.id,
+      'fixed_expense_id': fixedExpense?.id,
+      'user_id': userId,
     };
   }
 
@@ -50,12 +54,13 @@ class Expense extends Transaction {
     FixedExpense? fixedExpense,
   ) {
     return Expense(
-      id: map['id'],
-      amount: map['amount'],
-      date: DateTime.parse(map['date']),
-      description: map['description'],
+      id: map['expense_id'],
+      amount: map['expense_amount'],
+      date: DateTime.parse(map['expense_date']),
+      description: map['expense_description'],
       category: category,
       fixedExpense: fixedExpense,
+      userId: map['user_id'],
     );
   }
 }

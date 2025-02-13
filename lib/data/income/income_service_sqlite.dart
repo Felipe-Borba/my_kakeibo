@@ -12,11 +12,11 @@ class IncomeServiceSqlite {
   AsyncResult<Income> insert(Income income) async {
     try {
       final model = income.toMap();
-      model['id'] = _service.generateId();
+      model['income_id'] = _service.generateId();
 
       _service.database.insert(_service.incomeTable, model);
 
-      return Success(income.copyWith(id: model['id']));
+      return Success(income.copyWith(id: model['income_id']));
     } on Exception catch (e) {
       return Failure(e);
     }
@@ -25,9 +25,9 @@ class IncomeServiceSqlite {
   AsyncResult<List<Income>> findAll() async {
     try {
       const query = '''
-        SELECT income_sources.*, income.*, income_sources.id as sourceId 
-        FROM income
-        LEFT JOIN income_sources ON income.sourceId = income_sources.id
+        SELECT * 
+        FROM income as t1
+        LEFT JOIN income_sources as t2 ON t1.income_source_id = t2.income_source_id
       ''';
       final result = await _service.database.rawQuery(query);
       final list = result
@@ -46,10 +46,10 @@ class IncomeServiceSqlite {
       final end = DateTime(month.year, month.month + 1, 0);
 
       const query = '''
-        SELECT income_sources.*, income.*, income_sources.id as sourceId 
-        FROM income 
-        LEFT JOIN income_sources ON income.sourceId = income_sources.id
-        WHERE date >= ? AND date <= ?
+        SELECT *
+        FROM income as t1
+        LEFT JOIN income_sources as t2 ON t1.income_source_id = t2.income_source_id
+        WHERE income_date >= ? AND income_date <= ?
       ''';
       final result = await _service.database.rawQuery(
         query,
@@ -73,7 +73,7 @@ class IncomeServiceSqlite {
       final count = await _service.database.update(
         _service.incomeTable,
         model,
-        where: 'id = ?',
+        where: 'income_id = ?',
         whereArgs: [id],
       );
 
@@ -93,7 +93,7 @@ class IncomeServiceSqlite {
 
       final count = await _service.database.delete(
         _service.incomeTable,
-        where: 'id = ?',
+        where: 'income_id = ?',
         whereArgs: [id],
       );
 

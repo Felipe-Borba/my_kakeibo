@@ -46,7 +46,8 @@
     "sqlite",
     "Sqlite",
     "STEB",
-    "uuid"
+    "uuid",
+    "xxhdpi"
   ],
   "cmake.ignoreCMakeListsMissing": true,
   "dart.flutterSdkPath": ".fvm/versions/3.24.0"

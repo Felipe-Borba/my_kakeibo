@@ -45,7 +45,7 @@ class ExpenseCategoryServiceSqlite {
     try {
       final result = await _sqliteService.database.query(
         _sqliteService.expenseCategoryTable,
-        where: 'id = ?',
+        where: 'expense_category_id = ?',
         whereArgs: [expenseCategory.id],
       );
 
@@ -68,7 +68,7 @@ class ExpenseCategoryServiceSqlite {
       final rowsAffected = await _sqliteService.database.update(
         _sqliteService.expenseCategoryTable,
         expenseCategory.toMap(),
-        where: 'id = ?',
+        where: 'expense_category_id = ?',
         whereArgs: [expenseCategory.id],
       );
 
@@ -86,7 +86,7 @@ class ExpenseCategoryServiceSqlite {
     try {
       final rowsDeleted = await _sqliteService.database.delete(
         _sqliteService.expenseCategoryTable,
-        where: 'id = ?',
+        where: 'expense_category_id = ?',
         whereArgs: [expenseCategory.id],
       );
 

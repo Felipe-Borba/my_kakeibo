@@ -27,7 +27,7 @@ class UserServiceSqlite {
       await db.update(
         _sqlite.userTable,
         map,
-        where: 'id = ?',
+        where: 'user_id = ?',
         whereArgs: [user.id],
       );
       return Success(user);

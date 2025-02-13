@@ -13,11 +13,11 @@ class ExpenseServiceSqlite {
   AsyncResult<Expense> insert(Expense expense) async {
     try {
       final model = expense.toMap();
-      model['id'] = _service.generateId();
+      model['expense_id'] = _service.generateId();
 
       _service.database.insert(_service.expenseTable, model);
 
-      return Success(expense.copyWith(id: model['id']));
+      return Success(expense.copyWith(id: model['expense_id']));
     } on Exception catch (e) {
       return Failure(e);
     }
@@ -26,17 +26,19 @@ class ExpenseServiceSqlite {
   AsyncResult<List<Expense>> findAll() async {
     try {
       const query = '''
-        SELECT expense_categories.*, fixed_expenses.*, expenses.* 
-        FROM expenses
-        LEFT JOIN expense_categories ON expenses.categoryId = expense_categories.id
-        LEFT JOIN fixed_expenses ON expenses.fixedExpenseId = fixed_expenses.id
+        SELECT t3.*, t2.*, t1.* 
+        FROM expenses as t1
+        LEFT JOIN expense_categories as t2 ON t1.expense_category_id = t2.expense_category_id
+        LEFT JOIN fixed_expenses as t3 ON t1.fixed_expense_id = t3.fixed_expense_id
       ''';
       final result = await _service.database.rawQuery(query);
       final list = result
           .map((e) => Expense.fromMap(
                 e,
                 ExpenseCategory.fromMap(e),
-                FixedExpense.fromMap(e, ExpenseCategory.fromMap(e), []),
+                e['fixed_expense_id'] == null
+                    ? null
+                    : FixedExpense.fromMap(e, ExpenseCategory.fromMap(e), []),
               ))
           .toList();
 
@@ -52,21 +54,17 @@ class ExpenseServiceSqlite {
       final end = DateTime(month.year, month.month + 1, 0);
 
       const query = '''
-        SELECT expense_categories.*, expenses.*, expense_categories.id as categoryId 
+        SELECT * 
         FROM expenses 
-        LEFT JOIN expense_categories ON expenses.categoryId = expense_categories.id
-        WHERE date >= ? AND date <= ?
+        LEFT JOIN expense_categories ON expenses.expense_category_id = expense_categories.expense_category_id
+        WHERE expense_date >= ? AND expense_date <= ?
       ''';
       final result = await _service.database.rawQuery(
         query,
         [start.toIso8601String(), end.toIso8601String()],
       );
       final list = result
-          .map((e) => Expense.fromMap(
-                e,
-                ExpenseCategory.fromMap(e),
-                FixedExpense.fromMap(e, ExpenseCategory.fromMap(e), []),
-              ))
+          .map((e) => Expense.fromMap(e, ExpenseCategory.fromMap(e), null))
           .toList();
 
       return Success(list);
@@ -83,7 +81,7 @@ class ExpenseServiceSqlite {
       final count = await _service.database.update(
         _service.expenseTable,
         model,
-        where: 'id = ?',
+        where: 'expense_id = ?',
         whereArgs: [id],
       );
 
@@ -103,7 +101,7 @@ class ExpenseServiceSqlite {
 
       final count = await _service.database.delete(
         _service.expenseTable,
-        where: 'id = ?',
+        where: 'expense_id = ?',
         whereArgs: [id],
       );
 

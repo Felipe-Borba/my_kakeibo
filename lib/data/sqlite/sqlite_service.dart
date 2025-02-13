@@ -1,9 +1,9 @@
-import 'package:my_kakeibo/data/sqlite/migrations/0002_insert_default_values.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
 import 'migrations/0001_create_tables.dart';
+import 'migrations/0002_insert_default_values.dart';
 
 class SQLiteService {
   SQLiteService._internal();
@@ -13,7 +13,7 @@ class SQLiteService {
 
   final userTable = "users";
   final fixedExpenseTable = "fixed_expenses";
-  final expenseTable = "expenses"; 
+  final expenseTable = "expenses";
   final expenseCategoryTable = "expense_categories";
   final incomeTable = "income";
   final incomeSourceTable = "income_sources";
@@ -26,16 +26,25 @@ class SQLiteService {
     return _uuid.v4();
   }
 
-  Future<void> initialize() async {
+  Future<void> initialize({String version = "prod"}) async {
     final path = await getDatabasesPath();
     _database = await openDatabase(
-      join(path, 'my_kakeibo.db'),
+      join(path, version, 'my_kakeibo.db'),
       version: 1,
       onCreate: (db, version) async {
         await db.execute(createTables);
         await db.execute(insertDefaultValues);
       },
     );
+  }
+
+  Future<void> dropDatabase({String version = "prod"}) async {
+    final path = join(await getDatabasesPath(), version, 'my_kakeibo.db');
+    await deleteDatabase(path);
+  }
+
+  Future<void> close() async {
+    await _database.close();
   }
 
   Database get database => _database;

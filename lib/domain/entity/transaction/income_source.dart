@@ -30,19 +30,19 @@ class IncomeSource {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'icon': icon.index,
-      'color': color.index,
+      'income_source_id': id,
+      'income_source_name': name,
+      'income_source_icon': icon.index,
+      'income_source_color': color.index,
     };
   }
 
   factory IncomeSource.fromMap(Map<String, dynamic> map) {
     return IncomeSource(
-      id: map['sourceId'] ?? map['id'],
-      name: map['name'],
-      icon: IconCustom.values[map['icon']],
-      color: ColorCustom.values[map['color']],
+      id: map['income_source_id'],
+      name: map['income_source_name'],
+      icon: IconCustom.values[map['income_source_icon']],
+      color: ColorCustom.values[map['income_source_color']],
     );
   }
 

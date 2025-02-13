@@ -12,24 +12,21 @@ void main() {
   late SQLiteService sqliteService;
   late ExpenseCategoryServiceSqlite service;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_expense_category');
     service = ExpenseCategoryServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
   });
 
   tearDownAll(() async {
     await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_expense_category');
   });
 
   group('ExpenseCategoryServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.expenseCategoryTable);
     });
 
@@ -91,6 +88,7 @@ void main() {
       ));
 
       final userWithoutId = ExpenseCategory(
+        id: sqliteService.generateId(),
         name: "Test ExpenseCategory2",
         color: ColorCustom.blue,
         icon: IconCustom.entertainment,
