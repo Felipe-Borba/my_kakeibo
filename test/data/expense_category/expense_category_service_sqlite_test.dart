@@ -91,6 +91,7 @@ void main() {
       ));
 
       final userWithoutId = ExpenseCategory(
+        id: sqliteService.generateId(),
         name: "Test ExpenseCategory2",
         color: ColorCustom.blue,
         icon: IconCustom.entertainment,

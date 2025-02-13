@@ -12,6 +12,7 @@ class FixedExpense {
   final Remember remember;
   final ExpenseCategory category;
   final double amount;
+  final String? userId;
 
   FixedExpense({
     this.id,
@@ -22,6 +23,7 @@ class FixedExpense {
     required this.frequency,
     required this.remember,
     required this.category,
+    this.userId,
   });
 
   bool get alreadyPaid {
@@ -99,6 +101,7 @@ class FixedExpense {
     Remember? remember,
     ExpenseCategory? category,
     double? amount,
+    String? userId,
   }) {
     return FixedExpense(
       id: id ?? this.id,
@@ -109,18 +112,20 @@ class FixedExpense {
       remember: remember ?? this.remember,
       category: category ?? this.category,
       amount: amount ?? this.amount,
+      userId: userId ?? this.userId,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'amount': amount,
-      'dueDate': dueDate.toIso8601String(),
-      'description': description,
-      'frequency': frequency.index,
-      'remember': remember.index,
-      'categoryId': category.id,
+      'fixed_expense_id': id,
+      'fixed_expense_amount': amount,
+      'fixed_expense_due_date': dueDate.toIso8601String(),
+      'fixed_expense_description': description,
+      'fixed_expense_frequency': frequency.index,
+      'fixed_expense_remember': remember.index,
+      'expense_category_id': category.id,
+      'user_id': userId,
     };
   }
 
@@ -130,14 +135,15 @@ class FixedExpense {
     List<Expense> expenseList,
   ) {
     return FixedExpense(
-      id: map['fixedExpenseId'] ?? map['id'],
-      amount: map['amount'],
-      dueDate: DateTime.parse(map['dueDate']),
-      description: map['description'],
-      frequency: Frequency.values[map['frequency']],
-      remember: Remember.values[map['remember']],
+      id: map['fixed_expense_id'],
+      amount: map['fixed_expense_amount'],
+      dueDate: DateTime.parse(map['fixed_expense_due_date']),
+      description: map['fixed_expense_description'],
+      frequency: Frequency.values[map['fixed_expense_frequency']],
+      remember: Remember.values[map['fixed_expense_remember']],
       expenseList: expenseList,
       category: category,
+      userId: map['user_id'],
     );
   }
 }

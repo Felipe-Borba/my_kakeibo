@@ -40,10 +40,13 @@ void main() {
         icon: IconCustom.entertainment,
       );
 
-      final result = await service.insert(incomeSource);
+      await service.insert(incomeSource);
+      final result = await service.findAll();
+
       expect(result.isSuccess(), true);
       result.fold(
-        (data) {
+        (list) {
+          final data = list.first;
           expect(data.id, isNotNull);
           expect(data.name, incomeSource.name);
           expect(data.color, incomeSource.color);
@@ -91,6 +94,7 @@ void main() {
       ));
 
       final userWithoutId = IncomeSource(
+        id: sqliteService.generateId(),
         name: "Test ExpenseCategory2",
         color: ColorCustom.blue,
         icon: IconCustom.entertainment,

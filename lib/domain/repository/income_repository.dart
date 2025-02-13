@@ -1,19 +1,21 @@
 import 'package:my_kakeibo/data/income/income_service_sqlite.dart';
+import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:result_dart/result_dart.dart';
 
 class IncomeRepository {
   final IncomeServiceSqlite _incomeRealmService;
+  final UserServiceSqlite _userServiceSqlite;
 
-  IncomeRepository(
-    this._incomeRealmService,
-  );
+  IncomeRepository(this._incomeRealmService, this._userServiceSqlite);
 
   Future<Result<void>> save(Income income) async {
     if (income.id != null) {
       await _incomeRealmService.update(income);
     } else {
-      await _incomeRealmService.insert(income);
+      await _userServiceSqlite.getSelf().flatMap((user) {
+        return _incomeRealmService.insert(income.copyWith(userId: user.id));
+      });
     }
 
     return const Success("ok");

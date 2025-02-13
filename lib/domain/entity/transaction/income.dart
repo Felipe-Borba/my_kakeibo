@@ -10,6 +10,7 @@ class Income extends Transaction {
     required super.date,
     required super.description,
     required this.source,
+    super.userId,
   });
 
   Income copyWith({
@@ -18,6 +19,7 @@ class Income extends Transaction {
     DateTime? date,
     String? description,
     IncomeSource? source,
+    String? userId,
   }) {
     return Income(
       id: id ?? this.id,
@@ -25,26 +27,29 @@ class Income extends Transaction {
       date: date ?? this.date,
       description: description ?? this.description,
       source: source ?? this.source,
+      userId: userId ?? this.userId,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'amount': amount,
-      'date': date.toIso8601String(),
-      'description': description,
-      'sourceId': source.id,
+      'income_id': id,
+      'income_amount': amount,
+      'income_date': date.toIso8601String(),
+      'income_description': description,
+      'income_source_id': source.id,
+      'user_id': userId,
     };
   }
 
   factory Income.fromMap(Map<String, dynamic> map, IncomeSource source) {
     return Income(
-      id: map['id'],
-      amount: map['amount'],
-      date: DateTime.parse(map['date']),
-      description: map['description'],
+      id: map['income_id'],
+      amount: map['income_amount'],
+      date: DateTime.parse(map['income_date']),
+      description: map['income_description'],
       source: source,
+      userId: map['user_id'],
     );
   }
 }

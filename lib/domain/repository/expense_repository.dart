@@ -1,23 +1,25 @@
 import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
+import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseRepository {
   final ExpenseServiceSqlite _expenseRealmService;
+  final UserServiceSqlite _userServiceSqlite;
 
   ExpenseRepository(
     this._expenseRealmService,
+    this._userServiceSqlite,
   );
 
-  Future<Result<void>> insert(Expense expense) async {
-
+  AsyncResult<Expense> insert(Expense expense) async {
     if (expense.id != null) {
-      await _expenseRealmService.update(expense);
+      return await _expenseRealmService.update(expense);
     } else {
-      await _expenseRealmService.insert(expense);
+      return await _userServiceSqlite.getSelf().flatMap((user) {
+        return _expenseRealmService.insert(expense.copyWith(userId: user.id));
+      });
     }
-
-    return const Success("ok");
   }
 
   Future<Result<List<Expense>>> findAll() async {

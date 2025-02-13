@@ -30,19 +30,19 @@ class ExpenseCategory {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'icon': icon.index,
-      'color': color.index,
+      'expense_category_id': id,
+      'expense_category_name': name,
+      'expense_category_icon': icon.index,
+      'expense_category_color': color.index,
     };
   }
 
   factory ExpenseCategory.fromMap(Map<String, dynamic> map) {
     return ExpenseCategory(
-      id: map['categoryId'] ?? map['id'],
-      name: map['name'],
-      icon: IconCustom.values[map['icon']],
-      color: ColorCustom.values[map['color']],
+      id: map['expense_category_id'],
+      name: map['expense_category_name'],
+      icon: IconCustom.values[map['expense_category_icon']],
+      color: ColorCustom.values[map['expense_category_color']],
     );
   }
 

@@ -53,6 +53,7 @@ void main() {
 
   tearDown(() async {
     await sqliteService.database.delete(sqliteService.expenseCategoryTable);
+    await sqliteService.database.delete(sqliteService.fixedExpenseTable);
     final db = sqliteService.database;
     await db.close();
   });
@@ -70,10 +71,12 @@ void main() {
         category: category,
       );
 
-      final result = await expenseService.insert(expense);
+      await expenseService.insert(expense);
+      final result = await expenseService.findAll();
 
       expect(result.isSuccess(), true);
-      result.onSuccess((data) {
+      result.onSuccess((list) {
+        final data  = list.first;
         expect(data.id, isNotNull);
         expect(data.amount, expense.amount);
         expect(data.date, expense.date);

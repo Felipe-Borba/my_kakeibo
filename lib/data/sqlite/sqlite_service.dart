@@ -13,7 +13,7 @@ class SQLiteService {
 
   final userTable = "users";
   final fixedExpenseTable = "fixed_expenses";
-  final expenseTable = "expenses"; 
+  final expenseTable = "expenses";
   final expenseCategoryTable = "expense_categories";
   final incomeTable = "income";
   final incomeSourceTable = "income_sources";
