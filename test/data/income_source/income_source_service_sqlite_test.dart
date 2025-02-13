@@ -12,24 +12,21 @@ void main() {
   late SQLiteService sqliteService;
   late IncomeSourceServiceSqlite service;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_income_source');
     service = IncomeSourceServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.incomeSourceTable);
   });
 
   tearDownAll(() async {
     await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_income_source');
   });
 
   group('ExpenseCategoryServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.incomeSourceTable);
     });
 

@@ -19,18 +19,13 @@ void main() {
   late ExpenseCategory category;
   late ExpenseCategory category2;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_fixed_expense');
     fixedExpenseService = FixedExpenseServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.fixedExpenseTable);
 
-    await sqliteService.database.delete(sqliteService.expenseCategoryTable);
     final categoryService = ExpenseCategoryServiceSqlite(sqliteService);
     category = await categoryService
         .insert(ExpenseCategory(
@@ -48,13 +43,13 @@ void main() {
         .getOrThrow();
   });
 
-  tearDown(() async {
-    final db = sqliteService.database;
-    await db.close();
+  tearDownAll(() async {
+    await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_fixed_expense');
   });
 
   group('FixedExpenseServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.fixedExpenseTable);
     });
 

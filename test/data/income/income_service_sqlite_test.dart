@@ -15,17 +15,13 @@ void main() {
 
   late IncomeSource source;
 
-  setUpAll(() {
+  setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-  });
-
-  setUp(() async {
     sqliteService = SQLiteService();
-    await sqliteService.initialize();
+    await sqliteService.initialize(version: 'test_income');
+
     incomeService = IncomeServiceSqlite(sqliteService);
-    await sqliteService.database.delete(sqliteService.incomeTable);
-    await sqliteService.database.delete(sqliteService.incomeSourceTable);
     source = await IncomeSourceServiceSqlite(sqliteService)
         .insert(IncomeSource(
           color: ColorCustom.blue,
@@ -35,14 +31,13 @@ void main() {
         .getOrThrow();
   });
 
-  tearDown(() async {
-    await sqliteService.database.delete(sqliteService.incomeSourceTable);
-    final db = sqliteService.database;
-    await db.close();
+  tearDownAll(() async {
+    await sqliteService.database.close();
+    await sqliteService.dropDatabase(version: 'test_income');
   });
 
   group('IncomeServiceSqlite', () {
-    tearDown(() async {
+    setUp(() async {
       await sqliteService.database.delete(sqliteService.incomeTable);
     });
 
