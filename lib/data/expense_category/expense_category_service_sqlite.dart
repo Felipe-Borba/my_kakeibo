@@ -28,8 +28,8 @@ class ExpenseCategoryServiceSqlite {
 
   AsyncResult<List<ExpenseCategory>> findAll() async {
     try {
-      final result =
-          await _sqliteService.database.query(_sqliteService.expenseCategoryTable);
+      final result = await _sqliteService.database
+          .query(_sqliteService.expenseCategoryTable);
       final expenseCategories =
           result.map((e) => ExpenseCategory.fromMap(e)).toList();
 

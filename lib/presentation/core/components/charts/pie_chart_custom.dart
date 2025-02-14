@@ -18,7 +18,7 @@ class PieChart2State extends State<PieChartCustom> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.data.isEmpty) return const SizedBox.shrink();
+    if (widget.data.isEmpty) return const SizedBox.shrink();
 
     return AspectRatio(
       aspectRatio: 2 / 1,

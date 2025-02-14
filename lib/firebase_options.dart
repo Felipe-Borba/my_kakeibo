@@ -70,8 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '713195547362',
     projectId: 'my-kakeibo-f8ca5',
     storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
-    iosClientId: '713195547362-r5r8a6bb5jq4t9pfb519qnup0cdvvtro.apps.googleusercontent.com',
+    iosClientId:
+        '713195547362-r5r8a6bb5jq4t9pfb519qnup0cdvvtro.apps.googleusercontent.com',
     iosBundleId: 'com.example.myKakeibo',
   );
-
 }
