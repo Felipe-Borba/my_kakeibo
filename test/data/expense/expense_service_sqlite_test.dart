@@ -70,7 +70,7 @@ void main() {
 
       expect(result.isSuccess(), true);
       result.onSuccess((list) {
-        final data  = list.first;
+        final data = list.first;
         expect(data.id, isNotNull);
         expect(data.amount, expense.amount);
         expect(data.date, expense.date);
