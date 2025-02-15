@@ -15,7 +15,8 @@ class ExpenseCategoryServiceSqlite {
       final insertedCategory = expenseCategory.copyWith(
         id: _sqliteService.generateId(),
       );
-      await _sqliteService.database.insert(
+      final db = await _sqliteService.database;
+      await db.insert(
         _sqliteService.expenseCategoryTable,
         insertedCategory.toMap(),
       );
@@ -28,8 +29,8 @@ class ExpenseCategoryServiceSqlite {
 
   AsyncResult<List<ExpenseCategory>> findAll() async {
     try {
-      final result = await _sqliteService.database
-          .query(_sqliteService.expenseCategoryTable);
+      final db = await _sqliteService.database;
+      final result = await db.query(_sqliteService.expenseCategoryTable);
       final expenseCategories =
           result.map((e) => ExpenseCategory.fromMap(e)).toList();
 
@@ -43,7 +44,8 @@ class ExpenseCategoryServiceSqlite {
     ExpenseCategory expenseCategory,
   ) async {
     try {
-      final result = await _sqliteService.database.query(
+      final db = await _sqliteService.database;
+      final result = await db.query(
         _sqliteService.expenseCategoryTable,
         where: 'expense_category_id = ?',
         whereArgs: [expenseCategory.id],
@@ -65,7 +67,8 @@ class ExpenseCategoryServiceSqlite {
     ExpenseCategory expenseCategory,
   ) async {
     try {
-      final rowsAffected = await _sqliteService.database.update(
+      final db = await _sqliteService.database;
+      final rowsAffected = await db.update(
         _sqliteService.expenseCategoryTable,
         expenseCategory.toMap(),
         where: 'expense_category_id = ?',
@@ -84,7 +87,8 @@ class ExpenseCategoryServiceSqlite {
 
   AsyncResult<Unit> delete(ExpenseCategory expenseCategory) async {
     try {
-      final rowsDeleted = await _sqliteService.database.delete(
+      final db = await _sqliteService.database;
+      final rowsDeleted = await db.delete(
         _sqliteService.expenseCategoryTable,
         where: 'expense_category_id = ?',
         whereArgs: [expenseCategory.id],

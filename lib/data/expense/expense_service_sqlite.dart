@@ -15,7 +15,8 @@ class ExpenseServiceSqlite {
       final model = expense.toMap();
       model['expense_id'] = _service.generateId();
 
-      _service.database.insert(_service.expenseTable, model);
+      final db = await _service.database;
+      await db.insert(_service.expenseTable, model);
 
       return Success(expense.copyWith(id: model['expense_id']));
     } on Exception catch (e) {
@@ -31,7 +32,8 @@ class ExpenseServiceSqlite {
         LEFT JOIN expense_categories as t2 ON t1.expense_category_id = t2.expense_category_id
         LEFT JOIN fixed_expenses as t3 ON t1.fixed_expense_id = t3.fixed_expense_id
       ''';
-      final result = await _service.database.rawQuery(query);
+      final db = await _service.database;
+      final result = await db.rawQuery(query);
       final list = result
           .map((e) => Expense.fromMap(
                 e,
@@ -59,7 +61,8 @@ class ExpenseServiceSqlite {
         LEFT JOIN expense_categories ON expenses.expense_category_id = expense_categories.expense_category_id
         WHERE expense_date >= ? AND expense_date <= ?
       ''';
-      final result = await _service.database.rawQuery(
+      final db = await _service.database;
+      final result = await db.rawQuery(
         query,
         [start.toIso8601String(), end.toIso8601String()],
       );
@@ -78,7 +81,8 @@ class ExpenseServiceSqlite {
       final model = expense.toMap();
       final id = expense.id;
 
-      final count = await _service.database.update(
+      final db = await _service.database;
+      final count = await db.update(
         _service.expenseTable,
         model,
         where: 'expense_id = ?',
@@ -99,7 +103,8 @@ class ExpenseServiceSqlite {
     try {
       final id = expense.id;
 
-      final count = await _service.database.delete(
+      final db = await _service.database;
+      final count = await db.delete(
         _service.expenseTable,
         where: 'expense_id = ?',
         whereArgs: [id],

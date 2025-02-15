@@ -1,5 +1,125 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/app_theme.dart';
+import 'package:my_kakeibo/data/sqlite/migrations/0001_create_tables.dart';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+
+class DBProvider {
+  DBProvider._();
+
+  static final DBProvider db = DBProvider._();
+  static Database? _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    // if _database is null we instantiate it
+    _database = await initDB();
+    return _database!;
+  }
+
+  static const tableProject = """
+  CREATE TABLE IF NOT EXISTS expense_categories (
+        id TEXT PRIMARY KEY,
+        managerId TEXT,
+        consultantID TEXT,
+        name TEXT,
+        description TEXT,
+        created TEXT,
+        deadline TEXT
+      );""";
+  static const tableAudit = """
+  CREATE TABLE IF NOT EXISTS Audit (
+        id TEXT PRIMARY key,
+        projectId TEXT,
+        timeTrackId TEXT,
+        jsonChanges TEXT,
+        date TEXT,
+        employeeId TEXT
+      );""";
+  static const tableEmployee = """
+  CREATE TABLE IF NOT EXISTS Employee (
+        id TEXT PRIMARY key,
+        fullName TEXT,
+        managementLogonAccess INTEGER
+      );""";
+  static const tableJobPosition = """
+  CREATE TABLE IF NOT EXISTS JobPosition (
+        id TEXT PRIMARY KEY,
+        name TEXT
+      );""";
+  static const tableWorkType = """
+  CREATE TABLE IF NOT EXISTS WorkType (
+        id TEXT PRIMARY key,
+        name TEXT
+      );""";
+  static const tableAssignedJobPosition = """
+  CREATE TABLE IF NOT EXISTS AssignedJobPosition (
+        employeeId TEXT,
+        positionId TEXT
+      );""";
+  static const tableTimeTrack = """
+  CREATE TABLE IF NOT EXISTS TimeTrack (
+        id TEXT PRIMARY key,
+        timeSpan INTEGER,
+        employeeId TEXT,
+        projectId TEXT,
+        workType TEXT,
+        note TEXT,
+        date TEXT
+      );""";
+  static const tableAllowedWorkType = """
+  CREATE TABLE IF NOT EXISTS AllowedWorkType (
+        projectId TEXT,
+        workTypeId TEXT
+      );""";
+
+  Future<Database> initDB() async {
+    print("initDB executed");
+    //Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String path = join(await getDatabasesPath(), "teste", "core.db");
+    await deleteDatabase(path);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: (Database db, int version) async {
+        await db.execute(createUsersTable);
+        await db.execute(createExpensesTable);
+        await db.execute(createIncomeTable);
+        await db.execute(createFixedExpensesTable);
+        await db.execute(createExpenseCategoriesTable);
+        await db.execute(createIncomeSourcesTable);
+        // await db.execute(tableEmployee);
+        // await db.execute(tableAudit);
+        // await db.execute(tableProject);
+        // await db.execute(tableJobPosition);
+        // await db.execute(tableWorkType);
+        // await db.execute(tableAssignedJobPosition);
+        // await db.execute(tableTimeTrack);
+        // await db.execute(tableAllowedWorkType);
+        // await db.insert('expense_categories', {
+        //   'id': '1',
+        //   'managerId': '123',
+        //   'consultantID': '456',
+        //   'name': 'Project 1',
+        //   'description': 'Description of Project 1',
+        //   'created': DateTime.now().toIso8601String(),
+        //   'deadline': DateTime.now().add(Duration(days: 30)).toIso8601String(),
+        // });
+      },
+    );
+  }
+
+  ///get all Projects
+  Future/*<List<Project>>*/ getAllProjects() async {
+    final db = await database;
+    // return await db.query("expense_categories");
+    return await db.query("income_sources");
+    /*var res =
+    return res.isNotEmpty ? res.map((c) => Project.fromMap(c, false)).toList() : [];*/
+  }
+}
 
 void main() {
   runApp(const MyApp());
@@ -10,120 +130,61 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = getMaterialTheme(context);
-
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: theme.light(),
-      home: const HomeScreen(),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() async {
+    var res = await DBProvider.db.getAllProjects();
+    print(res);
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    const double available = 2000.00;
-    const double goal = 2500.00;
-    const double spent = 600.00;
-
-    final List<Map<String, dynamic>> transactions = [
-      {
-        "date": "Today",
-        "items": [
-          {"title": "Head", "subtitle": "Subhead", "amount": 30.01},
-          {"title": "Head", "subtitle": "Subhead", "amount": 30.01},
-        ]
-      },
-      {
-        "date": "Yesterday",
-        "items": [
-          {"title": "Head", "subtitle": "Subhead", "amount": 30.01},
-          {"title": "Head", "subtitle": "Subhead", "amount": 30.01},
-        ]
-      }
-    ];
-
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart), label: "Insights"),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "More"),
-        ],
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
+      appBar: AppBar(
+        title: Text(widget.title),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              const Text("Bem-vindo, Felipe!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              const Text("Available",
-                  style: TextStyle(fontSize: 16, color: Colors.grey)),
-              Text("R\$ ${available.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("meta", style: TextStyle(fontSize: 16)),
-                  Text(goal.toStringAsFixed(2),
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold)),
-                ],
-              ),
-              const Divider(),
-              Text("gasto: ${spent.toStringAsFixed(2)}",
-                  style: const TextStyle(fontSize: 14, color: Colors.grey)),
-              const SizedBox(height: 16),
-              Expanded(
-                child: ListView(
-                  children: transactions.map((group) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text(
-                            group["date"],
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        ...group["items"].map<Widget>((item) {
-                          return Card(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            child: ListTile(
-                              leading: const CircleAvatar(child: Text("A")),
-                              title: Text(item["title"]),
-                              subtitle: Text(item["subtitle"]),
-                              trailing: Text(
-                                item["amount"].toStringAsFixed(2),
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
-          ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }

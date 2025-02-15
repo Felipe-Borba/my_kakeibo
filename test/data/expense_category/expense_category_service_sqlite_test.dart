@@ -15,19 +15,20 @@ void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-    sqliteService = SQLiteService();
-    await sqliteService.initialize(version: 'test_expense_category');
+    sqliteService = SQLiteService(version: 'test_expense_category');
     service = ExpenseCategoryServiceSqlite(sqliteService);
   });
 
   tearDownAll(() async {
-    await sqliteService.database.close();
-    await sqliteService.dropDatabase(version: 'test_expense_category');
+    final db = await sqliteService.database;
+    await db.close();
+    await sqliteService.dropDatabase();
   });
 
   group('ExpenseCategoryServiceSqlite', () {
     setUp(() async {
-      await sqliteService.database.delete(sqliteService.expenseCategoryTable);
+      final db = await sqliteService.database;
+      await db.delete(sqliteService.expenseCategoryTable);
     });
 
     test('should insert a expenseCategory', () async {

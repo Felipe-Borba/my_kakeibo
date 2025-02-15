@@ -14,7 +14,8 @@ class IncomeServiceSqlite {
       final model = income.toMap();
       model['income_id'] = _service.generateId();
 
-      _service.database.insert(_service.incomeTable, model);
+      final db = await _service.database;
+      await db.insert(_service.incomeTable, model);
 
       return Success(income.copyWith(id: model['income_id']));
     } on Exception catch (e) {
@@ -29,7 +30,8 @@ class IncomeServiceSqlite {
         FROM income as t1
         LEFT JOIN income_sources as t2 ON t1.income_source_id = t2.income_source_id
       ''';
-      final result = await _service.database.rawQuery(query);
+      final db = await _service.database;
+      final result = await db.rawQuery(query);
       final list = result
           .map((e) => Income.fromMap(e, IncomeSource.fromMap(e)))
           .toList();
@@ -51,7 +53,8 @@ class IncomeServiceSqlite {
         LEFT JOIN income_sources as t2 ON t1.income_source_id = t2.income_source_id
         WHERE income_date >= ? AND income_date <= ?
       ''';
-      final result = await _service.database.rawQuery(
+      final db = await _service.database;
+      final result = await db.rawQuery(
         query,
         [start.toIso8601String(), end.toIso8601String()],
       );
@@ -70,7 +73,8 @@ class IncomeServiceSqlite {
       final model = income.toMap();
       final id = income.id;
 
-      final count = await _service.database.update(
+      final db = await _service.database;
+      final count = await db.update(
         _service.incomeTable,
         model,
         where: 'income_id = ?',
@@ -91,7 +95,8 @@ class IncomeServiceSqlite {
     try {
       final id = income.id;
 
-      final count = await _service.database.delete(
+      final db = await _service.database;
+      final count = await db.delete(
         _service.incomeTable,
         where: 'income_id = ?',
         whereArgs: [id],

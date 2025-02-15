@@ -14,7 +14,8 @@ class FixedExpenseServiceSqlite {
       final model = fixedExpense.toMap();
       model['fixed_expense_id'] = _service.generateId();
 
-      _service.database.insert(_service.fixedExpenseTable, model);
+      final db = await _service.database;
+      await db.insert(_service.fixedExpenseTable, model);
 
       return Success(fixedExpense.copyWith(id: model['fixed_expense_id']));
     } on Exception catch (e) {
@@ -29,7 +30,8 @@ class FixedExpenseServiceSqlite {
         FROM fixed_expenses
         LEFT JOIN expense_categories ON fixed_expenses.expense_category_id = expense_categories.expense_category_id
       ''';
-      final result = await _service.database.rawQuery(query);
+      final db = await _service.database;
+      final result = await db.rawQuery(query);
       final list = result
           .map((e) => FixedExpense.fromMap(e, ExpenseCategory.fromMap(e), []))
           .toList();
@@ -45,7 +47,8 @@ class FixedExpenseServiceSqlite {
       final model = fixedExpense.toMap();
       final id = fixedExpense.id;
 
-      final count = await _service.database.update(
+      final db = await _service.database;
+      final count = await db.update(
         _service.fixedExpenseTable,
         model,
         where: 'fixed_expense_id = ?',
@@ -66,7 +69,8 @@ class FixedExpenseServiceSqlite {
     try {
       final id = fixedExpense.id;
 
-      final count = await _service.database.delete(
+      final db = await _service.database;
+      final count = await db.delete(
         _service.fixedExpenseTable,
         where: 'fixed_expense_id = ?',
         whereArgs: [id],

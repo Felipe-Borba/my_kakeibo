@@ -18,8 +18,7 @@ void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-    sqliteService = SQLiteService();
-    await sqliteService.initialize(version: 'test_income');
+    sqliteService = SQLiteService(version: 'test_income');
 
     incomeService = IncomeServiceSqlite(sqliteService);
     source = await IncomeSourceServiceSqlite(sqliteService)
@@ -32,13 +31,15 @@ void main() {
   });
 
   tearDownAll(() async {
-    await sqliteService.database.close();
-    await sqliteService.dropDatabase(version: 'test_income');
+    final db = await sqliteService.database;
+    await db.close();
+    await sqliteService.dropDatabase();
   });
 
   group('IncomeServiceSqlite', () {
     setUp(() async {
-      await sqliteService.database.delete(sqliteService.incomeTable);
+      final db = await sqliteService.database;
+      await db.delete(sqliteService.incomeTable);
     });
 
     test('should insert an income', () async {

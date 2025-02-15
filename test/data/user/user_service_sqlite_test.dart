@@ -14,19 +14,20 @@ void main() {
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
-    sqliteService = SQLiteService();
-    await sqliteService.initialize(version: 'test_user');
+    sqliteService = SQLiteService(version: 'test_user');
     userService = UserServiceSqlite(sqliteService);
   });
 
   tearDownAll(() async {
-    await sqliteService.database.close();
-    await sqliteService.dropDatabase(version: 'test_user');
+    final db = await sqliteService.database;
+    await db.close();
+    await sqliteService.dropDatabase();
   });
 
   group('UserServiceSqlite', () {
     setUp(() async {
-      await sqliteService.database.delete(sqliteService.userTable);
+      final db = await sqliteService.database;
+      await db.delete(sqliteService.userTable);
     });
 
     test('should insert a user', () async {

@@ -10,7 +10,7 @@ class UserServiceSqlite {
 
   AsyncResult<User> insert(User user) async {
     try {
-      final db = _sqlite.database;
+      final db = await _sqlite.database;
       final insertedUser = user.copyWith(id: _sqlite.generateId());
       await db.insert(_sqlite.userTable, insertedUser.toMap());
       return Success(insertedUser);
@@ -22,7 +22,7 @@ class UserServiceSqlite {
   AsyncResult<User> update(User user) async {
     try {
       if (user.id == null) return Failure(CustomException.userNotFound());
-      final db = _sqlite.database;
+      final db = await _sqlite.database;
       final map = user.toMap();
       await db.update(
         _sqlite.userTable,
@@ -38,7 +38,7 @@ class UserServiceSqlite {
 
   Future<Result<User>> getSelf() async {
     try {
-      final db = _sqlite.database;
+      final db = await _sqlite.database;
       final result = await db.query(_sqlite.userTable, limit: 1);
       if (result.isEmpty) {
         return Failure(CustomException.userNotFound());
