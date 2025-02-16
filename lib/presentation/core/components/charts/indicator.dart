@@ -31,12 +31,20 @@ class Indicator extends StatelessWidget {
         const SizedBox(
           width: 4,
         ),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: textColor,
+        Container(
+          constraints: const BoxConstraints(maxWidth: 120),
+          child: Tooltip(
+            message: text,
+            preferBelow: false,
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
         )
       ],
