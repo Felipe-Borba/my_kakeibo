@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
 
 class Indicator extends StatelessWidget {
   const Indicator({
@@ -32,7 +33,7 @@ class Indicator extends StatelessWidget {
           width: 4,
         ),
         Container(
-          constraints: const BoxConstraints(maxWidth: 120),
+          constraints:  BoxConstraints(maxWidth: context.percentage(30)),
           child: Tooltip(
             message: text,
             preferBelow: false,

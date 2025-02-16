@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
 import 'package:provider/provider.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -66,7 +67,10 @@ class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
       items: _list.map((ExpenseCategory category) {
         return DropdownMenuItem(
           value: category,
-          child: Text(category.name),
+          child: Container(
+            constraints: BoxConstraints(maxWidth: context.percentage(80)),
+            child: Text(category.name, overflow: TextOverflow.ellipsis),
+          ),
         );
       }).toList(),
       validator: widget.validator,
