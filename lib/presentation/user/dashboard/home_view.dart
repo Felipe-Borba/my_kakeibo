@@ -154,8 +154,9 @@ class _HomeViewState extends State<HomeView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                constraints:
-                    BoxConstraints(maxWidth: context.screenPercentage(28),),
+                constraints: BoxConstraints(
+                  maxWidth: context.screenPercentage(28),
+                ),
                 child: TextTitleMedium(
                   context.currency.format(transaction.amount),
                   customTheme: const TextStyle(overflow: TextOverflow.ellipsis),
