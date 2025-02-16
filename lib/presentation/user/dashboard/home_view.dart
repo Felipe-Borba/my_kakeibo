@@ -11,6 +11,7 @@ import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.da
 import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_title_large.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_title_medium.dart';
+import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -145,17 +146,26 @@ class _HomeViewState extends State<HomeView> {
                 : transaction is Income
                     ? TextBodyMedium(transaction.source.name)
                     : null,
-        trailing: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextTitleLarge(
-              context.currency.format(transaction.amount),
-            ),
-            TextBodyMedium(
-              transaction.date.formatToString(context),
-            )
-          ],
+        trailing: Tooltip(
+          preferBelow: false,
+          message: context.currency.format(transaction.amount),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                constraints:
+                    BoxConstraints(maxWidth: context.screenPercentage(28),),
+                child: TextTitleMedium(
+                  context.currency.format(transaction.amount),
+                  customTheme: const TextStyle(overflow: TextOverflow.ellipsis),
+                ),
+              ),
+              TextBodyMedium(
+                transaction.date.formatToString(context),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 class TextTitleMedium extends StatelessWidget {
   final String data;
+  final TextStyle? customTheme;
 
-  const TextTitleMedium(this.data, {super.key});
+  const TextTitleMedium(this.data, {super.key, this.customTheme});
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      data,
-      style: Theme.of(context).textTheme.titleMedium,
-    );
+    var theme = Theme.of(context).textTheme.titleMedium;
+    var finalTheme = customTheme != null ? theme?.merge(customTheme) : theme;
+
+    return Text(data, style: finalTheme);
   }
 }

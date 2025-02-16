@@ -68,7 +68,7 @@ class _InputFormExpenseCategoryState extends State<InputFormExpenseCategory> {
         return DropdownMenuItem(
           value: category,
           child: Container(
-            constraints: BoxConstraints(maxWidth: context.percentage(80)),
+            constraints: BoxConstraints(maxWidth: context.screenPercentage(80)),
             child: Text(category.name, overflow: TextOverflow.ellipsis),
           ),
         );

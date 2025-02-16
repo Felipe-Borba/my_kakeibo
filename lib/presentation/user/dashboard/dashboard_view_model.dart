@@ -8,13 +8,11 @@ import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/color_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 
 class DashboardViewModel with ChangeNotifier {
   DashboardViewModel(
-    this._context,
     this._userRepository,
     this._expenseRepository,
     this._incomeRepository,
@@ -23,7 +21,6 @@ class DashboardViewModel with ChangeNotifier {
   }
 
   // Dependencies
-  final BuildContext _context;
   final UserRepository _userRepository;
   final ExpenseRepository _expenseRepository;
   final IncomeRepository _incomeRepository;
@@ -85,7 +82,7 @@ class DashboardViewModel with ChangeNotifier {
       return PieData(
         color: entry.key.color.toColor(),
         value: entry.value,
-        title: _context.currency.format(entry.value),
+        title: "${(entry.value / totalExpense * 100).round()}%",
         label: entry.key.name,
       );
     }).toList();

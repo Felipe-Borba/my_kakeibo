@@ -13,7 +13,6 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => DashboardViewModel(
-        context,
         context.read(),
         context.read(),
         context.read(),
