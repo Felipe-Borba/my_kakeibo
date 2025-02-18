@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:my_kakeibo/data/analytics_service.dart';
 import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/expense_category/expense_category_service_sqlite.dart';
 import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart';
@@ -25,6 +26,7 @@ class DependencyManager extends StatelessWidget {
     return MultiProvider(
       providers: [
         //Services
+        Provider(create: (context) => AnalyticsService()),
         Provider(create: (context) => SQLiteService()),
         Provider(create: (context) => UserServiceSqlite(context.read())),
         Provider(
