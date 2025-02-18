@@ -2,7 +2,7 @@
 // ignore_for_file: type=lint
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show defaultTargetPlatform, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -16,9 +16,6 @@ import 'package:flutter/foundation.dart'
 /// ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -46,32 +43,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDYEQpIFnVouq2ENuLjnGp1tQYJPK1nT2c',
-    appId: '1:713195547362:web:05e4fb6a112b80b2cc0cbb',
-    messagingSenderId: '713195547362',
-    projectId: 'my-kakeibo-f8ca5',
-    authDomain: 'my-kakeibo-f8ca5.firebaseapp.com',
-    storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
-    measurementId: 'G-MG6B7SGG4L',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB6Sr94lNgxifA4y_8gTtbl5FxTW3vT0Hg',
-    appId: '1:713195547362:android:da3e38ab3b452e2ccc0cbb',
-    messagingSenderId: '713195547362',
-    projectId: 'my-kakeibo-f8ca5',
-    storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
+    apiKey: 'AIzaSyCCdm1zNBJ2eRKZsiS_EysoRWQGtrNF5Q8',
+    appId: '1:411416223259:android:51d56a5cadcc99024fe2be',
+    messagingSenderId: '411416223259',
+    projectId: 'my-kakeibo-b2d6e',
+    storageBucket: 'my-kakeibo-b2d6e.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDgBRQFxWOmc27PljrE3tIEaRNvSKd5NYo',
-    appId: '1:713195547362:ios:571a9596af80c75acc0cbb',
-    messagingSenderId: '713195547362',
-    projectId: 'my-kakeibo-f8ca5',
-    storageBucket: 'my-kakeibo-f8ca5.firebasestorage.app',
-    iosClientId:
-        '713195547362-r5r8a6bb5jq4t9pfb519qnup0cdvvtro.apps.googleusercontent.com',
-    iosBundleId: 'com.example.myKakeibo',
+    apiKey: 'AIzaSyCsWxQB4-xBOF3UsMNp3v5wb5d3rr3yhVY',
+    appId: '1:411416223259:ios:5d7f98d7d8674cfb4fe2be',
+    messagingSenderId: '411416223259',
+    projectId: 'my-kakeibo-b2d6e',
+    storageBucket: 'my-kakeibo-b2d6e.firebasestorage.app',
+    iosBundleId: 'com.felipe.myKakeibo',
   );
+
 }
