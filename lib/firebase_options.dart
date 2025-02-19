@@ -59,5 +59,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'my-kakeibo-b2d6e.firebasestorage.app',
     iosBundleId: 'com.felipe.myKakeibo',
   );
-
 }

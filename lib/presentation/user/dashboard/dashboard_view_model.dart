@@ -13,12 +13,8 @@ import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 
 class DashboardViewModel with ChangeNotifier {
-  DashboardViewModel(
-    this._userRepository,
-    this._expenseRepository,
-    this._incomeRepository,
-    this._analyticsService
-  ) {
+  DashboardViewModel(this._userRepository, this._expenseRepository,
+      this._incomeRepository, this._analyticsService) {
     getInitialData();
   }
 
