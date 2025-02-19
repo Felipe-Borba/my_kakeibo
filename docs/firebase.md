@@ -28,3 +28,6 @@ adb shell setprop debug.firebase.analytics.app .none.
 
 ## Crashlytics [link](https://firebase.google.com/docs/crashlytics/get-started?platform=flutter)
 Setup bem simples praticamente só instalar a lib pq o analytics e o flutter já estavam instalados
+
+## Performance Monitoring
+Testei com a versão 0.10.0+11 até 0.10.1+3 e nenhuma delas funcionou. Embora o setup seja muito simples segundo a doc, o projeto não deu build, null pointer....
