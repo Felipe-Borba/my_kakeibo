@@ -25,3 +25,6 @@ Para desativar esse modo dev
 ```console
 adb shell setprop debug.firebase.analytics.app .none.
 ```
+
+## Crashlytics [link](https://firebase.google.com/docs/crashlytics/get-started?platform=flutter)
+Setup bem simples praticamente só instalar a lib pq o analytics e o flutter já estavam instalados
