@@ -17,7 +17,7 @@ class App extends StatelessWidget {
     final theme = getMaterialTheme(context);
 
     return ChangeNotifierProvider(
-      create: (context) => AppViewModel(context.read()),
+      create: (context) => AppViewModel(context.read(), context.read()),
       builder: (context, child) {
         final viewModel = Provider.of<AppViewModel>(context);
 
@@ -46,6 +46,9 @@ class App extends StatelessWidget {
           highContrastDarkTheme: theme.darkHighContrast(),
           //
           home: viewModel.initialRoute,
+          navigatorObservers: [
+            viewModel.getAnalyticsObserver(),
+          ],
         );
       },
     );

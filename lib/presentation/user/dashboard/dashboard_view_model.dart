@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/data/analytics_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
@@ -12,11 +13,8 @@ import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 
 class DashboardViewModel with ChangeNotifier {
-  DashboardViewModel(
-    this._userRepository,
-    this._expenseRepository,
-    this._incomeRepository,
-  ) {
+  DashboardViewModel(this._userRepository, this._expenseRepository,
+      this._incomeRepository, this._analyticsService) {
     getInitialData();
   }
 
@@ -24,6 +22,7 @@ class DashboardViewModel with ChangeNotifier {
   final UserRepository _userRepository;
   final ExpenseRepository _expenseRepository;
   final IncomeRepository _incomeRepository;
+  final AnalyticsService _analyticsService;
 
   // State
   double total = 0;
@@ -106,6 +105,7 @@ class DashboardViewModel with ChangeNotifier {
 
   onTabTapped(int selectedIndex) {
     this.selectedIndex.value = selectedIndex;
+    _analyticsService.logScreen(screen.runtimeType.toString());
     notifyListeners();
   }
 }

@@ -16,6 +16,7 @@ class DashboardView extends StatelessWidget {
         context.read(),
         context.read(),
         context.read(),
+        context.read(),
       ),
       builder: (BuildContext context, Widget? child) {
         final viewModel = Provider.of<DashboardViewModel>(context);
