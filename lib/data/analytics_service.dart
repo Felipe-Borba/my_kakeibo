@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 class AnalyticsService {
   final FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
 
-
   static init() {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
     PlatformDispatcher.instance.onError = (error, stack) {
