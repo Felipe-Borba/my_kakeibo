@@ -43,12 +43,18 @@ class DependencyManager extends StatelessWidget {
         Provider(create: (context) => LocalNotificationService()),
         Provider(create: (context) => PushNotificationService()),
         //Repositories
-        Provider(create: (context) => UserRepository(context.read())),
         Provider(
-            create: (context) => ExpenseRepository(
-                  context.read(),
-                  context.read(),
-                )),
+          create: (context) => UserRepository(
+            context.read(),
+            context.read(),
+          ),
+        ),
+        Provider(
+          create: (context) => ExpenseRepository(
+            context.read(),
+            context.read(),
+          ),
+        ),
         Provider(
           create: (context) => ExpenseCategoryRepository(context.read()),
         ),
@@ -60,10 +66,11 @@ class DependencyManager extends StatelessWidget {
           ),
         ),
         Provider(
-            create: (context) => IncomeRepository(
-                  context.read(),
-                  context.read(),
-                )),
+          create: (context) => IncomeRepository(
+            context.read(),
+            context.read(),
+          ),
+        ),
         Provider(create: (context) => IncomeSourceRepository(context.read())),
       ],
       child: child,
