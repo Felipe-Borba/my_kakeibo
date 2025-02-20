@@ -3,26 +3,25 @@
     "platforms": {
       "android": {
         "default": {
-          "projectId": "my-kakeibo-f8ca5",
-          "appId": "1:713195547362:android:da3e38ab3b452e2ccc0cbb",
+          "projectId": "my-kakeibo-b2d6e",
+          "appId": "1:411416223259:android:51d56a5cadcc99024fe2be",
           "fileOutput": "android/app/google-services.json"
         }
       },
       "ios": {
         "default": {
-          "projectId": "my-kakeibo-f8ca5",
-          "appId": "1:713195547362:ios:571a9596af80c75acc0cbb",
+          "projectId": "my-kakeibo-b2d6e",
+          "appId": "1:411416223259:ios:5d7f98d7d8674cfb4fe2be",
           "uploadDebugSymbols": false,
           "fileOutput": "ios/Runner/GoogleService-Info.plist"
         }
       },
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "my-kakeibo-f8ca5",
+          "projectId": "my-kakeibo-b2d6e",
           "configurations": {
-            "android": "1:713195547362:android:da3e38ab3b452e2ccc0cbb",
-            "ios": "1:713195547362:ios:571a9596af80c75acc0cbb",
-            "web": "1:713195547362:web:05e4fb6a112b80b2cc0cbb"
+            "android": "1:411416223259:android:51d56a5cadcc99024fe2be",
+            "ios": "1:411416223259:ios:5d7f98d7d8674cfb4fe2be"
           }
         }
       }

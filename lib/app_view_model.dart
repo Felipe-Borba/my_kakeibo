@@ -36,4 +36,8 @@ class AppViewModel extends ChangeNotifier {
     _userSubscription.cancel();
     super.dispose();
   }
+
+  getAnalyticsObserver() {
+    return _userRepository.getAnalyticsObserver();
+  }
 }

@@ -106,6 +106,7 @@ class DashboardViewModel with ChangeNotifier {
 
   onTabTapped(int selectedIndex) {
     this.selectedIndex.value = selectedIndex;
+    _userRepository.logScreen(screen.runtimeType.toString());
     notifyListeners();
   }
 }

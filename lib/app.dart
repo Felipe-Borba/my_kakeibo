@@ -46,6 +46,9 @@ class App extends StatelessWidget {
           highContrastDarkTheme: theme.darkHighContrast(),
           //
           home: viewModel.initialRoute,
+          navigatorObservers: [
+            viewModel.getAnalyticsObserver(),
+          ],
         );
       },
     );

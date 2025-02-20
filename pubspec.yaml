@@ -24,11 +24,13 @@ dependencies:
   fl_chart: ^0.69.2
   timezone: ^0.10.0
   uuid: ^4.5.1
-  firebase_app_check: ^0.3.1+6 #TODO ver melhor as questão do firebase
+  firebase_app_check: ^0.3.1+6
   keyboard_dismisser: ^3.0.0
   result_dart: ^2.0.0
   sqflite: ^2.4.0
   path: ^1.9.0
+  firebase_analytics: ^11.4.3
+  firebase_crashlytics: ^4.3.3
 
 dev_dependencies:
   flutter_test:
