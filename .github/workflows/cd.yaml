@@ -67,7 +67,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.example.myapp
+          packageName: com.borba.felipe.my_kakeibo
           releaseFile: build/app/outputs/bundle/release/app-release.aab
           track: alpha # internal, alpha, beta, production
-          inAppUpdatePriority: 3
+          inAppUpdatePriority: 5
