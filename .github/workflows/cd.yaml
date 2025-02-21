@@ -62,12 +62,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: appbundle
-          path: build/app/outputs/bundle/release
+          path: build/app/outputs/bundle/release/app-release.aab
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.borba.felipe.my_kakeibo
-          releaseFile: build/app/outputs/bundle/release/app-release.aab
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: alpha # internal, alpha, beta, production
           inAppUpdatePriority: 5
+          status: completed
+          changesNotSentForReview: false
