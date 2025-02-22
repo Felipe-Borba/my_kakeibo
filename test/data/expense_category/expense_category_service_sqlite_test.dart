@@ -206,5 +206,36 @@ void main() {
         },
       );
     });
+
+    test('should delete all ExpenseCategories', () async {
+      await service
+          .insert(ExpenseCategory(
+            name: 'Test ExpenseCategory 1',
+            color: ColorCustom.blue,
+            icon: IconCustom.entertainment,
+          ))
+          .getOrThrow();
+
+      await service
+          .insert(ExpenseCategory(
+            name: 'Test ExpenseCategory 2',
+            color: ColorCustom.orange,
+            icon: IconCustom.food,
+          ))
+          .getOrThrow();
+
+      final result = await service.deleteAll();
+
+      expect(result.isSuccess(), true);
+      result.onFailure((error) {
+        fail('Delete all failed');
+      });
+
+      final findResult = await service.findAll();
+      expect(findResult.isSuccess(), true);
+      findResult.onSuccess((data) {
+        expect(data.length, 0);
+      });
+    });
   });
 }

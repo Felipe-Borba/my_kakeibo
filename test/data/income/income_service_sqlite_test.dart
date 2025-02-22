@@ -203,5 +203,41 @@ void main() {
         expect(data.length, 0);
       });
     });
+
+    test('should delete all incomes', () async {
+      await incomeService
+          .insert(Income(
+            amount: 50.0,
+            date: DateTime.now(),
+            description: 'Groceries',
+            source: source,
+          ))
+          .getOrThrow();
+
+      await incomeService
+          .insert(Income(
+            amount: 30.0,
+            date: DateTime.now(),
+            description: 'Restaurant',
+            source: source,
+          ))
+          .getOrThrow();
+
+      final result = await incomeService.deleteAll();
+
+      expect(result.isSuccess(), true);
+      result.onSuccess((data) {
+        expect(data, unit);
+      });
+      result.onFailure((error) {
+        fail('Delete all failed');
+      });
+
+      final findResult = await incomeService.findAll();
+      expect(findResult.isSuccess(), true);
+      findResult.onSuccess((data) {
+        expect(data, isEmpty);
+      });
+    });
   });
 }

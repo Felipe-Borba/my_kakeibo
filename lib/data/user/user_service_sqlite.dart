@@ -49,4 +49,14 @@ class UserServiceSqlite {
       return Failure(CustomException.unknownError());
     }
   }
+
+  AsyncResult<Unit> delete() async {
+    try {
+      final db = await _sqlite.database;
+      await db.delete(_sqlite.userTable);
+      return const Success(unit);
+    } catch (e) {
+      return Failure(CustomException.unknownError());
+    }
+  }
 }

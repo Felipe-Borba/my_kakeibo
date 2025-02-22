@@ -47,6 +47,11 @@ class DependencyManager extends StatelessWidget {
           create: (context) => UserRepository(
             context.read(),
             context.read(),
+            context.read(),
+            context.read(),
+            context.read(),
+            context.read(),
+            context.read(),
           ),
         ),
         Provider(

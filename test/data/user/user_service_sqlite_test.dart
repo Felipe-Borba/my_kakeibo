@@ -125,5 +125,24 @@ void main() {
         },
       );
     });
+
+    test('should delete the user', () async {
+      await userService.insert(User(
+        name: 'Test User',
+        theme: UserTheme.light,
+        notificationToken: 'token',
+      ));
+
+      await userService.delete();
+      final result = await userService.getSelf();
+
+      expect(result.isError(), true);
+      result.onFailure((err) {
+        expect(err, isA<CustomException>());
+        if (err is CustomException) {
+          expect(err.type, ExceptionType.userNotFound);
+        }
+      });
+    });
   });
 }

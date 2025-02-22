@@ -105,4 +105,14 @@ class IncomeSourceServiceSqlite {
       return Failure(e);
     }
   }
+
+  AsyncResult<Unit> deleteAll() async {
+    try {
+      final db = await _sqliteService.database;
+      await db.delete(_sqliteService.incomeSourceTable);
+      return const Success(unit);
+    } on Exception catch (e) {
+      return Failure(e);
+    }
+  }
 }

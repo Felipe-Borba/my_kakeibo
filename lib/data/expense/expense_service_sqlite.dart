@@ -119,4 +119,15 @@ class ExpenseServiceSqlite {
       return Failure(e);
     }
   }
+
+  AsyncResult<Unit> deleteAll() async {
+    try {
+      final db = await _service.database;
+      await db.delete(_service.expenseTable);
+
+      return const Success(unit);
+    } on Exception catch (e) {
+      return Failure(e);
+    }
+  }
 }

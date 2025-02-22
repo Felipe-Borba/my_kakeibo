@@ -209,5 +209,39 @@ void main() {
         },
       );
     });
+
+    test('should delete all ExpenseCategories', () async {
+      await service.insert(IncomeSource(
+        name: 'Test IncomeSource 1',
+        color: ColorCustom.blue,
+        icon: IconCustom.entertainment,
+      ));
+      await service.insert(IncomeSource(
+        name: 'Test IncomeSource 2',
+        color: ColorCustom.orange,
+        icon: IconCustom.food,
+      ));
+
+      final result = await service.deleteAll();
+
+      expect(result.isSuccess(), true);
+      result.onSuccess((data) {
+        expect(data, unit);
+      });
+      result.onFailure((error) {
+        fail('Delete all failed');
+      });
+
+      final findResult = await service.findAll();
+      expect(findResult.isSuccess(), true);
+      findResult.fold(
+        (data) {
+          expect(data, isEmpty);
+        },
+        (error) {
+          fail('Find all failed');
+        },
+      );
+    });
   });
 }

@@ -227,5 +227,44 @@ void main() {
         }
       });
     });
+
+    test('should delete all fixed expenses', () async {
+      await fixedExpenseService
+          .insert(FixedExpense(
+            amount: 1000.0,
+            dueDate: DateTime.now(),
+            description: 'Monthly Rent',
+            category: category,
+            frequency: Frequency.monthly,
+            remember: Remember.no,
+            expenseList: List.empty(),
+          ))
+          .getOrThrow();
+
+      await fixedExpenseService
+          .insert(FixedExpense(
+            amount: 500.0,
+            dueDate: DateTime.now(),
+            description: 'Weekly Groceries',
+            category: category,
+            frequency: Frequency.weekly,
+            remember: Remember.no,
+            expenseList: List.empty(),
+          ))
+          .getOrThrow();
+
+      final deleteResult = await fixedExpenseService.deleteAll();
+
+      expect(deleteResult.isSuccess(), true);
+      deleteResult.onFailure((error) {
+        fail('Delete all failed');
+      });
+
+      final findResult = await fixedExpenseService.findAll();
+      expect(findResult.isSuccess(), true);
+      findResult.onSuccess((data) {
+        expect(data.length, 0);
+      });
+    });
   });
 }

@@ -225,5 +225,40 @@ void main() {
         expect(data.length, 0);
       });
     });
+
+    test('should delete all expenses', () async {
+      await expenseService
+          .insert(Expense(
+            amount: 50.0,
+            date: DateTime.now(),
+            description: 'Groceries',
+            category: category,
+          ))
+          .getOrThrow();
+      await expenseService
+          .insert(Expense(
+            amount: 30.0,
+            date: DateTime.now(),
+            description: 'Restaurant',
+            category: category,
+          ))
+          .getOrThrow();
+
+      final result = await expenseService.deleteAll();
+
+      expect(result.isSuccess(), true);
+      result.onSuccess((data) {
+        expect(data, unit);
+      });
+      result.onFailure((error) {
+        fail('Delete all failed');
+      });
+
+      final findResult = await expenseService.findAll();
+      expect(findResult.isSuccess(), true);
+      findResult.onSuccess((data) {
+        expect(data.length, 0);
+      });
+    });
   });
 }
