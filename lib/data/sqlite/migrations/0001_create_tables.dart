@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS expenses(
   expense_category_id TEXT,
   fixed_expense_id TEXT,
   user_id TEXT,
-  FOREIGN KEY(fixed_expense_id) REFERENCES fixed_expenses(fixed_expense_id),
-  FOREIGN KEY(expense_category_id) REFERENCES expense_categories(expense_category_id),
-  FOREIGN KEY(user_id) REFERENCES users(user_id)
+  FOREIGN KEY(fixed_expense_id) REFERENCES fixed_expenses(fixed_expense_id) ON DELETE CASCADE,
+  FOREIGN KEY(expense_category_id) REFERENCES expense_categories(expense_category_id) ON DELETE CASCADE,
+  FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 ''';
 
@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS income(
   income_description TEXT,
   income_source_id TEXT,
   user_id TEXT,
-  FOREIGN KEY(income_source_id) REFERENCES income_sources(income_source_id),
-  FOREIGN KEY(user_id) REFERENCES users(user_id)
+  FOREIGN KEY(income_source_id) REFERENCES income_sources(income_source_id) ON DELETE CASCADE,
+  FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 ''';
 
@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS fixed_expenses(
   fixed_expense_remember INTEGER,
   expense_category_id TEXT,
   user_id TEXT,
-  FOREIGN KEY(expense_category_id) REFERENCES expense_categories(expense_category_id),
-  FOREIGN KEY(user_id) REFERENCES users(user_id)
+  FOREIGN KEY(expense_category_id) REFERENCES expense_categories(expense_category_id) ON DELETE CASCADE,
+  FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 ''';
 

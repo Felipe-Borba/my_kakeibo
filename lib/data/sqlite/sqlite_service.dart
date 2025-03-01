@@ -33,8 +33,11 @@ class SQLiteService {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       singleInstance: true,
+      onConfigure: (db) async {
+        await db.execute('PRAGMA foreign_keys = ON');
+      },
       onCreate: (db, version) async {
         await db.execute(createUsersTable);
         await db.execute(createExpensesTable);
@@ -42,6 +45,22 @@ class SQLiteService {
         await db.execute(createFixedExpensesTable);
         await db.execute(createExpenseCategoriesTable);
         await db.execute(createIncomeSourcesTable);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('DROP TABLE $userTable');
+          await db.execute('DROP TABLE $expenseTable');
+          await db.execute('DROP TABLE $incomeTable');
+          await db.execute('DROP TABLE $fixedExpenseTable');
+          await db.execute('DROP TABLE $expenseCategoryTable');
+          await db.execute('DROP TABLE $incomeSourceTable');
+          await db.execute(createUsersTable);
+          await db.execute(createExpensesTable);
+          await db.execute(createIncomeTable);
+          await db.execute(createFixedExpensesTable);
+          await db.execute(createExpenseCategoriesTable);
+          await db.execute(createIncomeSourcesTable);
+        }
       },
     );
   }

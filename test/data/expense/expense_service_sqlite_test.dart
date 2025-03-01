@@ -16,6 +16,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 void main() {
   late SQLiteService sqliteService;
   late ExpenseServiceSqlite expenseService;
+  late ExpenseCategoryServiceSqlite expenseCategoryService;
 
   late ExpenseCategory category;
   late FixedExpense fixedExpense;
@@ -25,8 +26,9 @@ void main() {
     databaseFactory = databaseFactoryFfi;
     sqliteService = SQLiteService(version: 'test_expense');
     expenseService = ExpenseServiceSqlite(sqliteService);
+    expenseCategoryService = ExpenseCategoryServiceSqlite(sqliteService);
 
-    category = await ExpenseCategoryServiceSqlite(sqliteService)
+    category = await expenseCategoryService
         .insert(ExpenseCategory(
           color: ColorCustom.blue,
           icon: IconCustom.book,
@@ -257,6 +259,39 @@ void main() {
       final findResult = await expenseService.findAll();
       expect(findResult.isSuccess(), true);
       findResult.onSuccess((data) {
+        expect(data.length, 0);
+      });
+    });
+
+    test('should delete category and related expenses', () async {
+      final newCategory = await expenseCategoryService
+          .insert(ExpenseCategory(
+            color: ColorCustom.green,
+            icon: IconCustom.misc,
+            name: "Transport",
+          ))
+          .getOrThrow();
+
+      await expenseService
+          .insert(Expense(
+            amount: 20.0,
+            date: DateTime.now(),
+            description: 'Bus fare',
+            category: newCategory,
+          ))
+          .getOrThrow();
+
+      final deleteCategoryResult =
+          await expenseCategoryService.delete(newCategory);
+
+      expect(deleteCategoryResult.isSuccess(), true);
+      deleteCategoryResult.onFailure((error) {
+        fail('Delete category failed');
+      });
+
+      final findExpensesResult = await expenseService.findAll();
+      expect(findExpensesResult.isSuccess(), true);
+      findExpensesResult.onSuccess((data) {
         expect(data.length, 0);
       });
     });
