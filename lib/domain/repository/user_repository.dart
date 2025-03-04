@@ -7,6 +7,8 @@ import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart'
 import 'package:my_kakeibo/data/income/income_service_sqlite.dart';
 import 'package:my_kakeibo/data/income_source/income_source_service_sqlite.dart';
 import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -42,6 +44,22 @@ class UserRepository {
         _streamController.add(success);
       });
     }
+  }
+
+  AsyncResult<User> createNewUser({
+    required String name,
+    required List<ExpenseCategory> expenseCategories,
+    required List<IncomeSource> incomeSources,
+  }) async {
+    for (var element in expenseCategories) {
+      _expenseCategoryService.insert(element);
+    }
+
+    for (var element in incomeSources) {
+      _incomeSourceService.insert(element);
+    }
+
+    return await _userService.insert(User(name: name));
   }
 
   AsyncResult<Unit> deleteUserData() async {

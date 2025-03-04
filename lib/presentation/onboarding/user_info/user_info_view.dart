@@ -12,12 +12,7 @@ class UserInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => UserInfoViewModel(
-        context,
-        context.read(),
-        context.read(),
-        context.read(),
-      ),
+      create: (context) => UserInfoViewModel(context, context.read()),
       builder: (context, child) {
         final viewModel = Provider.of<UserInfoViewModel>(context);
 
