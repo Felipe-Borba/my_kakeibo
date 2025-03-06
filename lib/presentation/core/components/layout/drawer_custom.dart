@@ -99,10 +99,7 @@ class DrawerCustom extends StatelessWidget {
             },
           ),
           const Expanded(child: SizedBox(width: double.maxFinite)),
-          const SafeArea(
-            bottom: true,
-            child: AppVersion()
-          ),
+          const SafeArea(bottom: true, child: AppVersion()),
         ],
       ),
     );
