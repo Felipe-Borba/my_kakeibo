@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/components/app_version.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
@@ -88,18 +89,19 @@ class DrawerCustom extends StatelessWidget {
               context.pushScreen(const ExpenseCategoryListView());
             },
           ),
+          ListTile(
+            key: WidgetKeys.settings,
+            leading: const Icon(Icons.settings),
+            title: Text(context.intl.settings),
+            onTap: () {
+              scaffold.closeEndDrawer();
+              context.pushScreen(const SettingsScreen());
+            },
+          ),
           const Expanded(child: SizedBox(width: double.maxFinite)),
-          SafeArea(
+          const SafeArea(
             bottom: true,
-            child: ListTile(
-              key: WidgetKeys.settings,
-              leading: const Icon(Icons.settings),
-              title: Text(context.intl.settings),
-              onTap: () {
-                scaffold.closeEndDrawer();
-                context.pushScreen(const SettingsScreen());
-              },
-            ),
+            child: AppVersion()
           ),
         ],
       ),

@@ -222,5 +222,14 @@
   "fixedExpenseNotFound": "Fixed expense not found",
   "@fixedExpenseNotFound": {},
   "unknownError": "An unknown error occurred",
-  "@unknownError": {}
+  "@unknownError": {},
+  "version": "Version: {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  }
 }

@@ -222,5 +222,14 @@
   "fixedExpenseNotFound": "Despesa fixa não encontrada",
   "@fixedExpenseNotFound": {},
   "unknownError": "Ocorreu um erro desconhecido",
-  "@unknownError": {}
+  "@unknownError": {},
+  "version": "Versão: {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.0.0"
+      }
+    }
+  }
 }
