@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+@Deprecated('This class is deprecated. Use TextCustom instead.')
 class TextLabelMedium extends StatelessWidget {
   final String data;
-  final bool prominent; //TODO remover?
+  final bool prominent; 
   final TextStyle? customTheme;
 
   const TextLabelMedium(

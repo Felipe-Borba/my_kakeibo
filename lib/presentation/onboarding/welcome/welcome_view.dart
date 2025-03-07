@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view_model.dart';
@@ -24,34 +25,31 @@ class WelcomeView extends StatelessWidget {
                 const Expanded(child: SizedBox()),
                 ClipOval(child: Image.asset("assets/launcher/icon.png")),
                 const Expanded(child: SizedBox()),
-                Text(
+                TextCustom(
                   '${context.intl.appTitle} 家計簿',
-                  style: TextStyle(
-                    color: Colors.grey[800],
-                    fontSize: 16,
-                  ),
+                  color: Colors.grey[800],
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
-                  child: Text(
+                  child: TextCustom(
                     context.intl.welcomeToOurFinanceApp,
-                    style: const TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                  child: Text(
+                  child: TextCustom(
                     context.intl.manageYourFinancesWithEase,
-                    style: const TextStyle(fontSize: 18),
+                    theme: CustomTheme.bodyLarge,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                  child: Text(
+                  child: TextCustom(
                     context.intl.trackYourExpensesSetBudgets,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18),
+                    theme: CustomTheme.bodyLarge,
                   ),
                 ),
                 const Expanded(child: SizedBox()),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@Deprecated('This class is deprecated. Use TextCustom instead.')
 class TextTitleMedium extends StatelessWidget {
   final String data;
   final TextStyle? customTheme;

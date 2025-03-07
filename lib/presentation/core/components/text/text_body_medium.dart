@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@Deprecated('This class is deprecated. Use TextCustom instead.')
 class TextBodyMedium extends StatelessWidget {
   final String data;
   final bool prominent;
