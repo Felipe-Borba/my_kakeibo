@@ -57,16 +57,11 @@ class PieChart2State extends State<PieChartCustom> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: widget.data.map((e) {
-              return Column(
-                children: [
-                  Indicator(
-                    color: e.color,
-                    text: e.label,
-                    value: e.value,
-                    isSquare: true,
-                  ),
-                  const SizedBox(height: 8),
-                ],
+              return Indicator(
+                color: e.color,
+                text: e.label,
+                value: e.value,
+                isSquare: true,
               );
             }).toList(),
           ),

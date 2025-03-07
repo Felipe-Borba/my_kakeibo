@@ -24,6 +24,8 @@ class Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: <Widget>[
@@ -68,6 +70,7 @@ class Indicator extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(height: 8)
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_title_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,10 @@ class InsightsView extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const TextTitleMedium("Gasto mensal por categoria"),
+          const TextCustom(
+            "Gasto mensal por categoria",
+            theme: CustomTheme.titleMedium,
+          ),
           if (viewModel.pieChartData.isEmpty)
             Expanded(child: Center(child: Text(context.intl.no_transactions)))
           else
