@@ -6,8 +6,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
@@ -94,15 +93,17 @@ class IncomeListView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (income.description.isNotEmpty)
-                TextBodyMedium(income.description)
+                TextCustom(income.description, theme: CustomTheme.bodyMedium)
               else
-                TextBodyMedium(income.source.name),
-              TextBodyMedium(
+                TextCustom(income.source.name, theme: CustomTheme.bodyMedium),
+              TextCustom(
                 context.currency.format(income.amount),
                 prominent: true,
+                theme: CustomTheme.bodyMedium,
               ),
-              TextLabelMedium(
+              TextCustom(
                 income.date.formatToString(context),
+                theme: CustomTheme.labelMedium,
               ),
             ],
           ),

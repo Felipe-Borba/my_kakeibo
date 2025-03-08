@@ -4,7 +4,7 @@ import 'package:my_kakeibo/presentation/core/components/card_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/expense_category/expense_category_list/expense_category_list_view_model.dart';
@@ -79,8 +79,11 @@ class ExpenseCategoryListView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextBodyMedium(category.name),
-              TextBodyMedium(category.color.getTranslation(context)),
+              TextCustom(category.name, theme: CustomTheme.bodyMedium),
+              TextCustom(
+                category.color.getTranslation(context),
+                theme: CustomTheme.bodyMedium,
+              ),
             ],
           ),
         ),

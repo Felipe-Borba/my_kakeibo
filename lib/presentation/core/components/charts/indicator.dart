@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
 
@@ -41,19 +41,17 @@ class Indicator extends StatelessWidget {
               width: 4,
             ),
             Container(
-              constraints:
-                  BoxConstraints(maxWidth: context.screenPercentage(30)),
+              constraints: BoxConstraints(
+                maxWidth: context.screenPercentage(30),
+              ),
               child: Tooltip(
                 message: text,
                 preferBelow: false,
-                child: Text(
+                child: TextCustom(
                   text,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  prominent: true,
+                  color: textColor,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             )
@@ -64,9 +62,10 @@ class Indicator extends StatelessWidget {
           child: Tooltip(
             message: context.currency.format(value),
             preferBelow: false,
-            child: TextLabelMedium(
+            child: TextCustom(
               context.currency.format(value),
-              customTheme: const TextStyle(overflow: TextOverflow.ellipsis),
+              theme: CustomTheme.labelMedium,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),

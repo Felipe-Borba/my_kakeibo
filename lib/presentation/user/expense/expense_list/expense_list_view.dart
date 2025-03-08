@@ -6,8 +6,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
@@ -94,15 +93,20 @@ class ExpenseListView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (expense.description.isNotEmpty)
-                TextBodyMedium(expense.description)
+                TextCustom(expense.description, theme: CustomTheme.bodyMedium)
               else
-                TextBodyMedium(expense.category.name),
-              TextBodyMedium(
+                TextCustom(
+                  expense.category.name,
+                  theme: CustomTheme.bodyMedium,
+                ),
+              TextCustom(
                 context.currency.format(expense.amount),
                 prominent: true,
+                theme: CustomTheme.bodyMedium,
               ),
-              TextLabelMedium(
+              TextCustom(
                 expense.date.formatToString(context),
+                theme: CustomTheme.labelMedium,
               ),
             ],
           ),

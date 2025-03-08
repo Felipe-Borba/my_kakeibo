@@ -5,8 +5,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
@@ -91,18 +90,27 @@ class FixedExpenseListView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (fixedExpense.description.isNotEmpty)
-                TextBodyMedium(fixedExpense.description)
+                TextCustom(
+                  fixedExpense.description,
+                  theme: CustomTheme.bodyMedium,
+                )
               else
-                TextBodyMedium(fixedExpense.category.name),
-              TextBodyMedium(
+                TextCustom(
+                  fixedExpense.category.name,
+                  theme: CustomTheme.bodyMedium,
+                ),
+              TextCustom(
                 context.currency.format(fixedExpense.amount),
                 prominent: true,
+                theme: CustomTheme.bodyMedium,
               ),
-              TextLabelMedium(
+              TextCustom(
                 fixedExpense.frequency.getTranslation(context),
+                theme: CustomTheme.labelMedium,
               ),
-              TextLabelMedium(
+              TextCustom(
                 fixedExpense.dueDate.formatToString(context),
+                theme: CustomTheme.labelMedium,
               )
             ],
           ),

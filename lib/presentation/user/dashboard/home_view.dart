@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_body_medium.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_label_medium.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_title_large.dart';
-import 'package:my_kakeibo/presentation/core/components/text/text_title_medium.dart';
+import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
@@ -53,14 +50,20 @@ class _HomeViewState extends State<HomeView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextTitleMedium(context.intl.available),
-          TextTitleLarge(context.currency.format(viewModel.total)),
+          TextCustom(context.intl.available, theme: CustomTheme.titleMedium),
+          TextCustom(
+            context.currency.format(viewModel.total),
+            theme: CustomTheme.titleLarge,
+          ),
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextTitleMedium(context.intl.income),
-              TextTitleMedium(context.currency.format(viewModel.totalIncome)),
+              TextCustom(context.intl.income, theme: CustomTheme.titleMedium),
+              TextCustom(
+                context.currency.format(viewModel.totalIncome),
+                theme: CustomTheme.titleMedium,
+              ),
             ],
           ),
           LifeBar(
@@ -68,9 +71,10 @@ class _HomeViewState extends State<HomeView> {
             current: viewModel.total,
           ),
           const SizedBox(height: 4),
-          TextLabelMedium(
+          TextCustom(
             "${context.intl.expense} ${context.currency.format(viewModel.totalExpense)}",
             prominent: true,
+            theme: CustomTheme.labelMedium,
           ),
         ],
       ),
@@ -102,7 +106,10 @@ class _HomeViewState extends State<HomeView> {
             children: [
               Row(
                 children: [
-                  TextTitleMedium(context.intl.transactions),
+                  TextCustom(
+                    context.intl.transactions,
+                    theme: CustomTheme.titleMedium,
+                  ),
                   const Expanded(child: SizedBox()),
                   TextButton(
                     onPressed: () {},
@@ -136,15 +143,22 @@ class _HomeViewState extends State<HomeView> {
               ? transaction.category.icon.toIconData()
               : Icons.monetization_on_outlined,
         ),
-        title: TextTitleMedium(
+        title: TextCustom(
           transaction is Income ? context.intl.income : context.intl.expense,
+          theme: CustomTheme.titleMedium,
         ),
         subtitle: transaction.description.isNotEmpty
-            ? TextBodyMedium(transaction.description)
+            ? TextCustom(transaction.description, theme: CustomTheme.bodyMedium)
             : transaction is Expense
-                ? TextBodyMedium(transaction.category.name)
+                ? TextCustom(
+                    transaction.category.name,
+                    theme: CustomTheme.bodyMedium,
+                  )
                 : transaction is Income
-                    ? TextBodyMedium(transaction.source.name)
+                    ? TextCustom(
+                        transaction.source.name,
+                        theme: CustomTheme.bodyMedium,
+                      )
                     : null,
         trailing: Tooltip(
           preferBelow: false,
@@ -157,13 +171,15 @@ class _HomeViewState extends State<HomeView> {
                 constraints: BoxConstraints(
                   maxWidth: context.screenPercentage(28),
                 ),
-                child: TextTitleMedium(
+                child: TextCustom(
                   context.currency.format(transaction.amount),
-                  customTheme: const TextStyle(overflow: TextOverflow.ellipsis),
+                  overflow: TextOverflow.ellipsis,
+                  theme: CustomTheme.titleMedium,
                 ),
               ),
-              TextBodyMedium(
+              TextCustom(
                 transaction.date.formatToString(context),
+                theme: CustomTheme.bodyMedium,
               )
             ],
           ),
