@@ -107,6 +107,8 @@
   "@confirmPayment": {},
   "confirmPaymentText": "Tem certeza que deseja confirmar o pagamento?",
   "@confirmPaymentText": {},
+  "duplicatedPaymentWarning": "Você pode acabar com um pagamento duplicado",
+  "@duplicatedPaymentWarning": {},
   "pay": "Pagar",
   "@pay": {},
   "total": "Saldo {number}",

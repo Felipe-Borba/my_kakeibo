@@ -12,7 +12,7 @@ class TextCustom extends StatelessWidget {
     this.data, {
     super.key,
     this.prominent = false,
-    this.theme = CustomTheme.bodyLarge,
+    this.theme = CustomTheme.bodyMedium,
     this.overflow,
     this.color,
     this.textAlign,

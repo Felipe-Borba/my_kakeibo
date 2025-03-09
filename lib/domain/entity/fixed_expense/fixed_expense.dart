@@ -26,32 +26,6 @@ class FixedExpense {
     this.userId,
   });
 
-  bool get alreadyPaid {
-    DateTime now = DateTime.now();
-    switch (frequency) {
-      case Frequency.daily:
-        return dueDate.day != now.day;
-      case Frequency.weekly:
-        DateTime agora = DateTime.now();
-        DateTime primeiroDiaDaSemana = agora.subtract(
-          Duration(days: agora.weekday % 7),
-        );
-        DateTime ultimoDiaDaSemana = primeiroDiaDaSemana.add(
-          const Duration(days: 6),
-        );
-        return dueDate.isAfter(primeiroDiaDaSemana.subtract(
-              const Duration(seconds: 1),
-            )) &&
-            dueDate.isBefore(ultimoDiaDaSemana.add(
-              const Duration(days: 1),
-            ));
-      case Frequency.monthly:
-        return dueDate.month != now.month;
-      case Frequency.annually:
-        return dueDate.year != now.year;
-    }
-  }
-
   FixedExpense pay(Expense expense) {
     expenseList.add(expense);
 

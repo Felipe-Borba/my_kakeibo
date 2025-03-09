@@ -28,12 +28,14 @@ class WelcomeView extends StatelessWidget {
                 TextCustom(
                   '${context.intl.appTitle} 家計簿',
                   color: Colors.grey[800],
+                  theme: CustomTheme.bodyLarge,
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
                   child: TextCustom(
                     context.intl.welcomeToOurFinanceApp,
                     textAlign: TextAlign.center,
+                    theme: CustomTheme.bodyLarge,
                   ),
                 ),
                 Padding(

@@ -131,37 +131,45 @@ class FixedExpenseListView extends StatelessWidget {
           },
         ),
         IconButton(
-          onPressed: fixedExpense.alreadyPaid
-              ? null
-              : () async {
-                  var response = await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(context.intl.confirmPayment),
-                        content: Text(context.intl.confirmPaymentText),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(false);
-                            },
-                            child: Text(context.intl.cancel),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              Navigator.of(context).pop(true);
-                            },
-                            child: Text(context.intl.pay),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+          onPressed: () async {
+            var response = await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text(context.intl.confirmPayment),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextCustom(context.intl.confirmPaymentText),
+                      const SizedBox(height: 8),
+                      TextCustom(
+                        context.intl.duplicatedPaymentWarning,
+                        theme: CustomTheme.bodySmall,
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: Text(context.intl.cancel),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: Text(context.intl.pay),
+                    ),
+                  ],
+                );
+              },
+            );
 
-                  if (response == true) {
-                    await controller.pay(fixedExpense);
-                  }
-                },
+            if (response == true) {
+              await controller.pay(fixedExpense);
+            }
+          },
           icon: const Icon(Icons.payment),
         ),
       ],

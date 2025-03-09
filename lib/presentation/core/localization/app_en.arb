@@ -107,6 +107,8 @@
   "@confirmPayment": {},
   "confirmPaymentText": "Are you sure you want to check the payment",
   "@confirmPaymentText": {},
+  "duplicatedPaymentWarning": "You may end up with duplicated payment",
+  "@duplicatedPaymentWarning": {},
   "pay": "Pay",
   "@pay": {},
   "total": "Balance {number}",
