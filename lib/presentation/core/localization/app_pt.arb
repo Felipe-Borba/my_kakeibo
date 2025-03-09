@@ -141,7 +141,7 @@
   "@deleteData": {},
   "confirmDeleteData": "Você tem certeza que quer deletar os seus dados?",
   "@confirmDeleteData": {},
-  "confirmDeleteDataText": "Porque nos prezamos pela sua privacidade, uma ves deletado não será possível recuperar os seus dados",
+  "confirmDeleteDataText": "Porque nós prezamos pela sua privacidade. Uma vez deletados, não será possível recuperar os seus dados",
   "@confirmDeleteDataText": {},
   "terms_and_privacy_title": "Termos de Uso e Política de Privacidade",
   "@terms_and_privacy_title": {},
