@@ -107,7 +107,7 @@
   "@confirmPayment": {},
   "confirmPaymentText": "Are you sure you want to check the payment",
   "@confirmPaymentText": {},
-  "pay": "Pagar",
+  "pay": "Pay",
   "@pay": {},
   "total": "Balance {number}",
   "@total": {
