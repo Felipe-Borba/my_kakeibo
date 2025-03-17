@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
@@ -57,9 +58,13 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateDueDate(String? value) {
-    if (value == null) return _context.intl.fieldRequired;
-    if (value.isEmpty) return _context.intl.fieldRequired;
-    return null;
+    //TODO isso tá repetido lá na expense_form_view_model e qdo for add em um novo lugar é chato de importar isso por causa do intl
+    final dateFormat = DateFormat.yMEd(
+      Localizations.localeOf(_context).toString(),
+    );
+    final date = dateFormat.tryParse(value ?? '');
+    if (date is DateTime) return null;
+    return _context.intl.fieldRequired;
   }
 
   void setDescription(String value) {
@@ -78,7 +83,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
       id: _fixedExpense?.id,
       description: description,
       category: category!,
-      dueDate: dueDate!,
+      dueDate: dueDate ?? DateTime.now(),
       amount: amount!,
       expenseList: _fixedExpense?.expenseList ?? [],
       frequency: frequency!,
