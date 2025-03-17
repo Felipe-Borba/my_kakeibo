@@ -82,7 +82,8 @@ class DashboardViewModel with ChangeNotifier {
       return PieData(
         color: entry.key.color.toColor(),
         value: entry.value,
-        title: "${(entry.value / totalExpense * 100).round()}%",
+        title:
+            "${totalExpense > 0 ? (entry.value / totalExpense * 100).round() : 0}%",
         label: entry.key.name,
       );
     }).toList();
