@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
-import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 
 class ExpenseFormViewModel with ChangeNotifier {
   ExpenseFormViewModel(this._context, this._expense, this._expenseRepository);
@@ -51,9 +52,12 @@ class ExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateDate(String? value) {
-    if (value == null) return _context.intl.fieldRequired;
-    if (value.isEmpty) return _context.intl.fieldRequired;
-    return null;
+    final dateFormat = DateFormat.yMEd(
+      Localizations.localeOf(_context).toString(),
+    );
+    final date = dateFormat.tryParse(value ?? '');
+    if (date is DateTime) return null;
+    return _context.intl.fieldRequired;
   }
 
   void setDescription(String value) {
@@ -71,7 +75,7 @@ class ExpenseFormViewModel with ChangeNotifier {
     var result = await _expenseRepository.insert(Expense(
       id: _expense?.id,
       amount: amount!,
-      date: date!,
+      date: date ?? DateTime.now(),
       description: description,
       category: category!,
     ));
