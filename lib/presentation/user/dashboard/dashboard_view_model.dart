@@ -38,6 +38,7 @@ class DashboardViewModel with ChangeNotifier {
     const InsightsView(),
     // const ProfileView(),
   ];
+
   Widget get screen => screens[selectedIndex.value];
 
   // Actions
@@ -60,7 +61,7 @@ class DashboardViewModel with ChangeNotifier {
         .getOrDefault(List.empty());
     list = [...incomeList, ...expenseList];
     list.sort((a, b) => b.date.compareTo(a.date));
-    _makePieCartData(expenseList);
+    makePieCartData(expenseList, totalExpense);
 
     var result = await _userRepository.getUser();
     result.onSuccess((user) async {
@@ -70,15 +71,16 @@ class DashboardViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void _makePieCartData(List<Expense> expenseList) {
+  void makePieCartData(List<Expense> expenseList, double totalExpense) {
     var totalByCategory = _aggregateByCategory(expenseList);
-    pieChartData = _convertToPieData(totalByCategory);
+    pieChartData = _convertToPieData(totalByCategory, totalExpense);
   }
 
   List<PieData> _convertToPieData(
     Map<ExpenseCategory, double> totalByCategory,
+    double totalExpense,
   ) {
-    return totalByCategory.entries.map((entry) {
+    List<PieData> pieDataList = totalByCategory.entries.map((entry) {
       return PieData(
         color: entry.key.color.toColor(),
         value: entry.value,
@@ -87,6 +89,22 @@ class DashboardViewModel with ChangeNotifier {
         label: entry.key.name,
       );
     }).toList();
+
+    // Adjust the last category to ensure the total is 100%
+    if (pieDataList.isNotEmpty) {
+      int totalPercentage = pieDataList.fold(0, (sum, item) => sum + int.parse(item.title.replaceAll('%', '')));
+      int percentage = int.parse(pieDataList.last.title.replaceAll('%', ''));
+      int difference = 100 - totalPercentage;
+      int newPercentage = percentage + difference;
+      pieDataList.last = PieData(
+        color: pieDataList.last.color,
+        value: pieDataList.last.value,
+        title: "${newPercentage > 0 ? newPercentage: "<1"}%",
+        label: pieDataList.last.label,
+      );
+    }
+
+    return pieDataList;
   }
 
   Map<ExpenseCategory, double> _aggregateByCategory(
