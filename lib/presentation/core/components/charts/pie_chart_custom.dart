@@ -99,8 +99,10 @@ class PieChart2State extends State<PieChartCustom> {
 class PieData {
   Color color;
   double value;
-  String title; //TODO criar um campo numerico para a porcentagem e um de texto para o tooltip
   String label;
+  String title;
+
+  //TODO criar um campo numerico para a porcentagem e um de texto para o tooltip
 
   PieData({
     required this.color,

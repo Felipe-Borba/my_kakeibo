@@ -92,14 +92,15 @@ class DashboardViewModel with ChangeNotifier {
 
     // Adjust the last category to ensure the total is 100%
     if (pieDataList.isNotEmpty) {
-      int totalPercentage = pieDataList.fold(0, (sum, item) => sum + int.parse(item.title.replaceAll('%', '')));
+      int totalPercentage = pieDataList.fold(
+          0, (sum, item) => sum + int.parse(item.title.replaceAll('%', '')));
       int percentage = int.parse(pieDataList.last.title.replaceAll('%', ''));
       int difference = 100 - totalPercentage;
       int newPercentage = percentage + difference;
       pieDataList.last = PieData(
         color: pieDataList.last.color,
         value: pieDataList.last.value,
-        title: "${newPercentage > 0 ? newPercentage: "<1"}%",
+        title: "${newPercentage > 0 ? newPercentage : "<1"}%",
         label: pieDataList.last.label,
       );
     }
