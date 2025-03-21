@@ -8,13 +8,13 @@ import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:result_dart/result_dart.dart';
 
-import '../../../testing/analytics_service_mock.dart';
-import '../../../testing/expense_category_service_mock.dart';
-import '../../../testing/expense_service_mock.dart';
-import '../../../testing/fixed_expense_service_mock.dart';
-import '../../../testing/income_service_mock.dart';
-import '../../../testing/income_source_service_mock.dart';
-import '../../../testing/user_service_mock.dart';
+import '../../../testing/data/analytics_service_mock.dart';
+import '../../../testing/data/expense_category_service_mock.dart';
+import '../../../testing/data/expense_service_mock.dart';
+import '../../../testing/data/fixed_expense_service_mock.dart';
+import '../../../testing/data/income_service_mock.dart';
+import '../../../testing/data/income_source_service_mock.dart';
+import '../../../testing/data/user_service_mock.dart';
 
 void main() {
   late UserRepository userRepository;

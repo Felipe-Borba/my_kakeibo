@@ -5,23 +5,15 @@ import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
-import 'package:my_kakeibo/domain/repository/expense_repository.dart';
-import 'package:my_kakeibo/domain/repository/income_repository.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:result_dart/result_dart.dart';
 
-class UserRepositoryMock extends Mock implements UserRepository {}
-
-class ExpenseRepositoryMock extends Mock implements ExpenseRepository {}
-
-class IncomeRepositoryMock extends Mock implements IncomeRepository {}
+import '../../../../testing/domain/expense_repository_mock.dart';
+import '../../../../testing/domain/income_repository_mock.dart';
+import '../../../../testing/domain/user_repository_mock.dart';
 
 void main() {
   late DashboardViewModel viewModel;
-  late UserRepositoryMock userRepositoryMock;
-  late ExpenseRepositoryMock expenseRepositoryMock;
-  late IncomeRepositoryMock incomeRepositoryMock;
 
   final categoryA = ExpenseCategory(
     id: "A",
@@ -49,10 +41,6 @@ void main() {
   );
 
   setUp(() {
-    userRepositoryMock = UserRepositoryMock();
-    expenseRepositoryMock = ExpenseRepositoryMock();
-    incomeRepositoryMock = IncomeRepositoryMock();
-
     when(() => incomeRepositoryMock.getMonthTotal())
         .thenAnswer((_) async => const Success(0.0));
     when(() => expenseRepositoryMock.getMonthTotal())
@@ -102,7 +90,9 @@ void main() {
 
     // Act
     viewModel.makePieCartData(
-        expenses, expenses.fold(0, (sum, item) => sum + item.amount));
+      expenses,
+      expenses.fold(0, (sum, item) => sum + item.amount),
+    );
 
     // Assert
     final pieChartData = viewModel.pieChartData;
@@ -146,7 +136,9 @@ void main() {
 
     // Act
     viewModel.makePieCartData(
-        expenses, expenses.fold(0, (sum, item) => sum + item.amount));
+      expenses,
+      expenses.fold(0, (sum, item) => sum + item.amount),
+    );
 
     // Assert
     final pieChartData = viewModel.pieChartData;

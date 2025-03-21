@@ -5,7 +5,7 @@ import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_v
 import 'package:result_dart/result_dart.dart';
 
 import '../../../../../testing/app.dart';
-import '../../../../../testing/expense_category_repository_mock.dart';
+import '../../../../../testing/domain/expense_category_repository_mock.dart';
 
 void main() {
   testWidgets('Should validate required fields before create expense',

@@ -6,8 +6,8 @@ import 'package:my_kakeibo/domain/repository/expense_category_repository.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:provider/provider.dart';
 
-import 'expense_category_repository_mock.dart';
-import 'expense_repository_mock.dart';
+import 'domain/expense_category_repository_mock.dart';
+import 'domain/expense_repository_mock.dart';
 
 Future<void> createTestableWidget(
   WidgetTester tester, {
