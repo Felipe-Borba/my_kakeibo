@@ -69,6 +69,8 @@
   "@confirmDelete": {},
   "confirmDeleteText": "Tem certeza de que deseja excluir este item?",
   "@confirmDeleteText": {},
+  "deleteRelatedExpenses": "Despesas relacionadas também serão excluídas",
+  "@deleteRelatedExpenses": {},
   "cancel": "Cancelar",
   "@cancel": {},
   "delete": "Excluir",

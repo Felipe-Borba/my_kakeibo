@@ -96,7 +96,18 @@ class ExpenseCategoryListView extends StatelessWidget {
           icon: const Icon(Icons.delete),
           color: Colors.red,
           onPressed: () async {
-            var confirm = await showDeleteDialog(context);
+            var confirm = await showDeleteDialog(context,
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextCustom(context.intl.confirmDeleteText),
+                    const SizedBox(height: 16),
+                    TextCustom(
+                      context.intl.deleteRelatedExpenses,
+                      theme: CustomTheme.labelSmall,
+                    ),
+                  ],
+                ));
             if (confirm == true) {
               controller.onDelete(category);
             }

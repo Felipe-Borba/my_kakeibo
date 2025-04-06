@@ -69,6 +69,8 @@
   "@confirmDelete": {},
   "confirmDeleteText": "Are you sure you want to delete this item?",
   "@confirmDeleteText": {},
+  "deleteRelatedExpenses": "Related expenses will be deleted",
+  "@deleteRelatedExpenses": {},
   "cancel": "Cancel",
   "@cancel": {},
   "delete": "Delete",
