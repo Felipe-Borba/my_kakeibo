@@ -18,6 +18,7 @@ class ExpenseFormViewModel with ChangeNotifier {
 
   // State
   final formKey = GlobalKey<FormState>();
+
   // late final currencyFormatter = CurrencyFormatter(_context).formatter;
 
   late double? amount = _expense?.amount;
@@ -52,9 +53,7 @@ class ExpenseFormViewModel with ChangeNotifier {
   }
 
   String? validateDate(String? value) {
-    final dateFormat = DateFormat.yMEd(
-      Localizations.localeOf(_context).toString(),
-    );
+    final dateFormat = DateFormat.yMEd(_context.locale.toString());
     final date = dateFormat.tryParse(value ?? '');
     if (date is DateTime) return null;
     return _context.intl.fieldRequired;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
 class InputFormDate extends StatelessWidget {
   final String? Function(String? value)? validator;
@@ -19,9 +20,7 @@ class InputFormDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final intl = AppLocalizations.of(context)!;
-    final formatter = DateFormat.yMEd(
-      Localizations.localeOf(context).toString(),
-    );
+    final formatter = DateFormat.yMEd(context.locale.toString());
     final controller = TextEditingController(
       text: value != null ? formatter.format(value!) : null,
     );

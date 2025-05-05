@@ -6,6 +6,7 @@ import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
 extension LocalizationsExtension on BuildContext {
   AppLocalizations get intl => AppLocalizations.of(this)!;
+  Locale get locale => Localizations.localeOf(this);
 }
 
 extension FrequencyTranslation on Frequency {

@@ -59,9 +59,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
 
   String? validateDueDate(String? value) {
     //TODO isso tá repetido lá na expense_form_view_model e qdo for add em um novo lugar é chato de importar isso por causa do intl
-    final dateFormat = DateFormat.yMEd(
-      Localizations.localeOf(_context).toString(),
-    );
+    final dateFormat = DateFormat.yMEd(_context.locale.toString());
     final date = dateFormat.tryParse(value ?? '');
     if (date is DateTime) return null;
     return _context.intl.fieldRequired;
