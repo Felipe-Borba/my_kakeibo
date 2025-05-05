@@ -76,7 +76,7 @@ jobs:
       - name: Upload to Firebase App Distribution
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
-            --app my-kakeibo-b2d6e \
+            --app 1:411416223259:android:51d56a5cadcc99024fe2be \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
             --groups "vip"
 
@@ -100,6 +100,6 @@ jobs:
       - name: Upload to Firebase App Distribution
         run: |
           firebase appdistribution:distribute build/ios/ipa/Runner.ipa \
-            --app my-kakeibo-b2d6e \
+            --app 1:411416223259:ios:5d7f98d7d8674cfb4fe2be \
             --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
             --groups "vip"
