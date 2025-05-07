@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - v*
+  workflow_run:
+    workflows:
+      - CI
+#      - App Distribution # TODO while debugging app_distribution.yaml
+    types:
+      - completed
 
 jobs:
   # build_ios:
@@ -68,7 +74,7 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.borba.felipe.my_kakeibo
           releaseFiles: appbundle/app-release.aab
-          track: alpha # internal, alpha, beta, production
+          track: internal # internal, alpha, beta, production
           inAppUpdatePriority: 5
           status: completed
           changesNotSentForReview: false
