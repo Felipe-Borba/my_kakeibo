@@ -6,7 +6,7 @@ import 'package:my_kakeibo/presentation/core/components/charts/life_bar.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/icon_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';

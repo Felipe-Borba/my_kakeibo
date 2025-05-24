@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 
-extension IconExtension on IconCustom {
+extension IconCustomMapper on IconCustom {
   IconData toIconData() {
     return switch (this) {
       IconCustom.dog => Icons.pets,

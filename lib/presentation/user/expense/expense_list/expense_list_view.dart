@@ -9,7 +9,7 @@ import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/icon_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/icon_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view_model.dart';
 import 'package:provider/provider.dart';

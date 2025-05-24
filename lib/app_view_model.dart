@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:my_kakeibo/domain/entity/user/user_language.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
-import 'package:my_kakeibo/presentation/core/extensions/user_language_mapper.dart';
 import 'package:my_kakeibo/presentation/onboarding/welcome/welcome_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:result_dart/result_dart.dart';
