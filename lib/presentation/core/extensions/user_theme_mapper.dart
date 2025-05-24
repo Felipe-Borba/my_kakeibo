@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 
-extension UserThemeExtension on UserTheme {
+extension UserThemeMapper on UserTheme {
   String getTranslation(BuildContext context) {
     switch (this) {
       case UserTheme.system:

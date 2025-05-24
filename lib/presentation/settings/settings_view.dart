@@ -5,7 +5,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/user_language_mapper.dart';
-import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/user_theme_mapper.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view_model.dart';
 
