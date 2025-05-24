@@ -235,5 +235,7 @@
         "example": "1.0.0"
       }
     }
-  }
+  },
+  "monthlySpendingByCategory": "Monthly spending by category",
+  "@monthlySpendingByCategory": {}
 }

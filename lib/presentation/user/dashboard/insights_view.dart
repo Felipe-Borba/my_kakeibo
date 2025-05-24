@@ -19,8 +19,8 @@ class InsightsView extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const TextCustom(
-            "Gasto mensal por categoria",
+          TextCustom(
+            context.intl.monthlySpendingByCategory,
             theme: CustomTheme.titleMedium,
           ),
           if (viewModel.pieChartData.isEmpty)
