@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/mappers/frequency_mapper.dart';
 
 class InputFormFrequency extends StatelessWidget {
   final Frequency? value;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/mappers/icon_custom_mapper.dart';
 
 class InputFormIconCustom extends StatelessWidget {
   final IconCustom? value;

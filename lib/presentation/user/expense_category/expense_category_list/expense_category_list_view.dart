@@ -5,6 +5,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.da
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/show_delete_dialog.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
+import 'package:my_kakeibo/presentation/core/mappers/color_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/core/mappers/icon_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/expense_category/expense_category_list/expense_category_list_view_model.dart';

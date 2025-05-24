@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/mappers/color_custom_mapper.dart';
 
 class InputFormColorCustom extends StatelessWidget {
   final ColorCustom? value;
