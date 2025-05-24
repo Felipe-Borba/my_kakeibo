@@ -54,3 +54,5 @@ flutter:
     # Add assets from the images directory to the application.
     - assets/images/
     - assets/launcher/
+flutter_intl:
+  enabled: true

@@ -237,5 +237,9 @@
     }
   },
   "monthlySpendingByCategory": "Gastos mensais por categoria",
-  "@monthlySpendingByCategory": {}
+  "@monthlySpendingByCategory": {},
+  "english": "Inglês",
+  "@english": {},
+  "portuguese": "Português",
+  "@portuguese": {}
 }

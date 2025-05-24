@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:my_kakeibo/data/sqlite/sqlite_service.dart';
 import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
+import 'package:my_kakeibo/domain/entity/user/user_language.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
@@ -64,6 +65,7 @@ void main() {
         name: "Updated name",
         theme: UserTheme.dark,
         notificationToken: "updatedToken",
+        language: UserLanguage.portuguese,
       );
       final result = await userService.update(updatedUser);
 
@@ -73,6 +75,7 @@ void main() {
         expect(data.name, updatedUser.name);
         expect(data.theme, updatedUser.theme);
         expect(data.notificationToken, updatedUser.notificationToken);
+        expect(data.language, updatedUser.language);
       });
       result.onFailure((error) {
         fail('Update failed');

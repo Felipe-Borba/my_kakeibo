@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/domain/entity/user/user_language.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/user_language_mapper.dart';
 import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/settings/settings_view_model.dart';
@@ -20,6 +22,7 @@ class SettingsView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Spacer(),
             DropdownButton<UserTheme>(
               value: viewModel.userTheme,
               onChanged: viewModel.updateThemeMode,
@@ -32,6 +35,20 @@ class SettingsView extends StatelessWidget {
                   )
                   .toList(),
             ),
+            const SizedBox(height: 16),
+            DropdownButton<UserLanguage>(
+              value: viewModel.userLanguage,
+              onChanged: viewModel.updateLanguage,
+              items: UserLanguage.values
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e.getTranslation(context)),
+                    ),
+                  )
+                  .toList(),
+            ),
+            const SizedBox(height: 16),
             ElevatedButton.icon(
               key: WidgetKeys.deleteData,
               onPressed: () {
@@ -65,6 +82,7 @@ class SettingsView extends StatelessWidget {
               label: Text(context.intl.deleteData),
               icon: const Icon(Icons.warning_amber_rounded),
             ),
+            const Spacer(),
           ],
         ),
       ),

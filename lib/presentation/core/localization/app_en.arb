@@ -237,5 +237,9 @@
     }
   },
   "monthlySpendingByCategory": "Monthly spending by category",
-  "@monthlySpendingByCategory": {}
+  "@monthlySpendingByCategory": {},
+  "english": "English",
+  "@english": {},
+  "portuguese": "Portuguese",
+  "@portuguese": {}
 }

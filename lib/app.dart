@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_kakeibo/app_view_model.dart';
+import 'package:my_kakeibo/domain/entity/user/user_language.dart';
 import 'package:my_kakeibo/presentation/core/app_theme.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
+import 'package:my_kakeibo/presentation/core/extensions/user_language_mapper.dart';
 import 'package:my_kakeibo/presentation/core/extensions/user_theme_extension.dart';
 import 'package:provider/provider.dart';
 
@@ -31,11 +33,8 @@ class App extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          // locale: const Locale("pt"),
-          supportedLocales: const [
-            Locale('en'),
-            Locale('pt'),
-          ],
+          locale: viewModel.userLanguage?.toLocale(),
+          supportedLocales: UserLanguageMapper.getSupportedLanguages(),
           //
           onGenerateTitle: (context) => context.intl.appTitle,
           //
