@@ -2,26 +2,30 @@ name: App Distribution
 
 on:
   push:
-    tags:
-      - v*
+    branches: ["main"]
+    # tags:
+    #   - v*
 
 jobs:
-  build_ipa:
-    name: Build Flutter (iOS)
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-      - run: flutter pub get
-      - run: flutter clean
-      - run: flutter build ipa --release --no-codesign
-      - name: Upload IPA
-        uses: actions/upload-artifact@v4
-        with:
-          name: ios-build
-          path: build/ios/ipa/*.ipa
+  # Precisa de uma conta paga da apple para poder gerar um certificado de distribuição
+  # e assinar o app para distribuição. Caso contrário, não é possível gerar o arquivo IPA.
+  # build_ipa:
+  #   name: Build Flutter (iOS)
+  #   runs-on: macos-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         channel: "stable"
+  #         flutter-version: 3.24.0
+  #     - run: flutter pub get
+  #     - run: flutter clean
+  #     - run: flutter build ipa --release
+  #     - name: Upload IPA
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ios-build
+  #         path: build/ios/ipa/*.ipa
 
   build_apk:
     name: Build Flutter APK
@@ -62,9 +66,6 @@ jobs:
 
       - name: Download APK
         uses: actions/download-artifact@v4
-        with:
-          name: apk
-          path: build/app/outputs/flutter-apk
 
       - name: Install Firebase CLI
         run: |
@@ -72,31 +73,28 @@ jobs:
 
       - name: Upload to Firebase App Distribution
         run: |
-          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
-            --app 1:411416223259:android:51d56a5cadcc99024fe2be \
-            --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
-            --groups "vip"
+          firebase appdistribution:distribute apk/app-release.apk --app 1:411416223259:android:51d56a5cadcc99024fe2be --token ${{ secrets.FIREBASE_AUTH_TOKEN }} --groups "vip"
 
-  upload_ios_to_firebase:
-    name: Upload iOS to Firebase App Distribution
-    runs-on: macos-latest
-    needs: build_ipa
-    steps:
-      - uses: actions/checkout@v3
+  # upload_ios_to_firebase:
+  #   name: Upload iOS to Firebase App Distribution
+  #   runs-on: macos-latest
+  #   needs: build_ipa
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Download IPA
-        uses: actions/download-artifact@v4
-        with:
-          name: ios-build
-          path: build/ios/ipa
+  #     - name: Download IPA
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: ios-build
+  #         path: build/ios/ipa
 
-      - name: Install Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+  #     - name: Install Firebase CLI
+  #       run: |
+  #         curl -sL https://firebase.tools | bash
 
-      - name: Upload to Firebase App Distribution
-        run: |
-          firebase appdistribution:distribute build/ios/ipa/Runner.ipa \
-            --app 1:411416223259:ios:5d7f98d7d8674cfb4fe2be \
-            --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
-            --groups "vip"
+  #     - name: Upload to Firebase App Distribution
+  #       run: |
+  #         firebase appdistribution:distribute build/ios/ipa/Runner.ipa \
+  #           --app 1:411416223259:ios:5d7f98d7d8674cfb4fe2be \
+  #           --token ${{ secrets.FIREBASE_AUTH_TOKEN }} \
+  #           --groups "vip"
