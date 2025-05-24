@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 
-extension IconExtension on ColorCustom {
+extension ColorCustomMapper on ColorCustom {
   Color toColor() {
     return switch (this) {
       ColorCustom.brown => Colors.brown,

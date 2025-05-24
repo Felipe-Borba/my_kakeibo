@@ -7,7 +7,7 @@ import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
-import 'package:my_kakeibo/presentation/core/extensions/color_extension.dart';
+import 'package:my_kakeibo/presentation/core/extensions/color_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 
