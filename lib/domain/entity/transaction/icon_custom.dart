@@ -19,7 +19,6 @@ enum IconCustom {
   beauty,
   utilities,
   taxes,
-  savings,
   childcare,
   alcohol,
   coffee,

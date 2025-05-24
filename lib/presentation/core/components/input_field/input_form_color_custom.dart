@@ -25,11 +25,29 @@ class InputFormColorCustom extends StatelessWidget {
       items: ColorCustom.values.map((ColorCustom color) {
         return DropdownMenuItem(
           value: color,
-          child: Text(color.getTranslation(context)),
+          child: Row(
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: color.toColor(),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(color.getTranslation(context)),
+            ],
+          ),
         );
       }).toList(),
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      menuMaxHeight: 200,
     );
   }
 }

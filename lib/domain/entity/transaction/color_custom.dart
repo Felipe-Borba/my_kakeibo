@@ -5,5 +5,5 @@ enum ColorCustom {
   orange,
   yellow,
   green,
-  grey,
+  grey, pink, cyan, lime, indigo, teal, amber, blueGrey,
 }

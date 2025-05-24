@@ -25,11 +25,18 @@ class InputFormIconCustom extends StatelessWidget {
       items: IconCustom.values.map((IconCustom icon) {
         return DropdownMenuItem(
           value: icon,
-          child: Text(icon.getTranslation(context)),
+          child: Row(
+            children: [
+              Icon(icon.toIconData()),
+              const SizedBox(width: 8),
+              Text(icon.getTranslation(context)),
+            ],
+          ),
         );
       }).toList(),
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      menuMaxHeight: 200,
     );
   }
 }
