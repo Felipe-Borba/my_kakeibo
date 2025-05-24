@@ -8,7 +8,7 @@ import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
-import 'package:my_kakeibo/presentation/core/extensions/icon_custom_mapper.dart';
+import 'package:my_kakeibo/presentation/core/mappers/icon_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_view_model.dart';
 import 'package:provider/provider.dart';

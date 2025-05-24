@@ -5,8 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:my_kakeibo/app_view_model.dart';
 import 'package:my_kakeibo/presentation/core/app_theme.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/extensions/user_language_mapper.dart';
-import 'package:my_kakeibo/presentation/core/extensions/user_theme_mapper.dart';
+import 'package:my_kakeibo/presentation/core/mappers/user_language_mapper.dart';
+import 'package:my_kakeibo/presentation/core/mappers/user_theme_mapper.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
