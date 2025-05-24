@@ -2,9 +2,9 @@ name: App Distribution
 
 on:
   push:
-    branches: ["main"]
-    # tags:
-    #   - v*
+    # branches: ["main"]
+    tags:
+      - v*
 
 jobs:
   # Precisa de uma conta paga da apple para poder gerar um certificado de distribuição
