@@ -26,10 +26,11 @@ jobs:
         with:
           java-version: "12.x"
 
-      - name: Sey up Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v1
         with:
           channel: "stable"
+          flutter-version: "3.24.0"
 
       - name: Install dependencies
         run: flutter pub get
