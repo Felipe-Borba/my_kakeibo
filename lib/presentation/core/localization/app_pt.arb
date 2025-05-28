@@ -287,5 +287,15 @@
   "amber": "Âmbar",
   "@amber": {},
   "blueGrey": "Cinza-azulado",
-  "@blueGrey": {}
+  "@blueGrey": {},
+  "no": "Não",
+  "@no": {},
+  "weekBefore": "Uma semana antes",
+  "@weekBefore": {},
+  "dayBefore": "Um dia antes",
+  "@dayBefore": {},
+  "atDueDate": "No vencimento",
+  "@atDueDate": {},
+  "remember": "Lembrar",
+  "@remember": {}
 }

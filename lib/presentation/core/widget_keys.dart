@@ -17,4 +17,5 @@ class WidgetKeys {
   static const frequency = Key("frequency");
   static const source = Key("source");
   static const lifeBar = Key("life-bar");
+  static const remember = Key("remember");
 }

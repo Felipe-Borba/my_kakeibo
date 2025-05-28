@@ -287,5 +287,15 @@
   "amber": "Amber",
   "@amber": {},
   "blueGrey": "Blue Grey",
-  "@blueGrey": {}
+  "@blueGrey": {},
+  "no": "No",
+  "@no": {},
+  "weekBefore": "Week before",
+  "@weekBefore": {},
+  "dayBefore": "Day before",
+  "@dayBefore": {},
+  "atDueDate": "At due date",
+  "@atDueDate": {},
+  "remember": "Remember",
+  "@remember": {}
 }

@@ -30,6 +30,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   late String description = _fixedExpense?.description ?? '';
   late ExpenseCategory? category = _fixedExpense?.category;
   late Frequency? frequency = _fixedExpense?.frequency;
+  late Remember? remember = _fixedExpense?.remember ?? Remember.no;
 
   // Actions
   void setAmount(double? value) {
@@ -73,6 +74,16 @@ class FixedExpenseFormViewModel with ChangeNotifier {
     return null;
   }
 
+  String? validateFrequency(Frequency? value) {
+    if (value == null) return _context.intl.fieldRequired;
+    return null;
+  }
+
+  String? validateRemember(Remember? value) {
+    if (value == null) return _context.intl.fieldRequired;
+    return null;
+  }
+
   void onClickSave() async {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
@@ -85,7 +96,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
       amount: amount!,
       expenseList: _fixedExpense?.expenseList ?? [],
       frequency: frequency!,
-      remember: Remember.no,
+      remember: remember!,
     ));
 
     result.onFailure((failure) {
@@ -97,10 +108,5 @@ class FixedExpenseFormViewModel with ChangeNotifier {
     });
 
     notifyListeners();
-  }
-
-  String? validateFrequency(Frequency? value) {
-    if (value == null) return _context.intl.fieldRequired;
-    return null;
   }
 }

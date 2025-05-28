@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_remember.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_currency.dart';
@@ -89,6 +90,13 @@ class FixedExpenseFormView extends StatelessWidget {
             labelText: context.intl.description,
             initialValue: controller.description,
             onChanged: controller.setDescription,
+          ),
+          const SizedBox(height: 8),
+          InputFormRemember(
+            key: WidgetKeys.remember,
+            value: controller.remember,
+            onChanged: (value) => controller.remember = value,
+            validator: controller.validateRemember,
           ),
           const SizedBox(height: 24),
           Center(
