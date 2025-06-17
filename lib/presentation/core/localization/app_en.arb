@@ -213,6 +213,8 @@
   "@grey": {},
   "permissionDenied": "Permission denied",
   "@permissionDenied": {},
+  "notificationPermissionNotGranted": "Notification permission not granted",
+  "@notificationPermissionNotGranted": {},
   "userNotFound": "User not found",
   "@userNotFound": {},
   "incomeNotFound": "Income not found",
@@ -297,5 +299,7 @@
   "atDueDate": "At due date",
   "@atDueDate": {},
   "remember": "Remember",
-  "@remember": {}
+  "@remember": {},
+  "fixedExpenseNotificationTitle": "Fixed Expense Reminder",
+  "@fixedExpenseNotificationTitle": {}
 }

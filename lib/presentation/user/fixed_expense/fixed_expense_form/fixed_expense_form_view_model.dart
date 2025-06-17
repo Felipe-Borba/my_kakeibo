@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
@@ -88,15 +89,30 @@ class FixedExpenseFormViewModel with ChangeNotifier {
     bool isValid = formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
+    dueDate ??= DateTime.now();
     var result = await _fixedExpenseRepository.insert(FixedExpense(
       id: _fixedExpense?.id,
       description: description,
       category: category!,
-      dueDate: dueDate ?? DateTime.now(),
+      dueDate: dueDate!,
       amount: amount!,
       expenseList: _fixedExpense?.expenseList ?? [],
       frequency: frequency!,
       remember: remember!,
+      notification: remember != Remember.no
+          ? LocalNotification(
+              date: dueDate!.subtract(switch (remember) {
+                null => Duration.zero,
+                Remember.no => Duration.zero,
+                Remember.atDueDate => Duration.zero,
+                Remember.dayBefore => const Duration(days: 1),
+                Remember.weekBefore => const Duration(days: 7),
+              }),
+              id: DateTime.now().millisecondsSinceEpoch & 0x7FFFFFFF,
+              title: _context.intl.fixedExpenseNotificationTitle,
+              body: description,
+            )
+          : null,
     ));
 
     result.onFailure((failure) {

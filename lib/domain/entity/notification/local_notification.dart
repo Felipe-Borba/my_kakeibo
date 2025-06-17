@@ -1,11 +1,11 @@
-class Notification {
+class LocalNotification {
   int id;
   DateTime date;
   String? title;
   String? body;
   NotificationChannel channel;
 
-  Notification({
+  LocalNotification({
     required this.date,
     required this.id,
     this.title,

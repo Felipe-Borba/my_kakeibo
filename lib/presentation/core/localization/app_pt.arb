@@ -213,6 +213,8 @@
   "@grey": {},
   "permissionDenied": "Permissão negada",
   "@permissionDenied": {},
+  "notificationPermissionNotGranted": "Permissão de notificação não concedida",
+  "@notificationPermissionNotGranted": {},
   "userNotFound": "Usuário não encontrado",
   "@userNotFound": {},
   "incomeNotFound": "Renda não encontrada",
@@ -297,5 +299,7 @@
   "atDueDate": "No vencimento",
   "@atDueDate": {},
   "remember": "Lembrar",
-  "@remember": {}
+  "@remember": {},
+  "fixedExpenseNotificationTitle": "Lembrete de Despesa Fixa",
+  "@fixedExpenseNotificationTitle": {}
 }

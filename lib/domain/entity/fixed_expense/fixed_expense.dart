@@ -1,5 +1,6 @@
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 
@@ -13,6 +14,7 @@ class FixedExpense {
   final ExpenseCategory category;
   final double amount;
   final String? userId;
+  final LocalNotification? notification;
 
   FixedExpense({
     this.id,
@@ -24,6 +26,7 @@ class FixedExpense {
     required this.remember,
     required this.category,
     this.userId,
+    this.notification,
   });
 
   FixedExpense pay(Expense expense) {
@@ -76,6 +79,7 @@ class FixedExpense {
     ExpenseCategory? category,
     double? amount,
     String? userId,
+    LocalNotification? notification,
   }) {
     return FixedExpense(
       id: id ?? this.id,
@@ -87,6 +91,7 @@ class FixedExpense {
       category: category ?? this.category,
       amount: amount ?? this.amount,
       userId: userId ?? this.userId,
+      notification: notification ?? this.notification,
     );
   }
 

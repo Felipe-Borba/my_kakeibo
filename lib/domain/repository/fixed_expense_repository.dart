@@ -1,5 +1,6 @@
 import 'package:my_kakeibo/data/expense/expense_service_sqlite.dart';
 import 'package:my_kakeibo/data/fixed_expense/fixed_expense_service_sqlite.dart';
+import 'package:my_kakeibo/data/notification/local_notification_service.dart';
 import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
@@ -9,12 +10,13 @@ class FixedExpenseRepository {
   final FixedExpenseServiceSqlite _fixedExpenseRealmService;
   final ExpenseServiceSqlite _expenseRealmService;
   final UserServiceSqlite _userServiceSqlite;
+  final LocalNotificationService _localNotificationService;
 
   FixedExpenseRepository(
-    this._fixedExpenseRealmService,
-    this._expenseRealmService,
-    this._userServiceSqlite,
-  );
+      this._fixedExpenseRealmService,
+      this._expenseRealmService,
+      this._userServiceSqlite,
+      this._localNotificationService);
 
   Future<Result<void>> pay(FixedExpense fixedExpense) async {
     var expense = Expense(
@@ -36,18 +38,24 @@ class FixedExpenseRepository {
     return const Success("ok");
   }
 
-  Future<Result<void>> insert(FixedExpense fixedExpense) async {
+  AsyncResult<Unit> insert(FixedExpense fixedExpense) async {
     if (fixedExpense.id != null) {
-      await _fixedExpenseRealmService.update(fixedExpense);
+      return await _fixedExpenseRealmService
+          .update(fixedExpense)
+          .flatMap((expense) => const Success(unit));
     } else {
-      await _userServiceSqlite.getSelf().flatMap((user) {
-        return _fixedExpenseRealmService.insert(
-          fixedExpense.copyWith(userId: user.id),
-        );
-      });
+      return await _userServiceSqlite.getSelf().flatMap((user) =>
+          _fixedExpenseRealmService
+              .insert(fixedExpense.copyWith(userId: user.id))
+              .flatMap((expense) {
+            if (fixedExpense.notification != null) {
+              _localNotificationService.scheduleNotification(
+                fixedExpense.notification!,
+              );
+            }
+            return Success(expense);
+          }).flatMap((expense) => const Success(unit)));
     }
-
-    return const Success("ok");
   }
 
   Future<Result<List<FixedExpense>>> findAll() async {

@@ -1,11 +1,11 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:my_kakeibo/domain/entity/notification/notification.dart';
-import 'package:my_kakeibo/domain/entity/notification/notification_message.dart';
+import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
+import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationService {
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+  final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   LocalNotificationService() {
@@ -14,7 +14,7 @@ class LocalNotificationService {
 
   void _initialize() async {
     const initializationSettingsAndroid = AndroidInitializationSettings(
-      '@mipmap/launcher_icon',
+      '@mipmap/ic_launcher',
     );
     const initializationSettingsDarwin = DarwinInitializationSettings();
     const initializationSettings = InitializationSettings(
@@ -22,65 +22,100 @@ class LocalNotificationService {
       iOS: initializationSettingsDarwin,
     );
 
-    await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    await _localNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<Result<void>> displayNotification(NotificationMessage message) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-      "pushNotificationId",
-      "pushNotification",
-      importance: Importance.max,
-      priority: Priority.high,
-    );
+  // Future<Result<void>> displayNotification(NotificationMessage message) async {
+  //   const AndroidNotificationDetails androidNotificationDetails =
+  //       AndroidNotificationDetails(
+  //     "pushNotificationId",
+  //     "pushNotification",
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //   );
 
-    const NotificationDetails notificationDetails = NotificationDetails(
-      android: androidNotificationDetails,
-    );
+  //   const NotificationDetails notificationDetails = NotificationDetails(
+  //     android: androidNotificationDetails,
+  //   );
 
-    await _flutterLocalNotificationsPlugin.show(
-      0,
-      message.title,
-      message.body,
-      notificationDetails,
-    );
-    return const Success("ok");
-  }
+  //   await _flutterLocalNotificationsPlugin.show(
+  //     0,
+  //     message.title,
+  //     message.body,
+  //     notificationDetails,
+  //   );
+  //   return const Success("ok");
+  // }
 
-  Future<Result<void>> scheduleNotification(
-    Notification notification,
-  ) async {
+  AsyncResult<Unit> scheduleNotification(LocalNotification notification) async {
     try {
-      final androidDetails = AndroidNotificationDetails(
-        notification.channel.name,
-        notification.channel.name,
-        importance: Importance.high,
-        priority: Priority.high,
-      );
-
-      final notificationDetails = NotificationDetails(
-        android: androidDetails,
-      );
+      final granted = await _checkNotificationPermissions();
+      if (!granted) {
+        return Failure(CustomException.notificationPermissionNotGranted());
+      }
 
       final scheduledDate = tz.TZDateTime.from(
         notification.date,
         tz.local,
       );
 
-      await _flutterLocalNotificationsPlugin.zonedSchedule(
+      _localNotificationsPlugin.zonedSchedule(
         notification.id,
         notification.title,
         notification.body,
         scheduledDate,
-        notificationDetails,
-        androidScheduleMode: AndroidScheduleMode.inexact,
+        _getNotificationDetails(notification.channel),
+        // payload: notification.payload,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        // matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
       );
 
-      return const Success("ok");
+      return const Success(unit);
     } on Exception catch (e) {
       return Failure(e);
     }
+  }
+
+  Future<bool> _checkNotificationPermissions() async {
+    final androidPlugin =
+        _localNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    if (androidPlugin != null) {
+      return await androidPlugin.requestNotificationsPermission() ?? false;
+    }
+
+    final iosPlugin =
+        _localNotificationsPlugin.resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>();
+    if (iosPlugin != null) {
+      return await iosPlugin.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          ) ??
+          false;
+    }
+
+    return false;
+  }
+
+  NotificationDetails _getNotificationDetails(NotificationChannel channel) {
+    return switch (channel) {
+      NotificationChannel.standard => const NotificationDetails(
+          android: AndroidNotificationDetails(
+            "standard",
+            "Standard Notifications",
+            importance: Importance.defaultImportance,
+            priority: Priority.defaultPriority,
+          ),
+          iOS: DarwinNotificationDetails(
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: false,
+          ),
+        ),
+    };
   }
 }
