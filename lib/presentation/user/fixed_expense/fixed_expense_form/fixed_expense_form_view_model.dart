@@ -107,7 +107,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
                 Remember.atDueDate => Duration.zero,
                 Remember.dayBefore => const Duration(days: 1),
                 Remember.weekBefore => const Duration(days: 7),
-              }),
+              }).copyWith(hour: 9, minute: 0, second: 0),
               id: DateTime.now().millisecondsSinceEpoch & 0x7FFFFFFF,
               title: _context.intl.fixedExpenseNotificationTitle,
               body: description,

@@ -23,6 +23,23 @@ class LocalNotificationService {
     );
 
     await _localNotificationsPlugin.initialize(initializationSettings);
+
+    await _localNotificationsPlugin
+        .getActiveNotifications()
+        .then((notifications) {
+      if (notifications.isNotEmpty) {
+        // Handle active notifications if needed
+        print('Active notifications: $notifications');
+      }
+    });
+    await _localNotificationsPlugin
+        .pendingNotificationRequests()
+        .then((requests) {
+      if (requests.isNotEmpty) {
+        // Handle pending notification requests if needed
+        print('Pending notification requests: $requests');
+      }
+    });
   }
 
   // Future<Result<void>> displayNotification(NotificationMessage message) async {
