@@ -19,6 +19,9 @@ void main() {
   late ExpenseCategory category;
   late ExpenseCategory category2;
 
+  late FixedExpense fixedExpenseMock1;
+  late FixedExpense fixedExpenseMock2;
+
   setUpAll(() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
@@ -40,6 +43,26 @@ void main() {
           name: "Stub2",
         ))
         .getOrThrow();
+
+    fixedExpenseMock1 = FixedExpense(
+      amount: 1000.0,
+      dueDate: DateTime.now(),
+      description: 'Monthly Rent',
+      category: category,
+      frequency: Frequency.monthly,
+      remember: Remember.no,
+      expenseList: List.empty(),
+    );
+
+    fixedExpenseMock2 = FixedExpense(
+      amount: 500.0,
+      dueDate: DateTime.now(),
+      description: 'Weekly Groceries',
+      category: category,
+      frequency: Frequency.weekly,
+      remember: Remember.no,
+      expenseList: List.empty(),
+    );
   });
 
   tearDownAll(() async {
@@ -54,217 +77,247 @@ void main() {
       await db.delete(sqliteService.fixedExpenseTable);
     });
 
-    test('should insert a fixed expense', () async {
-      final fixedExpense = FixedExpense(
-        amount: 1000.0,
-        dueDate: DateTime.now(),
-        description: 'Monthly Rent',
-        category: category,
-        frequency: Frequency.monthly,
-        remember: Remember.no,
-        expenseList: List.empty(),
-      );
+    test(
+      'should insert a fixed expense',
+      () async {
+        // Arrange
+        final fixedExpense = fixedExpenseMock1;
 
-      final result = await fixedExpenseService.insert(fixedExpense);
+        // Act
+        final result = await fixedExpenseService.insert(fixedExpense);
 
-      expect(result.isSuccess(), true);
-      result.onSuccess((data) {
-        expect(data.id, isNotNull);
-        expect(data.amount, fixedExpense.amount);
-        expect(data.dueDate, fixedExpense.dueDate);
-        expect(data.description, fixedExpense.description);
-        expect(data.category.id, category.id);
-        expect(data.frequency, fixedExpense.frequency);
-        expect(data.remember, fixedExpense.remember);
-      });
-      result.onFailure((error) {
-        fail('Insert failed');
-      });
-    });
+        // Assert
+        expect(result.isSuccess(), true);
+        result.onSuccess((data) {
+          expect(data.id, isNotNull);
+          expect(data.amount, fixedExpense.amount);
+          expect(data.dueDate, fixedExpense.dueDate);
+          expect(data.description, fixedExpense.description);
+          expect(data.category.id, category.id);
+          expect(data.frequency, fixedExpense.frequency);
+          expect(data.remember, fixedExpense.remember);
+        });
+        result.onFailure((error) {
+          fail('Insert failed');
+        });
+      },
+    );
 
-    test('should find all fixed expenses', () async {
-      final fixedExpense1 = await fixedExpenseService
-          .insert(FixedExpense(
-            amount: 1000.0,
-            dueDate: DateTime.now(),
-            description: 'Monthly Rent',
-            category: category,
-            frequency: Frequency.monthly,
-            remember: Remember.no,
-            expenseList: List.empty(),
-          ))
-          .getOrThrow();
+    test(
+      'should find all fixed expenses',
+      () async {
+        // Arrange
+        final fixedExpense1 = await fixedExpenseService
+            .insert(fixedExpenseMock1) //
+            .getOrThrow();
 
-      final fixedExpense2 = await fixedExpenseService
-          .insert(FixedExpense(
-            amount: 500.0,
-            dueDate: DateTime.now(),
-            description: 'Weekly Groceries',
-            category: category,
-            frequency: Frequency.weekly,
-            remember: Remember.no,
-            expenseList: List.empty(),
-          ))
-          .getOrThrow();
+        final fixedExpense2 = await fixedExpenseService
+            .insert(fixedExpenseMock2) //
+            .getOrThrow();
 
-      final result = await fixedExpenseService.findAll();
+        // Act
+        final result = await fixedExpenseService.findAll();
 
-      expect(result.isSuccess(), true);
-      result.onSuccess((data) {
-        expect(data.length, 2);
-        expect(data[0].id, fixedExpense1.id);
-        expect(data[1].id, fixedExpense2.id);
-      });
-      result.onFailure((error) {
-        fail('Find all failed');
-      });
-    });
+        // Assert
+        expect(result.isSuccess(), true);
+        result.onSuccess((data) {
+          expect(data.length, 2);
+          expect(data[0].id, fixedExpense1.id);
+          expect(data[1].id, fixedExpense2.id);
+        });
+        result.onFailure((error) {
+          fail('Find all failed');
+        });
+      },
+    );
 
-    test('should update a fixed expense', () async {
-      final insertedExpense = await fixedExpenseService
-          .insert(FixedExpense(
-            amount: 1000.0,
-            dueDate: DateTime.now(),
-            description: 'Monthly Rent',
-            category: category,
-            frequency: Frequency.monthly,
-            remember: Remember.no,
-            expenseList: List.empty(),
-          ))
-          .getOrThrow();
+    test(
+      'should update a fixed expense',
+      () async {
+        // Arrange
+        final insertedExpense = await fixedExpenseService
+            .insert(fixedExpenseMock1) //
+            .getOrThrow();
 
-      final updatedExpense = insertedExpense.copyWith(
-        amount: 1200.0,
-        dueDate: DateTime.now().add(const Duration(days: 1)),
-        description: "Updated Rent",
-        category: category2,
-        frequency: Frequency.annually,
-        remember: Remember.dayBefore,
-      );
-      final updateResult = await fixedExpenseService.update(updatedExpense);
+        final updatedExpense = insertedExpense.copyWith(
+          amount: 1200.0,
+          dueDate: DateTime.now().add(const Duration(days: 1)),
+          description: "Updated Rent",
+          category: category2,
+          frequency: Frequency.annually,
+          remember: Remember.dayBefore,
+        );
 
-      expect(updateResult.isSuccess(), true);
-      updateResult.onSuccess((data) {
-        expect(data.amount, 1200.0);
-      });
-      updateResult.onFailure((error) {
-        fail('Update failed');
-      });
-    });
+        // Act
+        final updateResult = await fixedExpenseService.update(updatedExpense);
 
-    test('should return failure when updating non-existent fixed expense',
-        () async {
-      final fixedExpense = FixedExpense(
-        id: 'non-existent-id',
-        amount: 1000.0,
-        dueDate: DateTime.now(),
-        description: 'Non-existent Expense',
-        category: category,
-        frequency: Frequency.monthly,
-        remember: Remember.no,
-        expenseList: List.empty(),
-      );
+        // Assert
+        expect(updateResult.isSuccess(), true);
+        updateResult.onSuccess((data) {
+          expect(data.amount, 1200.0);
+        });
+        updateResult.onFailure((error) {
+          fail('Update failed');
+        });
+      },
+    );
 
-      final updateResult = await fixedExpenseService.update(fixedExpense);
+    test(
+      'should return failure when updating non-existent fixed expense',
+      () async {
+        // Arrange
+        final fixedExpense = FixedExpense(
+          id: 'non-existent-id',
+          amount: 1000.0,
+          dueDate: DateTime.now(),
+          description: 'Non-existent Expense',
+          category: category,
+          frequency: Frequency.monthly,
+          remember: Remember.no,
+          expenseList: List.empty(),
+        );
 
-      expect(updateResult.isError(), true);
-      updateResult.onFailure((error) {
-        expect(error, isA<CustomException>());
-        if (error is CustomException) {
-          expect(error.type, ExceptionType.fixedExpenseNotFound);
-        }
-      });
-    });
+        // Act
+        final updateResult = await fixedExpenseService.update(fixedExpense);
 
-    test('should delete a fixed expense', () async {
-      final fixedExpense = FixedExpense(
-        amount: 1000.0,
-        dueDate: DateTime.now(),
-        description: 'Monthly Rent',
-        category: category,
-        frequency: Frequency.monthly,
-        remember: Remember.no,
-        expenseList: List.empty(),
-      );
+        // Assert
+        expect(updateResult.isError(), true);
+        updateResult.onFailure((error) {
+          expect(error, isA<CustomException>());
+          if (error is CustomException) {
+            expect(error.type, ExceptionType.fixedExpenseNotFound);
+          }
+        });
+      },
+    );
 
-      final insertResult = await fixedExpenseService.insert(fixedExpense);
-      final insertedExpense = insertResult.getOrThrow();
+    test(
+      'should delete a fixed expense',
+      () async {
+        // Arrange
+        final fixedExpense = fixedExpenseMock1;
 
-      final deleteResult = await fixedExpenseService.delete(insertedExpense);
+        final insertResult = await fixedExpenseService.insert(fixedExpense);
+        final insertedExpense = insertResult.getOrThrow();
 
-      expect(deleteResult.isSuccess(), true);
-      deleteResult.onFailure((error) {
-        fail('Delete failed');
-      });
+        // Act
+        final deleteResult = await fixedExpenseService.delete(insertedExpense);
 
-      final findResult = await fixedExpenseService.findAll();
-      expect(findResult.isSuccess(), true);
-      findResult.onSuccess((data) {
-        expect(data.length, 0);
-      });
-    });
+        // Assert
+        expect(deleteResult.isSuccess(), true);
+        deleteResult.onFailure((error) {
+          fail('Delete failed');
+        });
 
-    test('should return failure when deleting non-existent fixed expense',
-        () async {
-      final fixedExpense = FixedExpense(
-        id: 'non-existent-id',
-        amount: 1000.0,
-        dueDate: DateTime.now(),
-        description: 'Non-existent Expense',
-        category: category,
-        frequency: Frequency.monthly,
-        remember: Remember.no,
-        expenseList: List.empty(),
-      );
+        final findResult = await fixedExpenseService.findAll();
+        expect(findResult.isSuccess(), true);
+        findResult.onSuccess((data) {
+          expect(data.length, 0);
+        });
+      },
+    );
 
-      final deleteResult = await fixedExpenseService.delete(fixedExpense);
+    test(
+      'should return failure when deleting non-existent fixed expense',
+      () async {
+        // Arrange
+        final fixedExpense = FixedExpense(
+          id: 'non-existent-id',
+          amount: 1000.0,
+          dueDate: DateTime.now(),
+          description: 'Non-existent Expense',
+          category: category,
+          frequency: Frequency.monthly,
+          remember: Remember.no,
+          expenseList: List.empty(),
+        );
 
-      expect(deleteResult.isError(), true);
-      deleteResult.onFailure((error) {
-        expect(error, isA<CustomException>());
-        if (error is CustomException) {
-          expect(error.type, ExceptionType.fixedExpenseNotFound);
-        }
-      });
-    });
+        // Act
+        final deleteResult = await fixedExpenseService.delete(fixedExpense);
 
-    test('should delete all fixed expenses', () async {
-      await fixedExpenseService
-          .insert(FixedExpense(
-            amount: 1000.0,
-            dueDate: DateTime.now(),
-            description: 'Monthly Rent',
-            category: category,
-            frequency: Frequency.monthly,
-            remember: Remember.no,
-            expenseList: List.empty(),
-          ))
-          .getOrThrow();
+        // Assert
+        expect(deleteResult.isError(), true);
+        deleteResult.onFailure((error) {
+          expect(error, isA<CustomException>());
+          if (error is CustomException) {
+            expect(error.type, ExceptionType.fixedExpenseNotFound);
+          }
+        });
+      },
+    );
 
-      await fixedExpenseService
-          .insert(FixedExpense(
-            amount: 500.0,
-            dueDate: DateTime.now(),
-            description: 'Weekly Groceries',
-            category: category,
-            frequency: Frequency.weekly,
-            remember: Remember.no,
-            expenseList: List.empty(),
-          ))
-          .getOrThrow();
+    test(
+      'should delete all fixed expenses',
+      () async {
+        // Arrange
+        await fixedExpenseService
+            .insert(fixedExpenseMock1) //
+            .getOrThrow();
 
-      final deleteResult = await fixedExpenseService.deleteAll();
+        await fixedExpenseService
+            .insert(fixedExpenseMock2) //
+            .getOrThrow();
 
-      expect(deleteResult.isSuccess(), true);
-      deleteResult.onFailure((error) {
-        fail('Delete all failed');
-      });
+        // Act
+        final deleteResult = await fixedExpenseService.deleteAll();
 
-      final findResult = await fixedExpenseService.findAll();
-      expect(findResult.isSuccess(), true);
-      findResult.onSuccess((data) {
-        expect(data.length, 0);
-      });
-    });
+        // Assert
+        expect(deleteResult.isSuccess(), true);
+        deleteResult.onFailure((error) {
+          fail('Delete all failed');
+        });
+
+        final findResult = await fixedExpenseService.findAll();
+        expect(findResult.isSuccess(), true);
+        findResult.onSuccess((data) {
+          expect(data.length, 0);
+        });
+      },
+    );
+
+    test(
+      'should insert a fixed expense and persist notification_id',
+      () async {
+        // Arrange
+        final fixedExpense = fixedExpenseMock1.copyWith(
+          notificationId: 1,
+        );
+
+        // Act
+        final result = await fixedExpenseService.insert(fixedExpense);
+
+        // Assert
+        expect(result.isSuccess(), true);
+        result.onSuccess((data) {
+          expect(data.notificationId, 1);
+        });
+      },
+    );
+
+    test(
+      'should find all fixed expenses and verify notification_id',
+      () async {
+        // Arrange
+        await fixedExpenseService
+            .insert(fixedExpenseMock1.copyWith(notificationId: 1))
+            .getOrThrow();
+
+        await fixedExpenseService
+            .insert(fixedExpenseMock2.copyWith(notificationId: 2))
+            .getOrThrow();
+
+        // Act
+        final result = await fixedExpenseService.findAll();
+
+        // Assert
+        expect(result.isSuccess(), true);
+        result.onSuccess((data) {
+          expect(data[0].notificationId, 1);
+          expect(data[1].notificationId, 2);
+        });
+      },
+    );
+
+    //
   });
 }

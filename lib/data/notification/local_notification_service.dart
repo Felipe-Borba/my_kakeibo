@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
 import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
@@ -29,7 +30,9 @@ class LocalNotificationService {
         .then((notifications) {
       if (notifications.isNotEmpty) {
         // Handle active notifications if needed
-        print('Active notifications: $notifications');
+        if (kDebugMode) {
+          print('Active notifications: $notifications');
+        }
       }
     });
     await _localNotificationsPlugin
@@ -37,7 +40,9 @@ class LocalNotificationService {
         .then((requests) {
       if (requests.isNotEmpty) {
         // Handle pending notification requests if needed
-        print('Pending notification requests: $requests');
+        if (kDebugMode) {
+          print('Pending notification requests: $requests');
+        }
       }
     });
   }
