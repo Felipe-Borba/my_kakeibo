@@ -35,7 +35,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <!-- Handles the triggering of scheduled notificatios -->
+        <!-- Handles the triggering of scheduled notifications -->
         <receiver
             android:exported="false"
             android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
