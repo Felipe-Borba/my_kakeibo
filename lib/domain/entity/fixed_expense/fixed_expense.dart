@@ -26,7 +26,7 @@ class FixedExpense {
     required this.category,
     this.userId,
     this.notificationId,
-  }) ;
+  });
 
   FixedExpense pay(Expense expense) {
     expenseList.add(expense);

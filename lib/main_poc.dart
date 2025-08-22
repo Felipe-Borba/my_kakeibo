@@ -34,7 +34,8 @@ class NotificationPocPage extends StatefulWidget {
 }
 
 class _NotificationPocPageState extends State<NotificationPocPage> {
-  final LocalNotificationService _notificationService = LocalNotificationService();
+  final LocalNotificationService _notificationService =
+      LocalNotificationService();
   int _counter = 0;
   int _secondsLeft = 0;
   bool _isCounting = false;
