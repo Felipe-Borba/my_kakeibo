@@ -25,7 +25,6 @@ class FixedExpenseFormViewModel with ChangeNotifier {
 
   // State
   final formKey = GlobalKey<FormState>();
-
   late double? amount = _fixedExpense?.amount;
   late DateTime? dueDate = _fixedExpense?.dueDate;
   late String description = _fixedExpense?.description ?? '';

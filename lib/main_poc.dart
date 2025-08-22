@@ -41,14 +41,14 @@ class _NotificationPocPageState extends State<NotificationPocPage> {
   bool _isCounting = false;
   final segundos = 6;
 
-  void _scheduleNotification() {
+  void _scheduleNotification() async {
     setState(() {
       _counter++;
       _secondsLeft = segundos;
       _isCounting = true;
     });
 
-    _notificationService.scheduleNotification(LocalNotification(
+    await _notificationService.scheduleNotification(LocalNotification(
       date: DateTime.now().add(Duration(seconds: segundos)),
       id: _counter,
       title: 'Notificação $_counter',
