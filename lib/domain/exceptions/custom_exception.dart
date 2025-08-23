@@ -19,10 +19,13 @@ class CustomException implements Exception {
       : type = ExceptionType.fixedExpenseNotFound;
   CustomException.unknownError() //
       : type = ExceptionType.unknownError;
+  CustomException.notificationPermissionNotGranted() //
+      : type = ExceptionType.notificationPermissionNotGranted;
 }
 
 enum ExceptionType {
   permissionDenied,
+  notificationPermissionNotGranted,
   userNotFound,
   incomeNotFound,
   incomeSourceNotFound,

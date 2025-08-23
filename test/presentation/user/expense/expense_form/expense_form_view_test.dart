@@ -8,22 +8,24 @@ import '../../../../../testing/app.dart';
 import '../../../../../testing/domain/expense_category_repository_mock.dart';
 
 void main() {
-  testWidgets('Should validate required fields before create expense',
-      (tester) async {
-    // Arrange
-    when(expenseCategoryRepositoryMock.findAll)
-        .thenAnswer((_) async => Success(List.empty()));
+  testWidgets(
+    'Should validate required fields before create expense',
+    (tester) async {
+      // Arrange
+      when(expenseCategoryRepositoryMock.findAll)
+          .thenAnswer((_) async => Success(List.empty()));
 
-    await createTestableWidget(
-      tester,
-      child: const ExpenseFormView(),
-    );
+      await createTestableWidget(
+        tester,
+        child: const ExpenseFormView(),
+      );
 
-    // Act
-    await tester.tap(find.byKey(WidgetKeys.saveExpense));
-    await tester.pumpAndSettle();
+      // Act
+      await tester.tap(find.byKey(WidgetKeys.saveExpense));
+      await tester.pumpAndSettle();
 
-    // Assert
-    expect(find.text("Field is required"), findsNWidgets(3));
-  });
+      // Assert
+      expect(find.text("Field is required"), findsNWidgets(3));
+    },
+  );
 }

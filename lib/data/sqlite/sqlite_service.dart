@@ -1,12 +1,14 @@
-import 'package:my_kakeibo/data/sqlite/migrations/0002_update_user_table.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
 
 import 'migrations/0001_create_tables.dart';
+import 'migrations/0002_update_user_table.dart';
+import 'migrations/0003_update_fixed_expense_table.dart';
 
 class SQLiteService {
   SQLiteService._internal();
+
   static final SQLiteService _instance = SQLiteService._internal();
   late String _version;
   static Database? _database;
@@ -34,7 +36,7 @@ class SQLiteService {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       singleInstance: true,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON');
@@ -47,6 +49,7 @@ class SQLiteService {
         await db.execute(createExpenseCategoriesTable);
         await db.execute(createIncomeSourcesTable);
         await db.execute(updateUserTable);
+        await db.execute(updateFixedExpenseTable003);
       },
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
@@ -65,6 +68,9 @@ class SQLiteService {
         }
         if (oldVersion < 3) {
           await db.execute(updateUserTable);
+        }
+        if (oldVersion < 4) {
+          await db.execute(updateFixedExpenseTable003);
         }
       },
     );

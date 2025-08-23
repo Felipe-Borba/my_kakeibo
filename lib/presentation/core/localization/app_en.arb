@@ -213,6 +213,8 @@
   "@grey": {},
   "permissionDenied": "Permission denied",
   "@permissionDenied": {},
+  "notificationPermissionNotGranted": "Notification permission not granted",
+  "@notificationPermissionNotGranted": {},
   "userNotFound": "User not found",
   "@userNotFound": {},
   "incomeNotFound": "Income not found",
@@ -287,5 +289,17 @@
   "amber": "Amber",
   "@amber": {},
   "blueGrey": "Blue Grey",
-  "@blueGrey": {}
+  "@blueGrey": {},
+  "no": "No",
+  "@no": {},
+  "weekBefore": "Week before",
+  "@weekBefore": {},
+  "dayBefore": "Day before",
+  "@dayBefore": {},
+  "atDueDate": "At due date",
+  "@atDueDate": {},
+  "remember": "Remember",
+  "@remember": {},
+  "fixedExpenseNotificationTitle": "Fixed Expense Reminder",
+  "@fixedExpenseNotificationTitle": {}
 }

@@ -14,6 +14,8 @@ extension AppExceptionExtension on CustomException {
       ExceptionType.incomeSourceNotFound => context.intl.incomeSourceNotFound,
       ExceptionType.expenseCategoryNotFound =>
         context.intl.expenseCategoryNotFound,
+      ExceptionType.notificationPermissionNotGranted =>
+        context.intl.notificationPermissionNotGranted,
     };
   }
 }

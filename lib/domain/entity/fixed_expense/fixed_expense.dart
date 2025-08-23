@@ -13,6 +13,7 @@ class FixedExpense {
   final ExpenseCategory category;
   final double amount;
   final String? userId;
+  final int? notificationId;
 
   FixedExpense({
     this.id,
@@ -24,6 +25,7 @@ class FixedExpense {
     required this.remember,
     required this.category,
     this.userId,
+    this.notificationId,
   });
 
   FixedExpense pay(Expense expense) {
@@ -76,6 +78,7 @@ class FixedExpense {
     ExpenseCategory? category,
     double? amount,
     String? userId,
+    int? notificationId,
   }) {
     return FixedExpense(
       id: id ?? this.id,
@@ -87,6 +90,7 @@ class FixedExpense {
       category: category ?? this.category,
       amount: amount ?? this.amount,
       userId: userId ?? this.userId,
+      notificationId: notificationId ?? this.notificationId,
     );
   }
 
@@ -100,6 +104,7 @@ class FixedExpense {
       'fixed_expense_remember': remember.index,
       'expense_category_id': category.id,
       'user_id': userId,
+      'notification_id': notificationId,
     };
   }
 
@@ -118,6 +123,9 @@ class FixedExpense {
       expenseList: expenseList,
       category: category,
       userId: map['user_id'],
+      notificationId: map['notification_id'] != null
+          ? int.tryParse(map['notification_id'].toString())
+          : null,
     );
   }
 }

@@ -17,10 +17,11 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.example.my_kakeibo"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34 //flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -38,6 +39,7 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         minSdkVersion 23
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -54,6 +56,10 @@ android {
             signingConfig = signingConfigs.release
         }
     }
+}
+
+dependencies {
+  coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
 }
 
 flutter {

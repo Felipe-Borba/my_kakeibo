@@ -213,6 +213,8 @@
   "@grey": {},
   "permissionDenied": "Permissão negada",
   "@permissionDenied": {},
+  "notificationPermissionNotGranted": "Permissão de notificação não concedida",
+  "@notificationPermissionNotGranted": {},
   "userNotFound": "Usuário não encontrado",
   "@userNotFound": {},
   "incomeNotFound": "Renda não encontrada",
@@ -287,5 +289,17 @@
   "amber": "Âmbar",
   "@amber": {},
   "blueGrey": "Cinza-azulado",
-  "@blueGrey": {}
+  "@blueGrey": {},
+  "no": "Não",
+  "@no": {},
+  "weekBefore": "Uma semana antes",
+  "@weekBefore": {},
+  "dayBefore": "Um dia antes",
+  "@dayBefore": {},
+  "atDueDate": "No vencimento",
+  "@atDueDate": {},
+  "remember": "Lembrar",
+  "@remember": {},
+  "fixedExpenseNotificationTitle": "Lembrete de Despesa Fixa",
+  "@fixedExpenseNotificationTitle": {}
 }
