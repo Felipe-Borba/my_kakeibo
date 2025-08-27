@@ -3,7 +3,7 @@ import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/formatter/currency_formatter.dart';
 
 class InputFormCurrency extends StatelessWidget {
-  final String? Function(String? value)? validator;
+  final String? Function(double? value)? validator;
   final String? labelText;
   final double? value;
   final void Function(double?)? onChanged;
@@ -26,7 +26,16 @@ class InputFormCurrency extends StatelessWidget {
       keyboardType: TextInputType.number,
       inputFormatters: [CurrencyFormatter(context)],
       decoration: InputDecoration(labelText: labelText),
-      validator: validator,
+      validator: (String? text) {
+        if (validator == null) return null;
+
+        if (text == null || text.isEmpty) {
+          return validator != null ? validator!(null) : null;
+        }
+
+        double? amount = context.currency.tryParse(text)?.toDouble();
+        return validator!(amount);
+      },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: (value) {
         if (onChanged != null) {
