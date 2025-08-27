@@ -18,7 +18,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.example.my_kakeibo"
     compileSdk = 34 //flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "26.1.10909125" //flutter.ndkVersion
 
     compileOptions {
         coreLibraryDesugaringEnabled true
