@@ -4,7 +4,7 @@ import 'package:my_kakeibo/data/user/user_service_sqlite.dart';
 import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/entity/user/user_language.dart';
 import 'package:my_kakeibo/domain/entity/user/user_theme.dart';
-import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
+import 'package:my_kakeibo/domain/entity/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
