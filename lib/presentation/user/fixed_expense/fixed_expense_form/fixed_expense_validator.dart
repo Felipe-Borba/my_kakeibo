@@ -9,7 +9,7 @@ class FixedExpenseValidator extends FormValidator {
 
   String? validateAmount(double? value) {
     if (value == null) return context.intl.fieldRequired;
-    if (value <= 0) return context.intl.fieldGreaterThenZero;
+    if (value <= 0) return context.intl.fieldGreaterThanZero;
     return null;
   }
 
