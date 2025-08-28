@@ -25,6 +25,7 @@ class ExpenseCategoryFormView extends StatelessWidget {
       ),
       builder: (context, child) {
         final viewModel = Provider.of<ExpenseCategoryFormViewModel>(context);
+        final validator = viewModel.validator;
 
         return ScaffoldCustom(
           appBar: AppBarCustom(
@@ -33,7 +34,7 @@ class ExpenseCategoryFormView extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
             child: Form(
-              key: viewModel.formKey,
+              key: validator.formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -41,7 +42,7 @@ class ExpenseCategoryFormView extends StatelessWidget {
                   const SizedBox(height: 8),
                   InputFormString(
                     key: WidgetKeys.name,
-                    validator: viewModel.validateName,
+                    validator: validator.validateName,
                     labelText: context.intl.name,
                     initialValue: viewModel.name,
                     onChanged: (value) => viewModel.name = value,
@@ -49,14 +50,14 @@ class ExpenseCategoryFormView extends StatelessWidget {
                   const SizedBox(height: 8),
                   InputFormColorCustom(
                     key: WidgetKeys.color,
-                    validator: viewModel.validateColor,
+                    validator: validator.validateColor,
                     value: viewModel.color,
                     onChanged: (value) => viewModel.color = value,
                   ),
                   const SizedBox(height: 8),
                   InputFormIconCustom(
                     key: WidgetKeys.icon,
-                    validator: viewModel.validateIcon,
+                    validator: validator.validateIcon,
                     value: viewModel.icon,
                     onChanged: (value) => viewModel.icon = value,
                   ),

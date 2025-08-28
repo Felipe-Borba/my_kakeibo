@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/components/input_field/input_form_remember.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_currency.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_date.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_frequency.dart';
+import 'package:my_kakeibo/presentation/core/components/input_field/input_form_remember.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_view_model.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +49,7 @@ class FixedExpenseFormView extends StatelessWidget {
     BuildContext context,
   ) {
     return Form(
-      key: controller.formKey,
+      key: controller.validator.formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,20 +59,20 @@ class FixedExpenseFormView extends StatelessWidget {
             value: controller.amount,
             onChanged: controller.setAmount,
             labelText: context.intl.amount,
-            validator: controller.validateAmount,
+            validator: controller.validator.validateAmount,
           ),
           const SizedBox(height: 8),
           InputFormExpenseCategory(
             key: WidgetKeys.category,
             value: controller.category,
             onChanged: controller.setCategory,
-            validator: controller.validateCategory,
+            validator: controller.validator.validateCategory,
           ),
           const SizedBox(height: 8),
           InputFormDate(
             key: WidgetKeys.dueDate,
             labelText: context.intl.dueDate,
-            validator: controller.validateDueDate,
+            validator: controller.validator.validateDueDate,
             value: controller.dueDate,
             onChanged: controller.setDueDate,
           ),
@@ -81,12 +81,12 @@ class FixedExpenseFormView extends StatelessWidget {
             key: WidgetKeys.frequency,
             value: controller.frequency,
             onChanged: (value) => controller.frequency = value,
-            validator: controller.validateFrequency,
+            validator: controller.validator.validateFrequency,
           ),
           const SizedBox(height: 8),
           InputFormString(
             key: WidgetKeys.description,
-            validator: controller.validateDescription,
+            validator: controller.validator.validateDescription,
             labelText: context.intl.description,
             initialValue: controller.description,
             onChanged: controller.setDescription,
@@ -96,7 +96,7 @@ class FixedExpenseFormView extends StatelessWidget {
             key: WidgetKeys.remember,
             value: controller.remember,
             onChanged: (value) => controller.remember = value,
-            validator: controller.validateRemember,
+            validator: controller.validator.validateRemember,
           ),
           const SizedBox(height: 24),
           Center(

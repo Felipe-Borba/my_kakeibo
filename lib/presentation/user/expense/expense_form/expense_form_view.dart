@@ -26,6 +26,7 @@ class ExpenseFormView extends StatelessWidget {
       ),
       builder: (context, child) {
         final viewModel = Provider.of<ExpenseFormViewModel>(context);
+        final validator = viewModel.validator;
 
         return ScaffoldCustom(
           appBar: AppBarCustom(
@@ -34,7 +35,7 @@ class ExpenseFormView extends StatelessWidget {
           body: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
             child: Form(
-              key: viewModel.formKey,
+              key: validator.formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,26 +45,26 @@ class ExpenseFormView extends StatelessWidget {
                     value: viewModel.amount,
                     onChanged: viewModel.setAmount,
                     labelText: context.intl.amount,
-                    validator: viewModel.validateAmount,
+                    validator: validator.validateAmount,
                   ),
                   const SizedBox(height: 8),
                   InputFormExpenseCategory(
                     key: WidgetKeys.category,
                     value: viewModel.category,
                     onChanged: viewModel.setCategory,
-                    validator: viewModel.validateCategory,
+                    validator: validator.validateCategory,
                   ),
                   const SizedBox(height: 8),
                   InputFormDate(
                     key: WidgetKeys.date,
-                    validator: viewModel.validateDate,
+                    validator: validator.validateDate,
                     value: viewModel.date,
                     onChanged: viewModel.setDate,
                   ),
                   const SizedBox(height: 8),
                   InputFormString(
                     key: WidgetKeys.description,
-                    validator: viewModel.validateDescription,
+                    validator: validator.validateDescription,
                     labelText: context.intl.description,
                     initialValue: viewModel.description,
                     onChanged: viewModel.setDescription,

@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
 class InputFormDate extends StatelessWidget {
-  final String? Function(String? value)? validator;
+  final String? Function(DateTime? value)? validator;
   final String? labelText;
   final DateTime? value;
   final void Function(DateTime?)? onChanged;
@@ -29,7 +29,16 @@ class InputFormDate extends StatelessWidget {
       // key: key,
       readOnly: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: validator,
+      validator: (String? text) {
+        if (validator != null) return null;
+
+        if (text == null || text.isEmpty) {
+          return validator != null ? validator!(null) : null;
+        }
+
+        DateTime? date = formatter.tryParse(text);
+        return validator!(date);
+      },
       controller: controller,
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
