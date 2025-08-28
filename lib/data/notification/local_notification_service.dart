@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
-import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
+import 'package:my_kakeibo/domain/entity/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:timezone/timezone.dart' as tz;
 

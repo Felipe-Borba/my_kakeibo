@@ -8,7 +8,7 @@ import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
 import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
-import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
+import 'package:my_kakeibo/domain/entity/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 

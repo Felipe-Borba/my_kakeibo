@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
+import 'package:my_kakeibo/domain/entity/custom_exception.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
 extension AppExceptionExtension on CustomException {

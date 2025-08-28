@@ -1,6 +1,6 @@
 import 'package:my_kakeibo/data/sqlite/sqlite_service.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
-import 'package:my_kakeibo/domain/exceptions/custom_exception.dart';
+import 'package:my_kakeibo/domain/entity/custom_exception.dart';
 import 'package:result_dart/result_dart.dart';
 
 class ExpenseCategoryServiceSqlite {
