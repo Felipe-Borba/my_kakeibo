@@ -3,9 +3,8 @@ import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income_source.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
-import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
+import 'package:my_kakeibo/presentation/user/income/income_form/income_validator.dart';
 
 class IncomeFormViewModel with ChangeNotifier {
   IncomeFormViewModel(this._context, this._income, this._incomeRepository);
@@ -14,7 +13,7 @@ class IncomeFormViewModel with ChangeNotifier {
   final IncomeRepository _incomeRepository;
   final BuildContext _context;
   final Income? _income;
-  final formKey = GlobalKey<FormState>();
+  late final validator = IncomeValidator(context: _context);
 
   // State
   late double? amount = _income?.amount;
@@ -24,8 +23,7 @@ class IncomeFormViewModel with ChangeNotifier {
 
   // Actions
   onClickSave() async {
-    bool isValid = formKey.currentState?.validate() ?? false;
-    if (!isValid) return;
+    if (validator.isInvalid()) return;
 
     var result = await _incomeRepository.save(Income(
       id: _income?.id,
@@ -44,28 +42,5 @@ class IncomeFormViewModel with ChangeNotifier {
     });
 
     notifyListeners();
-  }
-
-  String? validateAmount(String? value) {
-    if (value == null) return _context.intl.fieldRequired;
-    double? amount = _context.currency.tryParse(value)?.toDouble();
-    if (amount == null) return _context.intl.fieldRequired;
-    if (amount <= 0) return _context.intl.fieldGreaterThenZero;
-    return null;
-  }
-
-  String? validateDate(String? value) {
-    if (value == null) return _context.intl.fieldRequired;
-    if (value.isEmpty) return _context.intl.fieldRequired;
-    return null;
-  }
-
-  String? validateDescription(String? value) {
-    return null;
-  }
-
-  String? validateSource(IncomeSource? value) {
-    if (value == null) return _context.intl.fieldRequired;
-    return null;
   }
 }
