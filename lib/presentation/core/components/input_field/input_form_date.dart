@@ -30,7 +30,7 @@ class InputFormDate extends StatelessWidget {
       readOnly: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? text) {
-        if (validator != null) return null;
+        if (validator == null) return null;
 
         if (text == null || text.isEmpty) {
           return validator != null ? validator!(null) : null;
