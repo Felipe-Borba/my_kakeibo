@@ -215,6 +215,8 @@
   "@permissionDenied": {},
   "notificationPermissionNotGranted": "Notification permission not granted",
   "@notificationPermissionNotGranted": {},
+  "notificationDateInPast": "Notification date is in the past",
+  "@notificationDateInPast": {},
   "userNotFound": "User not found",
   "@userNotFound": {},
   "incomeNotFound": "Income not found",

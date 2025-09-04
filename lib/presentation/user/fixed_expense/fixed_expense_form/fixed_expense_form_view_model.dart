@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
-import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
+import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
@@ -24,6 +24,8 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   late final validator = FixedExpenseValidator(context: _context);
 
   // State
+  late String? id = _fixedExpense?.id;
+  late List<Expense> expenseList = _fixedExpense?.expenseList ?? [];
   late double? amount = _fixedExpense?.amount;
   late DateTime? dueDate = _fixedExpense?.dueDate;
   late String description = _fixedExpense?.description ?? '';
@@ -32,6 +34,8 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   late Remember? remember = _fixedExpense?.remember ?? Remember.no;
 
   // Actions
+  /// TODO: Refactor no dart tem palavra reservada 'set' e 'get' por isso não precisa desse setter no estilo java
+  /// ai fora vai ser como se tivesse setando diretamente a variavel mas com essas palavras reservadas vc meio que intercepta o jaguara
   void setAmount(double? value) {
     amount = value;
   }
@@ -50,36 +54,17 @@ class FixedExpenseFormViewModel with ChangeNotifier {
 
   void onClickSave() async {
     if (validator.isInvalid()) return;
-    dueDate ??= DateTime.now();
-
-    final notification = remember != Remember.no
-        ? LocalNotification(
-            date: dueDate!
-                .subtract(switch (remember!) {
-                  Remember.no => Duration.zero,
-                  Remember.atDueDate => Duration.zero,
-                  Remember.dayBefore => const Duration(days: 1),
-                  Remember.weekBefore => const Duration(days: 7),
-                })
-                .copyWith(hour: 9, minute: 0, second: 0),
-            title: _context.intl.fixedExpenseNotificationTitle,
-            body: description,
-          )
-        : null;
 
     var result = await _fixedExpenseRepository.insert(
-      FixedExpense(
-        id: _fixedExpense?.id,
-        description: description,
-        category: category!,
-        dueDate: dueDate!,
-        amount: amount!,
-        expenseList: _fixedExpense?.expenseList ?? [],
-        frequency: frequency!,
-        remember: remember!,
-        notificationId: notification?.id,
-      ),
-      notification,
+      id: id,
+      description: description,
+      category: category!,
+      dueDate: dueDate,
+      amount: amount!,
+      expenseList: expenseList,
+      frequency: frequency!,
+      remember: remember!,
+      notificationTitle: _context.intl.fixedExpenseNotificationTitle,
     );
 
     result.onFailure((failure) {

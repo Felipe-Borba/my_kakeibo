@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/repository/fixed_expense_repository.dart';
 import 'package:my_kakeibo/presentation/core/components/snackbar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/sort_component.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/fixed_expense.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_form/fixed_expense_form_view.dart';
@@ -80,7 +81,10 @@ class FixedExpenseListViewModel with ChangeNotifier {
   }
 
   pay(FixedExpense fixedExpense) async {
-    var result = await _fixedExpenseRepository.pay(fixedExpense);
+    var result = await _fixedExpenseRepository.pay(
+      fixedExpense: fixedExpense,
+      notificationTitle: _context.intl.fixedExpenseNotificationTitle,
+    );
     result.onFailure((failure) {
       showSnackbar(context: _context, text: failure.toString());
     });

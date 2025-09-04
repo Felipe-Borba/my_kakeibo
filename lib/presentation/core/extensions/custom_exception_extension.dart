@@ -16,6 +16,8 @@ extension AppExceptionExtension on CustomException {
         context.intl.expenseCategoryNotFound,
       ExceptionType.notificationPermissionNotGranted =>
         context.intl.notificationPermissionNotGranted,
+      ExceptionType.notificationDateInPast =>
+        context.intl.notificationDateInPast,
     };
   }
 }

@@ -1,5 +1,6 @@
 import 'package:my_kakeibo/domain/entity/fixed_expense/frequency.dart';
 import 'package:my_kakeibo/domain/entity/fixed_expense/remember.dart';
+import 'package:my_kakeibo/domain/entity/notification/local_notification.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 
@@ -27,6 +28,26 @@ class FixedExpense {
     this.userId,
     this.notificationId,
   });
+
+  (FixedExpense, LocalNotification?) makeNotificationForPayment(String title) {
+    if (remember != Remember.no) {
+      var notification = LocalNotification(
+        date: dueDate
+            .subtract(switch (remember) {
+              Remember.no => Duration.zero,
+              Remember.atDueDate => Duration.zero,
+              Remember.dayBefore => const Duration(days: 1),
+              Remember.weekBefore => const Duration(days: 7),
+            })
+            .copyWith(hour: 9, minute: 0, second: 0),
+        title: title,
+        body: description.isNotEmpty ? description : category.name,
+      );
+
+      return (copyWith(notificationId: notification.id), notification);
+    }
+    return (this, null);
+  }
 
   FixedExpense pay(Expense expense) {
     expenseList.add(expense);
