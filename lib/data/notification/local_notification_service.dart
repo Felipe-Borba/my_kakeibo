@@ -76,12 +76,16 @@ class LocalNotificationService {
         return Failure(CustomException.notificationPermissionNotGranted());
       }
 
+      if(!notification.inFuture()) {
+        return Failure(CustomException.notificationDateInPast());
+      }
+
       final scheduledDate = tz.TZDateTime.from(
         notification.date,
         tz.local,
       );
 
-      _localNotificationsPlugin.zonedSchedule(
+      await _localNotificationsPlugin.zonedSchedule(
         notification.id,
         notification.title,
         notification.body,

@@ -12,6 +12,10 @@ class LocalNotification {
     this.body,
     this.channel = NotificationChannel.standard,
   }) : id = id ?? DateTime.now().millisecondsSinceEpoch & 0x7FFFFFFF;
+
+  bool inFuture() {
+    return date.isAfter(DateTime.now());
+  }
 }
 
 enum NotificationChannel {

@@ -21,11 +21,14 @@ class CustomException implements Exception {
       : type = ExceptionType.unknownError;
   CustomException.notificationPermissionNotGranted() //
       : type = ExceptionType.notificationPermissionNotGranted;
+  CustomException.notificationDateInPast()//
+      : type = ExceptionType.notificationDateInPast;
 }
 
 enum ExceptionType {
   permissionDenied,
   notificationPermissionNotGranted,
+  notificationDateInPast,
   userNotFound,
   incomeNotFound,
   incomeSourceNotFound,

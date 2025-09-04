@@ -51,7 +51,7 @@ class FixedExpenseRepository {
               .insert(fixedExpense.copyWith(userId: user.id))
               .flatMap(
             (expense) async {
-              if (localNotification != null) {
+              if (localNotification != null && localNotification.inFuture()) {
                 await _localNotificationService.scheduleNotification(
                   localNotification,
                 );
