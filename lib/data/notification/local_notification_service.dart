@@ -76,7 +76,7 @@ class LocalNotificationService {
         return Failure(CustomException.notificationPermissionNotGranted());
       }
 
-      if(!notification.inFuture()) {
+      if (!notification.inFuture()) {
         return Failure(CustomException.notificationDateInPast());
       }
 

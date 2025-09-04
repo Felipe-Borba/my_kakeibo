@@ -21,7 +21,7 @@ class CustomException implements Exception {
       : type = ExceptionType.unknownError;
   CustomException.notificationPermissionNotGranted() //
       : type = ExceptionType.notificationPermissionNotGranted;
-  CustomException.notificationDateInPast()//
+  CustomException.notificationDateInPast() //
       : type = ExceptionType.notificationDateInPast;
 }
 
