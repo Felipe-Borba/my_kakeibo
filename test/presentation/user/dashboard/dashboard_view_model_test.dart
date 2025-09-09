@@ -153,4 +153,61 @@ void main() {
     expect(pieChartData[2].value, 151.25);
     expect(pieChartData[2].title, '16%');
   });
+
+  test('pie chart data with a single expense should be 100%', () {
+    // Arrange
+    final expense = Expense(
+      amount: 250.0,
+      category: categoryA,
+      date: DateTime.now(),
+      description: "",
+    );
+    final expenses = [expense];
+
+    // Act
+    viewModel.makePieCartData(
+      expenses,
+      expenses.fold(0, (sum, item) => sum + item.amount),
+    );
+
+    // Assert
+    final pieChartData = viewModel.pieChartData;
+    expect(pieChartData.length, 1);
+    expect(pieChartData[0].label, 'Category A');
+    expect(pieChartData[0].value, 250.0);
+    expect(pieChartData[0].title, '100%');
+  });
+
+  test('pie chart data with one very high and one very low expense', () {
+    // Arrange
+    final highExpense = Expense(
+      amount: 99999.42,
+      category: categoryA,
+      date: DateTime.now(),
+      description: "",
+    );
+    final lowExpense = Expense(
+      amount: 0.50,
+      category: categoryB,
+      date: DateTime.now(),
+      description: "",
+    );
+    final expenses = [highExpense, lowExpense];
+
+    // Act
+    viewModel.makePieCartData(
+      expenses,
+      expenses.fold(0, (sum, item) => sum + item.amount),
+    );
+
+    // Assert
+    final pieChartData = viewModel.pieChartData;
+    expect(pieChartData.length, 2);
+    expect(pieChartData[0].label, 'Category A');
+    expect(pieChartData[0].value, 99999.42);
+    expect(pieChartData[0].title, '100%');
+    expect(pieChartData[1].label, 'Category B');
+    expect(pieChartData[1].value, 0.50);
+    expect(pieChartData[1].title, '<1%');
+  });
 }

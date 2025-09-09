@@ -93,8 +93,8 @@ class DashboardViewModel with ChangeNotifier {
     // Adjust the last category to ensure the total is 100%
     if (pieDataList.isNotEmpty) {
       int totalPercentage = pieDataList.fold(
-          0, (sum, item) => sum + int.parse(item.title.replaceAll('%', '')));
-      int percentage = int.parse(pieDataList.last.title.replaceAll('%', ''));
+          0, (sum, item) => sum + _getPercentageString(item.title));
+      int percentage = _getPercentageString(pieDataList.last.title);
       int difference = 100 - totalPercentage;
       int newPercentage = percentage + difference;
       pieDataList.last = PieData(
@@ -106,6 +106,11 @@ class DashboardViewModel with ChangeNotifier {
     }
 
     return pieDataList;
+  }
+
+  int _getPercentageString(String title) {
+    final percentageString = title.replaceAll('%', '');
+    return int.tryParse(percentageString) ?? 0;
   }
 
   Map<ExpenseCategory, double> _aggregateByCategory(
