@@ -4,6 +4,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/app_bar_user.dart
 import 'package:my_kakeibo/presentation/core/components/layout/bottom_navigation_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 import 'package:provider/provider.dart';
 
 class DashboardView extends StatelessWidget {
@@ -24,11 +25,11 @@ class DashboardView extends StatelessWidget {
           appBar: AppBarUser(
             title: context.intl.welcomeMessage(viewModel.user?.name ?? ""),
           ),
-          body: viewModel.screen,
-          bottomNavigationBar: BottomNavigationBarCustom(
-            currentIndexNotifier: viewModel.selectedIndex,
-            onTabTapped: viewModel.onTabTapped,
-          ),
+          body: const InsightsView(),
+          // bottomNavigationBar: BottomNavigationBarCustom(
+          //   currentIndexNotifier: viewModel.selectedIndex,
+          //   onTabTapped: viewModel.onTabTapped,
+          // ),
         );
       },
     );

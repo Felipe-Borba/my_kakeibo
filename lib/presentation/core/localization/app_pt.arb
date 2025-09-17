@@ -4,6 +4,8 @@
   "@appTitle": {
     "description": "Seu aplicativo de finança pessoal"
   },
+  "subtitle": "Seu aplicativo de finanças pessoais",
+  "@subtitle": {},
   "currencyTag": "R$ ",
   "@currencyTag": {},
   "welcome": "Bem-vindo",
@@ -30,7 +32,7 @@
   "@trackYourExpensesSetBudgets": {},
   "getStarted": "Começar",
   "@getStarted": {},
-  "welcomeMessage": "Bem-vindo {userName}!",
+  "welcomeMessage": "Olá, {userName}!",
   "@welcomeMessage": {
     "placeholders": {
       "userName": {
@@ -39,6 +41,8 @@
       }
     }
   },
+  "welcome_back": "Bem-vindo de volta!",
+  "@welcome_back": {},
   "income": "Receita",
   "@income": {},
   "expense": "Despesa",

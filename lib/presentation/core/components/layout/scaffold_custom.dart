@@ -4,7 +4,6 @@ import 'package:my_kakeibo/presentation/core/components/layout/drawer_custom.dar
 
 class ScaffoldCustom extends StatelessWidget {
   final PreferredSizeWidget? appBar;
-  final Widget? bottomNavigationBar;
   final Widget body;
   final FloatingActionButton? floatingActionButton;
 
@@ -12,7 +11,6 @@ class ScaffoldCustom extends StatelessWidget {
     super.key,
     this.appBar,
     required this.body,
-    this.bottomNavigationBar,
     this.floatingActionButton,
   });
 
@@ -23,7 +21,7 @@ class ScaffoldCustom extends StatelessWidget {
         appBar: appBar,
         endDrawer: const DrawerCustom(),
         floatingActionButton: floatingActionButton,
-        bottomNavigationBar: bottomNavigationBar,
+        // bottomNavigationBar: bottomNavigationBar,
         body: SafeArea(child: body),
       ),
     );

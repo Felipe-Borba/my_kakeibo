@@ -32,14 +32,14 @@ class DashboardViewModel with ChangeNotifier {
   List<Transaction> list = List.empty();
   List<PieData> pieChartData = List.empty();
   User? user;
-  final selectedIndex = ValueNotifier<int>(0);
-  List<Widget> screens = [
-    const HomeView(),
-    const InsightsView(),
-    // const ProfileView(),
-  ];
+  // final selectedIndex = ValueNotifier<int>(0);
+  // List<Widget> screens = [
+  //   const HomeView(),
+  //   const InsightsView(),
+  //   // const ProfileView(),
+  // ];
 
-  Widget get screen => screens[selectedIndex.value];
+  // Widget get screen => screens[selectedIndex.value];
 
   // Actions
   getInitialData() async {
@@ -129,9 +129,9 @@ class DashboardViewModel with ChangeNotifier {
     return totalByCategory;
   }
 
-  onTabTapped(int selectedIndex) {
-    this.selectedIndex.value = selectedIndex;
-    _userRepository.logScreen(screen.runtimeType.toString());
-    notifyListeners();
-  }
+// onTabTapped(int selectedIndex) {
+//   this.selectedIndex.value = selectedIndex;
+//   _userRepository.logScreen(screen.runtimeType.toString());
+//   notifyListeners();
+// }
 }
