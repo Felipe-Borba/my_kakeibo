@@ -6,6 +6,9 @@ import 'package:my_kakeibo/domain/repository/income_repository.dart';
 import 'package:my_kakeibo/domain/repository/user_repository.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/settings/settings_screen.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
+import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view.dart';
+import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view.dart';
 
 class HomeViewModel with ChangeNotifier {
   HomeViewModel(
@@ -61,5 +64,24 @@ class HomeViewModel with ChangeNotifier {
 
   void onSettingsPressed() {
     _context.pushScreen(const SettingsScreen());
+  }
+
+  void onAddIncomePressed() {
+    _context.pushScreen(const IncomeFormView());
+  }
+
+  void onAddExpensePressed() {
+    _context.pushScreen(const ExpenseFormView());
+  }
+
+  void onInsightsPressed() {
+    _context.pushScreen(const DashboardView());
+  }
+
+  void onMenuPressed() {
+    final scaffold = Scaffold.maybeOf(_context);
+    if (scaffold != null && !scaffold.isDrawerOpen) {
+      scaffold.openEndDrawer();
+    }
   }
 }

@@ -4,7 +4,7 @@
   "@appTitle": {
     "description": "Your personal finance app"
   },
-  "subtitle": "Your personal finance app",
+  "subtitle": "Your finance app",
   "@subtitle": {},
   "currencyTag": "$ ",
   "@currencyTag": {},
@@ -244,8 +244,8 @@
       }
     }
   },
-  "monthlySpendingByCategory": "Monthly spending by category",
-  "@monthlySpendingByCategory": {},
+  "monthSpending": "Month spending",
+  "@monthSpending": {},
   "english": "English",
   "@english": {},
   "portuguese": "Portuguese",
@@ -307,5 +307,9 @@
   "remember": "Remember",
   "@remember": {},
   "fixedExpenseNotificationTitle": "Fixed Expense Reminder",
-  "@fixedExpenseNotificationTitle": {}
+  "@fixedExpenseNotificationTitle": {},
+  "quick_access": "Quick Access",
+  "@quick_access": {},
+  "income_vs_expense": "Income vs Expense",
+  "@income_vs_expense": {}
 }

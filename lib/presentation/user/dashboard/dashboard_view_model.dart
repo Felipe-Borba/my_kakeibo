@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
-import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/domain/repository/expense_repository.dart';
 import 'package:my_kakeibo/domain/repository/income_repository.dart';
-import 'package:my_kakeibo/domain/repository/user_repository.dart';
+import 'package:my_kakeibo/presentation/core/components/charts/bar_chart_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/presentation/core/mappers/color_custom_mapper.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/home_view.dart';
-import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 
 class DashboardViewModel with ChangeNotifier {
   DashboardViewModel(
-    this._userRepository,
     this._expenseRepository,
     this._incomeRepository,
   ) {
@@ -21,38 +18,18 @@ class DashboardViewModel with ChangeNotifier {
   }
 
   // Dependencies
-  final UserRepository _userRepository;
   final ExpenseRepository _expenseRepository;
   final IncomeRepository _incomeRepository;
 
   // State
-  double total = 0;
-  double totalIncome = 0;
-  double totalExpense = 0;
   List<Transaction> list = List.empty();
   List<PieData> pieChartData = List.empty();
-  User? user;
-  // final selectedIndex = ValueNotifier<int>(0);
-  // List<Widget> screens = [
-  //   const HomeView(),
-  //   const InsightsView(),
-  //   // const ProfileView(),
-  // ];
-
-  // Widget get screen => screens[selectedIndex.value];
+  List<BarData> barChartData = List.empty();
 
   // Actions
   getInitialData() async {
-    var totalIncome =
-        (await _incomeRepository.getMonthTotal()).getOrDefault(0.0);
     var totalExpense =
         (await _expenseRepository.getMonthTotal()).getOrDefault(0.0);
-    this.totalIncome = totalIncome;
-    this.totalExpense = totalExpense;
-    total = totalIncome - totalExpense;
-    if (total < 0) {
-      total = 0;
-    }
 
     var now = DateTime.now();
     var incomeList = (await _incomeRepository.findByMonth(month: now))
@@ -63,11 +40,9 @@ class DashboardViewModel with ChangeNotifier {
     list.sort((a, b) => b.date.compareTo(a.date));
     makePieCartData(expenseList, totalExpense);
 
-    var result = await _userRepository.getUser();
-    result.onSuccess((user) async {
-      this.user = user;
-      notifyListeners();
-    });
+    // Generate bar chart data for the last 6 months
+    await generateBarChartData();
+
     notifyListeners();
   }
 
@@ -88,7 +63,8 @@ class DashboardViewModel with ChangeNotifier {
             "${totalExpense > 0 ? (entry.value / totalExpense * 100).round() : 0}%",
         label: entry.key.name,
       );
-    }).toList();
+    }).toList()
+      ..sort((a, b) => b.value.compareTo(a.value)); //TODO the bug still exists if list is unsorted
 
     // Adjust the last category to ensure the total is 100%
     if (pieDataList.isNotEmpty) {
@@ -129,9 +105,40 @@ class DashboardViewModel with ChangeNotifier {
     return totalByCategory;
   }
 
-// onTabTapped(int selectedIndex) {
-//   this.selectedIndex.value = selectedIndex;
-//   _userRepository.logScreen(screen.runtimeType.toString());
-//   notifyListeners();
-// }
+  Future<void> generateBarChartData() async {
+    final List<BarData> data = [];
+    final now = DateTime.now();
+
+    // Get data for 2 months before and 3 months after the current month
+    for (int i = -2; i <= 3; i++) {
+      final month = DateTime(now.year, now.month + i, 1);
+      final monthName = _getMonthAbbreviation(month);
+
+      // Get income for this month
+      final incomeResult = await _incomeRepository.findByMonth(month: month);
+      final incomeList = incomeResult.getOrDefault(List.empty());
+      final incomeTotal =
+          incomeList.fold(0.0, (sum, income) => sum + income.amount);
+
+      // Get expenses for this month
+      final expenseResult = await _expenseRepository.findByMonth(month: month);
+      final expenseList = expenseResult.getOrDefault(List.empty());
+      final expenseTotal =
+          expenseList.fold(0.0, (sum, expense) => sum + expense.amount);
+
+      // Add to chart data
+      data.add(BarData(
+        month: monthName,
+        income: incomeTotal,
+        expense: expenseTotal,
+      ));
+    }
+
+    barChartData = data;
+  }
+
+  String _getMonthAbbreviation(DateTime date) {
+    final DateFormat formatter = DateFormat('MMM');
+    return formatter.format(date);
+  }
 }

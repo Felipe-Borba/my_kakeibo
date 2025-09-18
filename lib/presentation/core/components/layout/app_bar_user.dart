@@ -3,11 +3,8 @@ import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
 class AppBarUser extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
-
   const AppBarUser({
     super.key,
-    required this.title,
   });
 
   @override
@@ -15,6 +12,14 @@ class AppBarUser extends StatelessWidget implements PreferredSizeWidget {
     return PreferredSize(
       preferredSize: const Size.fromHeight(60.0),
       child: AppBar(
+        actions: const [
+          //Esconde o ícone padrão do drawer
+          SizedBox(),
+          // IconButton(
+          //   icon: Icon(Icons.notifications),
+          //   onPressed: () {},
+          // ),
+        ],
         title: Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: Row(

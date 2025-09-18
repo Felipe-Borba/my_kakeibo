@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/presentation/core/components/charts/bar_chart_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/charts/pie_chart_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/text/text_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
@@ -17,17 +18,35 @@ class InsightsView extends StatelessWidget {
         horizontal: 16,
         vertical: 24,
       ),
-      child: Column(
-        children: [
-          TextCustom(
-            context.intl.monthlySpendingByCategory,
-            theme: CustomTheme.titleMedium,
-          ),
-          if (viewModel.pieChartData.isEmpty)
-            Expanded(child: Center(child: Text(context.intl.no_transactions)))
-          else
-            PieChartCustom(data: viewModel.pieChartData),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextCustom(
+              context.intl.monthSpending,
+              theme: CustomTheme.titleMedium,
+            ),
+            const SizedBox(height: 16),
+            if (viewModel.pieChartData.isEmpty)
+              Center(
+                child: Container(
+                  height: 200,
+                  alignment: Alignment.center,
+                  child: Text(context.intl.no_transactions),
+                ),
+              )
+            else
+              // month Spending by Category Pie Chart
+              PieChartCustom(data: viewModel.pieChartData),
+            const SizedBox(height: 24),
+            BarChartCustom(
+              data: viewModel.barChartData,
+              title: context.intl.income_vs_expense,
+              incomeLabel: context.intl.income,
+              expenseLabel: context.intl.expense,
+            ),
+          ],
+        ),
       ),
     );
   }

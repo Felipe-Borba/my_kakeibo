@@ -51,13 +51,6 @@ class DrawerCustom extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.home),
-            title: Text(context.intl.home),
-            onTap: () {
-              context.pushAndRemoveAllScreen(const DashboardView());
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.account_balance_wallet_outlined),
             title: Text(context.intl.expense),
             onTap: () {

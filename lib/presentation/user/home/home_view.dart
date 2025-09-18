@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_kakeibo/app.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/income.dart';
 import 'package:my_kakeibo/domain/entity/transaction/transaction.dart';
@@ -10,38 +11,63 @@ import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/extensions/date_time_extension.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/screen_extension.dart';
+import 'package:my_kakeibo/presentation/core/mappers/color_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/core/mappers/icon_custom_mapper.dart';
 import 'package:my_kakeibo/presentation/user/home/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => HomeViewModel(
-        context.read(),
-        context.read(),
-        context.read(),
-        context,
-      ),
-      builder: (BuildContext context, Widget? child) {
-        final viewModel = Provider.of<HomeViewModel>(context);
+  State<HomeView> createState() => _HomeViewState();
+}
 
-        return ScaffoldCustom(
-          appBar: AppBarUser(
-            title: context.intl.welcomeMessage(viewModel.user?.name ?? ""),
-          ),
-          // body: const Placeholder(),
-          body: Column(
+class _HomeViewState extends State<HomeView> with RouteAware {
+  late HomeViewModel _viewModel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    //subscribe to route changes
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this); //prevent memory leaks
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _viewModel.getInitialData();
+    super.didPopNext();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaffoldCustom(
+      appBar: const AppBarUser(),
+      body: ChangeNotifierProvider(
+        create: (context) => HomeViewModel(
+          context.read(),
+          context.read(),
+          context.read(),
+          context,
+        ),
+        builder: (BuildContext context, Widget? child) {
+          _viewModel = Provider.of<HomeViewModel>(context);
+
+          return Column(
             children: [
-              summary(context, viewModel),
-              itemList(context, viewModel),
+              summary(context, _viewModel),
+              quickAccessBar(context, _viewModel),
+              itemList(context, _viewModel),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -52,6 +78,8 @@ class HomeView extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
+            // Theme.of(context).colorScheme.secondary,
+            // Theme.of(context).colorScheme.onSecondaryContainer,
             Color(0xFF16A34A),
             Color(0xFF059669),
           ],
@@ -150,13 +178,124 @@ class HomeView extends StatelessWidget {
             current: viewModel.total,
           ),
           const SizedBox(height: 4),
-          TextCustom(
-            "${context.intl.expense} ${context.currency.format(viewModel.totalExpense)}",
-            prominent: true,
-            theme: CustomTheme.labelMedium,
-            color: Colors.white,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextCustom(
+                "${context.intl.expense} ${context.currency.format(viewModel.totalExpense)}",
+                prominent: true,
+                theme: CustomTheme.labelMedium,
+                color: Colors.white,
+              ),
+            ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget quickAccessBar(BuildContext context, HomeViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: TextCustom(
+            context.intl.quick_access,
+            theme: CustomTheme.titleMedium,
+            prominent: true,
+          ),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 110,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              const SizedBox(width: 8),
+              quickAccessBarButton(
+                context: context,
+                icon: Icons.add_circle_outline,
+                label: context.intl.income,
+                onPressed: viewModel.onAddIncomePressed,
+                color: Colors.blueAccent,
+              ),
+              const SizedBox(width: 8),
+              quickAccessBarButton(
+                context: context,
+                icon: Icons.remove_circle_outline_outlined,
+                label: context.intl.expense,
+                onPressed: viewModel.onAddExpensePressed,
+                color: Colors.redAccent,
+              ),
+              const SizedBox(width: 8),
+              quickAccessBarButton(
+                context: context,
+                icon: Icons.account_balance_wallet_outlined,
+                label: context.intl.insights,
+                onPressed: viewModel.onInsightsPressed,
+                color: Colors.orangeAccent,
+              ),
+              const SizedBox(width: 8),
+              quickAccessBarButton(
+                context: context,
+                icon: Icons.menu_outlined,
+                label: context.intl.menu,
+                onPressed: viewModel.onMenuPressed,
+                color: Colors.blueGrey,
+              ),
+              const SizedBox(width: 8),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget quickAccessBarButton({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+    required Color color,
+  }) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(16.0),
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          side: BorderSide(
+            color: theme.colorScheme.surfaceTint.withOpacity(0.5),
+            width: 0.5,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: color,
+                  shape: BoxShape.circle,
+                ),
+                padding: const EdgeInsets.all(12.0),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 4),
+              TextCustom(label),
+              const Expanded(child: SizedBox(height: 4)),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -164,7 +303,7 @@ class HomeView extends StatelessWidget {
   Widget itemList(BuildContext context, HomeViewModel viewModel) {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.only(top: 32),
+        margin: const EdgeInsets.only(top: 16),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -207,10 +346,19 @@ class HomeView extends StatelessWidget {
     return Card.outlined(
       margin: const EdgeInsets.all(4),
       child: ListTile(
-        leading: Icon(
-          transaction is Expense
-              ? transaction.category.icon.toIconData()
-              : Icons.monetization_on_outlined,
+        leading: Container(
+          decoration: BoxDecoration(
+            color: transaction is Expense
+                ? transaction.category.color.toColor().withOpacity(0.5)
+                : Colors.green.withOpacity(0.5),
+            shape: BoxShape.circle,
+          ),
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(
+            transaction is Expense
+                ? transaction.category.icon.toIconData()
+                : Icons.monetization_on_outlined,
+          ),
         ),
         title: TextCustom(
           transaction is Income ? context.intl.income : context.intl.expense,
@@ -234,7 +382,7 @@ class HomeView extends StatelessWidget {
           message: context.currency.format(transaction.amount),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
                 constraints: BoxConstraints(
@@ -244,6 +392,7 @@ class HomeView extends StatelessWidget {
                   context.currency.format(transaction.amount),
                   overflow: TextOverflow.ellipsis,
                   theme: CustomTheme.titleMedium,
+                  textAlign: TextAlign.right,
                 ),
               ),
               TextCustom(

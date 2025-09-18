@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/app_bar_user.dart';
-import 'package:my_kakeibo/presentation/core/components/layout/bottom_navigation_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/insights_view.dart';
 import 'package:provider/provider.dart';
@@ -16,20 +15,14 @@ class DashboardView extends StatelessWidget {
       create: (context) => DashboardViewModel(
         context.read(),
         context.read(),
-        context.read(),
+        // context.read(),
       ),
       builder: (BuildContext context, Widget? child) {
-        final viewModel = Provider.of<DashboardViewModel>(context);
-
         return ScaffoldCustom(
-          appBar: AppBarUser(
-            title: context.intl.welcomeMessage(viewModel.user?.name ?? ""),
+          appBar: AppBarCustom(
+            title: context.intl.insights,
           ),
           body: const InsightsView(),
-          // bottomNavigationBar: BottomNavigationBarCustom(
-          //   currentIndexNotifier: viewModel.selectedIndex,
-          //   onTabTapped: viewModel.onTabTapped,
-          // ),
         );
       },
     );

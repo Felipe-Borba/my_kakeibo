@@ -4,7 +4,7 @@
   "@appTitle": {
     "description": "Seu aplicativo de finança pessoal"
   },
-  "subtitle": "Seu aplicativo de finanças pessoais",
+  "subtitle": "Seu aplicativo de finanças",
   "@subtitle": {},
   "currencyTag": "R$ ",
   "@currencyTag": {},
@@ -244,8 +244,8 @@
       }
     }
   },
-  "monthlySpendingByCategory": "Gastos mensais por categoria",
-  "@monthlySpendingByCategory": {},
+  "monthSpending": "Despesa mensal",
+  "@monthSpending": {},
   "english": "Inglês",
   "@english": {},
   "portuguese": "Português",
@@ -307,5 +307,9 @@
   "remember": "Lembrar",
   "@remember": {},
   "fixedExpenseNotificationTitle": "Lembrete de Despesa Fixa",
-  "@fixedExpenseNotificationTitle": {}
+  "@fixedExpenseNotificationTitle": {},
+  "quick_access": "Acesso Rápido",
+  "@quick_access": {},
+  "income_vs_expense": "Receitas vs Despesas",
+  "@income_vs_expense": {}
 }
