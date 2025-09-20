@@ -19,26 +19,15 @@ class ExpenseFormViewModel with ChangeNotifier {
   late DateTime? date = _expense?.date;
   late String description = _expense?.description ?? '';
   late ExpenseCategory? category = _expense?.category;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   // Actions
-  void setAmount(double? value) {
-    amount = value;
-  }
-
-  void setCategory(ExpenseCategory? value) {
-    category = value;
-  }
-
-  void setDate(DateTime? value) {
-    date = value;
-  }
-
-  void setDescription(String value) {
-    description = value;
-  }
-
   void onClickSave() async {
     if (validator.isInvalid()) return;
+
+    _isLoading = true;
+    notifyListeners();
 
     var result = await _expenseRepository.insert(Expense(
       id: _expense?.id,
@@ -49,13 +38,21 @@ class ExpenseFormViewModel with ChangeNotifier {
     ));
 
     result.onFailure((error) {
-      showSnackbar(context: _context, text: error.toString());
+      showSnackbar(
+        context: _context,
+        text: error.toString(),
+      );
     });
 
     result.onSuccess((success) {
+      showSnackbar(
+        context: _context,
+        text: 'Despesa salva com sucesso!',
+      );
       _context.popScreen(true);
     });
 
+    _isLoading = false;
     notifyListeners();
   }
 }

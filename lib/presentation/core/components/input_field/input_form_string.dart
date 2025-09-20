@@ -5,6 +5,7 @@ class InputFormString extends StatelessWidget {
   final String? initialValue;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final int? maxLines;
 
   const InputFormString({
     super.key,
@@ -12,6 +13,7 @@ class InputFormString extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.initialValue,
+    this.maxLines,
   });
 
   @override
@@ -22,6 +24,7 @@ class InputFormString extends StatelessWidget {
       onChanged: onChanged,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      maxLines: maxLines,
       decoration: InputDecoration(
         labelText: labelText,
         filled: true,

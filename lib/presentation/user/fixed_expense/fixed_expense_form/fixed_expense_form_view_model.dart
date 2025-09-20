@@ -24,6 +24,9 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   late final validator = FixedExpenseValidator(context: _context);
 
   // State
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   late String? id = _fixedExpense?.id;
   late List<Expense> expenseList = _fixedExpense?.expenseList ?? [];
   late double? amount = _fixedExpense?.amount;
@@ -34,26 +37,11 @@ class FixedExpenseFormViewModel with ChangeNotifier {
   late Remember? remember = _fixedExpense?.remember ?? Remember.no;
 
   // Actions
-  /// TODO: Refactor no dart tem palavra reservada 'set' e 'get' por isso não precisa desse setter no estilo java
-  /// ai fora vai ser como se tivesse setando diretamente a variavel mas com essas palavras reservadas vc meio que intercepta o jaguara
-  void setAmount(double? value) {
-    amount = value;
-  }
-
-  void setCategory(ExpenseCategory? value) {
-    category = value;
-  }
-
-  void setDueDate(DateTime? value) {
-    dueDate = value;
-  }
-
-  void setDescription(String value) {
-    description = value;
-  }
-
   void onClickSave() async {
     if (validator.isInvalid()) return;
+
+    _isLoading = true;
+    notifyListeners();
 
     var result = await _fixedExpenseRepository.insert(
       id: id,
@@ -75,6 +63,7 @@ class FixedExpenseFormViewModel with ChangeNotifier {
       _context.popScreen(true);
     });
 
+    _isLoading = false;
     notifyListeners();
   }
 }

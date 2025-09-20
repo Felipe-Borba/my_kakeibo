@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
+import 'package:my_kakeibo/presentation/core/components/button/button_filled.dart';
+import 'package:my_kakeibo/presentation/core/components/button/button_outline.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_color_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_icon_custom.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/body_form_layout.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
@@ -31,47 +34,55 @@ class ExpenseCategoryFormView extends StatelessWidget {
           appBar: AppBarCustom(
             title: context.intl.expense_category,
           ),
-          body: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
-            child: Form(
-              key: validator.formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 8),
-                  InputFormString(
-                    key: WidgetKeys.name,
-                    validator: validator.validateName,
-                    labelText: context.intl.name,
-                    initialValue: viewModel.name,
-                    onChanged: (value) => viewModel.name = value,
-                  ),
-                  const SizedBox(height: 8),
-                  InputFormColorCustom(
-                    key: WidgetKeys.color,
-                    validator: validator.validateColor,
-                    value: viewModel.color,
-                    onChanged: (value) => viewModel.color = value,
-                  ),
-                  const SizedBox(height: 8),
-                  InputFormIconCustom(
-                    key: WidgetKeys.icon,
-                    validator: validator.validateIcon,
-                    value: viewModel.icon,
-                    onChanged: (value) => viewModel.icon = value,
-                  ),
-                  const SizedBox(height: 24),
-                  Center(
-                    child: ElevatedButton(
-                      key: WidgetKeys.save,
-                      onPressed: viewModel.onClickSave,
-                      child: Text(context.intl.save),
-                    ),
-                  ),
-                ],
+          body: BodyFormLayout(
+            key: viewModel.validator.formKey,
+            paddingTop: 18,
+            title: expenseCategory == null
+                ? context.intl.add_new_expense_category
+                : context.intl.edit_expense_category,
+            description: expenseCategory == null
+                ? context.intl.add_new_expense_category_description
+                : context.intl.edit_expense_category_description,
+            formChildren: [
+              InputFormString(
+                key: WidgetKeys.name,
+                validator: validator.validateName,
+                labelText: context.intl.name,
+                initialValue: viewModel.name,
+                onChanged: (value) => viewModel.name = value,
               ),
-            ),
+              const SizedBox(height: 16),
+              InputFormColorCustom(
+                key: WidgetKeys.color,
+                validator: validator.validateColor,
+                value: viewModel.color,
+                onChanged: (value) => viewModel.color = value,
+              ),
+              const SizedBox(height: 16),
+              InputFormIconCustom(
+                key: WidgetKeys.icon,
+                validator: validator.validateIcon,
+                value: viewModel.icon,
+                onChanged: (value) => viewModel.icon = value,
+              ),
+            ],
+            bottomChildren: [
+              Expanded(
+                child: ButtonOutline(
+                  onPressed: () => Navigator.of(context).pop(),
+                  text: context.intl.cancel,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ButtonFilled(
+                  key: WidgetKeys.save,
+                  onPressed: viewModel.onClickSave,
+                  text: context.intl.save,
+                  isLoading: viewModel.isLoading,
+                ),
+              ),
+            ],
           ),
         );
       },

@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 
-class InputFormDate extends StatelessWidget {
+class InputFormDate extends StatefulWidget {
   final String? Function(DateTime? value)? validator;
   final String? labelText;
   final DateTime? value;
@@ -18,26 +18,31 @@ class InputFormDate extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final intl = AppLocalizations.of(context)!;
-    final formatter = DateFormat.yMEd(context.locale.toString());
-    final controller = TextEditingController(
-      text: value != null ? formatter.format(value!) : null,
-    );
+  State<InputFormDate> createState() => _InputFormDateState();
+}
 
+class _InputFormDateState extends State<InputFormDate> {
+  late final intl = AppLocalizations.of(context)!;
+  late final formatter = DateFormat.yMEd(context.locale.toString());
+  late final controller = TextEditingController(
+    text: widget.value != null ? formatter.format(widget.value!) : null,
+  );
+
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
-      // key: key,
+      key: widget.key,
       readOnly: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (String? text) {
-        if (validator == null) return null;
+        if (widget.validator == null) return null;
 
         if (text == null || text.isEmpty) {
-          return validator != null ? validator!(null) : null;
+          return widget.validator != null ? widget.validator!(null) : null;
         }
 
         DateTime? date = formatter.tryParse(text);
-        return validator!(date);
+        return widget.validator!(date);
       },
       controller: controller,
       onTap: () async {
@@ -48,11 +53,11 @@ class InputFormDate extends StatelessWidget {
           lastDate: DateTime(2100),
         );
 
-        if (onChanged != null) onChanged!(pickedDate);
+        if (widget.onChanged != null) widget.onChanged!(pickedDate);
         if (pickedDate != null) controller.text = formatter.format(pickedDate);
       },
       decoration: InputDecoration(
-        labelText: labelText,
+        labelText: widget.labelText,
         hintText: intl.selectDate,
         suffixIcon: const Icon(Icons.calendar_today),
       ),

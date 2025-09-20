@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
+import 'package:my_kakeibo/presentation/core/components/button/button_filled.dart';
+import 'package:my_kakeibo/presentation/core/components/button/button_outline.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_currency.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_date.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_expense_category.dart';
 import 'package:my_kakeibo/presentation/core/components/input_field/input_form_string.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/app_bar_custom.dart';
+import 'package:my_kakeibo/presentation/core/components/layout/body_form_layout.dart';
 import 'package:my_kakeibo/presentation/core/components/layout/scaffold_custom.dart';
+import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view_model.dart';
 import 'package:provider/provider.dart';
@@ -32,54 +35,63 @@ class ExpenseFormView extends StatelessWidget {
           appBar: AppBarCustom(
             title: context.intl.expense,
           ),
-          body: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 24),
-            child: Form(
-              key: validator.formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  InputFormCurrency(
-                    key: WidgetKeys.amount,
-                    value: viewModel.amount,
-                    onChanged: viewModel.setAmount,
-                    labelText: context.intl.amount,
-                    validator: validator.validateAmount,
-                  ),
-                  const SizedBox(height: 8),
-                  InputFormExpenseCategory(
-                    key: WidgetKeys.category,
-                    value: viewModel.category,
-                    onChanged: viewModel.setCategory,
-                    validator: validator.validateCategory,
-                  ),
-                  const SizedBox(height: 8),
-                  InputFormDate(
-                    key: WidgetKeys.date,
-                    validator: validator.validateDate,
-                    value: viewModel.date,
-                    onChanged: viewModel.setDate,
-                  ),
-                  const SizedBox(height: 8),
-                  InputFormString(
-                    key: WidgetKeys.description,
-                    validator: validator.validateDescription,
-                    labelText: context.intl.description,
-                    initialValue: viewModel.description,
-                    onChanged: viewModel.setDescription,
-                  ),
-                  const SizedBox(height: 24),
-                  Center(
-                    child: ElevatedButton(
-                      key: WidgetKeys.saveExpense,
-                      onPressed: viewModel.onClickSave,
-                      child: Text(context.intl.save),
-                    ),
-                  ),
-                ],
+          body: BodyFormLayout(
+            key: viewModel.validator.formKey,
+            paddingTop: 18,
+            title: expense == null
+                ? context.intl.add_new_expense
+                : context.intl.edit_expense,
+            description: expense == null
+                ? context.intl.add_new_expense_description
+                : context.intl.edit_expense_description,
+            formChildren: [
+              InputFormCurrency(
+                key: WidgetKeys.amount,
+                value: viewModel.amount,
+                onChanged: (value) => viewModel.amount = value,
+                labelText: context.intl.amount,
+                validator: validator.validateAmount,
               ),
-            ),
+              const SizedBox(height: 16),
+              InputFormExpenseCategory(
+                key: WidgetKeys.category,
+                value: viewModel.category,
+                onChanged: (value) => viewModel.category = value,
+                validator: validator.validateCategory,
+              ),
+              const SizedBox(height: 16),
+              InputFormDate(
+                key: WidgetKeys.date,
+                validator: validator.validateDate,
+                value: viewModel.date,
+                onChanged: (value) => viewModel.date = value,
+              ),
+              const SizedBox(height: 16),
+              InputFormString(
+                key: WidgetKeys.description,
+                validator: validator.validateDescription,
+                labelText: context.intl.description,
+                initialValue: viewModel.description,
+                onChanged: (value) => viewModel.description = value,
+              ),
+            ],
+            bottomChildren: [
+              Expanded(
+                child: ButtonOutline(
+                  onPressed: () => Navigator.of(context).pop(),
+                  text: context.intl.cancel,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: ButtonFilled(
+                  key: WidgetKeys.saveExpense,
+                  onPressed: viewModel.onClickSave,
+                  text: context.intl.save,
+                  isLoading: viewModel.isLoading,
+                ),
+              ),
+            ],
           ),
         );
       },
