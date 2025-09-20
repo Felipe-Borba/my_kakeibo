@@ -4,13 +4,11 @@ import 'package:my_kakeibo/domain/entity/transaction/color_custom.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense.dart';
 import 'package:my_kakeibo/domain/entity/transaction/expense_category.dart';
 import 'package:my_kakeibo/domain/entity/transaction/icon_custom.dart';
-import 'package:my_kakeibo/domain/entity/user/user.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view_model.dart';
 import 'package:result_dart/result_dart.dart';
 
 import '../../../../testing/domain/expense_repository_mock.dart';
 import '../../../../testing/domain/income_repository_mock.dart';
-import '../../../../testing/domain/user_repository_mock.dart';
 
 void main() {
   late DashboardViewModel viewModel;
@@ -49,11 +47,8 @@ void main() {
         .thenAnswer((_) async => const Success([]));
     when(() => expenseRepositoryMock.findByMonth(month: any(named: 'month')))
         .thenAnswer((_) async => const Success([]));
-    when(() => userRepositoryMock.getUser())
-        .thenAnswer((_) async => Success(User(id: '1', name: 'Test User')));
 
     viewModel = DashboardViewModel(
-      userRepositoryMock,
       expenseRepositoryMock,
       incomeRepositoryMock,
     );
