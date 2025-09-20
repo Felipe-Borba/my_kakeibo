@@ -311,5 +311,19 @@
   "quick_access": "Acesso Rápido",
   "@quick_access": {},
   "income_vs_expense": "Receitas vs Despesas",
-  "@income_vs_expense": {}
+  "@income_vs_expense": {},
+  "expenseCount": "{count, plural, =0{Nenhuma despesa} =1{1 despesa} other{{count} despesas}}",
+  "@expenseCount": {
+    "description": "Contagem de despesas associadas a uma categoria",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "slide_to_edit_or_delete": "Deslize para a esquerda para editar ou excluir",
+  "@slide_to_edit_or_delete": {},
+  "edit": "Editar",
+  "@edit": {}
 }
