@@ -232,10 +232,9 @@ class BarChartCustomState extends State<BarChartCustom> {
 
   double _calculateInterval(List<BarData> data) {
     double maxValue = _findMaxValue(data);
-    if(maxValue == 0) {
+    if (maxValue == 0) {
       maxValue = 5;
-    };
-    // Tentar criar 5 linhas de grade
+    }
     return maxValue / 5;
   }
 }

@@ -12,20 +12,20 @@ void main() {
         children: [
           GoldenTestScenario(
             name: 'with title',
-            child: ListTile(
+            child: const ListTile(
               title: Text('ListTile.title'),
             ),
           ),
           GoldenTestScenario(
             name: 'with title and subtitle',
-            child: ListTile(
+            child: const ListTile(
               title: Text('ListTile.title'),
               subtitle: Text('ListTile.subtitle'),
             ),
           ),
           GoldenTestScenario(
             name: 'with trailing icon',
-            child: ListTile(
+            child: const ListTile(
               title: Text('ListTile.title'),
               trailing: Icon(Icons.chevron_right_rounded),
             ),

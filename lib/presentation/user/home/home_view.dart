@@ -287,7 +287,7 @@ class _HomeViewState extends State<HomeView> with RouteAware {
                 padding: const EdgeInsets.all(12.0),
                 child: Icon(
                   icon,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
               const SizedBox(height: 4),

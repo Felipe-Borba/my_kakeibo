@@ -64,7 +64,7 @@ class DashboardViewModel with ChangeNotifier {
         label: entry.key.name,
       );
     }).toList()
-      ..sort((a, b) => b.value.compareTo(a.value)); //TODO the bug still exists if list is unsorted
+      ..sort((a, b) => b.value.compareTo(a.value));
 
     // Adjust the last category to ensure the total is 100%
     if (pieDataList.isNotEmpty) {

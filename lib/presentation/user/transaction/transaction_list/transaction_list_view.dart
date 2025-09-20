@@ -307,8 +307,10 @@ class TransactionListView extends StatelessWidget {
             theme: CustomTheme.titleMedium,
           ),
           subtitle: transaction.description.isNotEmpty
-              ? TextCustom(transaction.description,
-                  theme: CustomTheme.bodyMedium)
+              ? TextCustom(
+                  transaction.description,
+                  theme: CustomTheme.bodyMedium,
+                )
               : transaction is Expense
                   ? TextCustom(
                       transaction.category.name,

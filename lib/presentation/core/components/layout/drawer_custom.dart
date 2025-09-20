@@ -4,10 +4,9 @@ import 'package:my_kakeibo/presentation/core/extensions/intl.dart';
 import 'package:my_kakeibo/presentation/core/extensions/navigator_extension.dart';
 import 'package:my_kakeibo/presentation/core/widget_keys.dart';
 import 'package:my_kakeibo/presentation/settings/settings_screen.dart';
-import 'package:my_kakeibo/presentation/user/expense/expense_list/expense_list_view.dart';
+import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/expense_category/expense_category_list/expense_category_list_view.dart';
 import 'package:my_kakeibo/presentation/user/fixed_expense/fixed_expense_list/fixed_expense_list_view.dart';
-import 'package:my_kakeibo/presentation/user/income/income_list/income_list_view.dart';
 import 'package:my_kakeibo/presentation/user/transaction/transaction_list/transaction_list_view.dart';
 
 class DrawerCustom extends StatelessWidget {
@@ -60,10 +59,10 @@ class DrawerCustom extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.account_balance_wallet_outlined),
-            title: Text(context.intl.expense),
+            title: Text(context.intl.insights),
             onTap: () {
               scaffold.closeEndDrawer();
-              context.pushScreen(const ExpenseListView());
+              context.pushScreen(const DashboardView());
             },
           ),
           ListTile(
@@ -72,14 +71,6 @@ class DrawerCustom extends StatelessWidget {
             onTap: () {
               scaffold.closeEndDrawer();
               context.pushScreen(const FixedExpenseListView());
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.attach_money),
-            title: Text(context.intl.income),
-            onTap: () {
-              scaffold.closeEndDrawer();
-              context.pushScreen(const IncomeListView());
             },
           ),
           ListTile(
