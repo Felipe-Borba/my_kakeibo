@@ -317,12 +317,9 @@ class _HomeViewState extends State<HomeView> with RouteAware {
                   ),
                   const Expanded(child: SizedBox()),
 
-                  /// TODO: como isso são todas as transações,
-                  ///  talvez devesse juntar as listas de despesas e receitas
-                  // child: Text(context.intl.seeAll),
                   TextButton(
-                    onPressed: () {},
-                    child: const SizedBox(),
+                    onPressed: viewModel.onSeeAllPressed,
+                    child: Text(context.intl.seeAll),
                   ),
                 ],
               ),

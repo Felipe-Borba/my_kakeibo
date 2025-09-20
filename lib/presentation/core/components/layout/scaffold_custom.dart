@@ -5,7 +5,7 @@ import 'package:my_kakeibo/presentation/core/components/layout/drawer_custom.dar
 class ScaffoldCustom extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget body;
-  final FloatingActionButton? floatingActionButton;
+  final Widget? floatingActionButton;
 
   const ScaffoldCustom({
     super.key,

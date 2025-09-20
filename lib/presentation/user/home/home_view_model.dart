@@ -9,6 +9,7 @@ import 'package:my_kakeibo/presentation/settings/settings_screen.dart';
 import 'package:my_kakeibo/presentation/user/dashboard/dashboard_view.dart';
 import 'package:my_kakeibo/presentation/user/expense/expense_form/expense_form_view.dart';
 import 'package:my_kakeibo/presentation/user/income/income_form/income_form_view.dart';
+import 'package:my_kakeibo/presentation/user/transaction/transaction_list/transaction_list_view.dart';
 
 class HomeViewModel with ChangeNotifier {
   HomeViewModel(
@@ -83,5 +84,9 @@ class HomeViewModel with ChangeNotifier {
     if (scaffold != null && !scaffold.isDrawerOpen) {
       scaffold.openEndDrawer();
     }
+  }
+
+  void onSeeAllPressed() {
+    _context.pushScreen(const TransactionListView());
   }
 }

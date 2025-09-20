@@ -116,7 +116,7 @@ class ExpenseCategoryListView extends StatelessWidget {
           SlidableAction(
             onPressed: (_) => controller.onEdit(category),
             backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
             icon: Icons.edit,
             label: context.intl.edit,
             borderRadius: const BorderRadius.only(
@@ -144,8 +144,8 @@ class ExpenseCategoryListView extends StatelessWidget {
                 controller.onDelete(category);
               }
             },
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.error,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
             icon: Icons.delete,
             label: context.intl.delete,
             borderRadius: const BorderRadius.only(

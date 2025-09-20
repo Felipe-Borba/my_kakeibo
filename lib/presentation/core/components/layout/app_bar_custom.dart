@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final List<Widget>? actions;
 
   const AppBarCustom({
     super.key,
     required this.title,
+    this.actions =  const <Widget>[SizedBox()],
   });
 
   @override
@@ -28,7 +30,7 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
         AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          actions: const [SizedBox()],
+          actions: actions,
           centerTitle: true,
           title: Text(
             title,

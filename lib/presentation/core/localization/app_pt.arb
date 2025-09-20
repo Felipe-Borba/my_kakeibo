@@ -171,7 +171,7 @@
   "@no_transactions": {},
   "transactions": "Transações",
   "@transactions": {},
-  "seeAll": "Ver tudo",
+  "seeAll": "Ver todas",
   "@seeAll": {},
   "home": "Início",
   "@home": {},
@@ -325,5 +325,11 @@
   "slide_to_edit_or_delete": "Deslize para a esquerda para editar ou excluir",
   "@slide_to_edit_or_delete": {},
   "edit": "Editar",
-  "@edit": {}
+  "@edit": {},
+  "filters": "Filtros",
+  "@filters": {},
+  "month": "Mês",
+  "@month": {},
+  "sort": "Ordenar",
+  "@sort": {}
 }

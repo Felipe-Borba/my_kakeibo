@@ -325,5 +325,11 @@
   "slide_to_edit_or_delete": "Slide left to edit or delete",
   "@slide_to_edit_or_delete": {},
   "edit": "Edit",
-  "@edit": {}
+  "@edit": {},
+  "filters": "Filters",
+  "@filters": {},
+  "month": "Month",
+  "@month": {},
+  "sort": "Sort",
+  "@sort": {}
 }
