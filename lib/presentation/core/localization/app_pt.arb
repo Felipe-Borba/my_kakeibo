@@ -363,5 +363,19 @@
   "edit_expense_category": "Editar Categoria de Despesa",
   "@edit_expense_category": {},
   "edit_expense_category_description": "Edite os detalhes da sua categoria de despesa",
-  "@edit_expense_category_description": {}
+  "@edit_expense_category_description": {},
+  "apperance": "Aparência",
+  "@apperance": {},
+  "theme": "Tema",
+  "@theme": {},
+  "language": "Idioma",
+  "@language": {},
+  "data_management": "Gerenciamento de Dados",
+  "@data_management": {},
+  "this_action_will_permanently_delete_all_your_data": "Esta ação irá excluir permanentemente todos os seus dados.",
+  "@this_action_will_permanently_delete_all_your_data": {},
+  "data_deleted_successfully": "Dados excluídos com sucesso",
+  "@data_deleted_successfully": {},
+  "select_language": "Selecione o idioma",
+  "@select_language": {}
 }

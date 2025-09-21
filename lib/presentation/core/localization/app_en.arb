@@ -363,5 +363,19 @@
   "edit_expense_category": "Edit Expense Category",
   "@edit_expense_category": {},
   "edit_expense_category_description": "Modify your expense category details",
-  "@edit_expense_category_description": {}
+  "@edit_expense_category_description": {},
+  "apperance": "Apperance",
+  "@apperance": {},
+  "theme": "Theme",
+  "@theme": {},
+  "language": "Language",
+  "@language": {},
+  "data_management": "Data Management",
+  "@data_management": {},
+  "this_action_will_permanently_delete_all_your_data": "This action will permanently delete all your data",
+  "@this_action_will_permanently_delete_all_your_data": {},
+  "data_deleted_successfully": "Data deleted successfully",
+  "@data_deleted_successfully": {},
+  "select_language": "Select Language",
+  "@select_language": {}
 }
