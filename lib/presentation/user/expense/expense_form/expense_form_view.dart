@@ -36,7 +36,7 @@ class ExpenseFormView extends StatelessWidget {
             title: context.intl.expense,
           ),
           body: BodyFormLayout(
-            key: viewModel.validator.formKey,
+            formKey: viewModel.validator.formKey,
             paddingTop: 18,
             title: expense == null
                 ? context.intl.add_new_expense

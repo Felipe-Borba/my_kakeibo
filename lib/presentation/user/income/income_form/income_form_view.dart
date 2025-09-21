@@ -32,7 +32,7 @@ class IncomeFormView extends StatelessWidget {
             title: context.intl.income,
           ),
           body: BodyFormLayout(
-            key: viewModel.validator.formKey,
+            formKey: viewModel.validator.formKey,
             paddingTop: 18,
             title: income == null
                 ? context.intl.add_new_income

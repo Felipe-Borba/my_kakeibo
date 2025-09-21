@@ -33,9 +33,9 @@ class FixedExpenseFormView extends StatelessWidget {
         final viewModel = Provider.of<FixedExpenseFormViewModel>(context);
 
         return ScaffoldCustom(
-          key: viewModel.validator.formKey,
           appBar: AppBarCustom(title: context.intl.fixedExpense),
           body: BodyFormLayout(
+            formKey: viewModel.validator.formKey,
             paddingTop: 12,
             title: fixedExpense == null
                 ? context.intl.add_new_fixed_expense

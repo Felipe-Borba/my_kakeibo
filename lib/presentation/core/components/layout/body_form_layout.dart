@@ -8,9 +8,11 @@ class BodyFormLayout extends StatelessWidget {
   final String? title;
   final String? description;
   final double paddingTop;
+  final Key formKey;
 
   const BodyFormLayout({
     super.key,
+    required this.formKey,
     required this.formChildren,
     required this.bottomChildren,
     this.title,
@@ -26,7 +28,7 @@ class BodyFormLayout extends StatelessWidget {
           child: SingleChildScrollView(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
             child: Form(
-              key: key,
+              key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [

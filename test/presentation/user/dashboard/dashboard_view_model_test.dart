@@ -92,12 +92,12 @@ void main() {
     // Assert
     final pieChartData = viewModel.pieChartData;
     expect(pieChartData.length, 4);
-    expect(pieChartData[0].label, 'Category A');
-    expect(pieChartData[0].value, 899.0);
-    expect(pieChartData[0].title, '18%');
-    expect(pieChartData[1].label, 'Category B');
-    expect(pieChartData[1].value, 3671.22);
-    expect(pieChartData[1].title, '72%');
+    expect(pieChartData[0].label, 'Category B');
+    expect(pieChartData[0].value, 3671.22);
+    expect(pieChartData[0].title, '72%');
+    expect(pieChartData[1].label, 'Category A');
+    expect(pieChartData[1].value, 899.0);
+    expect(pieChartData[1].title, '18%');
     expect(pieChartData[2].label, 'Category C');
     expect(pieChartData[2].value, 492.90);
     expect(pieChartData[2].title, '10%');
