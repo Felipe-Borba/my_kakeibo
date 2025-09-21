@@ -18,7 +18,7 @@ class IncomeFormViewModel with ChangeNotifier {
   // State
   bool _isLoading = false;
   bool get isLoading => _isLoading;
-  
+
   late double? amount = _income?.amount;
   late DateTime? date = _income?.date;
   late String description = _income?.description ?? '';
@@ -27,7 +27,7 @@ class IncomeFormViewModel with ChangeNotifier {
   // Actions
   onClickSave() async {
     if (validator.isInvalid()) return;
-    
+
     _isLoading = true;
     notifyListeners();
 

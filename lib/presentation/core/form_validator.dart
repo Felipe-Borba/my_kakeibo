@@ -4,7 +4,8 @@ abstract class FormValidator {
   final GlobalKey<FormState> formKey;
   final BuildContext context;
 
-  FormValidator({required this.context}) : formKey = GlobalKey<FormState>();
+  FormValidator({required this.context})
+      : formKey = GlobalKey<FormState>(debugLabel: 'form-validator');
 
   bool isValid() => formKey.currentState?.validate() ?? false;
 

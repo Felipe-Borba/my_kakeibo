@@ -316,7 +316,6 @@ class _HomeViewState extends State<HomeView> with RouteAware {
                     prominent: true,
                   ),
                   const Expanded(child: SizedBox()),
-
                   TextButton(
                     onPressed: viewModel.onSeeAllPressed,
                     child: Text(context.intl.seeAll),
