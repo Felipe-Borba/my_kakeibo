@@ -4,6 +4,8 @@
   "@appTitle": {
     "description": "Seu aplicativo de finança pessoal"
   },
+  "subtitle": "Seu aplicativo de finanças",
+  "@subtitle": {},
   "currencyTag": "R$ ",
   "@currencyTag": {},
   "welcome": "Bem-vindo",
@@ -30,7 +32,7 @@
   "@trackYourExpensesSetBudgets": {},
   "getStarted": "Começar",
   "@getStarted": {},
-  "welcomeMessage": "Bem-vindo {userName}!",
+  "welcomeMessage": "Olá, {userName}!",
   "@welcomeMessage": {
     "placeholders": {
       "userName": {
@@ -39,6 +41,8 @@
       }
     }
   },
+  "welcome_back": "Bem-vindo de volta!",
+  "@welcome_back": {},
   "income": "Receita",
   "@income": {},
   "expense": "Despesa",
@@ -167,7 +171,7 @@
   "@no_transactions": {},
   "transactions": "Transações",
   "@transactions": {},
-  "seeAll": "Ver tudo",
+  "seeAll": "Ver todas",
   "@seeAll": {},
   "home": "Início",
   "@home": {},
@@ -240,8 +244,8 @@
       }
     }
   },
-  "monthlySpendingByCategory": "Gastos mensais por categoria",
-  "@monthlySpendingByCategory": {},
+  "monthSpending": "Despesa mensal",
+  "@monthSpending": {},
   "english": "Inglês",
   "@english": {},
   "portuguese": "Português",
@@ -303,5 +307,75 @@
   "remember": "Lembrar",
   "@remember": {},
   "fixedExpenseNotificationTitle": "Lembrete de Despesa Fixa",
-  "@fixedExpenseNotificationTitle": {}
+  "@fixedExpenseNotificationTitle": {},
+  "quick_access": "Acesso Rápido",
+  "@quick_access": {},
+  "income_vs_expense": "Receitas vs Despesas",
+  "@income_vs_expense": {},
+  "expenseCount": "{count, plural, =0{Nenhuma despesa} =1{1 despesa} other{{count} despesas}}",
+  "@expenseCount": {
+    "description": "Contagem de despesas associadas a uma categoria",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "slide_to_edit_or_delete": "Deslize para a esquerda para editar ou excluir",
+  "@slide_to_edit_or_delete": {},
+  "edit": "Editar",
+  "@edit": {},
+  "filters": "Filtros",
+  "@filters": {},
+  "month": "Mês",
+  "@month": {},
+  "sort": "Ordenar",
+  "@sort": {},
+  "add_new_expense": "Adicionar Nova Despesa",
+  "@add_new_expense": {},
+  "add_new_expense_description": "Adicione uma nova despesa aos seus registros",
+  "@add_new_expense_description": {},
+  "edit_expense": "Editar Despesa",
+  "@edit_expense": {},
+  "edit_expense_description": "Edite os detalhes da sua despesa",
+  "@edit_expense_description": {},
+  "add_new_income": "Adicionar Nova Receita",
+  "@add_new_income": {},
+  "add_new_income_description": "Adicione uma nova receita aos seus registros",
+  "@add_new_income_description": {},
+  "edit_income": "Editar Receita",
+  "@edit_income": {},
+  "edit_income_description": "Edite os detalhes da sua receita",
+  "@edit_income_description": {},
+  "add_new_fixed_expense": "Adicionar Nova Despesa Fixa",
+  "@add_new_fixed_expense": {},
+  "add_new_fixed_expense_description": "Adicione uma nova despesa fixa aos seus registros",
+  "@add_new_fixed_expense_description": {},
+  "edit_fixed_expense": "Editar Despesa Fixa",
+  "@edit_fixed_expense": {},
+  "edit_fixed_expense_description": "Edite os detalhes da sua despesa fixa",
+  "@edit_fixed_expense_description": {},
+  "add_new_expense_category": "Adicionar Nova Categoria de Despesa",
+  "@add_new_expense_category": {},
+  "add_new_expense_category_description": "Crie uma nova categoria para organizar suas despesas",
+  "@add_new_expense_category_description": {},
+  "edit_expense_category": "Editar Categoria de Despesa",
+  "@edit_expense_category": {},
+  "edit_expense_category_description": "Edite os detalhes da sua categoria de despesa",
+  "@edit_expense_category_description": {},
+  "apperance": "Aparência",
+  "@apperance": {},
+  "theme": "Tema",
+  "@theme": {},
+  "language": "Idioma",
+  "@language": {},
+  "data_management": "Gerenciamento de Dados",
+  "@data_management": {},
+  "this_action_will_permanently_delete_all_your_data": "Esta ação irá excluir permanentemente todos os seus dados.",
+  "@this_action_will_permanently_delete_all_your_data": {},
+  "data_deleted_successfully": "Dados excluídos com sucesso",
+  "@data_deleted_successfully": {},
+  "select_language": "Selecione o idioma",
+  "@select_language": {}
 }

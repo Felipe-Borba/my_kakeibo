@@ -4,7 +4,7 @@ class WidgetKeys {
   static const settings = Key("settings");
   static const name = Key("name");
   static const createAccount = Key("create-account");
-  static const deleteData = Key("deleteData");
+  static const deleteData = Key("delete-data");
   static const amount = Key("amount");
   static const category = Key("category");
   static const date = Key("date");

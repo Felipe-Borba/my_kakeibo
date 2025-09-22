@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_kakeibo/presentation/core/extensions/currency.dart';
 import 'package:my_kakeibo/presentation/core/formatter/currency_formatter.dart';
 
-class InputFormCurrency extends StatelessWidget {
+class InputFormCurrency extends StatefulWidget {
   final String? Function(double? value)? validator;
   final String? labelText;
   final double? value;
@@ -17,29 +17,36 @@ class InputFormCurrency extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final controller = TextEditingController(text: value?.toString());
+  State<InputFormCurrency> createState() => _InputFormCurrencyState();
+}
 
+class _InputFormCurrencyState extends State<InputFormCurrency> {
+  late final controller = TextEditingController(
+    text: widget.value != null ? context.currency.format(widget.value!) : '',
+  );
+
+  @override
+  Widget build(BuildContext context) {
     return TextFormField(
-      key: key,
+      key: widget.key,
       controller: controller,
       keyboardType: TextInputType.number,
       inputFormatters: [CurrencyFormatter(context)],
-      decoration: InputDecoration(labelText: labelText),
+      decoration: InputDecoration(labelText: widget.labelText),
       validator: (String? text) {
-        if (validator == null) return null;
+        if (widget.validator == null) return null;
 
         if (text == null || text.isEmpty) {
-          return validator != null ? validator!(null) : null;
+          return widget.validator != null ? widget.validator!(null) : null;
         }
 
         double? amount = context.currency.tryParse(text)?.toDouble();
-        return validator!(amount);
+        return widget.validator!(amount);
       },
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: (value) {
-        if (onChanged != null) {
-          onChanged!(context.currency.parse(value).toDouble());
+        if (widget.onChanged != null) {
+          widget.onChanged!(context.currency.parse(value).toDouble());
         }
       },
     );

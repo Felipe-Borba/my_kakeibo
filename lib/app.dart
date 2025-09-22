@@ -9,6 +9,9 @@ import 'package:my_kakeibo/presentation/core/mappers/user_language_mapper.dart';
 import 'package:my_kakeibo/presentation/core/mappers/user_theme_mapper.dart';
 import 'package:provider/provider.dart';
 
+final RouteObserver<ModalRoute<dynamic>> routeObserver =
+    RouteObserver<ModalRoute<dynamic>>();
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -46,6 +49,7 @@ class App extends StatelessWidget {
           home: viewModel.initialRoute,
           navigatorObservers: [
             viewModel.getAnalyticsObserver(),
+            routeObserver,
           ],
         );
       },

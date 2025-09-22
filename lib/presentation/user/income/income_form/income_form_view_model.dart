@@ -16,6 +16,9 @@ class IncomeFormViewModel with ChangeNotifier {
   late final validator = IncomeValidator(context: _context);
 
   // State
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
   late double? amount = _income?.amount;
   late DateTime? date = _income?.date;
   late String description = _income?.description ?? '';
@@ -24,6 +27,9 @@ class IncomeFormViewModel with ChangeNotifier {
   // Actions
   onClickSave() async {
     if (validator.isInvalid()) return;
+
+    _isLoading = true;
+    notifyListeners();
 
     var result = await _incomeRepository.save(Income(
       id: _income?.id,
@@ -41,6 +47,7 @@ class IncomeFormViewModel with ChangeNotifier {
       showSnackbar(context: _context, text: failure.toString());
     });
 
+    _isLoading = false;
     notifyListeners();
   }
 }
