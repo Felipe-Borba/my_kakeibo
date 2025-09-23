@@ -85,8 +85,12 @@ class TransactionListView extends StatelessWidget {
           floatingActionButton: SpeedDial(
             icon: Icons.add,
             activeIcon: Icons.close,
-            backgroundColor: Theme.of(context).colorScheme.primary,
-            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            elevation: 4,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            buttonSize: const Size.square(40),
+            childrenButtonSize: const Size(40, 48),
             spacing: 8,
             spaceBetweenChildren: 8,
             children: [
@@ -96,6 +100,9 @@ class TransactionListView extends StatelessWidget {
                 foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 label: context.intl.income,
                 onTap: () => viewModel.onAddIncome(),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               SpeedDialChild(
                 child: const Icon(Icons.remove),
@@ -103,6 +110,9 @@ class TransactionListView extends StatelessWidget {
                 foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 label: context.intl.expense,
                 onTap: () => viewModel.onAddExpense(),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ],
           ),
