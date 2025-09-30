@@ -20,6 +20,7 @@ class ExpenseFormViewModel with ChangeNotifier {
   late String description = _expense?.description ?? '';
   late ExpenseCategory? category = _expense?.category;
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   // Actions
@@ -54,5 +55,9 @@ class ExpenseFormViewModel with ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  void cancel() {
+    _context.popScreen(false);
   }
 }

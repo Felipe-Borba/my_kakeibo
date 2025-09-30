@@ -73,12 +73,13 @@ class ExpenseFormView extends StatelessWidget {
                 labelText: context.intl.description,
                 initialValue: viewModel.description,
                 onChanged: (value) => viewModel.description = value,
+                maxLines: 3,
               ),
             ],
             bottomChildren: [
               Expanded(
                 child: ButtonOutline(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: viewModel.cancel,
                   text: context.intl.cancel,
                 ),
               ),

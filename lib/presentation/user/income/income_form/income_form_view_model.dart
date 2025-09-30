@@ -17,6 +17,7 @@ class IncomeFormViewModel with ChangeNotifier {
 
   // State
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   late double? amount = _income?.amount;
@@ -49,5 +50,9 @@ class IncomeFormViewModel with ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  void cancel() {
+    _context.popScreen(false);
   }
 }

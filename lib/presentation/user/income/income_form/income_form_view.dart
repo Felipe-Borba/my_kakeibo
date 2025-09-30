@@ -69,12 +69,13 @@ class IncomeFormView extends StatelessWidget {
                 onChanged: (value) => viewModel.description = value,
                 validator: validator.validateDescription,
                 labelText: context.intl.description,
+                maxLines: 3,
               ),
             ],
             bottomChildren: [
               Expanded(
                 child: ButtonOutline(
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: viewModel.cancel,
                   text: context.intl.cancel,
                 ),
               ),
