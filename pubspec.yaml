@@ -45,6 +45,7 @@ dev_dependencies:
   mocktail: ^1.0.4
   flutter_launcher_icons: ^0.14.1
   sqflite_common_ffi: ^2.3.4
+  intl_utils: ^2.8.8
 
 flutter:
   uses-material-design: true
@@ -56,5 +57,3 @@ flutter:
     # Add assets from the images directory to the application.
     - assets/images/
     - assets/launcher/
-flutter_intl:
-  enabled: true

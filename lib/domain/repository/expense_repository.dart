@@ -12,7 +12,7 @@ class ExpenseRepository {
     this._userServiceSqlite,
   );
 
-  AsyncResult<Expense> insert(Expense expense) async {
+  AsyncResult<Expense> save(Expense expense) async {
     if (expense.id != null) {
       return await _expenseRealmService.update(expense);
     } else {

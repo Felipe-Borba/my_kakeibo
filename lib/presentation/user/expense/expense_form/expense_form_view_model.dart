@@ -30,7 +30,7 @@ class ExpenseFormViewModel with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    var result = await _expenseRepository.insert(Expense(
+    var result = await _expenseRepository.save(Expense(
       id: _expense?.id,
       amount: amount!,
       date: date ?? DateTime.now(),

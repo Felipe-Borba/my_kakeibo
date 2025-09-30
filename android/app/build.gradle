@@ -17,7 +17,7 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.example.my_kakeibo"
-    compileSdk = 34 //flutter.compileSdkVersion
+    compileSdk = 35 //flutter.compileSdkVersion
     ndkVersion = "26.1.10909125" //flutter.ndkVersion
 
     compileOptions {
@@ -38,7 +38,6 @@ android {
         targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        minSdkVersion 23
         multiDexEnabled true
     }
 
